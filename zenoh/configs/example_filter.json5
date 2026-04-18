@@ -1,0 +1,57 @@
+// zenoh/configs/example_filter.json5
+//
+// Example Zenoh bridge config for WAN deployments.
+// Pass to either start_zenoh_bridge.sh or connect_zenoh_bridge.sh via --config.
+//
+// Usage:
+//   ./zenoh/start_zenoh_bridge.sh 7447 --config zenoh/configs/example_filter.json5
+//   ./zenoh/connect_zenoh_bridge.sh <GPU_IP> 7447 --config zenoh/configs/example_filter.json5
+//
+// Reference: https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds/blob/main/DEFAULT_CONFIG.json5
+{
+  plugins: {
+    ros2dds: {
+      // Domain
+      // Uncomment to override the ROS_DOMAIN_ID seen by this bridge process.
+      // domain: 0,
+
+      // Topic allowlist / denylist
+      // By default every topic is bridged. Restrict this on WAN links to save
+      // bandwidth, especially for camera and point-cloud topics.
+      //
+      // allow: {
+      //   publishers:    ["/tf", "/tf_static", "/joint_states", "/cmd_vel"],
+      //   subscribers:   ["/cmd_vel"],
+      //   service_servers:  [],
+      //   service_clients:  [],
+      //   action_servers:   [],
+      //   action_clients:   [],
+      // },
+
+      // Frequency limits
+      // Cap how often each topic is forwarded over the WAN link.
+      // Uncomment and tune per your bandwidth budget.
+      //
+      // pub_max_frequencies: [
+      //   "/camera/.*=5.0",
+      //   "/point_cloud=2.0",
+      //   ".*=30.0",
+      // ],
+
+      // Namespace
+      // Prefix all bridged topics with a namespace to avoid collisions when
+      // multiple robots / students share the same local ROS graph.
+      //
+      // namespace: "/sim",
+    },
+  },
+
+  // Multicast scouting
+  // Keep this false for WAN / internet connections.
+  // The bridge uses TCP unicast to the router instead.
+  scouting: {
+    multicast: {
+      enabled: false,
+    },
+  },
+}
