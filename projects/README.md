@@ -101,6 +101,45 @@ mounted project remain owned by you.
 
 ---
 
+## Saving and Restoring Project State
+
+Use `scripts/project_snapshot.sh` from the repo root to save project artifacts
+and the matching repo code state in one step.
+
+Optional local defaults live in:
+
+```bash
+cp projects/my-legged-robot/snapshot.env.example projects/my-legged-robot/.snapshot.env
+```
+
+Local save:
+
+```bash
+./scripts/project_snapshot.sh save --project my-legged-robot
+```
+
+End-of-day save with git push:
+
+```bash
+./scripts/project_snapshot.sh save \
+  --project my-legged-robot \
+  --git-push
+```
+
+Restore into a fresh clone:
+
+```bash
+./scripts/project_snapshot.sh restore \
+  --project my-legged-robot \
+  --snapshot projects/my-legged-robot/artifacts/snapshots/<snapshot-id>.tar.gz
+```
+
+The helper stores archives under `artifacts/snapshots/`, uploads with `rsync`
+only when requested, and reuses your existing git auth when `--git-push` is
+enabled.
+
+---
+
 ## Shared VM — Multiple Students
 
 If you share a single VM, each student must use a **unique** container name and
@@ -123,6 +162,7 @@ Add these to your project's `.gitignore`:
 
 ```
 .env                        # may contain your NGC_API_KEY
+.snapshot.env               # local snapshot defaults only; no tokens
 ros2_ws/build/
 ros2_ws/install/
 ros2_ws/log/

@@ -135,20 +135,44 @@ and inform [Omotoye](https://github.com/Omotoye).
 
 ## Saving Training Progress
 
-Use `artifacts/checkpoints/` for model checkpoints and `artifacts/logs/` for
-training logs. These folders are ignored by git; archive and download them
-before the cloud server is deleted.
+Use `scripts/project_snapshot.sh` from the repo root to save the project
+artifacts and matching repo code state before the cloud server is deleted.
+
+Copy the optional snapshot defaults file if you want to pin include paths,
+an rsync target, or a resume command:
 
 ```bash
-mkdir -p artifacts/checkpoints artifacts/logs
-tar -czf artifacts/checkpoints/my_run.tar.gz \
-  artifacts/checkpoints/my_run \
-  artifacts/logs/my_run
+cp projects/<your-project-name>/snapshot.env.example \
+  projects/<your-project-name>/.snapshot.env
+```
+
+Recommended per-session save:
+
+```bash
+./scripts/project_snapshot.sh save --project <your-project-name>
+```
+
+Recommended end-of-day save when your git auth is already configured:
+
+```bash
+./scripts/project_snapshot.sh save \
+  --project <your-project-name> \
+  --git-push
+```
+
+Restore on a fresh server:
+
+```bash
+./scripts/project_snapshot.sh restore \
+  --project <your-project-name> \
+  --snapshot projects/<your-project-name>/artifacts/snapshots/<snapshot-id>.tar.gz
 ```
 
 > [!TIP]
 > Save a `metadata.yaml` next to each checkpoint with the git commit, command,
-> seed, task name, Isaac Sim version, and short notes.
+> seed, task name, Isaac Sim version, and short notes. Snapshot archives,
+> manifests, and checksums live under `artifacts/snapshots/`. The helper uses
+> existing SSH or HTTPS git auth only and does not manage tokens.
 
 ---
 

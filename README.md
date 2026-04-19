@@ -151,50 +151,68 @@ For normal interactive work, GPU access is usually allocated for a fixed daily
 window such as 8-12 hours. Training jobs can run longer when agreed with the
 lab. When the allocation ends, the cloud server is deleted to stop charges.
 
-Put training output under:
+Use [`scripts/project_snapshot.sh`](scripts/project_snapshot.sh) to save both
+your repo state and the heavy project artifacts that do not belong in git.
+The helper always creates a local archive under:
 
 ```text
-projects/<name>/artifacts/checkpoints/
-projects/<name>/artifacts/logs/
+projects/<name>/artifacts/snapshots/
 ```
 
-Save a small `metadata.yaml` next to each checkpoint with the git commit,
-command, seed, task name, Isaac Sim version, and notes.
-
-Package a run before the cloud server is deleted:
+Copy the template config once per project if you want local defaults for
+includes, resume commands, or an rsync target:
 
 ```bash
-cd ~/isaac-projects/projects/my-project
-tar -czf artifacts/checkpoints/walk_policy_2026-04-18.tar.gz \
-  artifacts/checkpoints/2026-04-18_walk_policy \
-  artifacts/logs/2026-04-18_walk_policy
+cp projects/my-project/snapshot.env.example projects/my-project/.snapshot.env
 ```
 
-Download it from your laptop:
+Save the current project locally before the server is deleted:
 
 ```bash
-rsync -avz <user>@<server-ip>:~/isaac-projects/projects/my-project/artifacts/checkpoints/walk_policy_2026-04-18.tar.gz ./backups/
+./scripts/project_snapshot.sh save --project my-project
 ```
 
-Restore on a fresh server:
+Save and also create or update a repo commit, then push with your existing git
+auth:
 
 ```bash
-# On the fresh server
+./scripts/project_snapshot.sh save \
+  --project my-project \
+  --git-push \
+  --resume-command "./isaac_vmctl.sh run -- bash -lc 'cd projects/my-project && python train.py'"
+```
+
+Save locally and upload the archive, manifest, and checksum to another SSH host:
+
+```bash
+./scripts/project_snapshot.sh save \
+  --project my-project \
+  --rsync-target user@backup-host:/absolute/path/isaac-snapshots/
+```
+
+Restore on a fresh server from a local archive:
+
+```bash
 git clone git@github.com:<your-github-user>/isaac-projects.git
-cd isaac-projects/projects/my-project
-mkdir -p artifacts/checkpoints
+cd isaac-projects
+./scripts/project_snapshot.sh restore \
+  --project my-project \
+  --snapshot projects/my-project/artifacts/snapshots/<snapshot-id>.tar.gz
+```
 
-# From your laptop
-rsync -avz ./backups/walk_policy_2026-04-18.tar.gz \
-  <user>@<new-server-ip>:~/isaac-projects/projects/my-project/artifacts/checkpoints/
+Restore directly from an rsync source:
 
-# Back on the fresh server
-tar -xzf artifacts/checkpoints/walk_policy_2026-04-18.tar.gz
+```bash
+./scripts/project_snapshot.sh restore \
+  --project my-project \
+  --snapshot user@backup-host:/absolute/path/isaac-snapshots/<snapshot-id>.tar.gz
 ```
 
 > [!TIP]
-> Source code and small scene/config files go in git. Large checkpoints and
-> generated logs should be archived and downloaded separately.
+> Keep the `.tar.gz`, `.manifest.json`, and `.sha256` files together. Git push
+> uses your existing SSH or HTTPS auth only; the helper does not manage tokens
+> or store credentials. Local archive creation is always the primary save path,
+> even when push or rsync upload fails.
 
 ## Startup Templates
 
