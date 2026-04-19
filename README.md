@@ -55,7 +55,7 @@ Recchiuto, who set up the machine and send credentials.
 Fork `https://github.com/RICE-unige/isaac-projects`, then clone your fork:
 
 ```bash
-git clone git@github.com:<your-github-user>/isaac-projects.git ~/isaac-projects
+git clone https://github.com/<your-github-user>/isaac-projects.git ~/isaac-projects
 cd ~/isaac-projects
 cp .env.example .env
 ```
@@ -256,7 +256,7 @@ Save locally and upload the archive, manifest, and checksum to another SSH host:
 Restore on a fresh server from a local archive:
 
 ```bash
-git clone git@github.com:<your-github-user>/isaac-projects.git ~/isaac-projects
+git clone https://github.com/<your-github-user>/isaac-projects.git ~/isaac-projects
 cd ~/isaac-projects
 ./scripts/project_snapshot.sh restore \
   --project my-project \
