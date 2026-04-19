@@ -31,9 +31,26 @@ Edit `.env` with your configuration, then start Isaac Sim from the repo root:
 
 ```bash
 source projects/my-legged-robot/.env
-./isaac_vmctl.sh bootstrap        # once on a fresh server
+./isaac_vmctl.sh bootstrap        # once on a fresh server; add --verbose for live logs
 ./isaac_vmctl.sh start isaacsim
 ```
+
+For Isaac Lab scripts that need a remote UI on SimplePod, do not start a
+separate `isaacsim` session first. Run the Isaac Lab command itself with
+livestreaming:
+
+```bash
+source projects/my-legged-robot/.env
+source ~/isaac-projects/configs/isaac-sim-5.1.0.env
+source ~/isaac-projects/configs/isaac-lab.env
+~/isaac-projects/isaac_vmctl.sh run --livestream public -- \
+  bash -lc 'cd external/IsaacLab && ./isaaclab.sh -p scripts/tutorials/00_sim/launch_app.py'
+```
+
+If the task renders camera sensors, add `--enable-cameras`. If the printed IP
+is not the one your laptop can reach, rerun with `--public-ip <reachable-ip>`.
+Install the laptop-side client once using the repo-level
+[WebRTC instructions](../README.md#quick-start).
 
 Source the project environment in each new terminal:
 

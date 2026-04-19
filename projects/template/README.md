@@ -43,9 +43,25 @@ From the **repository root**:
 cp projects/<your-project-name>/.env.example projects/<your-project-name>/.env
 # edit projects/<your-project-name>/.env
 source projects/<your-project-name>/.env
-./isaac_vmctl.sh bootstrap        # once on a fresh server
+./isaac_vmctl.sh bootstrap        # once on a fresh server; add --verbose for live logs
 ./isaac_vmctl.sh start isaacsim
 ```
+
+If you are running an Isaac Lab script on SimplePod and want the remote UI,
+launch the Isaac Lab script itself with WebRTC instead of starting a separate
+`isaacsim` container:
+
+```bash
+source configs/isaac-sim-5.1.0.env
+source configs/isaac-lab.env
+./isaac_vmctl.sh run --livestream public -- \
+  bash -lc 'cd external/IsaacLab && ./isaaclab.sh -p scripts/tutorials/00_sim/launch_app.py'
+```
+
+If the task renders camera sensors, add `--enable-cameras`. If the printed IP
+is not the one your laptop can reach, rerun with `--public-ip <reachable-ip>`.
+Install the Isaac Sim WebRTC Streaming Client once on your laptop using the
+repo-level [Quick Start](../../README.md#quick-start) instructions.
 
 ### 2. Source the project environment
 
@@ -73,6 +89,10 @@ Run the connectivity check to get the IP and ports:
 ```
 
 Open the Isaac Sim WebRTC client and connect to the IP printed above.
+
+For Isaac Lab one-shot livestream runs, the `isaac_vmctl.sh run` command prints
+the target IP before the script starts. Use that IP in the Isaac Sim WebRTC
+Streaming Client.
 
 > [!NOTE]
 > On Vast.ai headless jobs, skip WebRTC and use
