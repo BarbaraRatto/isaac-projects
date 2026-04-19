@@ -71,7 +71,40 @@ source .env
 ```
 
 Run this once on each new cloud server. After that, use `start` or `run`
-commands without reinstalling host packages.
+commands without reinstalling host packages. Use
+`./isaac_vmctl.sh bootstrap --verbose` when you want the full installer output
+streamed live; the default mode writes a detailed log file and prints its path.
+
+**Laptop: Install the Isaac Sim WebRTC Streaming Client**
+
+Download the client from NVIDIA’s official
+[Isaac Sim 5.1.0 Latest Release page](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/download.html)
+under **Isaac Sim WebRTC Streaming Client**. NVIDIA’s livestream client guide
+is here:
+[Livestream Clients](https://docs.isaacsim.omniverse.nvidia.com/latest/installation/manual_livestream_clients.html).
+
+On Linux, make the AppImage executable:
+
+```bash
+chmod +x ~/Downloads/isaacsim-webrtc-streaming-client-*.AppImage
+~/Downloads/isaacsim-webrtc-streaming-client-*.AppImage
+```
+
+If it complains about FUSE, install the FUSE 2 runtime first:
+
+```bash
+sudo add-apt-repository universe
+sudo apt update
+sudo apt install libfuse2 || sudo apt install libfuse2t64
+```
+
+Then launch it again:
+
+```bash
+~/Downloads/isaacsim-webrtc-streaming-client-*.AppImage --no-sandbox
+```
+
+When the client opens, enter the server IP and click **Connect**.
 
 **SimplePod: Isaac Sim with WebRTC**
 
@@ -103,14 +136,44 @@ your terminal:
 ./isaac_vmctl.sh run -- bash -lc 'cd projects/my-project && python train.py'
 ```
 
-**Isaac Lab**
+**SimplePod: Isaac Lab with Remote UI**
 
 ```bash
 source configs/isaac-sim-5.1.0.env
 source configs/isaac-lab.env
-./isaac_vmctl.sh start isaacsim
-./isaac_vmctl.sh shell
+./isaac_vmctl.sh run --livestream public -- \
+  bash -lc 'cd external/IsaacLab && ./isaaclab.sh -p scripts/tutorials/00_sim/launch_app.py'
 ```
+
+This runs the Isaac Lab script as the process that owns the WebRTC session. Use
+the IP printed by `isaac_vmctl.sh run` in the Isaac Sim WebRTC Streaming
+Client.
+
+If the task renders camera sensors, add `--enable-cameras`:
+
+```bash
+source configs/isaac-sim-5.1.0.env
+source configs/isaac-lab.env
+./isaac_vmctl.sh run --livestream public --enable-cameras -- \
+  bash -lc 'cd external/IsaacLab && ./isaaclab.sh -p scripts/demos/quadrupeds.py'
+```
+
+If automatic public-IP detection is wrong because of the cloud network or VPN,
+rerun with `--public-ip <reachable-ip>`.
+
+For non-interactive training, keep the run headless:
+
+```bash
+source configs/isaac-sim-5.1.0.env
+source configs/isaac-lab.env
+./isaac_vmctl.sh run -- \
+  bash -lc 'cd external/IsaacLab && ./isaaclab.sh -p scripts/reinforcement_learning/rl_games/train.py --task Isaac-Cartpole-v0 --headless'
+```
+
+> [!IMPORTANT]
+> Do not start a separate `./isaac_vmctl.sh start isaacsim` session when the
+> goal is to view an Isaac Lab script remotely. The WebRTC UI must come from
+> the Isaac Lab process itself.
 
 The repo is mounted inside the container at `/workspace/isaac-projects`. Keep
 Isaac Lab code in your fork, pin the Isaac Lab tag/commit in your project
@@ -236,6 +299,7 @@ RICE thesis projects. Assets and preview GIFs are coming soon in
 | `./isaac_vmctl.sh start isaacsim` | Start Isaac Sim with WebRTC |
 | `./isaac_vmctl.sh start isaacsim --headless` | Start Isaac Sim without WebRTC |
 | `./isaac_vmctl.sh run -- <command>` | Run a one-shot command inside the Isaac Sim image |
+| `./isaac_vmctl.sh run --livestream public -- <command>` | Run a one-shot command with AppLauncher WebRTC for remote Isaac Lab UI |
 | `./isaac_vmctl.sh stop isaacsim` | Stop the container |
 | `./isaac_vmctl.sh restart isaacsim` | Restart the container |
 | `./isaac_vmctl.sh status` | Check host, GPU, Docker, ROS 2, container |
@@ -253,6 +317,11 @@ these inbound ports are available:
 |---|---|
 | TCP `49100` | WebRTC signaling |
 | UDP `47998` | WebRTC video stream |
+
+For Isaac Lab, use WebRTC on the Isaac Lab command itself via
+`./isaac_vmctl.sh run --livestream public -- ...`. NVIDIA documents that
+streaming is the supported way to visualize Isaac Lab from inside a container,
+and that the Isaac Sim WebRTC Streaming Client is the recommended client.
 
 Use **Zenoh** when you need ROS 2 topics on your laptop:
 
