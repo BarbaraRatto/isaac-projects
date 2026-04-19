@@ -307,6 +307,8 @@ RICE thesis projects. Assets and preview GIFs are coming soon in
 | `./isaac_vmctl.sh shell` | Open a shell in the running container |
 | `./isaac_vmctl.sh check` | Print IP, port checks, client commands |
 | `./isaac_vmctl.sh bootstrap` | Install Docker, NVIDIA runtime, ROS 2, image |
+| `./isaac_vmctl.sh bootstrap zenoh` | Download the Zenoh bridge binary under `zenoh/` |
+| `./isaac_vmctl.sh start zenoh` | Start the server-side Zenoh ROS 2 bridge on TCP `7447` |
 
 ## WebRTC and ROS 2 Topics
 
@@ -327,11 +329,11 @@ Use **Zenoh** when you need ROS 2 topics on your laptop:
 
 ```bash
 # assigned GPU server
-./zenoh/setup.sh
-./zenoh/start_zenoh_bridge.sh
+./isaac_vmctl.sh bootstrap zenoh
+./isaac_vmctl.sh start zenoh
 
 # Laptop
-./zenoh/setup.sh
+./isaac_vmctl.sh bootstrap zenoh
 ./zenoh/connect_zenoh_bridge.sh <GPU_PUBLIC_IP>
 
 # Laptop with a Vast.ai mapped port

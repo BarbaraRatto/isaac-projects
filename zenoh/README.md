@@ -32,12 +32,12 @@ Laptop:     zenoh client -> local ROS 2 tools / RViz
 Run this once on the GPU server and once on your laptop:
 
 ```bash
-chmod +x zenoh/setup.sh
-./zenoh/setup.sh
+./isaac_vmctl.sh bootstrap zenoh
 ```
 
 This downloads `zenoh-bridge-ros2dds` v1.9.0 into `zenoh/`. Keep the same
-Zenoh version on both sides.
+Zenoh version on both sides. The direct helper remains available as
+`./zenoh/setup.sh`.
 
 ## Start the Server Bridge
 
@@ -45,14 +45,14 @@ On the assigned GPU server:
 
 ```bash
 cd ~/isaac-projects
-./zenoh/setup.sh
-./zenoh/start_zenoh_bridge.sh 7447
+./isaac_vmctl.sh bootstrap zenoh
+./isaac_vmctl.sh start zenoh 7447
 ```
 
 With a ROS domain:
 
 ```bash
-./zenoh/start_zenoh_bridge.sh 7447 --domain 0
+./isaac_vmctl.sh start zenoh 7447 --domain 0
 ```
 
 > [!WARNING]
@@ -64,7 +64,7 @@ With a ROS domain:
 SimplePod direct port:
 
 ```bash
-./zenoh/setup.sh
+./isaac_vmctl.sh bootstrap zenoh
 ./zenoh/connect_zenoh_bridge.sh <SIMPLEPOD_PUBLIC_IP> 7447
 ```
 
@@ -114,7 +114,7 @@ the example config when needed:
 
 ```bash
 # GPU server
-./zenoh/start_zenoh_bridge.sh 7447 --config zenoh/configs/example_filter.json5
+./isaac_vmctl.sh start zenoh 7447 --config zenoh/configs/example_filter.json5
 
 # Laptop
 ./zenoh/connect_zenoh_bridge.sh <GPU_PUBLIC_IP> 7447 --config zenoh/configs/example_filter.json5

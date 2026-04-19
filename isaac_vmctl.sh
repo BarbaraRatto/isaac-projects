@@ -230,7 +230,11 @@ usage() {
 Usage:
   ${SCRIPT_NAME} bootstrap [--verbose] [--log-file <path>]
                                  Install/repair Docker, NVIDIA runtime, ROS 2, and pull the Isaac Sim image.
+  ${SCRIPT_NAME} bootstrap zenoh|bridge [--force]
+                                 Download or refresh the Zenoh bridge binary under zenoh/.
   ${SCRIPT_NAME} start isaacsim      Start Isaac Sim with WebRTC.
+  ${SCRIPT_NAME} start zenoh|bridge [port] [--domain <id>] [--namespace <ns>] [--config <file>]
+                                 Start the server-side Zenoh ROS 2 bridge.
   ${SCRIPT_NAME} start isaacsim --headless
                                  Start Isaac Sim without WebRTC flags.
   ${SCRIPT_NAME} run [--livestream public|private] [--enable-cameras] [--public-ip <ip>] -- <command>
@@ -246,6 +250,8 @@ Usage:
                                  Install/repair ROS 2 only.
   ${SCRIPT_NAME} install docker [--verbose] [--log-file <path>]
                                  Install/repair Docker + NVIDIA container runtime only.
+  ${SCRIPT_NAME} install zenoh|bridge [--force]
+                                 Download or refresh the Zenoh bridge binary under zenoh/.
   ${SCRIPT_NAME} check               Show listener checks and client-side test commands.
   ${SCRIPT_NAME} help                Show this help.
 
@@ -273,7 +279,11 @@ Optional flags:
 Examples:
   ${SCRIPT_NAME} bootstrap
   ${SCRIPT_NAME} bootstrap --verbose
+  ${SCRIPT_NAME} bootstrap zenoh
+  ${SCRIPT_NAME} bootstrap bridge --force
   ${SCRIPT_NAME} start isaacsim
+  ${SCRIPT_NAME} start zenoh
+  ${SCRIPT_NAME} start bridge 7447 --domain 0
   ${SCRIPT_NAME} start isaacsim --headless
   ${SCRIPT_NAME} run -- bash -lc 'cd projects/my-project && python train.py'
   ${SCRIPT_NAME} run --livestream public -- bash -lc 'cd external/IsaacLab && ./isaaclab.sh -p scripts/tutorials/00_sim/launch_app.py'
@@ -540,6 +550,54 @@ ensure_ros2_installed() {
     fi
     rosdep update || true
   fi
+
+  ensure_ros_setup_in_bashrc
+}
+
+ensure_ros_setup_in_bashrc() {
+  local bashrc_path="${USER_HOME}/.bashrc"
+  local marker_begin="# >>> isaac-projects ROS 2 setup >>>"
+  local marker_end="# <<< isaac-projects ROS 2 setup <<<"
+  local setup_line_quoted="source \"${ROS_SETUP}\""
+  local setup_line_unquoted="source ${ROS_SETUP}"
+  local tmp_file user_group
+
+  mkdir -p "$USER_HOME"
+  touch "$bashrc_path"
+
+  if ! grep -Fqx "$marker_begin" "$bashrc_path" && \
+     { grep -Fqx "$setup_line_quoted" "$bashrc_path" || grep -Fqx "$setup_line_unquoted" "$bashrc_path"; }; then
+    info "ROS 2 setup already sourced in ${bashrc_path}."
+    return 0
+  fi
+
+  tmp_file=$(mktemp)
+  if grep -Fqx "$marker_begin" "$bashrc_path"; then
+    awk -v begin="$marker_begin" -v end="$marker_end" '
+      $0 == begin { skip=1; next }
+      $0 == end { skip=0; next }
+      !skip { print }
+    ' "$bashrc_path" >"$tmp_file"
+  else
+    cp "$bashrc_path" "$tmp_file"
+  fi
+
+  {
+    printf '\n%s\n' "$marker_begin"
+    printf 'if [ -f "%s" ]; then\n' "$ROS_SETUP"
+    printf '  source "%s"\n' "$ROS_SETUP"
+    printf 'fi\n'
+    printf '%s\n' "$marker_end"
+  } >>"$tmp_file"
+
+  if [[ ${EUID} -eq 0 ]]; then
+    user_group=$(id -gn "$USER_NAME")
+    install -o "$USER_NAME" -g "$user_group" -m 0644 "$tmp_file" "$bashrc_path"
+  else
+    install -m 0644 "$tmp_file" "$bashrc_path"
+  fi
+  rm -f "$tmp_file"
+  info "Ensured ROS 2 setup is sourced from ${bashrc_path}."
 }
 
 ensure_isaac_dirs() {
@@ -1006,6 +1064,18 @@ print_install_success_summary() {
   fi
 }
 
+zenoh_setup() {
+  local setup_script="${SCRIPT_DIR}/zenoh/setup.sh"
+  [[ -f "$setup_script" ]] || error "Zenoh setup script not found at ${setup_script}"
+  exec bash "$setup_script" "$@"
+}
+
+zenoh_start_bridge() {
+  local start_script="${SCRIPT_DIR}/zenoh/start_zenoh_bridge.sh"
+  [[ -f "$start_script" ]] || error "Zenoh start script not found at ${start_script}"
+  exec bash "$start_script" "$@"
+}
+
 install_docker_stack() {
   begin_install_session "install-docker"
   run_install_step 2 1 "Validate host and workspace settings" prepare_host_context
@@ -1044,9 +1114,19 @@ main() {
 
   case "$cmd" in
     start)
-      [[ "$sub" == "isaacsim" ]] || error "Usage: ${SCRIPT_NAME} start isaacsim"
-      shift 2
-      start_isaacsim "$@"
+      case "$sub" in
+        isaacsim)
+          shift 2
+          start_isaacsim "$@"
+          ;;
+        zenoh|bridge)
+          shift 2
+          zenoh_start_bridge "$@"
+          ;;
+        *)
+          error "Usage: ${SCRIPT_NAME} start {isaacsim|zenoh|bridge}"
+          ;;
+      esac
       ;;
     stop)
       [[ "$sub" == "isaacsim" ]] || error "Usage: ${SCRIPT_NAME} stop isaacsim"
@@ -1063,10 +1143,18 @@ main() {
       run_in_isaac_container "$@"
       ;;
     bootstrap)
-      shift
-      parse_common_flags "$@"
-      [[ ${#PARSED_ARGS[@]} -eq 0 ]] || error "Usage: ${SCRIPT_NAME} bootstrap [--verbose] [--log-file <path>]"
-      install_all
+      case "$sub" in
+        zenoh|bridge)
+          shift 2
+          zenoh_setup "$@"
+          ;;
+        *)
+          shift
+          parse_common_flags "$@"
+          [[ ${#PARSED_ARGS[@]} -eq 0 ]] || error "Usage: ${SCRIPT_NAME} bootstrap [--verbose] [--log-file <path>] | ${SCRIPT_NAME} bootstrap {zenoh|bridge} [--force]"
+          install_all
+          ;;
+      esac
       ;;
     status)
       status_all
@@ -1100,7 +1188,11 @@ main() {
           [[ ${#PARSED_ARGS[@]} -eq 0 ]] || error "Usage: ${SCRIPT_NAME} install docker [--verbose] [--log-file <path>]"
           install_docker_stack
           ;;
-        *) error "Usage: ${SCRIPT_NAME} install {all|ros2|docker}" ;;
+        zenoh|bridge)
+          shift 2
+          zenoh_setup "$@"
+          ;;
+        *) error "Usage: ${SCRIPT_NAME} install {all|ros2|docker|zenoh|bridge}" ;;
       esac
       ;;
     help|-h|--help)
