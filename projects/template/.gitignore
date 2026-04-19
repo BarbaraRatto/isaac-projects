@@ -1,5 +1,6 @@
 # Project-local secrets and generated files
 .env
+.snapshot.env
 
 # ROS 2 workspace build artifacts
 ros2_ws/build/
