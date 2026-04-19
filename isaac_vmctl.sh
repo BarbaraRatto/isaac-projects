@@ -223,31 +223,53 @@ render_install_status_line() {
       progress_count=$((index - 1))
       bar="$(render_progress_bar "$progress_count" "$total" active "$spinner_index")"
       ;;
+    *)
+      mark="$(spinner_frame "$spinner_index")"
+      mark_color="$COLOR_BLUE"
+      progress_count=$((index - 1))
+      bar="$(render_progress_bar "$progress_count" "$total" active "$spinner_index")"
+      ;;
+  esac
+
+  printf '%b%s%b %b[%d/%d]%b %s  %s  %b%s%b' \
+    "$mark_color" "$mark" "$COLOR_RESET" \
+    "$COLOR_DIM" "$index" "$total" "$COLOR_RESET" \
+    "$label" \
+    "$bar" \
+    "$COLOR_DIM" "$(format_duration "$elapsed_seconds")" "$COLOR_RESET"
+}
+
+render_install_step_summary_line() {
+  local phase="$1"
+  local total="$2"
+  local index="$3"
+  local label="$4"
+  local elapsed_seconds="$5"
+  local mark mark_color
+
+  case "$phase" in
     success)
       mark="$(status_glyph success)"
       mark_color="$COLOR_GREEN"
-      progress_count="$index"
-      bar="$(render_progress_bar "$progress_count" "$total")"
       ;;
     failure)
       mark="$(status_glyph failure)"
       mark_color="$COLOR_RED"
-      progress_count=$((index - 1))
-      bar="$(render_progress_bar "$progress_count" "$total")"
       ;;
     *)
-      mark="?"
-      mark_color="$COLOR_YELLOW"
-      progress_count=$((index - 1))
-      bar="$(render_progress_bar "$progress_count" "$total")"
+      if [[ "$UI_SUPPORTS_UNICODE" -eq 1 ]]; then
+        mark="•"
+      else
+        mark=">"
+      fi
+      mark_color="$COLOR_BLUE"
       ;;
   esac
 
-  printf '%b%s%b %s  %s  %d/%d  %b%s%b' \
+  printf '%b%s%b %b[%d/%d]%b %s  %b%s%b' \
     "$mark_color" "$mark" "$COLOR_RESET" \
+    "$COLOR_DIM" "$index" "$total" "$COLOR_RESET" \
     "$label" \
-    "$bar" \
-    "$index" "$total" \
     "$COLOR_DIM" "$(format_duration "$elapsed_seconds")" "$COLOR_RESET"
 }
 
@@ -405,20 +427,20 @@ run_install_step() {
 
   local started_at=$SECONDS
   if ! use_live_progress_ui; then
-    info "Step ${index}/${total}: ${label}  $(render_progress_bar "$((index - 1))" "$total")"
+    info "[${index}/${total}] ${label}"
   fi
 
   if run_logged "$total" "$index" "$label" "$@"; then
     if use_live_progress_ui; then
-      print_live_status_line "$(render_install_status_line success "$total" "$index" "$label" "$((SECONDS - started_at))")"
+      print_live_status_line "$(render_install_step_summary_line success "$total" "$index" "$label" "$((SECONDS - started_at))")"
     else
-      success "Completed: ${label}  $(render_progress_bar "$index" "$total")  $(format_duration "$((SECONDS - started_at))")"
+      success "[${index}/${total}] ${label}  $(format_duration "$((SECONDS - started_at))")"
     fi
     return 0
   fi
 
   if use_live_progress_ui; then
-    print_live_status_line "$(render_install_status_line failure "$total" "$index" "$label" "$((SECONDS - started_at))")" stderr
+    print_live_status_line "$(render_install_step_summary_line failure "$total" "$index" "$label" "$((SECONDS - started_at))")" stderr
   fi
   if [[ "$VERBOSE" -eq 0 ]]; then
     warn "Last 25 log lines:"
