@@ -354,7 +354,7 @@ these inbound ports are available:
 |---|---|
 | TCP `49100` | WebRTC signaling |
 | UDP `47998` | WebRTC video stream |
-| TCP `5901` | Optional TigerVNC GNOME desktop |
+| TCP `5901` | Optional TigerVNC XFCE desktop |
 
 For Isaac Lab, use WebRTC on the Isaac Lab command itself via
 `./isaac_vmctl.sh run --livestream public -- ...`. NVIDIA documents that
