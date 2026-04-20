@@ -1197,9 +1197,47 @@ tigervnc_port_listening() {
   ss -lnt | awk '{print $4}' | grep -Eq "[:.]${TIGERVNC_PORT}$"
 }
 
+tigervnc_port_owner_pids() {
+  ss -lntp 2>/dev/null | awk -v port=":${TIGERVNC_PORT}" '
+    $4 ~ port "$" && $0 ~ /Xtigervnc/ {
+      line=$0
+      while (match(line, /pid=[0-9]+/)) {
+        print substr(line, RSTART + 4, RLENGTH - 4)
+        line=substr(line, RSTART + RLENGTH)
+      }
+    }
+  ' | sort -u
+}
+
+tigervnc_port_owned_by_xtigervnc() {
+  [[ -n "$(tigervnc_port_owner_pids)" ]]
+}
+
 tigervnc_display_running() {
   have_cmd vncserver || return 1
   as_current_user vncserver -list 2>/dev/null | awk '{print $1}' | grep -qx ":${TIGERVNC_DISPLAY}"
+}
+
+stop_tigervnc_processes_on_port() {
+  local -a pids=()
+  local pid
+  while IFS= read -r pid; do
+    [[ -n "$pid" ]] && pids+=("$pid")
+  done < <(tigervnc_port_owner_pids)
+
+  [[ ${#pids[@]} -gt 0 ]] || return 0
+
+  info "Stopping existing TigerVNC listener on ${TIGERVNC_PORT}/tcp..."
+  kill "${pids[@]}" 2>/dev/null || true
+
+  local _
+  for _ in $(seq 1 10); do
+    tigervnc_port_listening || return 0
+    sleep 1
+  done
+
+  warn "TigerVNC did not stop cleanly; forcing old listener on ${TIGERVNC_PORT}/tcp to exit."
+  kill -9 "${pids[@]}" 2>/dev/null || true
 }
 
 start_tigervnc_server() {
@@ -1213,14 +1251,20 @@ start_tigervnc_server() {
     info "TigerVNC already listening on ${TIGERVNC_PORT}/tcp."
     return 0
   fi
-  if tigervnc_port_listening && ! tigervnc_display_running; then
+
+  if tigervnc_port_listening && ! tigervnc_port_owned_by_xtigervnc; then
     error "TCP ${TIGERVNC_PORT} is already in use. Choose a different TIGERVNC_PORT."
   fi
 
-  if tigervnc_display_running && [[ "$TIGERVNC_XSTARTUP_UPDATED" -eq 1 ]]; then
+  if tigervnc_port_listening; then
+    info "Restarting existing TigerVNC listener on ${TIGERVNC_PORT}/tcp."
+  elif tigervnc_display_running && [[ "$TIGERVNC_XSTARTUP_UPDATED" -eq 1 ]]; then
     info "TigerVNC startup file changed; restarting display ${display}."
   fi
   as_current_user vncserver -kill "$display" >/dev/null 2>&1 || true
+  if tigervnc_port_listening; then
+    stop_tigervnc_processes_on_port
+  fi
 
   info "Starting TigerVNC desktop on ${display} (${TIGERVNC_PORT}/tcp, ${TIGERVNC_GEOMETRY})..."
   as_current_user vncserver "$display" \
