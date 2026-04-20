@@ -11,6 +11,7 @@ configuration.
 | `isaac-sim-5.1.0.env` | 5.1.0 | 22.04 / 24.04 | 580.65.06 | RTX 5060 workstation / RTX 5090 SimplePod / RTX 6000 Pro Vast.ai | **Recommended** |
 | `isaac-sim-6.0.0-dev2.env` | 6.0.0-dev2 | 22.04 / 24.04 | 580.65.06+ | RTX 5060 workstation / RTX 5090 SimplePod / RTX 6000 Pro Vast.ai | Preview / unstable |
 | `isaac-lab.env` | N/A (overlay) | — | — | — | Source on top of a version config |
+| `simplepod-tigervnc.env` | N/A (overlay) | 22.04 / 24.04 | N/A | RTX 5090 SimplePod | Enables TigerVNC GNOME desktop during bootstrap |
 
 ## Usage
 
@@ -26,6 +27,11 @@ source configs/isaac-sim-5.1.0.env && ./isaac_vmctl.sh start isaacsim
 source configs/isaac-sim-5.1.0.env
 source configs/isaac-lab.env
 ./isaac_vmctl.sh start isaacsim --headless
+
+# Bootstrap SimplePod with a TigerVNC GNOME desktop on TCP 5901
+source configs/isaac-sim-5.1.0.env
+source configs/simplepod-tigervnc.env
+./isaac_vmctl.sh bootstrap
 
 # Run a one-shot training command inside the mounted repo
 ./isaac_vmctl.sh run -- bash -lc 'cd projects/my-project && python train.py'

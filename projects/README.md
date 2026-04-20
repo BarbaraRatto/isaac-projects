@@ -160,12 +160,13 @@ enabled.
 ## Shared VM — Multiple Students
 
 If you share a single VM, each student must use a **unique** container name and
-port pair to avoid conflicts. Edit your project's `.env`:
+port set to avoid conflicts. Edit your project's `.env`:
 
 ```bash
 CONTAINER_NAME=isaac-sim-alice
 WEBRTC_SIGNAL_PORT=49101
 WEBRTC_STREAM_PORT=47999
+TIGERVNC_PORT=5902
 ISAAC_HOST_ROOT=/home/alice/docker/isaac-sim
 ```
 

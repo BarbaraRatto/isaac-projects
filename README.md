@@ -75,6 +75,37 @@ commands without reinstalling host packages. Use
 `./isaac_vmctl.sh bootstrap --verbose` when you want the full installer output
 streamed live; the default mode writes a detailed log file and prints its path.
 
+**SimplePod: Optional TigerVNC GNOME Desktop**
+
+Use this when you want a full remote Linux desktop in addition to the Isaac Sim
+WebRTC viewport. SimplePod must allow inbound TCP `5901`, or the custom port
+you set in `TIGERVNC_PORT`.
+
+```bash
+source configs/isaac-sim-5.1.0.env
+source configs/simplepod-tigervnc.env
+./isaac_vmctl.sh bootstrap
+./isaac_vmctl.sh check
+```
+
+The bootstrap command installs TigerVNC, starts a GNOME Flashback desktop with
+the Ubuntu Yaru theme on display `:1`, and listens on TCP `5901`. If
+`TIGERVNC_PASSWORD` is empty, the helper generates one and saves it on the VM:
+
+```bash
+cat ~/.vnc/isaac-projects-vnc-password.txt
+```
+
+Open TigerVNC Viewer on your laptop and connect to:
+
+```text
+<SIMPLEPOD_PUBLIC_IP>:5901
+```
+
+If `ufw` is active and `ALLOWED_CLIENT_IP` is set, bootstrap restricts the VNC
+port to that IP. This does not configure SimplePod provider-side port rules;
+open TCP `5901` in SimplePod before connecting.
+
 **Laptop: Install the Isaac Sim WebRTC Streaming Client**
 
 Download the client from NVIDIA’s official
@@ -301,12 +332,14 @@ RICE thesis projects. Assets and preview GIFs are coming soon in
 | `./isaac_vmctl.sh run -- <command>` | Run a one-shot command inside the Isaac Sim image |
 | `./isaac_vmctl.sh run --livestream public -- <command>` | Run a one-shot command with AppLauncher WebRTC for remote Isaac Lab UI |
 | `./isaac_vmctl.sh stop isaacsim` | Stop the container |
+| `./isaac_vmctl.sh start tigervnc` | Install/start the TigerVNC GNOME desktop |
+| `./isaac_vmctl.sh stop tigervnc` | Stop the TigerVNC desktop |
 | `./isaac_vmctl.sh restart isaacsim` | Restart the container |
 | `./isaac_vmctl.sh status` | Check host, GPU, Docker, ROS 2, container |
 | `./isaac_vmctl.sh logs` | Follow Isaac Sim logs |
 | `./isaac_vmctl.sh shell` | Open a shell in the running container |
 | `./isaac_vmctl.sh check` | Print IP, port checks, client commands |
-| `./isaac_vmctl.sh bootstrap` | Install Docker, NVIDIA runtime, ROS 2, image |
+| `./isaac_vmctl.sh bootstrap` | Install Docker, NVIDIA runtime, ROS 2, image; also starts TigerVNC when `TIGERVNC_ENABLE=1` |
 | `./isaac_vmctl.sh bootstrap zenoh` | Download the Zenoh bridge binary under `zenoh/` |
 | `./isaac_vmctl.sh start zenoh` | Start the server-side Zenoh ROS 2 bridge on TCP `7447` |
 
@@ -319,6 +352,7 @@ these inbound ports are available:
 |---|---|
 | TCP `49100` | WebRTC signaling |
 | UDP `47998` | WebRTC video stream |
+| TCP `5901` | Optional TigerVNC GNOME desktop |
 
 For Isaac Lab, use WebRTC on the Isaac Lab command itself via
 `./isaac_vmctl.sh run --livestream public -- ...`. NVIDIA documents that

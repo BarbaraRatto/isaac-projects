@@ -206,6 +206,8 @@ Restore on a fresh server:
 | `ISAAC_IMAGE` | `nvcr.io/nvidia/isaac-sim:5.1.0` |
 | `WEBRTC_SIGNAL_PORT` | `49100` |
 | `WEBRTC_STREAM_PORT` | `47998` |
+| `TIGERVNC_ENABLE` | `0` |
+| `TIGERVNC_PORT` | `5901` |
 | `ISAAC_EXTRA_ARGS` | _(none)_ |
 
 ---
