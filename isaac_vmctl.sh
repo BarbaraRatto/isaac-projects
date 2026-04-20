@@ -21,6 +21,13 @@ HOST_WORKSPACE_ROOT="${HOST_WORKSPACE_ROOT:-$SCRIPT_DIR}"
 CONTAINER_WORKSPACE="${CONTAINER_WORKSPACE:-/workspace/isaac-projects}"
 CONTAINER_UID="${CONTAINER_UID:-}"
 CONTAINER_GID="${CONTAINER_GID:-}"
+TIGERVNC_ENABLE="${TIGERVNC_ENABLE:-0}"
+TIGERVNC_DISPLAY="${TIGERVNC_DISPLAY:-1}"
+TIGERVNC_PORT="${TIGERVNC_PORT:-5901}"
+TIGERVNC_GEOMETRY="${TIGERVNC_GEOMETRY:-1920x1080}"
+TIGERVNC_DEPTH="${TIGERVNC_DEPTH:-24}"
+TIGERVNC_LOCALHOST="${TIGERVNC_LOCALHOST:-0}"
+TIGERVNC_PASSWORD="${TIGERVNC_PASSWORD:-}"
 VERBOSE=0
 LOG_FILE="${LOG_FILE:-}"
 ACTIVE_LOG_FILE=""
@@ -454,9 +461,11 @@ usage() {
 Usage:
   ${SCRIPT_NAME} bootstrap [--verbose] [--log-file <path>]
                                  Install/repair Docker, NVIDIA runtime, ROS 2, and pull the Isaac Sim image.
+                                 Also installs and starts TigerVNC when TIGERVNC_ENABLE=1.
   ${SCRIPT_NAME} bootstrap zenoh|bridge [--force]
                                  Download or refresh the Zenoh bridge binary under zenoh/.
   ${SCRIPT_NAME} start isaacsim      Start Isaac Sim with WebRTC.
+  ${SCRIPT_NAME} start tigervnc|vnc  Install/start the TigerVNC GNOME desktop.
   ${SCRIPT_NAME} start zenoh|bridge [port] [--domain <id>] [--namespace <ns>] [--config <file>]
                                  Start the server-side Zenoh ROS 2 bridge.
   ${SCRIPT_NAME} start isaacsim --headless
@@ -464,6 +473,7 @@ Usage:
   ${SCRIPT_NAME} run [--livestream public|private] [--enable-cameras] [--public-ip <ip>] -- <command>
                                  Run a one-shot command inside the Isaac Sim container image.
   ${SCRIPT_NAME} stop isaacsim       Stop the Isaac Sim container.
+  ${SCRIPT_NAME} stop tigervnc|vnc   Stop the TigerVNC desktop.
   ${SCRIPT_NAME} restart isaacsim    Restart Isaac Sim.
   ${SCRIPT_NAME} status              Show VM / Docker / Isaac Sim / ROS status.
   ${SCRIPT_NAME} logs                Show Isaac Sim container logs.
@@ -476,6 +486,8 @@ Usage:
                                  Install/repair Docker + NVIDIA container runtime only.
   ${SCRIPT_NAME} install zenoh|bridge [--force]
                                  Download or refresh the Zenoh bridge binary under zenoh/.
+  ${SCRIPT_NAME} install tigervnc|vnc [--verbose] [--log-file <path>]
+                                 Install/start the TigerVNC GNOME desktop.
   ${SCRIPT_NAME} check               Show listener checks and client-side test commands.
   ${SCRIPT_NAME} help                Show this help.
 
@@ -492,6 +504,13 @@ Optional environment variables:
   CONTAINER_UID=<host-uid>            # optional; defaults to current user
   CONTAINER_GID=<host-gid>            # optional; defaults to current user
   ALLOWED_CLIENT_IP=<your-public-ip>   # only applied if ufw is already active
+  TIGERVNC_ENABLE=0|1                  # when 1, bootstrap installs/starts TigerVNC
+  TIGERVNC_DISPLAY=1
+  TIGERVNC_PORT=5901
+  TIGERVNC_GEOMETRY=1920x1080
+  TIGERVNC_DEPTH=24
+  TIGERVNC_LOCALHOST=0|1               # 0 listens on all interfaces; 1 binds localhost only
+  TIGERVNC_PASSWORD=<8-char-password>  # optional; generated once when unset
   PRIVACY_USERID=<email>
   ISAAC_EXTRA_ARGS='<extra Isaac Sim args>'
   NGC_API_KEY=<your-ngc-api-key>       # optional, only used if image pull requires login
@@ -502,10 +521,12 @@ Optional flags:
 
 Examples:
   ${SCRIPT_NAME} bootstrap
+  TIGERVNC_ENABLE=1 ${SCRIPT_NAME} bootstrap
   ${SCRIPT_NAME} bootstrap --verbose
   ${SCRIPT_NAME} bootstrap zenoh
   ${SCRIPT_NAME} bootstrap bridge --force
   ${SCRIPT_NAME} start isaacsim
+  ${SCRIPT_NAME} start tigervnc
   ${SCRIPT_NAME} start zenoh
   ${SCRIPT_NAME} start bridge 7447 --domain 0
   ${SCRIPT_NAME} start isaacsim --headless
@@ -535,6 +556,38 @@ as_root() {
 
 have_cmd() {
   command -v "$1" >/dev/null 2>&1
+}
+
+is_truthy() {
+  case "$1" in
+    1|true|TRUE|yes|YES|on|ON) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+as_current_user() {
+  local target_user="${USER_NAME:-$(current_user)}"
+  local target_home="${USER_HOME:-$(home_dir)}"
+
+  if [[ ${EUID} -eq 0 && -n "${USER_NAME:-}" && "$USER_NAME" != "root" ]]; then
+    runuser -u "$target_user" -- env HOME="$target_home" USER="$target_user" LOGNAME="$target_user" "$@"
+  else
+    env HOME="$target_home" USER="$target_user" LOGNAME="$target_user" "$@"
+  fi
+}
+
+install_for_current_user() {
+  local mode="$1"
+  local src="$2"
+  local dst="$3"
+  local user_group
+  user_group=$(id -gn "$USER_NAME")
+
+  if [[ ${EUID} -eq 0 ]]; then
+    install -o "$USER_NAME" -g "$user_group" -m "$mode" "$src" "$dst"
+  else
+    install -m "$mode" "$src" "$dst"
+  fi
 }
 
 require_supported_host() {
@@ -896,6 +949,246 @@ configure_ufw_if_active() {
   fi
 }
 
+validate_tigervnc_config() {
+  TIGERVNC_DISPLAY="${TIGERVNC_DISPLAY#:}"
+
+  [[ "$TIGERVNC_DISPLAY" =~ ^[0-9]+$ ]] || error "TIGERVNC_DISPLAY must be a number, for example 1."
+  [[ "$TIGERVNC_DISPLAY" -ge 1 && "$TIGERVNC_DISPLAY" -le 99 ]] || error "TIGERVNC_DISPLAY must be between 1 and 99."
+
+  if [[ -z "$TIGERVNC_PORT" ]]; then
+    TIGERVNC_PORT=$((5900 + TIGERVNC_DISPLAY))
+  fi
+  [[ "$TIGERVNC_PORT" =~ ^[0-9]+$ ]] || error "TIGERVNC_PORT must be a TCP port number."
+  [[ "$TIGERVNC_PORT" -ge 1 && "$TIGERVNC_PORT" -le 65535 ]] || error "TIGERVNC_PORT must be between 1 and 65535."
+
+  [[ "$TIGERVNC_GEOMETRY" =~ ^[0-9]+x[0-9]+$ ]] || error "TIGERVNC_GEOMETRY must look like 1920x1080."
+  [[ "$TIGERVNC_DEPTH" =~ ^[0-9]+$ ]] || error "TIGERVNC_DEPTH must be a number."
+}
+
+ensure_tigervnc_desktop_installed() {
+  local -a packages missing
+  packages=(
+    tigervnc-standalone-server
+    tigervnc-common
+    gnome-session-flashback
+    metacity
+    dbus-x11
+    x11-xserver-utils
+    xterm
+    gnome-terminal
+    nautilus
+    yaru-theme-gtk
+    yaru-theme-icon
+  )
+  missing=()
+
+  local pkg
+  for pkg in "${packages[@]}"; do
+    if ! dpkg -s "$pkg" >/dev/null 2>&1; then
+      missing+=("$pkg")
+    fi
+  done
+
+  if [[ ${#missing[@]} -eq 0 ]]; then
+    info "TigerVNC and GNOME desktop packages are already installed."
+    return 0
+  fi
+
+  info "Installing TigerVNC and GNOME desktop packages..."
+  ensure_common_apt_bits
+  as_root add-apt-repository -y universe
+  as_root apt-get update -y
+  as_root apt-get install -y "${missing[@]}"
+}
+
+ensure_tigervnc_user_files() {
+  local vnc_dir="${USER_HOME}/.vnc"
+  local xstartup_path="${vnc_dir}/xstartup"
+  local passwd_path="${vnc_dir}/passwd"
+  local generated_password_path="${vnc_dir}/isaac-projects-vnc-password.txt"
+  local user_group
+  user_group=$(id -gn "$USER_NAME")
+
+  mkdir -p "$vnc_dir"
+  if [[ ${EUID} -eq 0 ]]; then
+    chown "$USER_NAME:$user_group" "$vnc_dir"
+  fi
+  chmod 700 "$vnc_dir"
+
+  local tmp_xstartup
+  tmp_xstartup=$(mktemp)
+  cat >"$tmp_xstartup" <<'EOF_XSTARTUP'
+#!/usr/bin/env bash
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+export XDG_SESSION_TYPE=x11
+export XDG_CURRENT_DESKTOP=GNOME-Flashback:GNOME
+export XDG_SESSION_DESKTOP=gnome-flashback-metacity
+export DESKTOP_SESSION=gnome-flashback-metacity
+export GTK_THEME=Yaru
+
+if [[ -r "$HOME/.profile" ]]; then
+  # shellcheck source=/dev/null
+  source "$HOME/.profile"
+fi
+
+if command -v gnome-session >/dev/null 2>&1; then
+  exec dbus-run-session -- gnome-session --session=gnome-flashback-metacity
+fi
+
+exec xterm
+EOF_XSTARTUP
+  install_for_current_user 0755 "$tmp_xstartup" "$xstartup_path"
+  rm -f "$tmp_xstartup"
+
+  local password generated_password tmp_pass tmp_plain
+  generated_password=0
+  if [[ -n "$TIGERVNC_PASSWORD" ]]; then
+    password="$TIGERVNC_PASSWORD"
+  elif [[ -f "$generated_password_path" ]]; then
+    password=$(tr -d '\r\n' <"$generated_password_path")
+  else
+    password=$(od -An -N4 -tx1 /dev/urandom | tr -d ' \n')
+    generated_password=1
+  fi
+
+  [[ -n "$password" ]] || error "TigerVNC password is empty. Set TIGERVNC_PASSWORD and retry."
+  if [[ ${#password} -gt 8 ]]; then
+    warn "TigerVNC classic VNC authentication uses only the first 8 password characters."
+    password="${password:0:8}"
+  fi
+
+  tmp_pass=$(mktemp)
+  printf '%s\n' "$password" | vncpasswd -f >"$tmp_pass"
+  install_for_current_user 0600 "$tmp_pass" "$passwd_path"
+  rm -f "$tmp_pass"
+
+  if [[ "$generated_password" -eq 1 ]]; then
+    tmp_plain=$(mktemp)
+    printf '%s\n' "$password" >"$tmp_plain"
+    install_for_current_user 0600 "$tmp_plain" "$generated_password_path"
+    rm -f "$tmp_plain"
+    info "Generated TigerVNC password saved to ${generated_password_path}."
+  elif [[ -f "$generated_password_path" && -z "$TIGERVNC_PASSWORD" ]]; then
+    info "Using existing generated TigerVNC password from ${generated_password_path}."
+  else
+    info "Using TigerVNC password from TIGERVNC_PASSWORD."
+  fi
+}
+
+configure_tigervnc_ufw_if_active() {
+  if ! have_cmd ufw; then
+    return 0
+  fi
+
+  local ufw_status
+  need_root
+  ufw_status=$("${ROOT_PREFIX[@]}" ufw status 2>/dev/null | head -n1 || true)
+  if [[ "$ufw_status" != Status:\ active* ]]; then
+    if [[ -n "$ALLOWED_CLIENT_IP" ]]; then
+      warn "ALLOWED_CLIENT_IP is set, but ufw is not active. Not enabling or changing firewall automatically to avoid breaking SSH."
+    fi
+    return 0
+  fi
+
+  info "ufw is active; ensuring a TigerVNC rule exists..."
+  if [[ -n "$ALLOWED_CLIENT_IP" ]]; then
+    as_root ufw allow from "$ALLOWED_CLIENT_IP" to any port "$TIGERVNC_PORT" proto tcp
+  else
+    as_root ufw allow "${TIGERVNC_PORT}/tcp"
+  fi
+}
+
+tigervnc_port_listening() {
+  ss -lnt | awk '{print $4}' | grep -Eq "[:.]${TIGERVNC_PORT}$"
+}
+
+tigervnc_display_running() {
+  have_cmd vncserver || return 1
+  as_current_user vncserver -list 2>/dev/null | awk '{print $1}' | grep -qx ":${TIGERVNC_DISPLAY}"
+}
+
+start_tigervnc_server() {
+  local display=":${TIGERVNC_DISPLAY}"
+  local localhost_value="no"
+  if is_truthy "$TIGERVNC_LOCALHOST"; then
+    localhost_value="yes"
+  fi
+
+  if tigervnc_display_running && tigervnc_port_listening; then
+    info "TigerVNC already listening on ${TIGERVNC_PORT}/tcp."
+    return 0
+  fi
+  if tigervnc_port_listening; then
+    error "TCP ${TIGERVNC_PORT} is already in use. Choose a different TIGERVNC_PORT."
+  fi
+
+  as_current_user vncserver -kill "$display" >/dev/null 2>&1 || true
+
+  info "Starting TigerVNC GNOME desktop on ${display} (${TIGERVNC_PORT}/tcp)..."
+  as_current_user vncserver "$display" \
+    -geometry "$TIGERVNC_GEOMETRY" \
+    -depth "$TIGERVNC_DEPTH" \
+    -rfbport "$TIGERVNC_PORT" \
+    -localhost "$localhost_value"
+
+  local _
+  for _ in $(seq 1 15); do
+    if tigervnc_port_listening; then
+      info "TigerVNC is listening on ${TIGERVNC_PORT}/tcp."
+      return 0
+    fi
+    sleep 1
+  done
+
+  warn "TigerVNC did not appear on ${TIGERVNC_PORT}/tcp yet. Check ${USER_HOME}/.vnc/*.log."
+  return 1
+}
+
+print_tigervnc_connection_summary() {
+  validate_tigervnc_config
+
+  local public_ip password_hint
+  public_ip=$(get_public_ip 2>/dev/null || true)
+  password_hint="${USER_HOME}/.vnc/isaac-projects-vnc-password.txt"
+
+  echo
+  echo "TigerVNC desktop:"
+  echo "  Target:       ${public_ip:-<server-ip>}:${TIGERVNC_PORT}"
+  echo "  Display:      :${TIGERVNC_DISPLAY}"
+  echo "  Geometry:     ${TIGERVNC_GEOMETRY}"
+  echo "  Desktop:      GNOME Flashback with Ubuntu Yaru theme"
+  if [[ -f "$password_hint" && -z "$TIGERVNC_PASSWORD" ]]; then
+    echo "  Password:     ${password_hint}"
+  else
+    echo "  Password:     value supplied by TIGERVNC_PASSWORD"
+  fi
+}
+
+ensure_tigervnc_ready() {
+  require_supported_host
+  init_paths
+  validate_tigervnc_config
+  ensure_tigervnc_desktop_installed
+  ensure_tigervnc_user_files
+  configure_tigervnc_ufw_if_active
+  start_tigervnc_server
+}
+
+stop_tigervnc_server() {
+  require_supported_host
+  init_paths
+  validate_tigervnc_config
+
+  local display=":${TIGERVNC_DISPLAY}"
+  if have_cmd vncserver; then
+    info "Stopping TigerVNC display ${display}..."
+    as_current_user vncserver -kill "$display" || warn "TigerVNC display ${display} was not running."
+  else
+    warn "vncserver is not installed."
+  fi
+}
+
 append_extra_args() {
   local -n target=$1
   local -a extra_args=()
@@ -1127,6 +1420,17 @@ status_all() {
   fi
   echo
 
+  echo "=== TigerVNC Desktop ==="
+  echo "Enabled:         ${TIGERVNC_ENABLE}"
+  echo "Display:         :${TIGERVNC_DISPLAY#:}"
+  echo "Port:            ${TIGERVNC_PORT}/tcp"
+  if have_cmd vncserver; then
+    as_current_user vncserver -list || true
+  else
+    echo "vncserver not installed"
+  fi
+  echo
+
   echo "=== Isaac Sim Container ==="
   if have_cmd docker && docker_cmd ps -a --format '{{.Names}}' | grep -qx "$CONTAINER_NAME"; then
     docker_cmd ps -a --filter "name=^/${CONTAINER_NAME}$"
@@ -1136,7 +1440,7 @@ status_all() {
   echo
 
   echo "=== Listening Ports ==="
-  ss -lntup | egrep ":(${WEBRTC_SIGNAL_PORT}|${WEBRTC_STREAM_PORT})\b" || echo "No listeners yet on ${WEBRTC_SIGNAL_PORT}/${WEBRTC_STREAM_PORT}"
+  ss -lntup | egrep ":(${WEBRTC_SIGNAL_PORT}|${WEBRTC_STREAM_PORT}|${TIGERVNC_PORT})\b" || echo "No listeners yet on ${WEBRTC_SIGNAL_PORT}/${WEBRTC_STREAM_PORT}/${TIGERVNC_PORT}"
 }
 
 logs_isaacsim() {
@@ -1165,7 +1469,7 @@ check_connectivity() {
   fi
   echo
   echo "Listening sockets on this VM:"
-  ss -lntup | egrep ":(${WEBRTC_SIGNAL_PORT}|${WEBRTC_STREAM_PORT})\b" || echo "No listeners found yet."
+  ss -lntup | egrep ":(${WEBRTC_SIGNAL_PORT}|${WEBRTC_STREAM_PORT}|${TIGERVNC_PORT})\b" || echo "No listeners found yet."
   echo
 
   echo "=== Run these on your PC ==="
@@ -1177,6 +1481,14 @@ check_connectivity() {
   echo
   echo "Isaac Sim WebRTC client target:"
   echo "  ${public_ip}"
+  if is_truthy "$TIGERVNC_ENABLE" || tigervnc_port_listening; then
+    echo
+    echo "TigerVNC TCP test:"
+    echo "  nc -vz ${public_ip} ${TIGERVNC_PORT}"
+    echo
+    echo "TigerVNC client target:"
+    echo "  ${public_ip}:${TIGERVNC_PORT}"
+  fi
 }
 
 run_in_isaac_container() {
@@ -1314,14 +1626,33 @@ install_ros2_stack() {
   print_install_success_summary "ROS 2 setup"
 }
 
+install_tigervnc_stack() {
+  begin_install_session "install-tigervnc"
+  run_install_step 2 1 "Validate host and workspace settings" prepare_host_context
+  run_install_step 2 2 "Install and start TigerVNC GNOME desktop" ensure_tigervnc_ready
+  print_install_success_summary "TigerVNC desktop setup"
+  print_tigervnc_connection_summary
+}
+
 install_all() {
+  local total_steps=5
+  if is_truthy "$TIGERVNC_ENABLE"; then
+    total_steps=6
+  fi
+
   begin_install_session "bootstrap"
-  run_install_step 5 1 "Validate host and workspace settings" prepare_host_context
-  run_install_step 5 2 "Install or verify Docker and NVIDIA Container Toolkit" ensure_nvidia_container_runtime
-  run_install_step 5 3 "Install or verify ROS 2" ensure_ros2_installed
-  run_install_step 5 4 "Prepare Isaac Sim cache and data directories" ensure_isaac_dirs
-  run_install_step 5 5 "Pull or verify the Isaac Sim container image" ensure_isaac_image
+  run_install_step "$total_steps" 1 "Validate host and workspace settings" prepare_host_context
+  run_install_step "$total_steps" 2 "Install or verify Docker and NVIDIA Container Toolkit" ensure_nvidia_container_runtime
+  run_install_step "$total_steps" 3 "Install or verify ROS 2" ensure_ros2_installed
+  run_install_step "$total_steps" 4 "Prepare Isaac Sim cache and data directories" ensure_isaac_dirs
+  run_install_step "$total_steps" 5 "Pull or verify the Isaac Sim container image" ensure_isaac_image
+  if is_truthy "$TIGERVNC_ENABLE"; then
+    run_install_step "$total_steps" 6 "Install and start TigerVNC GNOME desktop" ensure_tigervnc_ready
+  fi
   print_install_success_summary "Bootstrap"
+  if is_truthy "$TIGERVNC_ENABLE"; then
+    print_tigervnc_connection_summary
+  fi
 }
 
 main() {
@@ -1343,18 +1674,33 @@ main() {
           shift 2
           start_isaacsim "$@"
           ;;
+        tigervnc|vnc)
+          shift 2
+          [[ $# -eq 0 ]] || error "Usage: ${SCRIPT_NAME} start {tigervnc|vnc}"
+          ensure_tigervnc_ready
+          print_tigervnc_connection_summary
+          ;;
         zenoh|bridge)
           shift 2
           zenoh_start_bridge "$@"
           ;;
         *)
-          error "Usage: ${SCRIPT_NAME} start {isaacsim|zenoh|bridge}"
+          error "Usage: ${SCRIPT_NAME} start {isaacsim|tigervnc|vnc|zenoh|bridge}"
           ;;
       esac
       ;;
     stop)
-      [[ "$sub" == "isaacsim" ]] || error "Usage: ${SCRIPT_NAME} stop isaacsim"
-      stop_isaacsim
+      case "$sub" in
+        isaacsim)
+          stop_isaacsim
+          ;;
+        tigervnc|vnc)
+          stop_tigervnc_server
+          ;;
+        *)
+          error "Usage: ${SCRIPT_NAME} stop {isaacsim|tigervnc|vnc}"
+          ;;
+      esac
       ;;
     restart)
       [[ "$sub" == "isaacsim" ]] || error "Usage: ${SCRIPT_NAME} restart isaacsim"
@@ -1416,7 +1762,13 @@ main() {
           shift 2
           zenoh_setup "$@"
           ;;
-        *) error "Usage: ${SCRIPT_NAME} install {all|ros2|docker|zenoh|bridge}" ;;
+        tigervnc|vnc)
+          shift 2
+          parse_common_flags "$@"
+          [[ ${#PARSED_ARGS[@]} -eq 0 ]] || error "Usage: ${SCRIPT_NAME} install {tigervnc|vnc} [--verbose] [--log-file <path>]"
+          install_tigervnc_stack
+          ;;
+        *) error "Usage: ${SCRIPT_NAME} install {all|ros2|docker|zenoh|bridge|tigervnc|vnc}" ;;
       esac
       ;;
     help|-h|--help)
