@@ -10,9 +10,10 @@ This repository helps RICE lab thesis students start reproducible
 **Isaac Sim**, **Isaac Lab**, and **ROS 2** work on the Cloud/lab GPU machines.
 
 The main tool is [isaac_vmctl.sh](isaac_vmctl.sh). It bootstraps Docker,
-NVIDIA Container Toolkit, ROS 2, pulls the Isaac Sim container, mounts this
-repo into the container, and starts WebRTC, a native GUI on the current X
-display such as TigerVNC, or headless sessions.
+NVIDIA Container Toolkit, ROS 2, default student tooling such as VS Code
+remote support and Jupyter, pulls the Isaac Sim container, mounts this repo
+into the container, and starts WebRTC, a native GUI on the current X display
+such as TigerVNC, or headless sessions.
 
 **What To Do First**
 
@@ -65,7 +66,8 @@ Edit `.env` if your supervisor gives you specific values. Then start the path
 that matches your machine. `isaac_vmctl.sh` only uses environment variables
 that are already sourced in the current shell. Use `.env` for the default
 WebRTC or headless path, and use the files under `configs/` when the workflow
-below calls for a pinned Isaac Sim version or the TigerVNC desktop overlay.
+below calls for a pinned Isaac Sim version, the Isaac Lab overlay, or the
+TigerVNC desktop overlay.
 
 ### Fresh Server Bootstrap
 
@@ -75,11 +77,9 @@ source .env
 ```
 
 Run this once on each new cloud server. After that, use `start` or `run`
-commands without reinstalling host packages. Use
-`./isaac_vmctl.sh bootstrap --verbose` when you want the full installer output
-streamed live; the default mode writes a detailed log file and prints its path.
-If you are using a pinned config or the TigerVNC workflow, source those files
-before `bootstrap` instead of relying only on `.env`.
+commands without reinstalling host packages. Add `--verbose` only when you
+want the full installer output in the terminal. If you are using a pinned
+config or TigerVNC, source those files before `bootstrap`.
 
 ### Workflow Summary
 
@@ -90,15 +90,16 @@ before `bootstrap` instead of relying only on `.env`.
   connect with the NVIDIA Isaac Sim WebRTC Streaming Client.
 - Vast.ai headless: run `./isaac_vmctl.sh start isaacsim --headless` when no
   viewport is needed.
-- Isaac Lab remote UI: run the Isaac Lab command with
-  `./isaac_vmctl.sh run --livestream public -- ...` so the script itself owns
-  the WebRTC session.
+- Isaac Lab headless: run the same `isaaclab.sh` tutorial arguments through
+  `./isaac_vmctl.sh run isaaclab '...'` from the repo root.
+- Isaac Lab GUI on SimplePod: omit `--headless` and run the Isaac Lab command
+  from the terminal inside TigerVNC so the viewport opens there.
 
 ### SimplePod with TigerVNC Desktop
 
-Use this when you want a full remote Linux desktop and plan to run Isaac Sim
-through that desktop instead of through the WebRTC client. SimplePod must allow
-inbound TCP `5901`, or the custom port you set in `TIGERVNC_PORT`.
+Use this when you want a full remote Linux desktop instead of the WebRTC
+client. SimplePod must allow inbound TCP `5901`, or the custom port set in
+`TIGERVNC_PORT`.
 
 First, bootstrap the desktop on the server:
 
@@ -109,10 +110,8 @@ source configs/simplepod-tigervnc.env
 ./isaac_vmctl.sh check
 ```
 
-The bootstrap command installs TigerVNC, starts an XFCE desktop with GNOME
-Terminal, a Full HD `1920x1080` resolution, and the Ubuntu Yaru theme on
-display `:1`, then listens on TCP `5901`. XFCE is the default because it is
-more reliable than full GNOME inside a plain VNC session. If
+Bootstrap installs TigerVNC and starts an XFCE desktop with GNOME Terminal,
+Ubuntu Yaru theming, and a Full HD `1920x1080` display on `:1`. If
 `TIGERVNC_PASSWORD` is empty, the helper generates one and saves it on the VM:
 
 ```bash
@@ -139,10 +138,11 @@ source configs/simplepod-tigervnc.env
 ./isaac_vmctl.sh check
 ```
 
-This starts the Isaac Sim container with access to the current X display from
-that terminal session. Use the TigerVNC Viewer window as the Isaac Sim UI;
-WebRTC ports are not needed for this mode. In this workflow, `check` should
-show the TigerVNC target and report that WebRTC is not listening.
+This starts Isaac Sim on the current X display from that VNC terminal. Use the
+TigerVNC window as the UI; WebRTC is not part of this workflow.
+
+Run non-headless Isaac Lab commands from that same VNC terminal. If
+`run isaaclab` omits `--headless`, the viewport opens on that display.
 
 The WebRTC-based workflows below use NVIDIA's WebRTC client instead of
 TigerVNC.
@@ -150,7 +150,7 @@ TigerVNC.
 ### WebRTC Client on Your Laptop
 
 You need the NVIDIA Isaac Sim WebRTC Streaming Client for the SimplePod WebRTC
-workflow and for Isaac Lab commands that use `--livestream public`.
+workflow.
 
 Download the client from NVIDIA's official
 [Isaac Sim 5.1.0 Latest Release page](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/download.html)
@@ -211,50 +211,123 @@ your terminal:
 ./isaac_vmctl.sh run -- bash -lc 'cd projects/my-project && python train.py'
 ```
 
-### SimplePod Isaac Lab with Remote UI
+### Isaac Lab Workflow
+
+`run isaaclab` keeps the same arguments you would pass to `./isaaclab.sh`.
+Only the prefix changes:
 
 ```bash
-source configs/isaac-sim-5.1.0.env
-source configs/isaac-lab.env
-./isaac_vmctl.sh run --livestream public -- \
-  bash -lc 'cd external/IsaacLab && ./isaaclab.sh -p scripts/tutorials/00_sim/launch_app.py'
+./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/train.py --task=Isaac-Ant-v0 --headless
 ```
 
-This runs the Isaac Lab script as the process that owns the WebRTC session. Use
-the IP printed by `isaac_vmctl.sh run` in the Isaac Sim WebRTC Streaming
-Client.
-
-If the task renders camera sensors, add `--enable-cameras`:
+becomes:
 
 ```bash
-source configs/isaac-sim-5.1.0.env
-source configs/isaac-lab.env
-./isaac_vmctl.sh run --livestream public --enable-cameras -- \
-  bash -lc 'cd external/IsaacLab && ./isaaclab.sh -p scripts/demos/quadrupeds.py'
+./isaac_vmctl.sh run isaaclab '-p scripts/reinforcement_learning/rsl_rl/train.py --task=Isaac-Ant-v0 --headless'
 ```
 
-If automatic public-IP detection is wrong because of the cloud network or VPN,
-rerun with `--public-ip <reachable-ip>`.
+When `configs/isaac-lab.env` is sourced, bootstrap manages a pinned Isaac Lab
+checkout and image for you.
 
-For non-interactive training, keep the run headless:
+| Location | Path |
+|---|---|
+| Host VM | `~/isaac-projects/external/IsaacLab` |
+| Inside the container | `/workspace/isaac-projects/external/IsaacLab` |
+| Config knob | `ISAACLAB_PATH=external/IsaacLab` |
+
+The whole repo is mounted into the container:
+
+| Location | Path |
+|---|---|
+| Host repo | `~/isaac-projects` |
+| Container repo | `/workspace/isaac-projects` |
+
+Bootstrap uses `ISAACLAB_REF`, `ISAACLAB_FRAMEWORKS`, and `ISAACLAB_PATH`
+from `configs/isaac-lab.env`. After bootstrap:
+
+```text
+Host checkout:   ~/isaac-projects/external/IsaacLab
+Container path:  /workspace/isaac-projects/external/IsaacLab
+Managed image:   rice/isaac-lab:<isaac-sim-tag>-<isaaclab-ref>-<frameworks>
+```
+
+Override the checkout location persistently:
 
 ```bash
+export ISAACLAB_PATH=projects/my-project/vendor/IsaacLab
+```
+
+Or for a one-off run:
+
+```bash
+./isaac_vmctl.sh run isaaclab --path projects/my-project/vendor/IsaacLab '--help'
+```
+
+#### First-Time Setup
+
+```bash
+cd ~/isaac-projects
 source configs/isaac-sim-5.1.0.env
 source configs/isaac-lab.env
-./isaac_vmctl.sh run -- \
-  bash -lc 'cd external/IsaacLab && ./isaaclab.sh -p scripts/reinforcement_learning/rl_games/train.py --task Isaac-Cartpole-v0 --headless'
+./isaac_vmctl.sh bootstrap
 ```
+
+This clones or updates the pinned Isaac Lab checkout and builds the managed
+Isaac Lab image. If you change `ISAACLAB_REF`, `ISAACLAB_FRAMEWORKS`, or
+`ISAACLAB_PATH`, rerun `./isaac_vmctl.sh bootstrap`.
+
+#### Headless Isaac Lab
+
+Use this for normal training:
+
+```bash
+cd ~/isaac-projects
+source configs/isaac-sim-5.1.0.env
+source configs/isaac-lab.env
+./isaac_vmctl.sh run isaaclab \
+  '-p scripts/reinforcement_learning/rsl_rl/train.py --task=Isaac-Velocity-Rough-Anymal-C-v0 --headless'
+```
+
+Another common example:
+
+```bash
+./isaac_vmctl.sh run isaaclab \
+  '-p scripts/reinforcement_learning/rsl_rl/train.py --task=Isaac-Ant-v0 --headless'
+```
+
+#### Isaac Lab GUI Through TigerVNC
+
+When you want the viewport, open TigerVNC first and run the same command
+without `--headless` from the terminal inside that desktop:
+
+```bash
+cd ~/isaac-projects
+source configs/isaac-sim-5.1.0.env
+source configs/simplepod-tigervnc.env
+source configs/isaac-lab.env
+./isaac_vmctl.sh run isaaclab \
+  '-p scripts/reinforcement_learning/rsl_rl/train.py --task=Isaac-Velocity-Rough-Anymal-C-v0'
+```
+
+That command does not use WebRTC. It opens on the current X display, which in
+this workflow is the TigerVNC desktop.
 
 > [!IMPORTANT]
-> Do not start a separate `./isaac_vmctl.sh start isaacsim` session when the
-> goal is to view an Isaac Lab script remotely. The WebRTC UI must come from
-> the Isaac Lab process itself.
+> Do not start a separate `./isaac_vmctl.sh start isaacsim` session before
+> `run isaaclab`. Isaac Lab should launch its own simulator process. Use
+> `--headless` for non-interactive runs, or omit it only from the TigerVNC
+> terminal when you want the GUI.
 
-The repo is mounted inside the container at `/workspace/isaac-projects`. Keep
-Isaac Lab code in your fork, pin the Isaac Lab tag/commit in your project
-README, and put outputs under `projects/<name>/artifacts/`.
-For repeated lab use, build a pinned Isaac Lab image with
-[containers/isaac-lab.Dockerfile](containers/isaac-lab.Dockerfile).
+> [!TIP]
+> `Ctrl+C` stops the Isaac Lab container started by `run isaaclab`. If you
+> launched a GUI run from TigerVNC, the Isaac Sim window opened by that command
+> should close as part of the same stop.
+
+Keep Isaac Lab code in your fork or workspace, pin the Isaac Lab tag/commit in
+your project README, and put generated outputs under
+`projects/<name>/artifacts/`. The managed Isaac Lab image is built through
+[containers/isaac-lab.Dockerfile](containers/isaac-lab.Dockerfile) during
+bootstrap.
 
 ## Project Layout
 
@@ -269,6 +342,7 @@ Use these folders:
 
 | Path | Purpose | Commit? |
 |---|---|---|
+| `external/IsaacLab/` | Bootstrap-managed pinned Isaac Lab checkout used by `run isaaclab` by default | Usually no; keep it as its own git checkout |
 | `projects/<name>/isaacsim/worlds/` | Isaac Sim worlds, USD scenes, robot scenes | Yes, if small |
 | `projects/<name>/isaacsim/rl_scenes/` | RL scene configs, tasks, curricula | Yes |
 | `projects/<name>/isaacsim/startup_scenes/` | Lab startup scenes copied for your project | Yes |
@@ -352,20 +426,39 @@ Restore directly from an rsync source:
 > or store credentials. Local archive creation is always the primary save path,
 > even when push or rsync upload fails.
 
-## Startup Templates
+## Student Tooling
 
-Templates will provide ready-to-edit Isaac Sim and Isaac Lab scenes for current
-RICE thesis projects. Assets and preview GIFs are coming soon in
-`docs/assets/startup-templates/`.
+Bootstrap also installs:
 
-| Template | Description | Preview GIF | Status |
-|---|---|---|---|
-| Kinova Tabletop VLA | Kinova arm on a table for VLA pick-place, pushing, and basic manipulation tasks. | `docs/assets/startup-templates/kinova-tabletop-vla.gif` | `COMING SOON` |
-| Spot + Kinova VLA | Mobile-manipulator scene for VLA control with Spot carrying a Kinova arm. | `docs/assets/startup-templates/spot-kinova-vla.gif` | `COMING SOON` |
-| Spot Navigation RL | Isaac Lab training scene that spawns multiple Spot robots for navigation policy work. | `docs/assets/startup-templates/spot-navigation-rl.gif` | `COMING SOON` |
-| Fire Search and Rescue | Realistic fire/smoke search-and-rescue scene with Spot and perception hooks. | `docs/assets/startup-templates/fire-search-rescue.gif` | `COMING SOON` |
-| Drone Thermal Search | Drone scene with thermal camera workflow for aerial inspection and search tasks. | `docs/assets/startup-templates/drone-thermal-search.gif` | `COMING SOON` |
-| Heterogeneous LLM Team | Mixed robot team scene for LLM-based task planning and coordination. | `docs/assets/startup-templates/heterogeneous-llm-team.gif` | `COMING SOON` |
+- VS Code remote support
+- JupyterLab and Notebook
+
+Defaults live in `.env`:
+
+```bash
+VSCODE_REMOTE_ENABLE=1
+JUPYTER_ENABLE=1
+# export STUDENT_EXTRA_TOOLS="tmux htop ncdu nvtop ripgrep git-lfs"
+```
+
+Optional extras: `tmux`, `htop`, `btop`, `ncdu`, `nvtop`, `nvitop`,
+`ripgrep`, `git-lfs`, `ffmpeg`, `mosh`.
+
+If `code` or `jupyter` is not found immediately after bootstrap, open a new
+terminal or run:
+
+```bash
+source ~/.bashrc
+```
+
+Recommended VS Code workflow:
+[Remote - SSH](https://code.visualstudio.com/docs/remote/ssh).
+
+To run Jupyter manually on the server:
+
+```bash
+jupyter lab --no-browser --ip 127.0.0.1 --port 8888
+```
 
 ## Common Commands
 
@@ -375,8 +468,8 @@ RICE thesis projects. Assets and preview GIFs are coming soon in
 | `./isaac_vmctl.sh start isaacsim --gui` | Start native Isaac Sim UI on the current X display |
 | `./isaac_vmctl.sh start isaacsim --vnc` | Alias for `--gui`; useful from TigerVNC terminal |
 | `./isaac_vmctl.sh start isaacsim --headless` | Start Isaac Sim without WebRTC |
+| `./isaac_vmctl.sh run isaaclab '<args>'` | Run Isaac Lab with the same arguments you would pass to `./isaaclab.sh` |
 | `./isaac_vmctl.sh run -- <command>` | Run a one-shot command inside the Isaac Sim image |
-| `./isaac_vmctl.sh run --livestream public -- <command>` | Run a one-shot command with AppLauncher WebRTC for remote Isaac Lab UI |
 | `./isaac_vmctl.sh stop isaacsim` | Stop the container |
 | `./isaac_vmctl.sh start tigervnc` | Install/start the TigerVNC desktop |
 | `./isaac_vmctl.sh stop tigervnc` | Stop the TigerVNC desktop |
@@ -385,7 +478,7 @@ RICE thesis projects. Assets and preview GIFs are coming soon in
 | `./isaac_vmctl.sh logs` | Follow Isaac Sim logs |
 | `./isaac_vmctl.sh shell` | Open a shell in the running container |
 | `./isaac_vmctl.sh check` | Print IP, port checks, client commands |
-| `./isaac_vmctl.sh bootstrap` | Install Docker, NVIDIA runtime, ROS 2, image; also starts TigerVNC when `TIGERVNC_ENABLE=1` |
+| `./isaac_vmctl.sh bootstrap` | Install Docker, NVIDIA runtime, ROS 2, default student tools, image; also manages Isaac Lab when `ISAACLAB_ENABLE=1` and starts TigerVNC when `TIGERVNC_ENABLE=1` |
 | `./isaac_vmctl.sh bootstrap zenoh` | Download the Zenoh bridge binary under `zenoh/` |
 | `./isaac_vmctl.sh start zenoh` | Start the server-side Zenoh ROS 2 bridge on TCP `7447` |
 
@@ -404,10 +497,10 @@ matching inbound ports are available:
 | UDP `47998` | WebRTC video stream |
 | TCP `5901` | Optional TigerVNC XFCE desktop |
 
-For Isaac Lab, use WebRTC on the Isaac Lab command itself via
-`./isaac_vmctl.sh run --livestream public -- ...`. NVIDIA documents that
-streaming is the supported way to visualize Isaac Lab from inside a container,
-and that the Isaac Sim WebRTC Streaming Client is the recommended client.
+For Isaac Lab, use `./isaac_vmctl.sh run isaaclab '...'`. Keep `--headless`
+for non-interactive runs. When you want to see the viewport, omit
+`--headless` and launch the command from the terminal inside TigerVNC so the
+GUI lands on that desktop instead of on WebRTC.
 
 Use **Zenoh** when you need ROS 2 topics on your laptop:
 

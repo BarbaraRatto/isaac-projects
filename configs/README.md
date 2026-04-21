@@ -2,7 +2,8 @@
 
 Pre-built environment files for supported Isaac Sim versions. Source one of
 these before running `isaac_vmctl.sh` to pin your environment to a known-good
-configuration.
+configuration. Use the repo-root `.env` for user-specific overrides such as
+`VSCODE_REMOTE_ENABLE`, `JUPYTER_ENABLE`, and `STUDENT_EXTRA_TOOLS`.
 
 ## Available Configs
 
@@ -26,7 +27,8 @@ source configs/isaac-sim-5.1.0.env && ./isaac_vmctl.sh start isaacsim
 # Start with Isaac Lab overlay
 source configs/isaac-sim-5.1.0.env
 source configs/isaac-lab.env
-./isaac_vmctl.sh start isaacsim --headless
+./isaac_vmctl.sh bootstrap
+./isaac_vmctl.sh run isaaclab '-p scripts/reinforcement_learning/rsl_rl/train.py --task=Isaac-Ant-v0 --headless'
 
 # Bootstrap SimplePod with a TigerVNC XFCE desktop on TCP 5901
 source configs/isaac-sim-5.1.0.env
@@ -34,7 +36,13 @@ source configs/simplepod-tigervnc.env
 ./isaac_vmctl.sh bootstrap
 
 # Start native Isaac Sim UI inside the TigerVNC desktop
-./isaac_vmctl.sh start isaacsim --vnc
+./isaac_vmctl.sh start isaacsim --gui
+
+# Or, for Isaac Lab inside TigerVNC, source the overlay and bootstrap the
+# managed Isaac Lab image first.
+source configs/isaac-lab.env
+./isaac_vmctl.sh bootstrap
+./isaac_vmctl.sh run isaaclab '-p scripts/tutorials/00_sim/launch_app.py'
 
 # Run a one-shot training command inside the mounted repo
 ./isaac_vmctl.sh run -- bash -lc 'cd projects/my-project && python train.py'
@@ -56,5 +64,5 @@ ALLOWED_CLIENT_IP=203.0.113.5 ./isaac_vmctl.sh start isaacsim
 
 For Isaac Lab, pin the Isaac Lab git tag/commit that supports the selected
 Isaac Sim image. Do not use an unpinned main branch for thesis work.
-Use [containers/isaac-lab.Dockerfile](../containers/isaac-lab.Dockerfile) when the lab
-wants a reusable Isaac Lab image for several students.
+The `isaac-lab.env` overlay now lets bootstrap manage the pinned checkout and
+local image build through [containers/isaac-lab.Dockerfile](../containers/isaac-lab.Dockerfile).

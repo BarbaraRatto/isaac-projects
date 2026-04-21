@@ -48,27 +48,30 @@ source projects/<your-project-name>/.env
 ```
 
 On SimplePod, if you sourced `configs/simplepod-tigervnc.env` and want the
-native Isaac Sim UI inside the VNC desktop instead of WebRTC, use:
+native Isaac Sim UI inside the VNC desktop instead of WebRTC, run this from
+the terminal inside TigerVNC:
 
 ```bash
-./isaac_vmctl.sh start isaacsim --vnc
+./isaac_vmctl.sh start isaacsim --gui
 ```
 
-If you are running an Isaac Lab script on SimplePod and want the remote UI,
-launch the Isaac Lab script itself with WebRTC instead of starting a separate
-`isaacsim` container:
+If you are running an Isaac Lab script, keep the same arguments you would pass
+to `./isaaclab.sh` and run them through `isaac_vmctl.sh` instead. For example,
+headless training looks like:
 
 ```bash
 source configs/isaac-sim-5.1.0.env
 source configs/isaac-lab.env
-./isaac_vmctl.sh run --livestream public -- \
-  bash -lc 'cd external/IsaacLab && ./isaaclab.sh -p scripts/tutorials/00_sim/launch_app.py'
+./isaac_vmctl.sh bootstrap
+./isaac_vmctl.sh run isaaclab \
+  '-p scripts/reinforcement_learning/rsl_rl/train.py --task=Isaac-Ant-v0 --headless'
 ```
 
-If the task renders camera sensors, add `--enable-cameras`. If the printed IP
-is not the one your laptop can reach, rerun with `--public-ip <reachable-ip>`.
-Install the Isaac Sim WebRTC Streaming Client once on your laptop using the
-repo-level [Quick Start](../../README.md#quick-start) instructions.
+That bootstrap run manages the pinned Isaac Lab checkout and local Isaac Lab
+image automatically.
+
+To see the Isaac Lab GUI, omit `--headless` and run the command from the
+terminal inside TigerVNC.
 
 ### 2. Source the project environment
 
@@ -97,9 +100,8 @@ Run the connectivity check to get the IP and ports:
 
 Open the Isaac Sim WebRTC client and connect to the IP printed above.
 
-For Isaac Lab one-shot livestream runs, the `isaac_vmctl.sh run` command prints
-the target IP before the script starts. Use that IP in the Isaac Sim WebRTC
-Streaming Client.
+For Isaac Lab GUI runs, skip WebRTC and launch the command from the terminal
+inside TigerVNC so the viewport opens there.
 
 > [!NOTE]
 > On Vast.ai headless jobs, skip WebRTC and use
@@ -213,6 +215,9 @@ Restore on a fresh server:
 | `ISAAC_IMAGE` | `nvcr.io/nvidia/isaac-sim:5.1.0` |
 | `WEBRTC_SIGNAL_PORT` | `49100` |
 | `WEBRTC_STREAM_PORT` | `47998` |
+| `VSCODE_REMOTE_ENABLE` | `1` |
+| `JUPYTER_ENABLE` | `1` |
+| `STUDENT_EXTRA_TOOLS` | unset |
 | `TIGERVNC_ENABLE` | `0` |
 | `TIGERVNC_PORT` | `5901` |
 | `TIGERVNC_GEOMETRY` | `1920x1080` |
