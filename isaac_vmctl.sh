@@ -2274,6 +2274,8 @@ run_in_isaac_container() {
   done
 
   [[ $# -gt 0 ]] || error "Usage: ${SCRIPT_NAME} run [--livestream public|private] [--enable-cameras] [--public-ip <ip>] -- <command>"
+  local entrypoint_cmd="$1"
+  shift
 
   require_supported_host
   init_paths
@@ -2304,12 +2306,12 @@ run_in_isaac_container() {
   info "Running one-shot command in ${ISAAC_IMAGE}..."
   info "Workspace: ${HOST_WORKSPACE_ROOT} -> ${CONTAINER_WORKSPACE}"
   if [[ "$livestream_mode" == "1" ]]; then
-    info "Isaac Lab livestream mode: public WebRTC"
+    info "One-shot WebRTC mode: public"
     info "Connect the Isaac Sim WebRTC client to: ${public_ip}"
     info "Required ports on the host: ${WEBRTC_SIGNAL_PORT}/tcp and ${WEBRTC_STREAM_PORT}/udp"
     info "If this IP is wrong for your cloud provider or VPN setup, rerun with --public-ip <reachable-ip>."
   elif [[ "$livestream_mode" == "2" ]]; then
-    info "Isaac Lab livestream mode: private/local WebRTC"
+    info "One-shot WebRTC mode: private/local"
     if [[ -n "$public_ip" ]]; then
       info "Configured reachable client target: ${public_ip}"
     else
@@ -2323,6 +2325,7 @@ run_in_isaac_container() {
   local run_status=0
   if run_docker_attached "isaac-run" \
     "${DOCKER_RUN_ARGS[@]}" \
+    --entrypoint "$entrypoint_cmd" \
     "$ISAAC_IMAGE" \
     "$@"; then
     run_status=0
