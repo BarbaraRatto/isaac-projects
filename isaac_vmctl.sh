@@ -2816,7 +2816,18 @@ zenoh_setup() {
 
 zenoh_start_bridge() {
   local start_script="${SCRIPT_DIR}/zenoh/start_zenoh_bridge.sh"
+  local has_domain_arg=0
+  local arg
   [[ -f "$start_script" ]] || error "Zenoh start script not found at ${start_script}"
+  for arg in "$@"; do
+    if [[ "$arg" == "--domain" ]]; then
+      has_domain_arg=1
+      break
+    fi
+  done
+  if [[ "$has_domain_arg" -eq 0 ]]; then
+    exec bash "$start_script" "$@" --domain "$ROS_DOMAIN_ID"
+  fi
   exec bash "$start_script" "$@"
 }
 
