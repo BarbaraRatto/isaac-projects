@@ -883,24 +883,17 @@ ensure_ros2_installed() {
   fi
 
   ensure_ros_setup_in_bashrc
+  ensure_ros_profile_script
 }
 
 ensure_ros_setup_in_bashrc() {
   local bashrc_path="${USER_HOME}/.bashrc"
   local marker_begin="# >>> isaac-projects ROS 2 setup >>>"
   local marker_end="# <<< isaac-projects ROS 2 setup <<<"
-  local setup_line_quoted="source \"${ROS_SETUP}\""
-  local setup_line_unquoted="source ${ROS_SETUP}"
   local tmp_file user_group
 
   mkdir -p "$USER_HOME"
   touch "$bashrc_path"
-
-  if ! grep -Fqx "$marker_begin" "$bashrc_path" && \
-     { grep -Fqx "$setup_line_quoted" "$bashrc_path" || grep -Fqx "$setup_line_unquoted" "$bashrc_path"; }; then
-    info "ROS 2 setup already sourced in ${bashrc_path}."
-    return 0
-  fi
 
   tmp_file=$(mktemp)
   if grep -Fqx "$marker_begin" "$bashrc_path"; then
@@ -915,8 +908,12 @@ ensure_ros_setup_in_bashrc() {
 
   {
     printf '\n%s\n' "$marker_begin"
-    printf 'if [ -f "%s" ]; then\n' "$ROS_SETUP"
+    printf 'if [ "${ROS_DISTRO:-}" != "%s" ] && [ -f "%s" ]; then\n' "$ROS_DISTRO" "$ROS_SETUP"
+    printf '  __isaac_projects_nounset_was_enabled=0\n'
+    printf '  case $- in *u*) __isaac_projects_nounset_was_enabled=1; set +u ;; esac\n'
     printf '  source "%s"\n' "$ROS_SETUP"
+    printf '  if [ "$__isaac_projects_nounset_was_enabled" = "1" ]; then set -u; fi\n'
+    printf '  unset __isaac_projects_nounset_was_enabled\n'
     printf 'fi\n'
     printf '%s\n' "$marker_end"
   } >>"$tmp_file"
@@ -929,6 +926,53 @@ ensure_ros_setup_in_bashrc() {
   fi
   rm -f "$tmp_file"
   info "Ensured ROS 2 setup is sourced from ${bashrc_path}."
+}
+
+ensure_ros_profile_script() {
+  local profile_path="/etc/profile.d/isaac-projects-ros2.sh"
+  local tmp_file marker_begin marker_end bash_block shell_file
+
+  tmp_file=$(mktemp)
+  cat >"$tmp_file" <<EOF_PROFILE
+# Source ROS 2 for login shells on the GPU host.
+if [ "\${ROS_DISTRO:-}" != "${ROS_DISTRO}" ] && [ -f "${ROS_SETUP%setup.bash}setup.sh" ]; then
+  __isaac_projects_nounset_was_enabled=0
+  case \$- in *u*) __isaac_projects_nounset_was_enabled=1; set +u ;; esac
+  . "${ROS_SETUP%setup.bash}setup.sh"
+  if [ "\$__isaac_projects_nounset_was_enabled" = "1" ]; then set -u; fi
+  unset __isaac_projects_nounset_was_enabled
+fi
+EOF_PROFILE
+  as_root install -m 0644 "$tmp_file" "$profile_path"
+  rm -f "$tmp_file"
+  info "Ensured ROS 2 setup is sourced from ${profile_path}."
+
+  marker_begin="# >>> isaac-projects ROS 2 setup >>>"
+  marker_end="# <<< isaac-projects ROS 2 setup <<<"
+  bash_block="if [ \"\${ROS_DISTRO:-}\" != \"${ROS_DISTRO}\" ] && [ -f \"${ROS_SETUP}\" ]; then
+  __isaac_projects_nounset_was_enabled=0
+  case \$- in *u*) __isaac_projects_nounset_was_enabled=1; set +u ;; esac
+  source \"${ROS_SETUP}\"
+  if [ \"\$__isaac_projects_nounset_was_enabled\" = \"1\" ]; then set -u; fi
+  unset __isaac_projects_nounset_was_enabled
+fi"
+  for shell_file in /etc/bash.bashrc /etc/skel/.bashrc; do
+    [[ -f "$shell_file" ]] || as_root touch "$shell_file"
+    tmp_file=$(mktemp)
+    awk -v begin="$marker_begin" -v end="$marker_end" '
+      $0 == begin { skip=1; next }
+      $0 == end { skip=0; next }
+      !skip { print }
+    ' "$shell_file" >"$tmp_file"
+    {
+      printf '\n%s\n' "$marker_begin"
+      printf '%s\n' "$bash_block"
+      printf '%s\n' "$marker_end"
+    } >>"$tmp_file"
+    as_root install -m 0644 "$tmp_file" "$shell_file"
+    rm -f "$tmp_file"
+  done
+  info "Ensured ROS 2 setup is sourced from system bash startup files."
 }
 
 ensure_shell_block() {
