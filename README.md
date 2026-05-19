@@ -173,11 +173,12 @@ cp .env.example .env
 ```
 
 Edit `.env` if your supervisor gives you specific values. Then start the path
-that matches your machine. `isaac_vmctl.sh` only uses environment variables
-that are already sourced in the current shell. Use `.env` for the default
-WebRTC or headless path, and use the files under `configs/` when the workflow
-below calls for a pinned Isaac Sim version, the Isaac Lab overlay, or the
-TigerVNC desktop overlay.
+that matches your machine. On `arancino`, use the native workstation commands
+above. On cloud machines, `isaac_vmctl.sh` only uses environment variables that
+are already sourced in the current shell. Use `.env` for the default WebRTC or
+headless path, and use the files under `configs/` when the workflow below calls
+for a pinned Isaac Sim version, the Isaac Lab overlay, or the TigerVNC desktop
+overlay.
 
 ### Fresh Server Bootstrap
 
@@ -189,7 +190,8 @@ source .env
 Run this once on each new cloud server. After that, use `start` or `run`
 commands without reinstalling host packages. Add `--verbose` only when you
 want the full installer output in the terminal. If you are using a pinned
-config or TigerVNC, source those files before `bootstrap`.
+config or TigerVNC, source those files before `bootstrap`. Do not run this on
+the native `arancino` workstation unless instructed.
 
 Bootstrap installs ROS 2 on the host and, by default, builds a managed Isaac
 Sim runtime image with ROS 2 installed inside the container too. This means
@@ -200,6 +202,8 @@ libraries.
 
 ### Workflow Summary
 
+- Arancino native workstation: use the `students` account for setup, ROS
+  integration, simple environments, small tests, and GUI checks.
 - SimplePod + TigerVNC desktop: bootstrap the TigerVNC desktop once, connect
   with TigerVNC Viewer, then run `./isaac_vmctl.sh start isaacsim --gui` from
   the terminal inside that desktop.
@@ -497,7 +501,7 @@ bootstrap.
 
 ## Project Layout
 
-Start from the template:
+If you are starting a new project, copy the template inside your cloned fork:
 
 ```bash
 cp -r projects/template projects/my-project
@@ -525,13 +529,17 @@ Inside the container, the repository is available at:
 
 ## Saving Progress
 
-For normal interactive work, GPU access is usually allocated for a fixed daily
-window such as 8-12 hours. Training jobs can run longer when agreed with the
-lab. When the allocation ends, the cloud server is deleted to stop charges.
+On `arancino`, work under `/home/students/work` is persistent on the
+workstation. Save, export, or push when you want backup, sharing, version
+control, or portability.
 
-Use [`scripts/project_snapshot.sh`](scripts/project_snapshot.sh) to save both
-your repo state and the heavy project artifacts that do not belong in git.
-The helper always creates a local archive under:
+On cloud GPU servers, access is usually allocated for a fixed daily window such
+as 8-12 hours. Training jobs can run longer when agreed with the lab. When the
+allocation ends, the cloud server is deleted to stop charges.
+
+For cloud work, use [`scripts/project_snapshot.sh`](scripts/project_snapshot.sh)
+to save both your repo state and the heavy project artifacts that do not belong
+in git. The helper always creates a local archive under:
 
 ```text
 projects/<name>/artifacts/snapshots/
@@ -544,7 +552,7 @@ includes, resume commands, or an rsync target:
 cp projects/my-project/snapshot.env.example projects/my-project/.snapshot.env
 ```
 
-Save the current project locally before the server is deleted:
+Save the current cloud project locally before the server is deleted:
 
 ```bash
 ./scripts/project_snapshot.sh save --project my-project
@@ -594,7 +602,7 @@ Restore directly from an rsync source:
 
 ## Student Tooling
 
-Bootstrap also installs:
+On cloud machines, bootstrap also installs:
 
 - VS Code remote support
 - JupyterLab and Notebook
@@ -627,6 +635,9 @@ jupyter lab --no-browser --ip 127.0.0.1 --port 8888
 ```
 
 ## Common Commands
+
+For native `arancino` commands, use the workstation section above. The table
+below is for cloud/Docker workflows.
 
 | Command | Use |
 |---|---|
