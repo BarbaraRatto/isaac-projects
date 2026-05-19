@@ -7,21 +7,25 @@
 ![Zenoh](https://img.shields.io/badge/Zenoh-1.9.0-0082C8)
 
 This repository helps RICE lab thesis students start reproducible
-**Isaac Sim**, **Isaac Lab**, and **ROS 2** work on the Cloud/lab GPU machines.
+**Isaac Sim**, **Isaac Lab**, and **ROS 2** work on the lab workstation and
+cloud GPU machines.
 
-The main tool is [isaac_vmctl.sh](isaac_vmctl.sh). It bootstraps Docker,
-NVIDIA Container Toolkit, ROS 2, default student tooling such as VS Code
-remote support and Jupyter, pulls the Isaac Sim container, builds a local
-ROS-enabled Isaac Sim runtime image, mounts this repo into the container, and
-starts WebRTC, a native GUI on the current X display such as TigerVNC, or
-headless sessions.
+For cloud GPU machines, the main tool is
+[isaac_vmctl.sh](isaac_vmctl.sh). It bootstraps Docker, NVIDIA Container
+Toolkit, ROS 2, default student tooling such as VS Code remote support and
+Jupyter, pulls the Isaac Sim container, builds a local ROS-enabled Isaac Sim
+runtime image, mounts this repo into the container, and starts WebRTC, a native
+GUI on the current X display such as TigerVNC, or headless sessions.
+
+The lab workstation `arancino` is already set up natively. Do not use the cloud
+bootstrap workflow there unless your supervisor or maintainer tells you to.
 
 **What To Do First**
 
 1. Ask your thesis supervisor which GPU machine to use.
 2. Fork this repository into your own GitHub account.
 3. Clone your fork on the assigned machine.
-4. Copy [projects/template](projects/template/) into your own project folder.
+4. Create or use a project folder under `projects/` inside your fork.
 5. Keep your code, scenes, configs, and notes in your fork.
 6. Open an [issue](https://github.com/RICE-unige/isaac-projects/issues) and
    inform [Omotoye](https://github.com/Omotoye) if the setup or docs break.
@@ -45,13 +49,118 @@ Recchiuto, who set up the machine and send credentials.
 
 | Machine | Use For |
 |---|---|
-| Lab workstation, RTX 5060 | Setup, ROS integration, simple single-robot simulation. Not available yet. |
-| [SimplePod](https://simplepod.ai/), RTX 5090 | Isaac Sim WebRTC, Zenoh, external ports, VPN, remote interactive work. |
-| [Vast.ai](https://vast.ai/), RTX 6000 Pro | Headless training, and headless Isaac Sim/ROS 2 jobs when the environment is already set up. |
+| Lab workstation `arancino`, RTX 5060 | Native Isaac Sim/Isaac Lab for setup, ROS integration, environment building, basic GUI work, and small/simple test scenes. |
+| [SimplePod](https://simplepod.ai/), RTX 5090 | Cloud GPU for heavier interactive work, large scenes, policy/model training, WebRTC, Zenoh, external ports, and VPN workflows. |
+| [Vast.ai](https://vast.ai/), RTX 6000 Pro | Cloud GPU for headless training, large model runs, and headless Isaac Sim/ROS 2 jobs when the environment is already set up. |
 
 > [!NOTE]
-> Until the RTX 5060 lab workstation arrives, use the cloud machines for all
-> use cases.
+> The RTX 5060 workstation is not a heavy training machine. Use it when you
+> need setup, ROS integration, simple environments, and small tests. Request a
+> cloud GPU for large scenes, large models, policy training, or long GPU-heavy
+> jobs.
+
+## Lab Workstation: Arancino
+
+`arancino` is the RTX 5060 desktop in the lab. It is already configured with
+native Isaac Sim, Isaac Lab, ROS 2 Jazzy, Docker, NVIDIA drivers, CUDA support,
+GNOME VNC desktops, and desktop launchers.
+
+Do **not** run `./isaac_vmctl.sh bootstrap` or other cloud setup scripts on
+`arancino` unless your supervisor or maintainer explicitly tells you to. The
+workstation does not follow the same deletion/setup rules as cloud servers.
+
+Students use the shared `students` account. This account does not have
+sudo/admin access. If you need software installed, removed, repaired, or
+changed on the machine, contact your thesis supervisor or the maintainer.
+
+There are three normal ways to use the workstation:
+
+1. Sit at the physical workstation and log into `students` with the connected
+   monitor and keyboard.
+2. Connect from inside the lab with TigerVNC using your assigned display/port.
+3. Connect from outside the lab through the VPN first, then TigerVNC.
+
+Use the VNC/VPN notice in the lab for the current ports and passwords.
+
+### Work Folder
+
+Keep student work under:
+
+```bash
+/home/students/work
+```
+
+Create a folder with your name, then clone your fork inside it. Keep the fork
+intact so the same repo can be pushed to GitHub and tested later on a cloud GPU
+if needed:
+
+```bash
+cd /home/students/work
+mkdir firstname-lastname
+cd firstname-lastname
+git clone https://github.com/<your-github-user>/isaac-projects.git
+cd isaac-projects
+```
+
+Put your project files inside the cloned repo, normally under:
+
+```text
+/home/students/work/firstname-lastname/isaac-projects/projects/my-project
+```
+
+
+### Native Isaac Commands
+
+Desktop launchers are available from the Ubuntu application menu and desktop.
+The terminal commands are:
+
+```bash
+isaacsim-5.1
+isaacsim-5.1-headless
+isaacsim-5.1-python
+isaacsim-6.0
+isaacsim-6.0-python
+isaaclab-2.3
+isaaclab-3.0
+```
+
+Native install locations:
+
+| Tool | Location |
+|---|---|
+| Isaac Sim 5.1 | `/home/isaac/isaac-sim/5.1.0` |
+| Isaac Sim 6.0 | `/home/isaac/isaac-sim/6.0.0-venv` |
+| Isaac Lab 2.3 | `/home/isaac/isaaclab/2.3.0` |
+| Isaac Lab 3.0 beta | `/home/isaac/isaaclab/3.0.0-beta` |
+| Isaac Sim 5.1 assets | `/home/isaac/isaac-sim/assets/Assets/Isaac/5.1` |
+| Isaac Sim 6.0 assets | NVIDIA cloud assets, because a complete local 6.0 asset pack is not currently published |
+
+Direct Isaac Sim 5.1 examples:
+
+```bash
+cd /home/isaac/isaac-sim/5.1.0
+./isaac-sim.sh
+./python.sh standalone_examples/api/isaacsim.robot.policy.examples/anymal_standalone.py
+```
+
+Direct Isaac Sim 6.0 examples:
+
+```bash
+cd /home/isaac/isaac-sim/6.0.0-venv
+source /home/isaac/isaac-sim/6.0.0-venv/bin/activate
+isaacsim
+python your_script.py
+```
+
+Direct Isaac Lab examples:
+
+```bash
+cd /home/isaac/isaaclab/2.3.0
+./isaaclab.sh --help
+
+cd /home/isaac/isaaclab/3.0.0-beta
+./isaaclab.sh --help
+```
 
 ## Quick Start
 
