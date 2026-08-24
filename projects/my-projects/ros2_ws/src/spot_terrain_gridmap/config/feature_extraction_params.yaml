@@ -1,0 +1,43 @@
+feature_extraction:
+  ros__parameters:
+    # ------------------------------------------------------------------
+    # Topic I/O
+    # ------------------------------------------------------------------
+    image_topic: "/camera/rgb"
+    depth_topic: "/camera/depth"
+    camera_info_topic: "/camera/camera_info"
+    feature_image_topic: "/feature_image"
+    gridmap_topic: "/terrain_gridmap"
+    occupancy_topic: "/terrain_gridmap_debug"
+
+    # ------------------------------------------------------------------
+    # Frames
+    # ------------------------------------------------------------------
+    camera_frame: "ZED_X"
+    robot_base_frame: "base_link"
+    odom_frame: "odom"
+
+    # ------------------------------------------------------------------
+    # DINOv2
+    # ------------------------------------------------------------------
+    model_name: "facebook/dinov2-small"
+    device: "cuda"
+    input_size: 518   # squared resize (must be a multiple of 14)
+
+    # ------------------------------------------------------------------
+    # Gridmap
+    # ------------------------------------------------------------------
+    gridmap_length_x: 5.0    # [m]
+    gridmap_length_y: 5.0    # [m]
+    gridmap_resolution: 0.1  # [m/cell] → 50×50 grid
+
+    # ------------------------------------------------------------------
+    # Depth filtering
+    # ------------------------------------------------------------------
+    depth_min: 0.1    # [m] minimum valid depth
+    depth_max: 10.0   # [m] maximum valid depth
+
+    # ------------------------------------------------------------------
+    # Debug / logging
+    # ------------------------------------------------------------------
+    log_every_n: 30   # log statistics every N processed frames

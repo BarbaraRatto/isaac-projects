@@ -1,0 +1,16 @@
+energy_estimation_node:
+  ros__parameters:
+    use_sim_time: true
+
+    # Finestra della media mobile sulla potenza istantanea [s]
+    # Usata per calcolare 'average_power' e ridurre il rumore
+    moving_average_window: 0.5
+
+    # Topic di input (stato dei giunti)
+    joint_states_topic: "/joint_states"
+
+    # Topic di output (stima energetica)
+    energy_topic: "/energy/current_consumption"
+
+    # Frame da inserire nell'header del messaggio pubblicato
+    frame_id: "base_link"

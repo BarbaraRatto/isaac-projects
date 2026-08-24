@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="http://download.ros.org/schema/package_format3.xsd"?>
+<package format="3">
+  <name>spot_terrain_gridmap</name>
+  <version>0.1.0</version>
+  <description>
+    Pipeline immagine -> gridmap del terreno per navigazione energy-aware
+    del robot quadrupede Spot. Estrae feature visive continue tramite
+    DINOv2 (frozen) e le proietta in una gridmap BEV locale, pubblicata
+    su /terrain_gridmap come input per la policy di Reinforcement Learning.
+    Vedi Sez. 4.2 del documento di contesto del progetto di tesi.
+  </description>
+  <maintainer email="todo@example.com">todo</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <!-- Dipendenze ROS 2 standard (disponibili nel Python di sistema) -->
+  <depend>rclpy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>grid_map_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>cv_bridge</depend>
+  <depend>tf2_ros</depend>          	<!-- AGGIUNTO -->
+  <depend>message_filters</depend>  	<!-- AGGIUNTO -->
+
+  <!--
+    NOTA: torch, transformers, pillow, numpy (versione recente) NON sono
+    dichiarate qui come <depend> perche' vanno installate nel virtual
+    environment dedicato (vedi README.md), non tramite rosdep/apt. Questo
+    e' il motivo per cui questo package richiede un venv separato invece
+    di usare solo il Python di sistema di ROS.
+  -->
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

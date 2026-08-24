@@ -1,0 +1,46 @@
+terrain_feature_node:
+  ros__parameters:
+
+    # ------------------------------------------------------------------
+    # Topic I/O
+    # ------------------------------------------------------------------
+    image_topic: "/camera/rgb"                # AGGIORNATO
+    depth_topic: "/camera/depth"              # AGGIORNATO
+    camera_info_topic: "/camera/camera_info"  # AGGIORNATO
+    gridmap_topic: "/terrain_gridmap"
+
+    # Frame del robot rispetto al quale viene espressa la gridmap locale.
+    # Deve coincidere con un frame presente nel TF tree (vedi Sez. 2.2 del
+    # documento di contesto): odom -> base_link -> ...
+    robot_base_frame: "base_link"
+    # Frame della camera (presente nel TF tree)
+    camera_frame: "ZED_X"                       # <-- AGGIUNTO (confermato dal TF tree)
+
+    # ------------------------------------------------------------------
+    # Modello DINOv2
+    # ------------------------------------------------------------------
+    # ViT-S (384-dim) di default: compromesso leggerezza/qualita'.
+    # Alternativa: "facebook/dinov2-base" (768-dim, ViT-B), piu' espressivo
+    # ma piu' lento. Cambiare qui non richiede modifiche al codice.
+    model_name: "facebook/dinov2-small"
+    device: "cuda"   # "cuda" o "cpu" (cpu solo per debug, molto piu' lento)
+
+    # ------------------------------------------------------------------
+    # Gridmap locale (BEV) - TODO 1 del documento: da tarare
+    # ------------------------------------------------------------------
+    gridmap:
+      length_x: 6.0       # [m] estensione della gridmap davanti al robot
+      length_y: 6.0        # [m] estensione laterale della gridmap
+      resolution: 0.1        # [m/cella] dimensione lato di ogni cella (10 cm)
+      # Nota: con length_x=6.0, length_y=6.0, resolution=0.1 si ottiene
+      # una griglia di 60x60 celle. Valori di partenza ragionevoli, da
+      # rivedere in base alla risoluzione della camera e alla dimensione
+      # delle patch DINOv2 (14x14 px) una volta nota la camera reale.
+
+    # ------------------------------------------------------------------
+    # Varie
+    # ------------------------------------------------------------------
+    log_every_n: 30    # logga statistiche ogni N frame elaborati
+
+    # probab. da togliere:
+    #publish_elevation_layer: false   # layer opzionale, non ancora implementato

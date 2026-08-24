@@ -1,0 +1,105 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /Status1
+      Splitter Ratio: 0.5
+  - Class: rviz_common/Selection
+    Name: Selection
+  - Class: rviz_common/Tool Properties
+    Expanded:
+      - /2D Goal Pose1
+    Name: Tool Properties
+  - Class: rviz_common/Views
+    Name: Views
+
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Reference Frame: odom
+      Plane Cell Count: 20
+      Cell Size: 1
+      Enabled: true
+
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Show Names: true
+      Show Axes: true
+      Show Arrows: false
+
+    - Class: rviz_default_plugins/RobotModel
+      Name: RobotModel
+      Description Topic:
+        Value: /robot_description
+      TF Prefix: ""
+      Enabled: true
+
+    - Class: rviz_default_plugins/Odometry
+      Name: Odometry
+      Topic:
+        Value: /odom
+      Enabled: true
+
+    - Class: rviz_default_plugins/Map
+      Name: LocalCostmap
+      Topic:
+        Value: /local_costmap/costmap
+      Enabled: true
+
+    - Class: rviz_default_plugins/Map
+      Name: GlobalCostmap
+      Topic:
+        Value: /global_costmap/costmap
+      Enabled: true
+
+    - Class: rviz_default_plugins/Path
+      Name: GlobalPlan
+      Topic:
+        Value: /plan
+      Color: 0; 255; 0
+      Enabled: true
+
+    - Class: rviz_default_plugins/Path
+      Name: LocalPlan
+      Topic:
+        Value: /local_plan
+      Color: 255; 0; 0
+      Enabled: true
+
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: odom
+    Frame Rate: 30
+
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/SetGoal
+      Topic: /goal_pose
+
+  Value: true
+
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 8
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Yaw: 0.78
+      Pitch: 0.6
+      Near Clip Distance: 0.01
+
+Window Geometry:
+  Height: 900
+  Width: 1400
+  Displays:
+    collapsed: false
