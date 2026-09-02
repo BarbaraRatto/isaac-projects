@@ -1,0 +1,115 @@
+# =============================================================================
+# Configurazione centrale per spot_rl_controller
+# Modifica questi parametri senza toccare il codice.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Spazio delle azioni: limiti velocità /cmd_vel
+# -----------------------------------------------------------------------------
+action_space:
+  vx_max: 0.5       # [m/s] velocità longitudinale massima
+  vy_max: 0.3       # [m/s] velocità laterale massima
+  omega_max: 1.0    # [rad/s] velocità angolare massima
+
+# -----------------------------------------------------------------------------
+# Spazio delle osservazioni: gridmap
+# -----------------------------------------------------------------------------
+gridmap:
+  size_x: 5.0       # [m] estensione della gridmap (asse X, avanti)
+  size_y: 5.0       # [m] estensione della gridmap (asse Y, laterale)
+  resolution: 0.1   # [m] dimensione cella
+  # n_rows = size_x / resolution = 50
+  # n_cols = size_y / resolution = 50
+  n_pca_components: 16   # Numero di componenti PCA per comprimere i 384 layer DINOv2
+  pca_min_samples: 200   # Campioni minimi per inizializzare la PCA online
+
+# -----------------------------------------------------------------------------
+# Funzione di reward
+# -----------------------------------------------------------------------------
+reward:
+  lambda_avg_power: 0.01    # Peso penalità potenza media [W]  (segnale primario)
+  lambda_inst_power: 0.003  # Peso penalità potenza istantanea [W] (segnale reattivo)
+  lambda_time: 0.005        # Penalità fissa per timestep (incentiva rapidità)
+  goal_bonus: 10.0          # Bonus al raggiungimento del goal
+  collision_penalty: 5.0    # Penalità per collisione / stuck
+  p_max_normalization: 200.0  # [W] potenza massima attesa (per normalizzare la penalità)
+
+# -----------------------------------------------------------------------------
+# Gestione episodi (training)
+# -----------------------------------------------------------------------------
+episode:
+  max_steps: 500            # Step massimi per episodio (timeout)
+  goal_tolerance_m: 0.15    # [m] distanza per considerare il goal raggiunto
+  stuck_timeout_steps: 50   # Step senza progresso prima di terminare (stuck detection)
+  stuck_min_progress_m: 0.05 # [m] progresso minimo in stuck_timeout_steps per non essere "stuck"
+
+# -----------------------------------------------------------------------------
+# Iperparametri PPO (Stable-Baselines3)
+# -----------------------------------------------------------------------------
+ppo:
+  learning_rate: 3.0e-4
+  n_steps: 2048             # Step raccolti per ogni aggiornamento (per env)
+  batch_size: 256
+  n_epochs: 10              # Epoche di ottimizzazione per aggiornamento
+  gamma: 0.99               # Fattore di sconto
+  gae_lambda: 0.95          # GAE lambda
+  clip_range: 0.2           # PPO clip range
+  ent_coef: 0.01            # Coefficiente di entropia (incoraggia esplorazione)
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  total_timesteps: 1_000_000  # Step totali di training
+  log_interval: 10            # Ogni quanti aggiornamenti loggare
+
+# -----------------------------------------------------------------------------
+# Architettura policy: CNN + MLP
+# -----------------------------------------------------------------------------
+network:
+  cnn_channels: [32, 64, 128]   # Canali dei layer Conv2D
+  cnn_kernel_size: 3             # Kernel size Conv2D
+  mlp_hidden_sizes: [512, 256]   # Hidden layer del MLP dopo la concatenazione
+  features_dim: 256              # Dimensione del vettore features estratto dalla CNN
+
+# -----------------------------------------------------------------------------
+# Topic ROS2 (da non cambiare se si usa la configurazione di default)
+# -----------------------------------------------------------------------------
+topics:
+  gridmap_in: "/terrain_gridmap"              # GridMap da feature_extraction_node (384 layer)
+  energy_in: "/energy/current_consumption"    # EnergyEstimate da energy_estimation_node
+  odom_in: "/odom"                             # Odometria
+  goal_in: "/goal_pose"                        # PoseStamped goal (da RViz o NAV2)
+  cmd_vel_out: "/cmd_vel"                      # Comando velocità verso CHAMP
+  costmap_out: "/energy_costmap"              # GridMap compressa (16+1 layer) pubblicata internamente
+  costmap_debug_out: "/energy_costmap_debug"  # OccupancyGrid per RViz
+
+# -----------------------------------------------------------------------------
+# Frame TF
+# -----------------------------------------------------------------------------
+frames:
+  robot_base: "base_link"
+  odom: "odom"
+
+# -----------------------------------------------------------------------------
+# Controllo frequenza
+# -----------------------------------------------------------------------------
+control:
+  frequency_hz: 20.0    # Frequenza di controllo (uguale a NAV2 controller_frequency)
+  spin_timeout_s: 0.01  # Timeout spin_once() nel Gymnasium env
+
+# -----------------------------------------------------------------------------
+# Percorsi file
+# -----------------------------------------------------------------------------
+paths:
+  spot_usd: "/home/students/work/barbara/isaac-projects/projects/my-projects/champ_container/sim/robot/spot.usd"
+  model_dir: "models/"          # Cartella checkpoint (relativa alla working dir)
+  log_dir: "logs/"              # Cartella TensorBoard
+  best_model_name: "best_model" # Nome del modello migliore
+  final_model_name: "final_model"
+  final_model_isaaclab: "final_model_isaaclab"  # Modello Isaac Lab
+
+# -----------------------------------------------------------------------------
+# Modalità reattiva (inference): ricalcola se la potenza supera soglia
+# -----------------------------------------------------------------------------
+reactive:
+  enabled: true
+  power_spike_threshold_w: 50.0   # [W] incremento di P_avg che scatena il ricalcolo
+  cooldown_steps: 10              # Step di attesa dopo un ricalcolo reattivo
