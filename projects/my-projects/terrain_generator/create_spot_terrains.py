@@ -21,7 +21,7 @@ material_slippery = RigidBodyMaterialCfg(
     restitution=0.0,
 )
 
-max_slope_rad = math.radians(7.5) # Dimezzato (prima 15.0)
+max_slope_rad = math.radians(30.0) # Aumentato x4 (prima 7.5)
 
 # --- 3. CONFIGURAZIONE DELLA SCACCHIERA ---
 terrain_cfg = TerrainGeneratorCfg(
@@ -35,7 +35,7 @@ terrain_cfg = TerrainGeneratorCfg(
     vertical_scale=0.001,  # Altezza calcolata al millimetro
     
     use_cache=False,
-    curriculum=False,       
+    curriculum=True,       
     
     sub_terrains={
         "1_flat_asphalt": terrain_gen.MeshPlaneTerrainCfg(
@@ -56,7 +56,7 @@ terrain_cfg = TerrainGeneratorCfg(
         # 4. Scale
         "4_stairs": terrain_gen.MeshPyramidStairsTerrainCfg(
             proportion=1.0 / 8.0,
-            step_height_range=(0.0, 0.02), 
+            step_height_range=(0.0, 0.08), 
             step_width=0.15,               
             platform_width=1.0, 	   
             border_width=0.25, # Aggiunto per uniformità
@@ -64,14 +64,14 @@ terrain_cfg = TerrainGeneratorCfg(
         
         "5_fine_gravel": terrain_gen.HfRandomUniformTerrainCfg(
             proportion=1.0 / 8.0,
-            noise_range=(0.0, 0.0025), 
+            noise_range=(0.0, 0.01), 
             noise_step=0.01,
             border_width=0.25, # Rimesso al valore originale
         ),
         
         "6_large_stones": terrain_gen.HfRandomUniformTerrainCfg(
             proportion=1.0 / 8.0,
-            noise_range=(0.0, 0.005), 
+            noise_range=(0.0, 0.02), 
             noise_step=0.02,
             border_width=0.25, # Rimesso al valore originale
         ),
@@ -79,7 +79,7 @@ terrain_cfg = TerrainGeneratorCfg(
         "7_discrete_obstacles": terrain_gen.HfDiscreteObstaclesTerrainCfg(
             proportion=1.0 / 8.0,
             obstacle_height_mode="fixed",
-            obstacle_height_range=(0.01, 0.025), 
+            obstacle_height_range=(0.04, 0.10), 
             obstacle_width_range=(0.1, 0.4),    
             num_obstacles=40,                   
             platform_width=0.2, 
@@ -88,7 +88,7 @@ terrain_cfg = TerrainGeneratorCfg(
         
         "8_wave_hills": terrain_gen.HfWaveTerrainCfg(
             proportion=1.0 / 8.0,
-            amplitude_range=(0.0, 0.05), 
+            amplitude_range=(0.0, 0.20), 
             num_waves=4,
             border_width=0.25, # Rimesso al valore originale
         ),
@@ -112,12 +112,6 @@ def main():
         collision_group=-1,
         physics_material=material_normal,
         num_envs=1,
-        # Aggiungo una texture visiva realistica per far lavorare bene la telecamera ZED
-        visual_material=sim_utils.MdlFileCfg(
-            mdl_path="http://omniverse-content-production.s3-us-west-2.amazonaws.com/Materials/Base/Masonry/Concrete_Rough.mdl",
-            project_uvw=True,      # Fondamentale per mappare la texture sul terreno procedurale
-            texture_scale=(0.5, 0.5), # Scala della texture
-        ),
     )
 
     terrain_importer = TerrainImporter(importer_cfg)
