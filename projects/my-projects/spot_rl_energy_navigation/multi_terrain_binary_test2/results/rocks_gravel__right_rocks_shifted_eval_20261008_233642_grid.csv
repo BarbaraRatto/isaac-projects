@@ -1,0 +1,10 @@
+row,col,terrain
+0,0,t1_asphalt
+0,1,t5_large_rocks
+0,2,t5_large_rocks
+1,0,t4_fine_gravel
+1,1,t2_slippery
+1,2,t5_large_rocks
+2,0,t4_fine_gravel
+2,1,t4_fine_gravel
+2,2,t1_asphalt

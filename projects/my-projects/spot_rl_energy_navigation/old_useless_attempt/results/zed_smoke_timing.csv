@@ -1,0 +1,2 @@
+camera_asset,mode,actions,image_every,image_updates,simulation_seconds,wall_seconds,actions_per_wall_second,model_load_seconds,action_mean_ms,action_p95_ms,physics_mean_ms,physics_p95_ms,camera_mean_ms,camera_p95_ms,feature_mean_ms,feature_p95_ms,gpu_memory_start_mb,gpu_memory_peak_mb,feature_shape,checksum
+ZED_X/CameraRight,camera,2,1,2,0.4,0.216,9.256,0.0,107.92,126.61,89.06,91.63,1.0,1.05,0.0,0.0,5191.3,5191.3,,0.0

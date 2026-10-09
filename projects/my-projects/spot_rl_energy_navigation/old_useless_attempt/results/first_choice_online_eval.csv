@@ -1,0 +1,6 @@
+episode,success,reason,route,energy_j,path_length_m,goal_distance_m,steps,mean_valid_visual
+1,0,unsafe,direct,1924.13,10.55,5.45,54,5.4
+2,0,unsafe,direct,1940.9,10.68,5.23,52,5.53
+3,0,unsafe,direct,1408.81,8.4,6.96,40,5.39
+4,0,unsafe,direct,659.95,3.17,12.62,19,3.9
+5,0,unsafe,direct,1259.03,6.73,8.74,32,6.18

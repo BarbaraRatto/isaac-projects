@@ -1,0 +1,4 @@
+direct_terrain,route,trial,speed_cap_m_s,status,walk_s,distance_m,displacement_m,energy_j,energy_j_per_m,mean_speed_m_s,goal_distance_m,reached_waypoints,start_x_m,start_y_m,end_x_m,end_y_m,end_z_m
+t6_obstacles,direct,1,0.65,ok,53.595,33.2194,32.5324,5673.3761,170.785,0.6198,0.3988,10,1.5695,0.1269,34.1017,0.0189,0.508
+t6_obstacles,direct,1,0.75,fall,41.79,28.7913,27.6172,5655.4835,196.43,0.689,5.3189,9,1.5695,0.1269,29.1864,0.2376,0.2731
+t6_obstacles,direct,1,0.8,ok,45.88,33.6159,32.5397,5866.9331,174.5283,0.7327,0.3993,10,1.5695,0.1269,34.1085,-0.0787,0.5285

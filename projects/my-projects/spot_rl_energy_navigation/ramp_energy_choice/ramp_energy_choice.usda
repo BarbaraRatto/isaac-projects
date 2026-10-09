@@ -1,0 +1,320 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    subLayers = [
+        @../../terrain_generator/real_terrains.usd@
+    ]
+)
+
+over "World"
+{
+    over "Grid"
+    {
+        over "Cell_0_0_t2_slippery" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_0_1_t5_large_rocks" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_0_2_t1_asphalt" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_0_3_t4_fine_gravel" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_0_5_t7_stairs" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_0_6_t1_asphalt" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_1_0_t3_ramp" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_1_1_t4_fine_gravel" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_1_2_t4_fine_gravel" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_1_6_t4_fine_gravel" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_2_0_t1_asphalt" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_2_1_t3_ramp" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_2_2_t7_stairs" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_2_3_t2_slippery" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_2_4_t3_ramp" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_2_5_t5_large_rocks" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_2_6_t2_slippery" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_3_0_t1_asphalt" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_3_1_t5_large_rocks" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_3_2_t7_stairs" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_3_3_t6_obstacles" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_3_4_t1_asphalt" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_3_5_t3_ramp" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_3_6_t4_fine_gravel" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_4_0_t5_large_rocks" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_4_1_t6_obstacles" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_4_2_t7_stairs" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_4_3_t7_stairs" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_4_4_t3_ramp" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_4_5_t4_fine_gravel" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_4_6_t7_stairs" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_5_0_t5_large_rocks" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_5_1_t6_obstacles" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_5_2_t4_fine_gravel" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_5_3_t2_slippery" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_5_4_t1_asphalt" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_5_5_t6_obstacles" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_5_6_t7_stairs" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_6_0_t6_obstacles" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_6_1_t6_obstacles" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_6_2_t2_slippery" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_6_3_t2_slippery" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_6_4_t2_slippery" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_6_5_t6_obstacles" (
+            active = false
+        )
+        {
+        }
+
+        over "Cell_6_6_t3_ramp" (
+            active = false
+        )
+        {
+        }
+
+        def Xform "Cell_0_3_t1_asphalt_detour" (
+            prepend references = @../../terrain_generator/real_terrains.usd@</World/Grid/Cell_0_4_t1_asphalt>
+        )
+        {
+            double3 xformOp:translate = (-6, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+
+            over "terrain"
+            {
+                over "mesh" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </World/Materials/t1_asphalt_mat>
+                }
+            }
+        }
+
+        def Xform "Cell_0_5_t1_asphalt_detour" (
+            prepend references = @../../terrain_generator/real_terrains.usd@</World/Grid/Cell_0_4_t1_asphalt>
+        )
+        {
+            double3 xformOp:translate = (6, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+
+            over "terrain"
+            {
+                over "mesh" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </World/Materials/t1_asphalt_mat>
+                }
+            }
+        }
+    }
+}
+

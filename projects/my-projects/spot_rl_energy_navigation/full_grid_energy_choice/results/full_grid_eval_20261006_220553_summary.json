@@ -1,0 +1,95 @@
+{
+  "source_csv": "spot_rl_energy_navigation/full_grid_energy_choice/results/full_grid_eval_20261006_220553.csv",
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/full_grid_energy_choice/runs/full_grid_online_32env_20261006_194228/policy_final.zip",
+  "evaluation": "deterministic policy, one simulated Spot, DINO live, 20 episodes",
+  "training": {
+    "num_envs": 32,
+    "transitions": 102400,
+    "wall_seconds": 5577.222,
+    "episodes": 4032,
+    "successes": 3427,
+    "cumulative_success_rate": 0.85
+  },
+  "evaluation_counts": {
+    "episodes": 20,
+    "arrivals": 19,
+    "unsafe": 1,
+    "timeout": 0,
+    "success_rate": 0.95
+  },
+  "all_episodes": {
+    "episodes": 20,
+    "energy_j_mean": 967.484,
+    "energy_j_sample_sd": 103.588,
+    "path_length_m_mean": 4.147,
+    "path_length_m_sample_sd": 0.543,
+    "energy_j_per_m_mean": 236.351,
+    "energy_j_per_m_sample_sd": 32.153,
+    "decisions_mean": 15.9,
+    "decisions_sample_sd": 2.573,
+    "asphalt_contacts": 9,
+    "rocks_contacts": 20,
+    "obstacle_contacts": 19
+  },
+  "arrivals_only": {
+    "episodes": 19,
+    "energy_j_mean": 979.025,
+    "energy_j_sample_sd": 92.276,
+    "path_length_m_mean": 4.257,
+    "path_length_m_sample_sd": 0.237,
+    "energy_j_per_m_mean": 229.674,
+    "energy_j_per_m_sample_sd": 12.252,
+    "decisions_mean": 16.316,
+    "decisions_sample_sd": 1.827,
+    "asphalt_contacts": 8,
+    "rocks_contacts": 19,
+    "obstacle_contacts": 19
+  },
+  "failures_only": {
+    "episodes": 1,
+    "energy_j_mean": 748.21,
+    "energy_j_sample_sd": null,
+    "path_length_m_mean": 2.06,
+    "path_length_m_sample_sd": null,
+    "energy_j_per_m_mean": 363.21,
+    "energy_j_per_m_sample_sd": null,
+    "decisions_mean": 8.0,
+    "decisions_sample_sd": null,
+    "asphalt_contacts": 1,
+    "rocks_contacts": 1,
+    "obstacle_contacts": 0
+  },
+  "arrivals_with_asphalt_contact": {
+    "episodes": 8,
+    "energy_j_mean": 1013.058,
+    "energy_j_sample_sd": 105.568,
+    "path_length_m_mean": 4.362,
+    "path_length_m_sample_sd": 0.291,
+    "energy_j_per_m_mean": 231.922,
+    "energy_j_per_m_sample_sd": 12.702,
+    "decisions_mean": 17.625,
+    "decisions_sample_sd": 1.923,
+    "asphalt_contacts": 8,
+    "rocks_contacts": 8,
+    "obstacle_contacts": 8
+  },
+  "arrivals_without_asphalt_contact": {
+    "episodes": 11,
+    "energy_j_mean": 954.274,
+    "energy_j_sample_sd": 76.975,
+    "path_length_m_mean": 4.181,
+    "path_length_m_sample_sd": 0.163,
+    "energy_j_per_m_mean": 228.038,
+    "energy_j_per_m_sample_sd": 12.259,
+    "decisions_mean": 15.364,
+    "decisions_sample_sd": 1.027,
+    "asphalt_contacts": 0,
+    "rocks_contacts": 11,
+    "obstacle_contacts": 11
+  },
+  "interpretation": [
+    "All 20 episodes touched rocks; 9 of 20 also touched asphalt. Asphalt contact is not proof that the robot took an asphalt bypass.",
+    "The episode that stopped unsafe traveled only 2.060 m. Compare energy across complete arrivals, not the overall energy mean alone.",
+    "The asphalt-contact groups are descriptive and not a controlled energy comparison between routes."
+  ]
+}

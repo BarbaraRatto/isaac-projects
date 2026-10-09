@@ -1,0 +1,4 @@
+episode,mode,success,reason,route,energy_j,distance_to_goal_m,path_length_m,steps,mean_visual_valid
+1,online,1,goal,avoided_ice,1464.73,0.54,8.69,48,10.53
+2,online,1,goal,avoided_ice,1566.27,0.52,8.73,49,11.02
+3,online,1,goal,avoided_ice,1515.67,0.43,9.02,50,10.53

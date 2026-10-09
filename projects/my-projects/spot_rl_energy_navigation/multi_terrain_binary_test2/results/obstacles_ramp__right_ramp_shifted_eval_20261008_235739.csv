@@ -1,0 +1,11 @@
+episode,layout,split,geometry,success,reason,energy_j,path_length_m,final_distance_m,decisions,asphalt_entry,ice_entry,ramp_entry,gravel_entry,rocks_entry,obstacles_entry,stairs_entry,energy_j_per_m
+1,obstacles_ramp__right_ramp,test,shifted,0,unsafe,2339.26,7.969,1.02,33,1,0,1,0,0,1,0,293.54
+2,obstacles_ramp__right_ramp,test,shifted,0,unsafe,1173.3,3.507,3.765,15,1,0,0,0,0,1,0,334.56
+3,obstacles_ramp__right_ramp,test,shifted,0,unsafe,9594.89,9.271,2.324,81,1,1,1,0,0,1,0,1034.94
+4,obstacles_ramp__right_ramp,test,shifted,1,goal,1608.32,7.488,0.517,26,1,0,0,0,0,1,0,214.79
+5,obstacles_ramp__right_ramp,test,shifted,0,unsafe,1237.45,3.636,3.464,15,1,0,0,0,0,1,0,340.33
+6,obstacles_ramp__right_ramp,test,shifted,1,goal,1409.31,7.132,0.508,25,1,0,0,0,0,1,0,197.6
+7,obstacles_ramp__right_ramp,test,shifted,0,unsafe,2377.76,8.881,1.759,33,1,0,1,0,0,1,0,267.74
+8,obstacles_ramp__right_ramp,test,shifted,0,unsafe,1412.01,3.915,3.178,18,1,1,0,0,0,1,0,360.67
+9,obstacles_ramp__right_ramp,test,shifted,0,unsafe,7140.04,21.327,1.081,102,1,1,1,0,0,1,0,334.79
+10,obstacles_ramp__right_ramp,test,shifted,0,unsafe,1921.59,7.479,1.158,27,1,0,1,0,0,1,0,256.93

@@ -1,0 +1,6 @@
+episode,success,reason,route,energy_j,path_length_m,goal_distance_m,steps,mean_valid_visual
+1,1,goal,direct,2544.06,15.36,0.4,73,9.55
+2,1,goal,direct,2463.14,15.05,0.53,71,9.74
+3,1,goal,direct,2532.36,15.21,0.5,72,9.63
+4,1,goal,direct,2547.51,15.41,0.46,73,9.54
+5,1,goal,direct,2438.54,15.18,0.49,71,9.57

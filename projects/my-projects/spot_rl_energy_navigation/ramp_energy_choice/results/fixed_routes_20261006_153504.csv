@@ -1,0 +1,7 @@
+route,trial,success,energy_j,path_length_m,ramp_entry,asphalt_entry,final_distance_m,decisions,speed_cap_m_s
+direct_ramp,1,1,1394.94,8.645,1,0,0.43,54,0.8
+direct_ramp,2,1,1373.13,8.584,1,0,0.447,54,0.8
+direct_ramp,3,1,1413.82,8.608,1,0,0.487,55,0.8
+asphalt_detour,1,1,1931.55,11.132,0,1,0.415,75,0.8
+asphalt_detour,2,1,1963.09,11.197,0,1,0.521,76,0.8
+asphalt_detour,3,1,1916.24,11.145,0,1,0.414,75,0.8

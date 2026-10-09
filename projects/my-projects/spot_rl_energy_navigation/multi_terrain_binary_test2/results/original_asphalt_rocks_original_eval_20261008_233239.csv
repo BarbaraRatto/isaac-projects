@@ -1,0 +1,11 @@
+episode,layout,split,geometry,success,reason,energy_j,path_length_m,final_distance_m,decisions,asphalt_entry,ice_entry,ramp_entry,gravel_entry,rocks_entry,obstacles_entry,stairs_entry,energy_j_per_m
+1,original_asphalt_rocks,train,original,1,goal,1287.9,6.171,0.486,22,1,1,0,1,0,0,0,208.7
+2,original_asphalt_rocks,train,original,1,goal,1399.06,6.592,0.39,23,1,0,0,1,0,0,0,212.24
+3,original_asphalt_rocks,train,original,1,goal,1336.32,6.486,0.355,22,1,1,0,1,0,0,0,206.03
+4,original_asphalt_rocks,train,original,1,goal,1486.94,7.266,0.489,24,1,0,0,1,0,0,0,204.64
+5,original_asphalt_rocks,train,original,1,goal,1319.12,6.725,0.513,23,1,0,0,1,0,0,0,196.15
+6,original_asphalt_rocks,train,original,1,goal,1315.42,6.878,0.417,25,1,0,0,1,0,0,0,191.25
+7,original_asphalt_rocks,train,original,1,goal,1265.31,6.345,0.436,22,1,1,0,1,0,0,0,199.42
+8,original_asphalt_rocks,train,original,1,goal,1445.6,7.324,0.445,25,1,0,0,1,0,0,0,197.38
+9,original_asphalt_rocks,train,original,1,goal,1457.22,7.415,0.327,26,1,0,0,1,0,0,0,196.52
+10,original_asphalt_rocks,train,original,1,goal,1191.58,6.175,0.365,21,1,1,0,1,0,0,0,192.97

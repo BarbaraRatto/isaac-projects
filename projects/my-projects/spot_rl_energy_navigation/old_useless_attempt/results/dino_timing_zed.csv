@@ -1,0 +1,5 @@
+camera_asset,mode,actions,image_every,image_updates,simulation_seconds,wall_seconds,actions_per_wall_second,model_load_seconds,action_mean_ms,action_p95_ms,physics_mean_ms,physics_p95_ms,camera_mean_ms,camera_p95_ms,feature_mean_ms,feature_p95_ms,gpu_memory_start_mb,gpu_memory_peak_mb,feature_shape,checksum
+none,baseline,40,1,0,8.0,10.416,3.84,0.0,260.24,1575.75,147.25,193.71,0.0,0.0,0.0,0.0,3712.1,3712.1,,0.0
+ZED_X/CameraRight,camera,40,1,40,8.0,6.142,6.512,0.0,153.47,882.71,88.11,100.0,1.03,1.34,0.0,0.0,5155.4,5155.4,,0.0
+ZED_X/CameraRight,online,40,1,40,8.0,8.372,4.778,2.61,209.21,924.47,91.26,104.98,1.02,1.1,54.96,69.24,5294.9,5294.9,37x37x384,-47.0614
+ZED_X/CameraRight,cached,40,1,40,8.0,6.164,6.49,0.0,154.0,844.19,88.84,104.78,1.0,1.14,0.28,0.33,5154.9,5154.9,37x37x384,-51.6573

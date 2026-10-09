@@ -1,0 +1,6 @@
+mode,actions,image_every,image_updates,simulation_seconds,wall_seconds,actions_per_wall_second,model_load_seconds,action_mean_ms,action_p95_ms,physics_mean_ms,physics_p95_ms,camera_mean_ms,camera_p95_ms,feature_mean_ms,feature_p95_ms,gpu_memory_start_mb,gpu_memory_peak_mb,feature_shape,checksum
+baseline,40,1,0,8.0,5.455,7.333,0.0,136.28,841.56,78.48,90.75,0.0,0.0,0.0,0.0,3265.9,3265.9,,0.0
+camera,40,1,40,8.0,5.855,6.831,0.0,146.3,826.66,85.57,99.11,1.0,1.14,0.0,0.0,5074.9,5074.9,,0.0
+online,40,1,40,8.0,8.354,4.788,2.159,208.75,934.04,90.64,104.4,1.05,1.18,56.37,67.13,5214.9,5214.9,37x37x384,-62.5936
+cached,40,1,40,8.0,5.314,7.528,0.0,132.75,814.66,75.1,89.56,0.0,0.0,0.33,0.46,3265.9,3265.9,37x37x384,-63.6822
+online,40,2,20,8.0,7.36,5.434,2.111,183.92,954.96,90.8,106.64,1.01,1.07,58.39,67.62,5214.9,5214.9,37x37x384,-31.4535

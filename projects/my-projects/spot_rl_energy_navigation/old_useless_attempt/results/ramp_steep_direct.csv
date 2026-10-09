@@ -1,0 +1,3 @@
+direct_terrain,route,trial,speed_cap_m_s,status,walk_s,distance_m,displacement_m,energy_j,energy_j_per_m,mean_speed_m_s,goal_distance_m,reached_waypoints,start_x_m,start_y_m,end_x_m,end_y_m,end_z_m
+Cell_1_0_t3_ramp,direct,1,0.6,timeout,55.0,5.7752,4.9169,1351.6773,234.0466,0.105,10.0192,1,1.5695,0.1269,6.4813,-0.0955,0.5333
+Cell_1_0_t3_ramp,direct,1,0.9,timeout,55.0,5.2996,5.0405,1127.8712,212.8219,0.0964,9.8974,1,1.5695,0.1269,6.6034,-0.1296,0.5392
