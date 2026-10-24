@@ -1,0 +1,20 @@
+{
+  "speed": 0.8,
+  "repeats": 10,
+  "seed": 230023,
+  "source": "/home/students/work/barbara/isaac-projects/projects/my-projects/terrain_generator/manual_asphalt_rocks_10cm",
+  "sha256": {
+    "rocks_right.usd": "065e415b435aad61a0d2ae71fbbfd0cced2797ec77d91ed34b3c93c85679a720",
+    "rocks_left.usd": "62031457cc9d81a9b255610bddfc680872841a80befe2affdc2fa6778adae1b1"
+  },
+  "dt": 0.005,
+  "action_dt": 0.2,
+  "gamma": 0.999,
+  "goal_radius": 0.55,
+  "deadline": 40.0,
+  "initial_yaw": 0.7853981633974483,
+  "waypoint_radius": 0.25,
+  "settle_s": 2.0,
+  "energy": "PhysX sum(abs(torque*joint_speed)), trapezoid",
+  "note": "Geometry fixed; matched initial XY jitter +/-5 cm; same route on both maps."
+}

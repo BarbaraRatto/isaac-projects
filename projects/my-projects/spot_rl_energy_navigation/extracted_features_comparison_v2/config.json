@@ -1,0 +1,45 @@
+{
+  "schema_version": 2,
+  "seed": 23,
+  "camera": {
+    "width": 640, "height": 360,
+    "focal_length": 2.2079999446868896,
+    "horizontal_aperture": 5.760000228881836,
+    "vertical_aperture": 3.240000009536743,
+    "clipping_range": [0.009999999776482582, 100000.0],
+    "body_offset_m": [0.42, 0.0, 0.07],
+    "pitch_down_deg": 15.0,
+    "settle_render_frames": 8
+  },
+  "physics": {"dt": 0.005, "spawn_height_m": 0.75, "settle_seconds": 2.0, "minimum_body_height_m": 0.25},
+  "stance": {
+    "distances_m": [2.4, 2.8], "pilot_distances_m": [2.8],
+    "azimuths_deg": [60, 90, 120, 240, 270, 300],
+    "pilot_azimuths_deg": [60, 90, 120, 270],
+    "hold_seconds": 0.2
+  },
+  "walking": {
+    "azimuths_deg": [90, 270], "pilot_azimuths_deg": [90],
+    "start_distance_m": 2.4, "duration_seconds": 6.0,
+    "forward_speed_m_s": 0.3, "capture_every_seconds": 1.0,
+    "yaw_gain": 1.0, "max_yaw_rate_rad_s": 0.5
+  },
+  "lighting": {"intensity": 3000.0},
+  "dino": {"directory": "models/dinov2", "input_size": 518, "feature_dim": 384},
+  "projection": {
+    "depth_min_m": 0.2, "depth_max_m": 15.0,
+    "surface_z_min_m": -0.04,
+    "boundary_margin_m": 0.08,
+    "cell_resolution_m": 0.5,
+    "grid_origin_m": [-3.0, -1.5], "grid_shape": [20, 84],
+    "cell_label_purity": 0.95,
+    "rl_z_min_m": -0.1, "rl_z_max_m": 0.6,
+    "look_x_m": [0.5, 1.0, 1.5, 2.0],
+    "look_y_m": [-1.0, -0.5, 0.0, 0.5, 1.0],
+    "max_front_angle_deg": 50.0
+  },
+  "analysis": {
+    "samples_per_frame": 16, "cosine_pairs": 2000,
+    "test_fraction": 0.3, "bootstrap_repeats": 200
+  }
+}

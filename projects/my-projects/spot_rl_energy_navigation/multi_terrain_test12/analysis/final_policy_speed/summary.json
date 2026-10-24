@@ -1,0 +1,32 @@
+[
+  {
+    "layout": "rocks_asphalt__right_rocks",
+    "source": "spot_rl_energy_navigation/multi_terrain_test12/results/evaluation_20261023_114646_833745",
+    "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test12/runs/test12_ppo_20261023_035643_112305/policy_final.pt",
+    "episodes": 5,
+    "command_mean_m_s": 1.2275631125755397,
+    "command_min_m_s": 0.689772144,
+    "command_max_m_s": 1.5007145600000003,
+    "command_percent_over_manual": 96.40287769784173,
+    "measured_horizontal_mean_from_intervals_m_s": 1.1675496312019593,
+    "measured_horizontal_max_interval_m_s": 1.5691796949330716,
+    "full_episode_path_over_time_m_s": 1.1755491846756967,
+    "mean_episode_seconds": 5.5600000000000005,
+    "mean_energy_j": 1119.815087890625
+  },
+  {
+    "layout": "rocks_asphalt__right_asphalt",
+    "source": "spot_rl_energy_navigation/multi_terrain_test12/results/evaluation_20261023_114909_425872",
+    "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test12/runs/test12_ppo_20261023_035643_112305/policy_final.pt",
+    "episodes": 5,
+    "command_mean_m_s": 0.8053721924134616,
+    "command_min_m_s": 0.039683720000000026,
+    "command_max_m_s": 1.455614184,
+    "command_percent_over_manual": 39.42307692307692,
+    "measured_horizontal_mean_from_intervals_m_s": 0.7697424423116586,
+    "measured_horizontal_max_interval_m_s": 1.386415372125043,
+    "full_episode_path_over_time_m_s": 0.771208726442777,
+    "mean_episode_seconds": 8.320000000000002,
+    "mean_energy_j": 1207.7224365234374
+  }
+]

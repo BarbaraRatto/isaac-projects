@@ -1,0 +1,295 @@
+{
+  "schema_version": 2,
+  "labels": [
+    "asphalt",
+    "ice",
+    "ramp",
+    "gravel",
+    "rocks",
+    "obstacles",
+    "stairs"
+  ],
+  "board": "assets/terrains/board.usdc",
+  "robot": "assets/robot/spot.usdc",
+  "controller": "assets/robot/locomotion.pt",
+  "stations": [
+    {
+      "name": "asphalt_0",
+      "label": "asphalt",
+      "variant": 0,
+      "center_xy": [
+        0.0,
+        0.0
+      ],
+      "bounds_xy": [
+        -3.0,
+        3.0,
+        -1.5,
+        1.5
+      ],
+      "top_z_max": 0.0,
+      "prim_path": "/World/Stations/asphalt_0/Tile",
+      "source_cell": "/World/Grid/Cell_0_2_t1_asphalt"
+    },
+    {
+      "name": "ice_0",
+      "label": "ice",
+      "variant": 0,
+      "center_xy": [
+        6.0,
+        0.0
+      ],
+      "bounds_xy": [
+        3.0,
+        9.0,
+        -1.5,
+        1.5
+      ],
+      "top_z_max": 0.0,
+      "prim_path": "/World/Stations/ice_0/Tile",
+      "source_cell": "/World/Grid/Cell_0_0_t2_slippery"
+    },
+    {
+      "name": "ramp_0",
+      "label": "ramp",
+      "variant": 0,
+      "center_xy": [
+        12.0,
+        0.0
+      ],
+      "bounds_xy": [
+        9.0,
+        15.0,
+        -1.5,
+        1.5
+      ],
+      "top_z_max": 0.164000004529953,
+      "prim_path": "/World/Stations/ramp_0/Tile",
+      "source_cell": "/World/Grid/Cell_1_0_t3_ramp"
+    },
+    {
+      "name": "gravel_0",
+      "label": "gravel",
+      "variant": 0,
+      "center_xy": [
+        18.0,
+        0.0
+      ],
+      "bounds_xy": [
+        15.0,
+        21.0,
+        -1.5,
+        1.5
+      ],
+      "top_z_max": 0.014999999664723873,
+      "prim_path": "/World/Stations/gravel_0/Tile",
+      "source_cell": "/World/Grid/Cell_0_3_t4_fine_gravel"
+    },
+    {
+      "name": "rocks_0",
+      "label": "rocks",
+      "variant": 0,
+      "center_xy": [
+        24.0,
+        0.0
+      ],
+      "bounds_xy": [
+        21.0,
+        27.0,
+        -1.5,
+        1.5
+      ],
+      "top_z_max": 0.05000000074505806,
+      "prim_path": "/World/Stations/rocks_0/Tile",
+      "source_cell": "/World/Grid/Cell_0_1_t5_large_rocks"
+    },
+    {
+      "name": "obstacles_0",
+      "label": "obstacles",
+      "variant": 0,
+      "center_xy": [
+        30.0,
+        0.0
+      ],
+      "bounds_xy": [
+        27.0,
+        33.0,
+        -1.5,
+        1.5
+      ],
+      "top_z_max": 0.04800000041723251,
+      "prim_path": "/World/Stations/obstacles_0/Tile",
+      "source_cell": "/World/Grid/Cell_3_3_t6_obstacles"
+    },
+    {
+      "name": "stairs_0",
+      "label": "stairs",
+      "variant": 0,
+      "center_xy": [
+        36.0,
+        0.0
+      ],
+      "bounds_xy": [
+        33.0,
+        39.0,
+        -1.5,
+        1.5
+      ],
+      "top_z_max": 0.2800000011920929,
+      "prim_path": "/World/Stations/stairs_0/Tile",
+      "source_cell": "/World/Grid/Cell_0_5_t7_stairs"
+    },
+    {
+      "name": "gravel_1",
+      "label": "gravel",
+      "variant": 1,
+      "center_xy": [
+        0.0,
+        7.0
+      ],
+      "bounds_xy": [
+        -3.0,
+        3.0,
+        5.5,
+        8.5
+      ],
+      "top_z_max": 0.014999999664723873,
+      "prim_path": "/World/Stations/gravel_1/Tile",
+      "source_cell": "/World/Grid/Cell_1_1_t4_fine_gravel"
+    },
+    {
+      "name": "rocks_1",
+      "label": "rocks",
+      "variant": 1,
+      "center_xy": [
+        6.0,
+        7.0
+      ],
+      "bounds_xy": [
+        3.0,
+        9.0,
+        5.5,
+        8.5
+      ],
+      "top_z_max": 0.05000000074505806,
+      "prim_path": "/World/Stations/rocks_1/Tile",
+      "source_cell": "/World/Grid/Cell_1_3_t5_large_rocks"
+    },
+    {
+      "name": "obstacles_1",
+      "label": "obstacles",
+      "variant": 1,
+      "center_xy": [
+        12.0,
+        7.0
+      ],
+      "bounds_xy": [
+        9.0,
+        15.0,
+        5.5,
+        8.5
+      ],
+      "top_z_max": 0.05999999865889549,
+      "prim_path": "/World/Stations/obstacles_1/Tile",
+      "source_cell": "/World/Grid/Cell_4_1_t6_obstacles"
+    },
+    {
+      "name": "stairs_1",
+      "label": "stairs",
+      "variant": 1,
+      "center_xy": [
+        18.0,
+        7.0
+      ],
+      "bounds_xy": [
+        15.0,
+        21.0,
+        5.5,
+        8.5
+      ],
+      "top_z_max": 0.2800000011920929,
+      "prim_path": "/World/Stations/stairs_1/Tile",
+      "source_cell": "/World/Grid/Cell_2_2_t7_stairs"
+    },
+    {
+      "name": "asphalt_1",
+      "label": "asphalt",
+      "variant": 1,
+      "center_xy": [
+        24.0,
+        7.0
+      ],
+      "bounds_xy": [
+        21.0,
+        27.0,
+        5.5,
+        8.5
+      ],
+      "top_z_max": 0.0,
+      "prim_path": "/World/Stations/asphalt_1/Tile",
+      "source_cell": "/World/Grid/Cell_0_4_t1_asphalt"
+    },
+    {
+      "name": "ice_1",
+      "label": "ice",
+      "variant": 1,
+      "center_xy": [
+        30.0,
+        7.0
+      ],
+      "bounds_xy": [
+        27.0,
+        33.0,
+        5.5,
+        8.5
+      ],
+      "top_z_max": 0.0,
+      "prim_path": "/World/Stations/ice_1/Tile",
+      "source_cell": "/World/Grid/Cell_2_3_t2_slippery"
+    },
+    {
+      "name": "ramp_1",
+      "label": "ramp",
+      "variant": 1,
+      "center_xy": [
+        36.0,
+        7.0
+      ],
+      "bounds_xy": [
+        33.0,
+        39.0,
+        5.5,
+        8.5
+      ],
+      "top_z_max": 0.164000004529953,
+      "prim_path": "/World/Stations/ramp_1/Tile",
+      "source_cell": "/World/Grid/Cell_1_4_t3_ramp"
+    }
+  ],
+  "files": {
+    "assets/terrains/board.usdc": "086f06f7df3d6c51a2ef4339ed702873d25bfeaf352fa914b0a0774b36efa2cd",
+    "assets/textures/asphalt_pit_lane_diff_1k.png": "54ba47901a91257c251f7bcc03beb6f21e4a2413980ea052ec5b66472975a748",
+    "assets/textures/gravel_floor_02_nor_dx_1k.png": "7c870d2a573c2df7b39f85872cd34a75b9369f30f873a186029ecd06105f0c36",
+    "assets/textures/asphalt_pit_lane_nor_dx_1k.png": "dea4518218339d91642995d7a13b13472b96171849241f9564e816443b55433b",
+    "assets/textures/ice_ground_0031_normal_directx_1k.png": "0e12d0ac3282b55cc00d8aae2fd2017d3f85e320b4bd943cdda72388445a4924",
+    "assets/textures/marble_rock_02_diff_1k.png": "836791d51d9ebee8a4c73f842674de3d22746b3aa868834117263fec8418e245",
+    "assets/textures/gravel_floor_02_diff_1k.png": "f23f82fd58312c0998b4c33c11269fee507a6ae5703b3400f5e04ed7b0015d78",
+    "assets/textures/ice_ground_0031_color_1k.jpg": "69dc37577948e30104e695ecd3b95fd1746e58857b171c4217278aafe9a28835",
+    "assets/textures/marble_rock_02_nor_dx_1k.png": "ccf598f77e8ebed2b033b3e292d26d9bedc328f19b5a45cabb3b15ea41a66da7",
+    "assets/textures/gray_rocks_diff_1k.png": "1ee89bde82c397cdb098f0fb68bec3b25d206608e5e7fb46e61263a20128a728",
+    "assets/textures/gray_rocks_nor_dx_1k.png": "6872c7a4b113b3583ed24815acccc56aacd95ad3ec57355cdc021628b3295fc0",
+    "assets/robot/locomotion.pt": "d95d675e8b080d5c84a2a2779d165ff7ecd3e34d24b233c083242e615a3d589a",
+    "assets/robot/spot.usdc": "9a282f48ded21434f88c953d72477d4e159764fb725601936bcb16bdf9622966",
+    "models/dinov2/model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1",
+    "models/dinov2/preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+    "models/dinov2/config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d"
+  },
+  "provenance": {
+    "source_board": "/home/students/work/barbara/isaac-projects/projects/my-projects/terrain_generator/real_terrains.usd",
+    "source_board_sha256": "8c57aded784df015390f28730c89c398a18e7ab4a5ce779a80ee1f382f17e816",
+    "source_robot_sha256": "79aa68380357daf3b8aea3bb93ebf71b4b7f4015dc97ecb53c286de232ef60dd",
+    "standard_runtime_shader": "OmniPBR.mdl",
+    "dino": "facebook/dinov2-small",
+    "geometry": "two unchanged 6x3 m donor cells per class, translated into two rows; local asphalt access floor"
+  }
+}

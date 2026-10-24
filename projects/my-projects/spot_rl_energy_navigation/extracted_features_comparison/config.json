@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "seed": 23,
+  "camera": {
+    "width": 640,
+    "height": 360,
+    "focal_length": 2.2079999446868896,
+    "horizontal_aperture": 5.760000228881836,
+    "vertical_aperture": 3.240000009536743,
+    "clipping_range": [0.009999999776482582, 100000.0],
+    "height_m": 0.7,
+    "pitch_down_deg": 15.0,
+    "settle_render_frames": 12
+  },
+  "views": {
+    "distances_m": [0.8, 1.2, 1.8],
+    "azimuths_deg": [0, 45, 90, 135, 180, 225, 270, 315],
+    "pilot_azimuths_deg": [0, 90, 180, 270]
+  },
+  "lights": [
+    {"name": "training", "intensity": 3000.0, "rotation_deg": [0, 0, 0]},
+    {"name": "dim", "intensity": 1500.0, "rotation_deg": [0, 0, 0]},
+    {"name": "oblique", "intensity": 3000.0, "rotation_deg": [35, 20, 40]}
+  ],
+  "dino": {"directory": "models/dinov2", "input_size": 518, "feature_dim": 384},
+  "projection": {
+    "depth_min_m": 0.2,
+    "depth_max_m": 15.0,
+    "z_min_m": -0.1,
+    "z_max_m": 0.6,
+    "terrain_half_size_m": 1.0,
+    "boundary_margin_m": 0.08,
+    "cell_resolution_m": 0.5,
+    "grid_origin_m": [-1.0, -1.0],
+    "grid_shape": [12, 12],
+    "look_x_m": [0.5, 1.0, 1.5, 2.0],
+    "look_y_m": [-1.0, -0.5, 0.0, 0.5, 1.0],
+    "max_front_angle_deg": 50.0,
+    "virtual_camera_forward_offset_m": 0.42
+  },
+  "analysis": {
+    "samples_per_frame": 32,
+    "cosine_pairs": 5000,
+    "test_fraction": 0.3,
+    "bootstrap_repeats": 300
+  }
+}

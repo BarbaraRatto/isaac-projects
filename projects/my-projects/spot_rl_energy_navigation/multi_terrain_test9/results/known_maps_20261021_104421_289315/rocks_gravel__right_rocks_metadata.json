@@ -1,0 +1,10 @@
+{
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test9/runs/test9_sac_32env_20261021_013829_609712/policy_final.zip",
+  "layout": "rocks_gravel__right_rocks",
+  "split": "train",
+  "episodes": 5,
+  "seed": 20000,
+  "deterministic": true,
+  "terrain_usd": "/home/students/work/barbara/isaac-projects/projects/my-projects/terrain_generator/multi_terrain_binary_test2/train/rocks_gravel__right_rocks.usd",
+  "terrain_sha256": "44faa502e7681a0b6130789257bb84e8a65e07e2ba936034f01a88b695125dff"
+}

@@ -1,0 +1,67 @@
+{
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test9/runs/test9_sac_32env_20261021_013829_609712/policy_final.zip",
+  "episodes_per_map": 5,
+  "seed": 20000,
+  "deterministic": true,
+  "headless": false,
+  "layouts": [
+    "rocks_gravel__right_rocks",
+    "rocks_gravel__right_gravel"
+  ],
+  "agent_device": "cpu",
+  "commands": [
+    [
+      "/home/isaac/isaaclab/2.3.0/isaaclab.sh",
+      "-p",
+      "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test9/play.py",
+      "--checkpoint",
+      "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test9/runs/test9_sac_32env_20261021_013829_609712/policy_final.zip",
+      "--layout",
+      "rocks_gravel__right_rocks",
+      "--episodes",
+      "5",
+      "--seed",
+      "20000",
+      "--agent-device",
+      "cpu",
+      "--torch-threads",
+      "4",
+      "--output",
+      "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test9/results/known_maps_20261021_104421_289315/rocks_gravel__right_rocks.csv"
+    ],
+    [
+      "/home/isaac/isaaclab/2.3.0/isaaclab.sh",
+      "-p",
+      "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test9/play.py",
+      "--checkpoint",
+      "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test9/runs/test9_sac_32env_20261021_013829_609712/policy_final.zip",
+      "--layout",
+      "rocks_gravel__right_gravel",
+      "--episodes",
+      "5",
+      "--seed",
+      "20000",
+      "--agent-device",
+      "cpu",
+      "--torch-threads",
+      "4",
+      "--output",
+      "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test9/results/known_maps_20261021_104421_289315/rocks_gravel__right_gravel.csv"
+    ]
+  ],
+  "results": [
+    {
+      "layout": "rocks_gravel__right_rocks",
+      "episodes": 5,
+      "arrivals": 0,
+      "success_rate": 0.0,
+      "mean_arrival_energy_j": null,
+      "mean_arrival_path_m": null,
+      "mean_final_distance_m": 6.2194,
+      "outcomes": {
+        "out_of_bounds": 5
+      },
+      "episodes_csv": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test9/results/known_maps_20261021_104421_289315/rocks_gravel__right_rocks.csv"
+    }
+  ]
+}

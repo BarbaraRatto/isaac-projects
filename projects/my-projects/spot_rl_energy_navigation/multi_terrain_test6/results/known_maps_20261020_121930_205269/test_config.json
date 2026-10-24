@@ -1,0 +1,52 @@
+{
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test6/runs/test6_sac_32env_20261019_235423_917318/policy_best.zip",
+  "episodes_per_map": 20,
+  "seed": 20000,
+  "deterministic": true,
+  "headless": false,
+  "layouts": [
+    "rocks_gravel__right_rocks",
+    "rocks_gravel__right_gravel"
+  ],
+  "agent_device": "cpu",
+  "commands": [
+    [
+      "/home/isaac/isaaclab/2.3.0/isaaclab.sh",
+      "-p",
+      "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test6/play.py",
+      "--checkpoint",
+      "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test6/runs/test6_sac_32env_20261019_235423_917318/policy_best.zip",
+      "--layout",
+      "rocks_gravel__right_rocks",
+      "--episodes",
+      "20",
+      "--seed",
+      "20000",
+      "--agent-device",
+      "cpu",
+      "--torch-threads",
+      "4",
+      "--output",
+      "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test6/results/known_maps_20261020_121930_205269/rocks_gravel__right_rocks.csv"
+    ],
+    [
+      "/home/isaac/isaaclab/2.3.0/isaaclab.sh",
+      "-p",
+      "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test6/play.py",
+      "--checkpoint",
+      "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test6/runs/test6_sac_32env_20261019_235423_917318/policy_best.zip",
+      "--layout",
+      "rocks_gravel__right_gravel",
+      "--episodes",
+      "20",
+      "--seed",
+      "20000",
+      "--agent-device",
+      "cpu",
+      "--torch-threads",
+      "4",
+      "--output",
+      "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test6/results/known_maps_20261020_121930_205269/rocks_gravel__right_gravel.csv"
+    ]
+  ]
+}

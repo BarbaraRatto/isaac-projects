@@ -1,0 +1,7 @@
+mode,episode,reason,success,decisions,final_x_m,final_y_m,final_z_m,final_gravity_z,final_goal_distance_m,closest_goal_distance_m,gravel_entry,rocks_entry,ice_entry,energy_j,path_length_m
+policy,1,x_min,0,7,-0.8105,1.4372,0.4413,-0.9705,5.2313,5.1162,0,1,0,398.4,1.701
+policy,2,x_min,0,8,-0.8292,1.938,0.4866,-0.9871,5.0221,4.9653,0,1,0,560.78,2.17
+policy,3,x_min,0,7,-0.8558,1.4486,0.4434,-0.9753,5.2653,5.1227,0,1,0,399.98,1.703
+guided,1,goal,1,62,3.8011,3.5115,0.5025,-0.9993,0.4912,0.4912,1,0,0,1350.46,7.435
+guided,2,goal,1,62,3.8051,3.4748,0.5067,-0.9996,0.5281,0.5281,1,0,0,1338.34,7.472
+guided,3,goal,1,61,3.7497,3.4985,0.5095,-0.9993,0.5015,0.5015,1,0,0,1321.86,7.476

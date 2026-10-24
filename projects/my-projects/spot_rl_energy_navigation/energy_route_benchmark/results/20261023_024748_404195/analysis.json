@@ -1,0 +1,237 @@
+{
+  "episodes": 40,
+  "valid": 40,
+  "complete": true,
+  "groups": {
+    "map0_asphalt": {
+      "attempted": 10,
+      "successes": 10,
+      "valid": 10,
+      "failures": {
+        "fallen": 0,
+        "out_of_bounds": 0,
+        "timeout": 0
+      },
+      "energy_j": {
+        "n": 10,
+        "mean": 1353.2870723139645,
+        "sd": 26.759135314744523,
+        "minimum": 1295.3955332946778,
+        "maximum": 1386.9605991983417
+      },
+      "discounted_energy_j": {
+        "n": 10,
+        "mean": 1318.4290417387451,
+        "sd": 25.650957238612687,
+        "minimum": 1262.9472459025171,
+        "maximum": 1350.8066266805506
+      },
+      "path_m": {
+        "n": 10,
+        "mean": 7.688439395738329,
+        "sd": 0.10639756655097578,
+        "minimum": 7.533631390854579,
+        "maximum": 7.865446766859271
+      },
+      "seconds": {
+        "n": 10,
+        "mean": 10.66,
+        "sd": 0.16465452046971266,
+        "minimum": 10.4,
+        "maximum": 11.0
+      },
+      "joules_per_m": {
+        "n": 10,
+        "mean": 176.00962429196358,
+        "sd": 1.9699565998709307,
+        "minimum": 171.94835612308003,
+        "maximum": 178.78812266554664
+      }
+    },
+    "map0_rocks": {
+      "attempted": 10,
+      "successes": 10,
+      "valid": 10,
+      "failures": {
+        "fallen": 0,
+        "out_of_bounds": 0,
+        "timeout": 0
+      },
+      "energy_j": {
+        "n": 10,
+        "mean": 1531.084936871469,
+        "sd": 28.268237185531046,
+        "minimum": 1487.2259493774177,
+        "maximum": 1580.6214027404785
+      },
+      "discounted_energy_j": {
+        "n": 10,
+        "mean": 1487.158040622563,
+        "sd": 27.102220618278725,
+        "minimum": 1444.6473725614685,
+        "maximum": 1534.303121417003
+      },
+      "path_m": {
+        "n": 10,
+        "mean": 8.12073076720138,
+        "sd": 0.10354444071515169,
+        "minimum": 7.998270244276993,
+        "maximum": 8.363263211989125
+      },
+      "seconds": {
+        "n": 10,
+        "mean": 11.64,
+        "sd": 0.15776212754932284,
+        "minimum": 11.4,
+        "maximum": 12.0
+      },
+      "joules_per_m": {
+        "n": 10,
+        "mean": 188.53983360407238,
+        "sd": 2.483473214015402,
+        "minimum": 185.20537669599784,
+        "maximum": 192.53930166491403
+      }
+    },
+    "map1_asphalt": {
+      "attempted": 10,
+      "successes": 10,
+      "valid": 10,
+      "failures": {
+        "fallen": 0,
+        "out_of_bounds": 0,
+        "timeout": 0
+      },
+      "energy_j": {
+        "n": 10,
+        "mean": 1369.095193799198,
+        "sd": 28.33460717980525,
+        "minimum": 1334.0594197750095,
+        "maximum": 1426.832979788184
+      },
+      "discounted_energy_j": {
+        "n": 10,
+        "mean": 1332.1247987723505,
+        "sd": 27.23822566625498,
+        "minimum": 1298.7288587869095,
+        "maximum": 1387.2242964805966
+      },
+      "path_m": {
+        "n": 10,
+        "mean": 8.06146926140133,
+        "sd": 0.08449811524797543,
+        "minimum": 7.956690514106554,
+        "maximum": 8.187245148444605
+      },
+      "seconds": {
+        "n": 10,
+        "mean": 11.02,
+        "sd": 0.11352924243950956,
+        "minimum": 10.8,
+        "maximum": 11.200000000000001
+      },
+      "joules_per_m": {
+        "n": 10,
+        "mean": 169.81914383558004,
+        "sd": 2.0637057901913707,
+        "minimum": 167.1666388798883,
+        "maximum": 174.2751015656653
+      }
+    },
+    "map1_rocks": {
+      "attempted": 10,
+      "successes": 10,
+      "valid": 10,
+      "failures": {
+        "fallen": 0,
+        "out_of_bounds": 0,
+        "timeout": 0
+      },
+      "energy_j": {
+        "n": 10,
+        "mean": 1534.0876747781635,
+        "sd": 55.015540784811876,
+        "minimum": 1480.9947549128528,
+        "maximum": 1672.2434194552902
+      },
+      "discounted_energy_j": {
+        "n": 10,
+        "mean": 1491.2242440213251,
+        "sd": 51.63737961509661,
+        "minimum": 1440.610804763953,
+        "maximum": 1620.4033953315088
+      },
+      "path_m": {
+        "n": 10,
+        "mean": 7.789452403134026,
+        "sd": 0.12623459075862886,
+        "minimum": 7.630377101504639,
+        "maximum": 7.95205073250616
+      },
+      "seconds": {
+        "n": 10,
+        "mean": 11.48,
+        "sd": 0.4638007234913627,
+        "minimum": 11.0,
+        "maximum": 12.600000000000001
+      },
+      "joules_per_m": {
+        "n": 10,
+        "mean": 196.93130373453508,
+        "sd": 5.7537369140274315,
+        "minimum": 191.07910093832908,
+        "maximum": 210.29083889260698
+      }
+    }
+  },
+  "paired_by_map": {
+    "0": {
+      "n": 10,
+      "mean": 177.7978645575046,
+      "sd": 47.49015091569201,
+      "minimum": 120.06565901756198,
+      "maximum": 285.22586944580075
+    },
+    "1": {
+      "n": 10,
+      "mean": 164.99248097896583,
+      "sd": 45.46896769625932,
+      "minimum": 128.45353402853038,
+      "maximum": 285.1005336427688
+    }
+  },
+  "balanced_paired_delta_j": {
+    "n": 10,
+    "mean": 171.39517276823523,
+    "sd": 42.415585389571575,
+    "minimum": 139.32153352141393,
+    "maximum": 285.1632015442848,
+    "bootstrap_95_interval": [
+      152.3037231569885,
+      200.08702303305878
+    ]
+  },
+  "balanced_discounted_delta_j": {
+    "n": 10,
+    "mean": 163.91422206639638,
+    "sd": 39.96534645653932,
+    "minimum": 133.52563204930038,
+    "maximum": 270.91375747083555
+  },
+  "weights_for_energy_advantage": {
+    "10": 5.834470036984207,
+    "25": 14.586175092460518,
+    "100": 58.34470036984207
+  },
+  "discounted_weights_for_energy_advantage": {
+    "10": 6.100751889576318,
+    "25": 15.251879723940796,
+    "100": 61.007518895763184
+  },
+  "notes": [
+    "Only successful, correctly followed routes enter energy comparisons.",
+    "Jitter repetitions on fixed maps and fixed controller, not independent terrain realizations.",
+    "Bootstrap interval clusters both mirrored maps per trial; exploratory small-sample interval.",
+    "Weights match only the energy advantage; total reward also includes progress/time/terminal terms."
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "terrains": [
+    {
+      "name": "ice_0",
+      "label": "ice",
+      "file": "assets/terrains/ice_0.usdc",
+      "source_cell": "/World/Grid/Cell_1_1_t2_slippery",
+      "bounds_xy": [
+        -1,
+        1,
+        -1,
+        1
+      ]
+    },
+    {
+      "name": "gravel_0",
+      "label": "gravel",
+      "file": "assets/terrains/gravel_0.usdc",
+      "source_cell": "/World/Grid/Cell_1_0_t4_fine_gravel",
+      "bounds_xy": [
+        -1,
+        1,
+        -1,
+        1
+      ]
+    },
+    {
+      "name": "gravel_1",
+      "label": "gravel",
+      "file": "assets/terrains/gravel_1.usdc",
+      "source_cell": "/World/Grid/Cell_2_0_t4_fine_gravel",
+      "bounds_xy": [
+        -1,
+        1,
+        -1,
+        1
+      ]
+    },
+    {
+      "name": "gravel_2",
+      "label": "gravel",
+      "file": "assets/terrains/gravel_2.usdc",
+      "source_cell": "/World/Grid/Cell_2_1_t4_fine_gravel",
+      "bounds_xy": [
+        -1,
+        1,
+        -1,
+        1
+      ]
+    },
+    {
+      "name": "rocks_0",
+      "label": "rocks",
+      "file": "assets/terrains/rocks_0.usdc",
+      "source_cell": "/World/Grid/Cell_0_1_t5_large_rocks",
+      "bounds_xy": [
+        -1,
+        1,
+        -1,
+        1
+      ]
+    },
+    {
+      "name": "rocks_1",
+      "label": "rocks",
+      "file": "assets/terrains/rocks_1.usdc",
+      "source_cell": "/World/Grid/Cell_0_2_t5_large_rocks",
+      "bounds_xy": [
+        -1,
+        1,
+        -1,
+        1
+      ]
+    },
+    {
+      "name": "rocks_2",
+      "label": "rocks",
+      "file": "assets/terrains/rocks_2.usdc",
+      "source_cell": "/World/Grid/Cell_1_2_t5_large_rocks",
+      "bounds_xy": [
+        -1,
+        1,
+        -1,
+        1
+      ]
+    }
+  ],
+  "files": {
+    "assets/terrains/rocks_1.usdc": "7cb0f43dc2496fd447820faa4d04f527991658020a9b785b883285f792484ea1",
+    "assets/terrains/ice_0.usdc": "00b5fbf0f1b6fc2f38e7fb1598c099053edfb4cb2253a37e9d3723af5e5cf75b",
+    "assets/terrains/gravel_2.usdc": "8046c1cde1621af1ca293e064022a4caab83f21e3b998bd372c2ee43a005ea22",
+    "assets/terrains/gravel_0.usdc": "6bff5309d945f4f4311dfff2921cb4c5f20fa291c61b2767f9f865ad8bccdd33",
+    "assets/terrains/gravel_1.usdc": "753fa9dc991ec25831eae080b79da4c7e76dfb9455222fd1da55667c5f491168",
+    "assets/terrains/rocks_0.usdc": "a2580ac930ea7386a6d59af33ca80b9fdfdb4778d56b7fe17169841a520c906f",
+    "assets/terrains/rocks_2.usdc": "a55b549053afc3d62e726e20f04ebdfa43e4d5ef7f2dbbbfc367980563a02860",
+    "assets/textures/gravel_floor_02_nor_dx_1k.png": "7c870d2a573c2df7b39f85872cd34a75b9369f30f873a186029ecd06105f0c36",
+    "assets/textures/ice_ground_0031_normal_directx_1k.png": "0e12d0ac3282b55cc00d8aae2fd2017d3f85e320b4bd943cdda72388445a4924",
+    "assets/textures/gravel_floor_02_diff_1k.png": "f23f82fd58312c0998b4c33c11269fee507a6ae5703b3400f5e04ed7b0015d78",
+    "assets/textures/ice_ground_0031_color_1k.jpg": "69dc37577948e30104e695ecd3b95fd1746e58857b171c4217278aafe9a28835",
+    "assets/textures/gray_rocks_diff_1k.png": "1ee89bde82c397cdb098f0fb68bec3b25d206608e5e7fb46e61263a20128a728",
+    "assets/textures/gray_rocks_nor_dx_1k.png": "6872c7a4b113b3583ed24815acccc56aacd95ad3ec57355cdc021628b3295fc0",
+    "models/dinov2/model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1",
+    "models/dinov2/preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+    "models/dinov2/config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d"
+  },
+  "provenance": {
+    "board": "/home/students/work/barbara/isaac-projects/projects/my-projects/terrain_generator/multi_terrain_binary_test2/train/rocks_gravel__right_rocks.usd",
+    "board_sha256": "44faa502e7681a0b6130789257bb84e8a65e07e2ba936034f01a88b695125dff",
+    "dino_model": "facebook/dinov2-small",
+    "dino_snapshot": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+    "camera_optics": "ZED X CameraRight, same as test6; copied numerically to config.json",
+    "standard_shader": "OmniPBR.mdl provided by the installed Isaac Sim runtime; no project asset dependency"
+  }
+}

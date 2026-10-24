@@ -1,0 +1,6 @@
+episode,layout,split,geometry,success,reason,energy_j,path_length_m,final_distance_m,decisions,asphalt_entry,ice_entry,ramp_entry,gravel_entry,rocks_entry,obstacles_entry,stairs_entry,energy_j_per_m
+1,rocks_gravel__right_gravel,test,shifted,0,unsafe,1737.29,6.525,2.5,33,1,0,0,0,1,0,0,266.25
+2,rocks_gravel__right_gravel,test,shifted,0,unsafe,1202.02,5.235,3.674,22,1,0,0,0,1,0,0,229.61
+3,rocks_gravel__right_gravel,test,shifted,0,unsafe,1030.02,4.139,4.696,19,1,0,0,0,1,0,0,248.86
+4,rocks_gravel__right_gravel,test,shifted,0,unsafe,1415.67,5.603,2.943,23,1,0,0,0,1,0,0,252.66
+5,rocks_gravel__right_gravel,test,shifted,0,unsafe,1256.34,5.218,3.568,22,1,0,0,0,1,0,0,240.77

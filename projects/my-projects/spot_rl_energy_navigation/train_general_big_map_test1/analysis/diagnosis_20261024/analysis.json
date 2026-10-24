@@ -1,0 +1,256 @@
+{
+  "run": "general_map_ppo_20261024_001131_609673",
+  "through_transitions": 438272,
+  "episode_count": 5044,
+  "outcomes": {
+    "out_of_bounds": 1010,
+    "fallen": 2257,
+    "goal": 448,
+    "timeout": 1329
+  },
+  "windows": [
+    {
+      "start": 0,
+      "end": 50000,
+      "n": 878,
+      "rates": {
+        "goal": 5.466970387243736,
+        "fallen": 57.630979498861045,
+        "out_of_bounds": 30.29612756264237,
+        "timeout": 6.605922551252847
+      }
+    },
+    {
+      "start": 50000,
+      "end": 100000,
+      "n": 618,
+      "rates": {
+        "goal": 10.517799352750808,
+        "fallen": 48.05825242718446,
+        "out_of_bounds": 21.844660194174757,
+        "timeout": 19.57928802588997
+      }
+    },
+    {
+      "start": 100000,
+      "end": 150000,
+      "n": 559,
+      "rates": {
+        "goal": 9.481216457960643,
+        "fallen": 45.974955277280856,
+        "out_of_bounds": 16.99463327370304,
+        "timeout": 27.549194991055455
+      }
+    },
+    {
+      "start": 150000,
+      "end": 200000,
+      "n": 559,
+      "rates": {
+        "goal": 8.765652951699463,
+        "fallen": 40.96601073345259,
+        "out_of_bounds": 22.003577817531305,
+        "timeout": 28.264758497316638
+      }
+    },
+    {
+      "start": 200000,
+      "end": 250000,
+      "n": 592,
+      "rates": {
+        "goal": 7.4324324324324325,
+        "fallen": 46.62162162162162,
+        "out_of_bounds": 20.43918918918919,
+        "timeout": 25.506756756756758
+      }
+    },
+    {
+      "start": 250000,
+      "end": 300000,
+      "n": 509,
+      "rates": {
+        "goal": 9.62671905697446,
+        "fallen": 43.222003929273086,
+        "out_of_bounds": 15.717092337917485,
+        "timeout": 31.43418467583497
+      }
+    },
+    {
+      "start": 300000,
+      "end": 350000,
+      "n": 489,
+      "rates": {
+        "goal": 8.384458077709612,
+        "fallen": 39.46830265848671,
+        "out_of_bounds": 14.314928425357873,
+        "timeout": 37.83231083844581
+      }
+    },
+    {
+      "start": 350000,
+      "end": 400000,
+      "n": 444,
+      "rates": {
+        "goal": 13.288288288288289,
+        "fallen": 25.9009009009009,
+        "out_of_bounds": 15.99099099099099,
+        "timeout": 44.81981981981982
+      }
+    },
+    {
+      "start": 400000,
+      "end": 438272,
+      "n": 396,
+      "rates": {
+        "goal": 10.1010101010101,
+        "fallen": 41.41414141414141,
+        "out_of_bounds": 12.373737373737374,
+        "timeout": 36.111111111111114
+      }
+    }
+  ],
+  "initial_heading": [
+    {
+      "lo": 0,
+      "n": 849,
+      "success_rate": 16.372202591283862
+    },
+    {
+      "lo": 30,
+      "n": 840,
+      "success_rate": 14.642857142857142
+    },
+    {
+      "lo": 60,
+      "n": 879,
+      "success_rate": 10.12514220705347
+    },
+    {
+      "lo": 90,
+      "n": 794,
+      "success_rate": 5.415617128463476
+    },
+    {
+      "lo": 120,
+      "n": 834,
+      "success_rate": 3.357314148681055
+    },
+    {
+      "lo": 150,
+      "n": 848,
+      "success_rate": 3.0660377358490565
+    }
+  ],
+  "mean_undiscounted_returns": {
+    "goal": 142.8630130663514,
+    "fallen": -325.4984037430877,
+    "out_of_bounds": -322.7121843685018,
+    "timeout": -364.2041242612404
+  },
+  "evaluation_easy": [
+    {
+      "transitions": 53248,
+      "episodes": 32,
+      "success_rate": 0.125,
+      "mean_success_energy_j": 1397.2100219726562,
+      "mean_success_path_m": 7.931364357471466,
+      "outcomes": {
+        "goal": 4,
+        "fallen": 14,
+        "out_of_bounds": 6,
+        "timeout": 8
+      }
+    },
+    {
+      "transitions": 102400,
+      "episodes": 32,
+      "success_rate": 0.0625,
+      "mean_success_energy_j": 1335.4493408203125,
+      "mean_success_path_m": 6.913137912750244,
+      "outcomes": {
+        "goal": 2,
+        "fallen": 10,
+        "out_of_bounds": 6,
+        "timeout": 14
+      }
+    },
+    {
+      "transitions": 151552,
+      "episodes": 32,
+      "success_rate": 0.03125,
+      "mean_success_energy_j": 938.9287719726562,
+      "mean_success_path_m": 5.300784111022949,
+      "outcomes": {
+        "goal": 1,
+        "fallen": 12,
+        "out_of_bounds": 5,
+        "timeout": 14
+      }
+    },
+    {
+      "transitions": 200704,
+      "episodes": 32,
+      "success_rate": 0.0625,
+      "mean_success_energy_j": 1964.0635070800781,
+      "mean_success_path_m": 11.161413669586182,
+      "outcomes": {
+        "goal": 2,
+        "fallen": 10,
+        "out_of_bounds": 2,
+        "timeout": 18
+      }
+    },
+    {
+      "transitions": 253952,
+      "episodes": 32,
+      "success_rate": 0.125,
+      "mean_success_energy_j": 1993.7539978027344,
+      "mean_success_path_m": 11.258503317832947,
+      "outcomes": {
+        "goal": 4,
+        "fallen": 11,
+        "out_of_bounds": 3,
+        "timeout": 14
+      }
+    },
+    {
+      "transitions": 303104,
+      "episodes": 32,
+      "success_rate": 0.0625,
+      "mean_success_energy_j": 1290.3881225585938,
+      "mean_success_path_m": 5.9366068840026855,
+      "outcomes": {
+        "goal": 2,
+        "fallen": 12,
+        "out_of_bounds": 2,
+        "timeout": 16
+      }
+    },
+    {
+      "transitions": 352256,
+      "episodes": 32,
+      "success_rate": 0.03125,
+      "mean_success_energy_j": 1239.94921875,
+      "mean_success_path_m": 5.9226884841918945,
+      "outcomes": {
+        "goal": 1,
+        "fallen": 5,
+        "out_of_bounds": 2,
+        "timeout": 24
+      }
+    },
+    {
+      "transitions": 401408,
+      "episodes": 32,
+      "success_rate": 0.0,
+      "mean_success_energy_j": null,
+      "mean_success_path_m": null,
+      "outcomes": {
+        "goal": 0,
+        "fallen": 5,
+        "out_of_bounds": 1,
+        "timeout": 26
+      }
+    }
+  ]
+}

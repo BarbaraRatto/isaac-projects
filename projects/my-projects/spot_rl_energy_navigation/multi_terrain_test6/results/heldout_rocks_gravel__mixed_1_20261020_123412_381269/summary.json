@@ -1,0 +1,58 @@
+{
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test6/runs/test6_sac_32env_20261019_235423_917318/policy_best.zip",
+  "layout": "rocks_gravel__mixed_1",
+  "split": "heldout",
+  "episodes": 20,
+  "seed": 20000,
+  "deterministic": true,
+  "headless": false,
+  "grid": [
+    [
+      "t1_asphalt",
+      "t5_large_rocks",
+      "t4_fine_gravel"
+    ],
+    [
+      "t4_fine_gravel",
+      "t2_slippery",
+      "t4_fine_gravel"
+    ],
+    [
+      "t5_large_rocks",
+      "t5_large_rocks",
+      "t1_asphalt"
+    ]
+  ],
+  "command": [
+    "/home/isaac/isaaclab/2.3.0/isaaclab.sh",
+    "-p",
+    "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test6/play.py",
+    "--checkpoint",
+    "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test6/runs/test6_sac_32env_20261019_235423_917318/policy_best.zip",
+    "--layout",
+    "rocks_gravel__mixed_1",
+    "--episodes",
+    "20",
+    "--seed",
+    "20000",
+    "--agent-device",
+    "cpu",
+    "--torch-threads",
+    "4",
+    "--output",
+    "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test6/results/heldout_rocks_gravel__mixed_1_20261020_123412_381269/rocks_gravel__mixed_1.csv"
+  ],
+  "result": {
+    "layout": "rocks_gravel__mixed_1",
+    "episodes": 20,
+    "arrivals": 20,
+    "success_rate": 1.0,
+    "mean_arrival_energy_j": 1386.5115,
+    "mean_arrival_path_m": 6.52765,
+    "mean_final_distance_m": 0.4534,
+    "outcomes": {
+      "goal": 20
+    },
+    "episodes_csv": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test6/results/heldout_rocks_gravel__mixed_1_20261020_123412_381269/rocks_gravel__mixed_1.csv"
+  }
+}

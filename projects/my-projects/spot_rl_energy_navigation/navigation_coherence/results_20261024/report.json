@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "test": "relative_goal_16_cases",
+      "passed": true
+    },
+    {
+      "test": "yaw_sign_-1",
+      "yaw_change_rad": -0.92353112436831,
+      "passed": true
+    },
+    {
+      "test": "yaw_sign_1",
+      "yaw_change_rad": 0.987114530056715,
+      "passed": true
+    },
+    {
+      "test": "forward_heading_0.000",
+      "forward_m": 0.4936331510543823,
+      "lateral_m": 0.06909862905740738,
+      "passed": true
+    },
+    {
+      "test": "forward_heading_1.571",
+      "forward_m": 0.49414560198783875,
+      "lateral_m": 0.06751927733421326,
+      "passed": true
+    },
+    {
+      "test": "forward_heading_3.142",
+      "forward_m": 0.49418938159942627,
+      "lateral_m": 0.06589121371507645,
+      "passed": true
+    },
+    {
+      "test": "forward_heading_-1.571",
+      "forward_m": 0.49381107091903687,
+      "lateral_m": 0.06775840371847153,
+      "passed": true
+    },
+    {
+      "test": "go_to_front",
+      "initial_distance_m": 1.4594168663024902,
+      "final_distance_m": 0.2984248399734497,
+      "passed": true
+    },
+    {
+      "test": "go_to_left",
+      "initial_distance_m": 0.7145567536354065,
+      "final_distance_m": 0.3245777189731598,
+      "passed": true
+    },
+    {
+      "test": "go_to_right",
+      "initial_distance_m": 0.8895167112350464,
+      "final_distance_m": 0.32021790742874146,
+      "passed": true
+    },
+    {
+      "test": "go_to_behind",
+      "initial_distance_m": 1.3460808992385864,
+      "final_distance_m": 0.28304222226142883,
+      "passed": true
+    }
+  ],
+  "note": "One robot on asphalt of frozen v2 map; actual test1 action mapping and locomotion weights. No DINO, PPO or learned navigation policy. Does not validate rough-terrain traversability."
+}
