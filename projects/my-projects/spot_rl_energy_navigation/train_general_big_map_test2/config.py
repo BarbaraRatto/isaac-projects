@@ -34,7 +34,7 @@ class NavigationConfig:
 
 @dataclass(frozen=True)
 class PPOSettings:
-    timesteps: int = 100_000
+    timesteps: int = 200_000
     num_envs: int = 32
     rollout_steps: int = 128
     batch_size: int = 256

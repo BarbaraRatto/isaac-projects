@@ -187,7 +187,9 @@ class Test13Env(DirectRLEnv):
                                 nav_return=float(self.episode_nav_return[i]),
                                 energy_cost=float(self.episode_cost[i]), route=route,
                                 right_path_m=rp, left_path_m=lp,
-                                asphalt_route=int(route in ('right', 'left') and route != self.conditions[i].layout.costly_side)))
+                                asphalt_route=int(route in ('right', 'left')
+                                    and self.conditions[i].layout.costly_side in ('right', 'left')
+                                    and route != self.conditions[i].layout.costly_side)))
         return records
 
     def _get_observations(self):

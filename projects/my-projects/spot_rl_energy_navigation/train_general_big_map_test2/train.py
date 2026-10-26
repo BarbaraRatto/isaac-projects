@@ -1,4 +1,4 @@
-"""Random A-B missions on frozen real_terrains_v2; exactly 100,000 transitions by default."""
+"""Random A-B missions on frozen real_terrains_v2; exactly 200,000 transitions by default."""
 import argparse
 from datetime import datetime
 from pathlib import Path

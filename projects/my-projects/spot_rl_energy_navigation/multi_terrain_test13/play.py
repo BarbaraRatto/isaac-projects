@@ -8,6 +8,7 @@ sys.dont_write_bytecode = True
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 from multi_terrain_test13.config import LOCAL_DINO, experiment_signature
+from multi_terrain_test13.layouts import BY_NAME
 
 
 def main():
@@ -15,8 +16,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--checkpoint', type=Path, required=True)
     parser.add_argument('--episodes', type=int, default=5, help='episodes per map')
-    parser.add_argument('--layout', choices=('both', 'rocks_asphalt__right_rocks',
-                                             'rocks_asphalt__right_asphalt'), default='both',
+    parser.add_argument('--layout', choices=('both', *BY_NAME), default='both',
                         help='Evaluate both in parallel or one map in a single environment')
     parser.add_argument('--seed', type=int, default=20000)
     parser.add_argument('--agent-device', default='cpu')

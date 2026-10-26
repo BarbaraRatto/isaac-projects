@@ -42,13 +42,13 @@ def test_replicated_map_and_exact_budget():
     assert len(conditions) == 32
     assert len({c.layout.usd for c in conditions}) == 1
     assert all(c.layout.usd.is_file() for c in conditions)
-    remaining, lengths = 100000, []
+    remaining, lengths = 200000, []
     while remaining:
         steps = rollout_length(remaining, 32, 128)
         lengths.append(steps)
         remaining -= steps*32
-    assert lengths == [128]*24+[53]
-    assert sum(lengths)*32 == 100000
+    assert lengths == [128]*48+[106]
+    assert sum(lengths)*32 == 200000
     assert NAV_CFG.max_episode_steps == 450
 
 
@@ -262,4 +262,4 @@ def test_general_map_reward_components_and_energy_weight():
     torch.testing.assert_close(env.extras['reward_components'],
                                torch.tensor([[151.98, .2], [-301.02, .5]]))
     torch.testing.assert_close(result, torch.tensor([151.78, -301.52]))
-    assert PPO_CFG.timesteps == 100000
+    assert PPO_CFG.timesteps == 200000

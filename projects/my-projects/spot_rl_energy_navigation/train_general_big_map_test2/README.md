@@ -1,6 +1,6 @@
 # Navigazione su mappa grande — test 2
 
-Esperimento diagnostico da zero, con **100.000 transizioni aggregate**, 32 ambienti separati e missioni A–B indipendenti. La mappa è la copia congelata di `real_terrains_v2.usd` già usata nel test 1: nessuna rigenerazione. Sono inclusi mappa, PCA e banca di punti; robot, controllore locomotorio, camera e DINO usano gli asset locali del progetto.
+Esperimento diagnostico da zero, con **200.000 transizioni aggregate**, 32 ambienti separati e missioni A–B indipendenti. La mappa è la copia congelata di `real_terrains_v2.usd` già usata nel test 1: nessuna rigenerazione. Sono inclusi mappa, PCA e banca di punti; robot, controllore locomotorio, camera e DINO usano gli asset locali del progetto.
 
 ## Avvio
 
@@ -45,9 +45,9 @@ Lo yaw è campionato rispetto alla direzione A→B, non rispetto agli assi globa
 
 Una fase avanza solo dopo **due valutazioni consecutive con almeno l'80% di successi** (almeno 26/32). Niente avanzamento automatico al trascorrere delle transizioni. Dal livello 1, il 75% delle nuove missioni usa la fase corrente e il 25% una fase precedente scelta uniformemente.
 
-Valutazioni deterministiche ogni 10.000 transizioni, al termine del rollout: prima a 12.288, poi 20.480, 32.768, ecc., più quella finale a 100.000. Ogni valutazione contiene 32 episodi, uno per robot, **solo della fase corrente**; punti riservati alla valutazione e missioni riproducibili per fase. Non entrano nel buffer PPO né nelle statistiche di normalizzazione. Quando cambia la fase, cambia la difficoltà: non confrontare le percentuali come se fossero lo stesso test.
+Valutazioni deterministiche ogni 10.000 transizioni, al termine del rollout: prima a 12.288, poi 20.480, 32.768, ecc., più quella finale a 200.000. Ogni valutazione contiene 32 episodi, uno per robot, **solo della fase corrente**; punti riservati alla valutazione e missioni riproducibili per fase. Non entrano nel buffer PPO né nelle statistiche di normalizzazione. Quando cambia la fase, cambia la difficoltà: non confrontare le percentuali come se fossero lo stesso test.
 
-Con rollout 32×128=4.096, il budget comprende 24 rollout completi e uno da 53 passi vettoriali. Le transizioni di valutazione sono aggiuntive e richiedono tempo. **100.000 transizioni servono a verificare l'apprendimento iniziale**, non a completare tutte le otto fasi: con questa frequenza e due valutazioni per promozione non si possono raggiungere tutte entro il budget. Nessuna garanzia di policy generalistica a fine run.
+Con rollout 32×128=4.096, il budget comprende 48 rollout completi e uno da 106 passi vettoriali. Le transizioni di valutazione sono aggiuntive e richiedono tempo. **200.000 transizioni permettono una verifica dell'apprendimento più estesa**, ma il completamento delle otto fasi dipende dai successi ottenuti e non è garantito entro il budget. Nessuna garanzia di policy generalistica a fine run.
 
 ## Risultati e valutazione manuale
 

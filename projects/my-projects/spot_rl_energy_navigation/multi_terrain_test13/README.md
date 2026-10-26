@@ -1,5 +1,9 @@
 # Test 13: PPO con memoria RGB-D sulle mappe asfalto/rocce
 
+Tre nuove mappe per valutazione: `maps/new_map_1.usd`, `maps/new_map_2.usd`,
+`maps/new_map_3.usd`. Disposizioni e comandi in [maps/NEW_MAPS.md](maps/NEW_MAPS.md).
+`play_new_maps.sh` le valuta una dopo l'altra con lo stesso checkpoint.
+
 Da `my-projects`:
 
 ```bash

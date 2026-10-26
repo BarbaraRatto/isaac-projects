@@ -54,7 +54,17 @@ MIRRORED = Layout(
     USD_DIR / "rocks_left.usd", "left",
 )
 TRAIN_LAYOUTS = (ROCKS, MIRRORED)
-BY_NAME = {layout.name: layout for layout in TRAIN_LAYOUTS}
+# Held-out boards: these do not change training conditions or checkpoint identity.
+A, R, I = 't1_asphalt', 't5_large_rocks', 't2_slippery'
+TEST_LAYOUTS = (
+    Layout('new_map_1', ((A, R, R), (A, I, A), (A, R, A)),
+           USD_DIR / 'new_map_1.usd', 'both', split='test'),
+    Layout('new_map_2', ((A, R, A), (A, I, A), (R, R, A)),
+           USD_DIR / 'new_map_2.usd', 'both', split='test'),
+    Layout('new_map_3', ((A, R, A), (R, I, R), (A, A, A)),
+           USD_DIR / 'new_map_3.usd', 'both', split='test'),
+)
+BY_NAME = {layout.name: layout for layout in (*TRAIN_LAYOUTS, *TEST_LAYOUTS)}
 
 
 def training_conditions(num_envs: int = 32) -> tuple[Condition, ...]:

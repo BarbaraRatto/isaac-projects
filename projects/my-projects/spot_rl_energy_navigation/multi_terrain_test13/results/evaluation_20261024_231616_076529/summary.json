@@ -1,0 +1,120 @@
+{
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/runs/test13_ppo_20261023_122929_726370/policy_final.pt",
+  "seed": 20000,
+  "layout": "new_map_3",
+  "summary": {
+    "episodes": 5,
+    "successes": 0,
+    "success_rate": 0.0,
+    "mean_success_energy_j": null,
+    "mean_success_path_m": null,
+    "mean_success_seconds": null,
+    "outcomes": {
+      "goal": 0,
+      "fallen": 5,
+      "out_of_bounds": 0,
+      "timeout": 0
+    },
+    "by_layout": {
+      "new_map_3": {
+        "episodes": 5,
+        "success_rate": 0.0,
+        "mean_success_energy_j": null,
+        "routes": {
+          "right": 5,
+          "left": 0,
+          "mixed": 0,
+          "none": 0
+        },
+        "asphalt_route_rate": 0.0
+      }
+    }
+  },
+  "episodes": [
+    {
+      "env_id": 0,
+      "layout": "new_map_3",
+      "reason": "fallen",
+      "success": 0,
+      "steps": 15,
+      "energy_j": 789.9140625,
+      "path_m": 2.48529314994812,
+      "final_distance_m": 3.2353296279907227,
+      "nav_return": -293.0744323730469,
+      "energy_cost": 7.899139881134033,
+      "route": "right",
+      "right_path_m": 0.5723881721496582,
+      "left_path_m": 0.0,
+      "asphalt_route": 0,
+      "episode": 1
+    },
+    {
+      "env_id": 0,
+      "layout": "new_map_3",
+      "reason": "fallen",
+      "success": 0,
+      "steps": 16,
+      "energy_j": 843.8975830078125,
+      "path_m": 2.5355072021484375,
+      "final_distance_m": 3.289902925491333,
+      "nav_return": -293.1148681640625,
+      "energy_cost": 8.43897533416748,
+      "route": "right",
+      "right_path_m": 0.374989777803421,
+      "left_path_m": 0.0,
+      "asphalt_route": 0,
+      "episode": 2
+    },
+    {
+      "env_id": 0,
+      "layout": "new_map_3",
+      "reason": "fallen",
+      "success": 0,
+      "steps": 15,
+      "energy_j": 743.4061279296875,
+      "path_m": 2.591562032699585,
+      "final_distance_m": 3.226755380630493,
+      "nav_return": -293.1405029296875,
+      "energy_cost": 7.434060096740723,
+      "route": "right",
+      "right_path_m": 0.3725086450576782,
+      "left_path_m": 0.0,
+      "asphalt_route": 0,
+      "episode": 3
+    },
+    {
+      "env_id": 0,
+      "layout": "new_map_3",
+      "reason": "fallen",
+      "success": 0,
+      "steps": 16,
+      "energy_j": 769.1041259765625,
+      "path_m": 2.6274256706237793,
+      "final_distance_m": 3.2508280277252197,
+      "nav_return": -292.9653015136719,
+      "energy_cost": 7.691041946411133,
+      "route": "right",
+      "right_path_m": 0.5443623065948486,
+      "left_path_m": 0.0,
+      "asphalt_route": 0,
+      "episode": 4
+    },
+    {
+      "env_id": 0,
+      "layout": "new_map_3",
+      "reason": "fallen",
+      "success": 0,
+      "steps": 15,
+      "energy_j": 940.96337890625,
+      "path_m": 2.80114483833313,
+      "final_distance_m": 2.853839874267578,
+      "nav_return": -292.04876708984375,
+      "energy_cost": 9.40963363647461,
+      "route": "right",
+      "right_path_m": 0.18653683364391327,
+      "left_path_m": 0.0,
+      "asphalt_route": 0,
+      "episode": 5
+    }
+  ]
+}

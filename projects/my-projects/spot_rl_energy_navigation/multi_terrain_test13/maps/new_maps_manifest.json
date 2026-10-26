@@ -1,0 +1,250 @@
+{
+  "source": "rocks_right.usd",
+  "source_sha256": "0b22f449834ea64505dee3a1d5d584c9fc09f92b08f729e998aeaf91b2946e12",
+  "cell_size_m": 2,
+  "rows": "first row y=0; then y=2 and y=4",
+  "start_xy": [
+    0,
+    0
+  ],
+  "goal_xy": [
+    4,
+    4
+  ],
+  "maps": [
+    {
+      "name": "new_map_1",
+      "file": "new_map_1.usd",
+      "sha256": "921bc3ad3ddf52142f60b86e4274ce807826b27677b8921fd301344435d1a284",
+      "grid": [
+        [
+          "t1_asphalt",
+          "t5_large_rocks",
+          "t5_large_rocks"
+        ],
+        [
+          "t1_asphalt",
+          "t2_slippery",
+          "t1_asphalt"
+        ],
+        [
+          "t1_asphalt",
+          "t5_large_rocks",
+          "t1_asphalt"
+        ]
+      ],
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "terrain": "t1_asphalt",
+          "donor": "/World/Grid/Cell_0_0_t1_asphalt"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "terrain": "t5_large_rocks",
+          "donor": "/World/Grid/Cell_0_1_t5_large_rocks"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "terrain": "t5_large_rocks",
+          "donor": "/World/Grid/Cell_0_2_t5_large_rocks"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "terrain": "t1_asphalt",
+          "donor": "/World/Grid/Cell_1_0_t1_asphalt"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "terrain": "t2_slippery",
+          "donor": "/World/Grid/Cell_1_1_t2_slippery"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "terrain": "t1_asphalt",
+          "donor": "/World/Grid/Cell_2_0_t1_asphalt"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "terrain": "t1_asphalt",
+          "donor": "/World/Grid/Cell_2_1_t1_asphalt"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "terrain": "t5_large_rocks",
+          "donor": "/World/Grid/Cell_1_2_t5_large_rocks"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "terrain": "t1_asphalt",
+          "donor": "/World/Grid/Cell_2_2_t1_asphalt"
+        }
+      ]
+    },
+    {
+      "name": "new_map_2",
+      "file": "new_map_2.usd",
+      "sha256": "c3e51e8d13d275f719c28e260c91f13d39e6e6ced85c2d29eb34ae387dca7b02",
+      "grid": [
+        [
+          "t1_asphalt",
+          "t5_large_rocks",
+          "t1_asphalt"
+        ],
+        [
+          "t1_asphalt",
+          "t2_slippery",
+          "t1_asphalt"
+        ],
+        [
+          "t5_large_rocks",
+          "t5_large_rocks",
+          "t1_asphalt"
+        ]
+      ],
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "terrain": "t1_asphalt",
+          "donor": "/World/Grid/Cell_0_0_t1_asphalt"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "terrain": "t5_large_rocks",
+          "donor": "/World/Grid/Cell_0_1_t5_large_rocks"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "terrain": "t1_asphalt",
+          "donor": "/World/Grid/Cell_1_0_t1_asphalt"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "terrain": "t1_asphalt",
+          "donor": "/World/Grid/Cell_2_0_t1_asphalt"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "terrain": "t2_slippery",
+          "donor": "/World/Grid/Cell_1_1_t2_slippery"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "terrain": "t1_asphalt",
+          "donor": "/World/Grid/Cell_2_1_t1_asphalt"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "terrain": "t5_large_rocks",
+          "donor": "/World/Grid/Cell_0_2_t5_large_rocks"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "terrain": "t5_large_rocks",
+          "donor": "/World/Grid/Cell_1_2_t5_large_rocks"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "terrain": "t1_asphalt",
+          "donor": "/World/Grid/Cell_2_2_t1_asphalt"
+        }
+      ]
+    },
+    {
+      "name": "new_map_3",
+      "file": "new_map_3.usd",
+      "sha256": "e02299df158224555833aa1ab1bfc15ee7b2ce577f84996de358b849cde99d5a",
+      "grid": [
+        [
+          "t1_asphalt",
+          "t5_large_rocks",
+          "t1_asphalt"
+        ],
+        [
+          "t5_large_rocks",
+          "t2_slippery",
+          "t5_large_rocks"
+        ],
+        [
+          "t1_asphalt",
+          "t1_asphalt",
+          "t1_asphalt"
+        ]
+      ],
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "terrain": "t1_asphalt",
+          "donor": "/World/Grid/Cell_0_0_t1_asphalt"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "terrain": "t5_large_rocks",
+          "donor": "/World/Grid/Cell_0_1_t5_large_rocks"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "terrain": "t1_asphalt",
+          "donor": "/World/Grid/Cell_1_0_t1_asphalt"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "terrain": "t5_large_rocks",
+          "donor": "/World/Grid/Cell_0_2_t5_large_rocks"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "terrain": "t2_slippery",
+          "donor": "/World/Grid/Cell_1_1_t2_slippery"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "terrain": "t5_large_rocks",
+          "donor": "/World/Grid/Cell_1_2_t5_large_rocks"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "terrain": "t1_asphalt",
+          "donor": "/World/Grid/Cell_2_0_t1_asphalt"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "terrain": "t1_asphalt",
+          "donor": "/World/Grid/Cell_2_1_t1_asphalt"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "terrain": "t1_asphalt",
+          "donor": "/World/Grid/Cell_2_2_t1_asphalt"
+        }
+      ]
+    }
+  ]
+}
