@@ -1,11 +1,14 @@
 """Read-only references to existing robot, camera, locomotion and terrain assets."""
 
+import os
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 ROBOT_USD = PROJECT_ROOT / "IsaacRobotics" / "assets" / "spot.usd"
 POLICY_WEIGHTS = PROJECT_ROOT / "IsaacRobotics" / "policies" / "spot" / "models" / "spot_policy.pt"
-ZED_USD = Path("/home/isaac/isaac-sim/assets/Assets/Isaac/5.1/Isaac/Sensors/Stereolabs/ZED_X/ZED_X.usdc")
+_LOCAL_ZED = PROJECT_ROOT / ".cloud_assets" / "ZED_X.usdc"
+_ORIGINAL_ZED = Path("/home/isaac/isaac-sim/assets/Assets/Isaac/5.1/Isaac/Sensors/Stereolabs/ZED_X/ZED_X.usdc")
+ZED_USD = Path(os.environ.get("SPOT_ZED_USD", str(_LOCAL_ZED if _LOCAL_ZED.is_file() else _ORIGINAL_ZED)))
 ZED_CAMERA_PRIM = "/Root/base_link/ZED_X/CameraRight"
 
 

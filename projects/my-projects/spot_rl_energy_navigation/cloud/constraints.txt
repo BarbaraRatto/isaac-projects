@@ -1,0 +1,6 @@
+numpy==1.26.4
+torch==2.7.0
+torchvision==0.22.0
+transformers==5.8.1
+opencv-python-headless==4.11.0.86
+safetensors==0.7.0

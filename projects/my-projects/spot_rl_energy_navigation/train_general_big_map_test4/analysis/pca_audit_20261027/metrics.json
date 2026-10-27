@@ -1,0 +1,83 @@
+{
+  "pca_sha256": "bd2a8622ea2266604f1b9088e9b939f065b42b9204b0f6f252db0a107aadcf5e",
+  "original_metadata": {
+    "identity": {
+      "dino": {
+        "config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d",
+        "preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+        "model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1"
+      },
+      "input_size": 518,
+      "resize": "opencv_linear_square_no_crop",
+      "terrain": {
+        "rocks_gravel__right_rocks": "44faa502e7681a0b6130789257bb84e8a65e07e2ba936034f01a88b695125dff",
+        "rocks_gravel__right_gravel": "74018f3897fec0b5b78e737710023ec5e6c2460615669ce2ce1169100d394f18"
+      }
+    },
+    "seed": 123,
+    "collect_steps": 1500,
+    "samples_seen": {
+      "0": 28051,
+      "1": 32118,
+      "3": 46515,
+      "4": 53961
+    },
+    "reservoir_counts": {
+      "0": 10000,
+      "1": 10000,
+      "3": 10000,
+      "4": 10000
+    },
+    "fitted_per_terrain": 10000,
+    "fit_samples": 40000,
+    "whitening": false,
+    "dataset": "scripted_small_mirrored_boards"
+  },
+  "original_variance_retained": 0.8193423155418326,
+  "diagnostic_dataset": "extracted_features_comparison_v2/data/features/pilot_01",
+  "frames": 70,
+  "records": 149,
+  "per_material": {
+    "asphalt": {
+      "samples": 2731,
+      "centered_variance_retained": 0.6300099715827469,
+      "calibration_center_retained": 0.6541725341837861
+    },
+    "ice": {
+      "samples": 2952,
+      "centered_variance_retained": 0.7245492592195811,
+      "calibration_center_retained": 0.7234641371973829
+    },
+    "ramp": {
+      "samples": 2847,
+      "centered_variance_retained": 0.5697159251711337,
+      "calibration_center_retained": 0.5309717541635077
+    },
+    "gravel": {
+      "samples": 2826,
+      "centered_variance_retained": 0.6840704238481238,
+      "calibration_center_retained": 0.664595400571938
+    },
+    "rocks": {
+      "samples": 2980,
+      "centered_variance_retained": 0.6653734036725226,
+      "calibration_center_retained": 0.7210796476024237
+    },
+    "obstacles": {
+      "samples": 2807,
+      "centered_variance_retained": 0.5292535127923352,
+      "calibration_center_retained": 0.48046303660980166
+    },
+    "stairs": {
+      "samples": 3407,
+      "centered_variance_retained": 0.42159050556206945,
+      "calibration_center_retained": 0.3982116884700658
+    }
+  },
+  "all_materials": {
+    "samples": 20550,
+    "centered_variance_retained": 0.5889077228461167,
+    "calibration_center_retained": 0.5776191708302437
+  },
+  "limitation": "Existing pilot on donor cells from real_terrains.usd, not current real_terrains_v2. No refitting; all acquisition splits pooled for descriptive audit only. Patch samples are correlated; these are not classification or navigation scores."
+}

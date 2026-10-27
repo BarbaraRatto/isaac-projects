@@ -1,0 +1,5 @@
+# Keep the simulator stack separate from the system/template Python.
+numpy==1.26.4
+transformers==5.8.1
+opencv-python-headless==4.11.0.86
+safetensors==0.7.0

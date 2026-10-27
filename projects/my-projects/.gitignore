@@ -18,3 +18,9 @@ checkpoints/
 # Python
 __pycache__/
 *.pyc
+
+# Local cloud installation and portable training packages
+.spot-runtime/
+.cloud_assets/
+spot_rl_energy_navigation/cloud/env.sh
+spot_rl_energy_navigation/cloud/dist/
