@@ -1,0 +1,38 @@
+{
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test6_SAC/runs/general_map_test6_sac_20261029_001023_953670/policy_final.pt",
+  "replay": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test6_SAC/runs/general_map_test6_sac_20261029_001023_953670/replay_300000.npz",
+  "seed": 42,
+  "eligible": 60447,
+  "sampled": 512,
+  "conditions": {
+    "original": [],
+    "yaw_rate_zero": [
+      7
+    ],
+    "previous_yaw_action_zero": [
+      12
+    ],
+    "both_zero": [
+      7,
+      12
+    ]
+  },
+  "paired_left_minus_right_by_condition": {
+    "original": {
+      "mean": 0.8973472714424133,
+      "positive_fraction": 0.99609375
+    },
+    "yaw_rate_zero": {
+      "mean": 0.7549497485160828,
+      "positive_fraction": 0.998046875
+    },
+    "previous_yaw_action_zero": {
+      "mean": 0.7925171256065369,
+      "positive_fraction": 0.99609375
+    },
+    "both_zero": {
+      "mean": 0.6692637801170349,
+      "positive_fraction": 0.998046875
+    }
+  }
+}

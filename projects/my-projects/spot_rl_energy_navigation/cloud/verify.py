@@ -57,11 +57,19 @@ def verify_bundle(project):
 
 
 def verify_runtime():
+    import ctypes
     import importlib.metadata as metadata
+    # Report these prerequisites before a missing renderer library causes a
+    # native crash or Kit discovers a missing core HDF5 dependency at startup.
+    ctypes.CDLL("libGLU.so.1")
+    import h5py
+    import hydra
     import torch
     import cv2
     from transformers import AutoImageProcessor, AutoModel
 
+    if torch.version.cuda != "12.8":
+        raise RuntimeError(f"Expected the cu128 PyTorch build, got torch={torch.__version__}, CUDA={torch.version.cuda}. Rerun the updated setup.")
     if not torch.cuda.is_available():
         raise RuntimeError("PyTorch cannot access CUDA. Check the rented instance/host driver.")
     name = torch.cuda.get_device_name(0)
@@ -109,5 +117,5 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except (OSError, ValueError, RuntimeError) as error:
+    except (OSError, ValueError, RuntimeError, ImportError) as error:
         sys.exit(f"[ERROR] {error}")

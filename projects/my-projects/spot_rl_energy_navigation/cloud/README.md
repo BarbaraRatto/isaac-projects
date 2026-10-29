@@ -5,12 +5,24 @@ esperimenti successivi che usano lo stesso stack. Non modifica il Python della
 macchina, non installa driver e non avvia il training completo.
 
 Versioni: Python 3.11, Isaac Sim 5.1.0, Isaac Lab v2.3.0, PyTorch 2.7.0 CUDA 12.8,
-torchvision 0.22.0, NumPy 1.26.4. Transformers 5.8.1 e safetensors 0.7.0 sono le
+torchvision 0.22.0, NumPy 1.26.0 (richiesto da isaacsim-kernel 5.1.0). Transformers 5.8.1 e safetensors 0.7.0 sono le
 versioni rilevate nell'installazione originale; i pesi DINO sono copiati e
 controllati contro gli hash della PCA. La procedura segue
 [Isaac Lab 2.3](https://isaac-sim.github.io/IsaacLab/v2.3.0/source/setup/installation/pip_installation.html).
 Le dipendenze transitive risolte vengono registrate in
 `.spot-runtime/requirements-resolved.txt`; non sono tutte bloccate a priori.
+
+PyTorch, torchvision e torchaudio vengono installati esplicitamente nelle build
+`2.7.0+cu128`, `0.22.0+cu128`, `2.7.0+cu128`, prima di Isaac Sim. La versione
+`torch==2.7.0` senza suffisso accetta anche la build CUDA 12.6, che non esegue
+i kernel sulla RTX 5090. Il setup protegge inoltre i pin di Isaac Sim
+`packaging==23.0` e `click==8.1.7`, selezionando versioni compatibili di wheel,
+Typer e Hugging Face Hub. `pip check` deve passare prima delle prove runtime.
+Il setup include `libglu1-mesa` per il renderer e tutti i pacchetti base di
+Isaac Lab caricati dall'experience Kit (core, assets, RL, tasks e mimic), senza
+framework RL opzionali. Il pacchetto RL base fornisce anche h5py e Hydra,
+importati indirettamente dal framework. GLU/h5py/Hydra sono verificati prima
+di avviare il simulatore.
 
 ## 1. Preparazione sulla macchina originale
 

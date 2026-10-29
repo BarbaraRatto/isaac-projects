@@ -1,0 +1,27 @@
+{
+  "seed": 42,
+  "sources": {
+    "100k": {
+      "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test6_SAC/runs/general_map_test6_sac_20261028_201519_133017/policy_final.pt",
+      "replay": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test6_SAC/runs/general_map_test6_sac_20261028_201519_133017/replay_100000.npz",
+      "transitions": 100000,
+      "eligible": 63731,
+      "sampled": 512
+    },
+    "300k": {
+      "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test6_SAC/runs/general_map_test6_sac_20261029_001023_953670/policy_final.pt",
+      "replay": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test6_SAC/runs/general_map_test6_sac_20261029_001023_953670/replay_300000.npz",
+      "transitions": 300000,
+      "eligible": 60447,
+      "sampled": 512
+    }
+  },
+  "actor": "300k",
+  "conditions": [
+    "baseline_300k",
+    "goal_100k",
+    "other_state_100k",
+    "gridmap_100k",
+    "all_100k"
+  ]
+}

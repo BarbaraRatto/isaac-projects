@@ -81,7 +81,7 @@ if [[ "$SKIP_APT" == 0 ]]; then
     "${APT_PREFIX[@]}" apt-get update
     "${APT_PREFIX[@]}" env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         ca-certificates curl git build-essential cmake pkg-config \
-        libgl1 libegl1 libglib2.0-0 libgomp1 libvulkan1 vulkan-tools \
+        libgl1 libglu1-mesa libegl1 libglib2.0-0 libgomp1 libvulkan1 vulkan-tools \
         libx11-6 libxext6 libxrender1 libxi6 libxrandr2 libxinerama1 libxcursor1 \
         libsm6 libice6 libxt6 libnss3 "$ALSA_PACKAGE" libatomic1 \
         libxkbcommon0 libxkbcommon-x11-0 libxcb-cursor0 tmux
@@ -100,8 +100,11 @@ export PATH="$RUNTIME/venv/bin:$PATH"
 PY="$RUNTIME/venv/bin/python"
 "$PY" -c 'import sys; assert sys.version_info[:2] == (3, 11), sys.version'
 "$PY" -m pip install 'pip<26' 'setuptools<81' wheel toml
+# Select the CUDA build explicitly BEFORE Sim can pull the default PyPI build.
+# Version 2.7.0 alone also matches the cu126 build, which cannot run on RTX 5090.
+"$PY" -m pip install 'torch==2.7.0+cu128' 'torchvision==0.22.0+cu128' \
+    'torchaudio==2.7.0+cu128' --index-url https://download.pytorch.org/whl/cu128
 "$PY" -m pip install 'isaacsim[all,extscache]==5.1.0' --extra-index-url https://pypi.nvidia.com
-"$PY" -m pip install torch==2.7.0 torchvision==0.22.0 --index-url https://download.pytorch.org/whl/cu128
 LAB="$RUNTIME/IsaacLab"
 if [[ ! -d "$LAB" ]]; then
     git clone --depth 1 --branch v2.3.0 https://github.com/isaac-sim/IsaacLab.git "$LAB"
@@ -109,11 +112,17 @@ fi
 [[ "$(git -C "$LAB" describe --tags --exact-match HEAD)" == v2.3.0 ]] || {
     echo 'Existing IsaacLab checkout is not v2.3.0; use a fresh --runtime-dir.'; exit 1;
 }
-# Only the core framework and robot assets are needed by this project's custom PPO.
+# The default Kit experience also loads tasks; the RL base package supplies
+# h5py/hydra and other dependencies imported transitively by the core framework.
+# No optional learning-framework extras are installed for this project's custom PPO.
 # Build dependencies must be present because Isaac Lab uses setup.py + toml.
 "$PY" -m pip install --no-build-isolation \
+    'isaacsim[all,extscache]==5.1.0' --extra-index-url https://pypi.nvidia.com \
     -e "$LAB/source/isaaclab" -e "$LAB/source/isaaclab_assets" \
+    -e "$LAB/source/isaaclab_rl" -e "$LAB/source/isaaclab_tasks" \
+    -e "$LAB/source/isaaclab_mimic" \
     -r "$HERE/requirements.txt"
+"$PY" -m pip check
 cat > "$RUNTIME/isaaclab-python.sh" <<'WRAPPER'
 #!/usr/bin/env bash
 set -euo pipefail
