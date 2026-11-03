@@ -2,8 +2,10 @@
 """Check transferred inputs before any large download, then optionally CUDA/DINO/PCA."""
 import argparse
 import hashlib
+import importlib
 import json
 import os
+import re
 from pathlib import Path
 import sys
 
@@ -20,22 +22,45 @@ def sha256(path):
     return digest.hexdigest()
 
 
-def verify_files(project, zed=None):
+def selected_experiment(project, explicit=None):
+    name = explicit
+    manifest = project / 'spot_rl_energy_navigation/cloud/bundle-manifest.json'
+    if name is None and manifest.is_file():
+        bundle = json.loads(manifest.read_text())
+        name = bundle.get('primary_experiment') or (bundle.get('experiments') or [EXPERIMENT])[0]
+    name = name or EXPERIMENT
+    if not re.fullmatch(r'[a-zA-Z0-9_-]+', name):
+        raise ValueError(f'Invalid experiment name: {name}')
+    return name
+
+
+def verify_files(project, zed=None, experiment=None):
     nav = project / "spot_rl_energy_navigation"
-    experiment = nav / EXPERIMENT
+    experiment = nav / selected_experiment(project, experiment)
     dino = nav / "extracted_features_comparison_v2/models/dinov2"
     zed = zed or Path(os.environ.get("SPOT_ZED_USD", str(project / ".cloud_assets/ZED_X.usdc")))
     required = [project / "IsaacRobotics/assets/spot.usd",
                 project / "IsaacRobotics/policies/spot/models/spot_policy.pt", zed,
-                experiment / "train.py", experiment / "artifacts/pca32.npz",
+                experiment / "train.py",
                 experiment / "artifacts/manifest.json"]
     missing = [str(path) for path in required if not path.is_file()]
     if missing:
         raise FileNotFoundError("Missing files. Create/upload the portable package first:\n" + "\n".join(missing))
-    identity = json.loads((experiment / "artifacts/manifest.json").read_text())["identity"]
+    manifest = json.loads((experiment / "artifacts/manifest.json").read_text())
+    identity = manifest['identity']
+    pca = experiment / manifest.get('pca_source', 'artifacts/pca32.npz')
+    if not pca.resolve().is_relative_to(experiment.resolve()) or not pca.is_file():
+        raise FileNotFoundError(f'Missing/invalid frozen PCA: {pca}')
     checks = {dino / name: digest for name, digest in identity["dino"].items()}
     checks.update({experiment / "artifacts" / name: digest for name, digest in identity["missions"].items()})
     checks.update({experiment / "maps" / (name + ".usd"): digest for name, digest in identity["terrain"].items()})
+    if manifest.get('pca_sha256'):
+        checks[pca] = manifest['pca_sha256']
+    for name, digest in manifest.get('portable_texture_sha256', {}).items():
+        path = project/name
+        if not path.resolve().is_relative_to(project.resolve()):
+            raise ValueError(f'Invalid texture path: {name}')
+        checks[path] = digest
     for path, digest in checks.items():
         if not path.is_file() or sha256(path) != digest:
             raise ValueError(f"Missing or changed frozen input: {path}")
@@ -56,7 +81,7 @@ def verify_bundle(project):
     print(f"[OK] Package checksums: {len(manifest['files'])} files.", flush=True)
 
 
-def verify_runtime():
+def verify_runtime(experiment=None):
     import ctypes
     import importlib.metadata as metadata
     # Report these prerequisites before a missing renderer library causes a
@@ -80,15 +105,19 @@ def verify_runtime():
     assert (value @ value).sum().item() == 64**3
     print(f"[OK] CUDA kernel on {name}; {torch.cuda.get_device_properties(0).total_memory / 1024**3:.1f} GiB VRAM.")
     sys.path.insert(0, str(HERE.parent))
-    from train_general_big_map_test3.config import LOCAL_DINO, DEFAULT_PCA
-    from train_general_big_map_test3.artifacts import source_identity, pca_compatible
-    from train_general_big_map_test3.perception import FrozenPCA
-    identity = source_identity(LOCAL_DINO)
-    pca = FrozenPCA.load(DEFAULT_PCA)
-    if not pca_compatible(pca.metadata.get("identity", {}), identity):
+    experiment = selected_experiment(PROJECT, experiment)
+    config = importlib.import_module(experiment+'.config')
+    artifacts = importlib.import_module(experiment+'.artifacts')
+    perception = importlib.import_module(experiment+'.perception')
+    identity = artifacts.source_identity(config.LOCAL_DINO)
+    pca = perception.FrozenPCA.load(config.DEFAULT_PCA)
+    if not artifacts.pca_compatible(pca.metadata.get("identity", {}), identity):
         raise ValueError("Frozen PCA and DINO weights/preprocessing do not match.")
-    processor = AutoImageProcessor.from_pretrained(str(LOCAL_DINO), local_files_only=True)
-    model = AutoModel.from_pretrained(str(LOCAL_DINO), local_files_only=True).to("cuda").eval()
+    calibration_name = experiment+'.calibration'
+    if importlib.util.find_spec(calibration_name) is not None:
+        importlib.import_module(calibration_name).validate_calibration(pca, identity)
+    processor = AutoImageProcessor.from_pretrained(str(config.LOCAL_DINO), local_files_only=True)
+    model = AutoModel.from_pretrained(str(config.LOCAL_DINO), local_files_only=True).to("cuda").eval()
     import numpy as np
     inputs = processor(images=np.zeros((518, 518, 3), dtype=np.uint8), return_tensors="pt",
                        do_resize=False, do_center_crop=False).to("cuda")
@@ -106,12 +135,18 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--runtime", action="store_true")
     parser.add_argument("--check-bundle", action="store_true")
+    parser.add_argument('--experiment', help='default: primary experiment in the package manifest')
+    parser.add_argument('--print-experiment', action='store_true', help='print only the selected experiment name')
     args = parser.parse_args()
-    verify_files(PROJECT)
+    experiment = selected_experiment(PROJECT, args.experiment)
+    if args.print_experiment:
+        print(experiment)
+        return
+    verify_files(PROJECT, experiment=experiment)
     if args.check_bundle:
         verify_bundle(PROJECT)
     if args.runtime:
-        verify_runtime()
+        verify_runtime(experiment)
 
 
 if __name__ == "__main__":

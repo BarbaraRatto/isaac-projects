@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+import subprocess
 from unittest.mock import patch
 
 import package
@@ -93,6 +94,52 @@ class CloudInputTests(unittest.TestCase):
         manifest.write_text(json.dumps({"files": {"../../etc/passwd": hashlib.sha256(b"").hexdigest()}}))
         with self.assertRaisesRegex(ValueError, "Invalid manifest"):
             verify.verify_bundle(self.root)
+
+    def test_test9_selection_pca_and_textures_without_test3(self):
+        name = 'train_general_big_map_test9_SAC'
+        new = self.nav/name
+        self.exp.rename(new)
+        (new/'artifacts/pca32.npz').rename(new/'artifacts/pca32_big_map.npz')
+        manifest_path = new/'artifacts/manifest.json'
+        manifest = json.loads(manifest_path.read_text())
+        manifest['pca_source'] = 'artifacts/pca32_big_map.npz'
+        manifest['pca_sha256'] = verify.sha256(new/'artifacts/pca32_big_map.npz')
+        texture = self.root/'terrain_generator/textures/test.png'
+        self.write(texture)
+        manifest['portable_texture_sha256'] = {'terrain_generator/textures/test.png':verify.sha256(texture)}
+        manifest_path.write_text(json.dumps(manifest))
+        (self.cloud/'bundle-manifest.json').write_text(json.dumps({'primary_experiment':name}))
+        self.assertEqual(verify.selected_experiment(self.root), name)
+        verify.verify_files(self.root)
+        texture.unlink()
+        with self.assertRaisesRegex(ValueError, 'changed frozen input'):
+            verify.verify_files(self.root)
+        with self.assertRaisesRegex(ValueError, 'Invalid experiment'):
+            verify.selected_experiment(self.root, '../../outside')
+
+    def test_setup_check_only_uses_selected_experiment_without_installing(self):
+        source = Path(__file__).parent
+        (self.cloud/'setup.sh').write_bytes((source/'setup.sh').read_bytes())
+        (self.cloud/'verify.py').write_bytes((source/'verify.py').read_bytes())
+        result = subprocess.run(['bash',str(self.cloud/'setup.sh'),'--check-only'],
+                                capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout+result.stderr)
+        self.assertFalse((self.root/'.spot-runtime').exists())
+
+    def test_start_helper_keeps_default_training_and_creates_new_resume_run(self):
+        source = Path(__file__).parent
+        (self.root/'start_test9.sh').write_bytes((source/'start_test9.sh').read_bytes())
+        self.write(self.cloud/'env.sh', b'# test only\n')
+        (self.cloud/'run.sh').write_text('#!/usr/bin/env bash\nprintf "%s\\n" "$@"\n')
+        runs = self.root/'persistent runs'
+        result = subprocess.run(['bash',str(self.root/'start_test9.sh'),str(runs),
+                                 '--resume','/old/run','--timesteps','1500000'], capture_output=True, text=True)
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertIn('train_general_big_map_test9_SAC', result.stdout)
+        self.assertIn('--resume\n/old/run\n', result.stdout)
+        target = Path((runs/'latest_run.txt').read_text().strip())
+        self.assertEqual(target.parent,runs)
+        self.assertNotEqual(target,Path('/old/run'))
 
 
 if __name__ == "__main__":

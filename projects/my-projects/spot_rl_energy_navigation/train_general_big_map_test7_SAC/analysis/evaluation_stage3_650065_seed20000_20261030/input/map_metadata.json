@@ -1,0 +1,85 @@
+{
+  "grid": [
+    [
+      "t1_asphalt",
+      "t3_ramp",
+      "t6_obstacles",
+      "t1_asphalt",
+      "t1_asphalt",
+      "t5_large_rocks",
+      "t7_stairs"
+    ],
+    [
+      "t3_ramp",
+      "t7_stairs",
+      "t2_slippery",
+      "t2_slippery",
+      "t2_slippery",
+      "t5_large_rocks",
+      "t6_obstacles"
+    ],
+    [
+      "t4_fine_gravel",
+      "t5_large_rocks",
+      "t3_ramp",
+      "t5_large_rocks",
+      "t7_stairs",
+      "t3_ramp",
+      "t7_stairs"
+    ],
+    [
+      "t6_obstacles",
+      "t7_stairs",
+      "t4_fine_gravel",
+      "t3_ramp",
+      "t6_obstacles",
+      "t4_fine_gravel",
+      "t7_stairs"
+    ],
+    [
+      "t5_large_rocks",
+      "t2_slippery",
+      "t4_fine_gravel",
+      "t1_asphalt",
+      "t5_large_rocks",
+      "t1_asphalt",
+      "t1_asphalt"
+    ],
+    [
+      "t6_obstacles",
+      "t2_slippery",
+      "t3_ramp",
+      "t7_stairs",
+      "t5_large_rocks",
+      "t3_ramp",
+      "t4_fine_gravel"
+    ],
+    [
+      "t4_fine_gravel",
+      "t6_obstacles",
+      "t1_asphalt",
+      "t2_slippery",
+      "t4_fine_gravel",
+      "t2_slippery",
+      "t6_obstacles"
+    ]
+  ],
+  "cell_width_m": 6.0,
+  "cell_height_m": 3.0,
+  "bounds_min": [
+    -3.0,
+    -1.5,
+    -1.0
+  ],
+  "bounds_max": [
+    39.0,
+    19.5,
+    0.2800000011920929
+  ],
+  "usd_sha256": "3656ff462e51ef6935e3d572834965a39bdf9345f9ecdfc1af509a665903925c",
+  "points": 4200,
+  "train_points": 3360,
+  "evaluation_points": 840,
+  "local_checks": "11x11 footprint samples, 0.55 m half-width, relief <= 0.16 m; not a traversal guarantee",
+  "reachability_checked": false
+}

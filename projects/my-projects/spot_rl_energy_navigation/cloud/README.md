@@ -56,8 +56,10 @@ non sostituisce i pesi con revisioni nuove scaricate da Internet.
 
 - Linux Ubuntu 22.04/24.04 **x86_64**, con Python 3, root o sudo senza password.
 - Una GPU RTX: L40S o RTX 6000 Ada da 48 GB sono il profilo iniziale previsto.
-- Driver host compatibile con Isaac Sim 5.1 e CUDA 12.8 (scegliere un host con
-  driver NVIDIA recente, ad esempio ramo 580 o successivo).
+- Driver host compatibile con Isaac Sim 5.1 e CUDA 12.8: il riferimento testato
+  da NVIDIA per Isaac Sim 5.1 su Linux è **580.65.06**. Un driver più recente
+  non garantisce compatibilità: sul precedente host con 615.71.09 anche il
+  test minimo di Isaac Sim terminava nel renderer RTX con segmentation fault.
 - Come punto di partenza, 64 GB RAM e almeno 150 GB di disco libero per ambiente,
   download, cache e risultati; riservare ulteriore spazio per training lunghi.
 - Il template/container deve esporre anche **graphics**, oltre a compute/utility.
@@ -128,6 +130,35 @@ test sulla macchina di sviluppo.
 
 ## 4. Training attuali e successivi
 
+Il pacchetto `spot-cloud-training-tests3-7-20261029.tar.gz` contiene test3,
+test4, test5, test6_SAC e test7_SAC, inclusi i file locali non ancora in Git.
+Per rigenerare lo stesso insieme di esperimenti dalla macchina originale:
+
+```bash
+python3 spot_rl_energy_navigation/cloud/package.py \
+  --experiment train_general_big_map_test3 \
+  --experiment train_general_big_map_test4 \
+  --experiment train_general_big_map_test5 \
+  --experiment train_general_big_map_test6_SAC \
+  --experiment train_general_big_map_test7_SAC \
+  --output spot_rl_energy_navigation/cloud/dist/spot-cloud-training-tests3-7-20261029.tar.gz
+```
+
+Estrai questo archivio in una directory nuova. Il setup resta unico per tutti
+gli esperimenti ed esegue il probe del test3. Per provare il più recente:
+
+```bash
+bash spot_rl_energy_navigation/cloud/run.sh train_general_big_map_test7_SAC --probe-steps 2
+```
+
+Per avviare il training completo, togli `--probe-steps 2`. Per gli altri test,
+sostituisci il nome con `train_general_big_map_test6_SAC`,
+`train_general_big_map_test5`, `train_general_big_map_test4` oppure
+`train_general_big_map_test3`. Esegui un training alla volta sulla GPU.
+I launcher dei test4–7 controllano la PCA esistente e, se necessario, eseguono
+la calibrazione prima del training. L'archivio include le PCA locali e gli
+artefatti disponibili, ma non checkpoint dei training precedenti o risultati.
+
 Dalla directory del progetto:
 
 ```bash
@@ -179,3 +210,24 @@ bash spot_rl_energy_navigation/cloud/run.sh train_general_big_map_test3
 I risultati restano nelle cartelle `runs/` degli esperimenti: copiali fuori
 dall'istanza prima di eliminarla. Il setup non sincronizza automaticamente i run
 e non allena nuovi algoritmi o dipendenze future senza aggiornare i requisiti.
+
+
+## Pacchetto completo test 9 SAC
+
+Per il nuovo test usare la guida [CLOUD_TEST9.md](CLOUD_TEST9.md), inclusa anche
+come `LEGGIMI_TEST9.md` nella radice dell'archivio. Un unico
+`dist/spot-test9-sac-cloud.tar.gz` contiene progetto e texture; gli archivi di
+correzione del test 7 non servono. Il setup legge l'esperimento principale dal
+manifest e usa il test 9 per verifiche e probe (due robot, nessun training).
+
+Per rigenerare il pacchetto sulla macchina originale, senza SimulationApp:
+
+```bash
+/home/isaac/isaaclab/2.3.0/_isaac_sim/python.sh \
+  spot_rl_energy_navigation/cloud/package_test9.py
+```
+
+Il packager normalizza soltanto i percorsi delle texture del test 9, aggiorna
+le identità e conserva la stessa mappa portabile localmente e nel pacchetto.
+Rifiuta una prima conversione se esistono già checkpoint del test 9.
+La PCA originale non viene ricalcolata né riscritta.

@@ -1,0 +1,18 @@
+ANALISI TEST7 SAC
+
+Apri mappa_percorsi.png per vedere tutti i percorsi.
+Apri percorsi_per_episodio.pdf per vedere ogni episodio separato.
+Apri diagnostica_episodi.pdf per confrontare percorso, distanza e inclinazione.
+REPORT.md contiene risultati e limiti; riepilogo_episodi.csv si apre anche con Excel.
+input/ contiene i dati forniti e i metadati della mappa locale congelata.
+
+Per rigenerare i grafici, da questa cartella (Python 3 con numpy e matplotlib):
+python -m pip install numpy matplotlib
+python analyze_paths.py input --map-metadata input/map_metadata.json --output grafici
+
+Per altre valutazioni della stessa mappa:
+python analyze_paths.py PERCORSO_CARTELLA_RISULTATI --map-metadata input/map_metadata.json --output grafici_nuovi
+
+Non servono Isaac Sim o una GPU. Per mappe diverse usare i relativi metadati.
+La cartella dei risultati deve contenere episodes.csv, trajectories.csv,
+fall_diagnostics.csv e summary.json prodotti dalla valutazione test7.

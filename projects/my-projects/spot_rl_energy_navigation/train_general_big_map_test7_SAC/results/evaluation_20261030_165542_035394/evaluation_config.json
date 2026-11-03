@@ -1,0 +1,12 @@
+{
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test7_SAC/checkpoints_importati/policy_best_stage_3.pt",
+  "seed": 20000,
+  "requested_stage": 3,
+  "episodes": 10,
+  "num_envs": 1,
+  "map_backend": "cuda",
+  "goal_scaling": {
+    "mode": "fixed_scale",
+    "scale_m": 10.0
+  }
+}

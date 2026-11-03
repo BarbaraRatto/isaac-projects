@@ -1,0 +1,95 @@
+{
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test7_SAC/checkpoints_importati/policy_best_stage_3.pt",
+  "seed": 78692,
+  "num_envs": 1,
+  "goal_scaling": {
+    "mode": "fixed_scale",
+    "scale_m": 10.0
+  },
+  "summary": {
+    "stage": 4,
+    "stage_name": "tutti i terreni ammessi 12\u201320 m",
+    "episodes": 1,
+    "successes": 0,
+    "success_rate": 0.0,
+    "mean_success_energy_j": null,
+    "mean_success_path_m": null,
+    "mean_success_seconds": null,
+    "outcomes": {
+      "goal": 0,
+      "fallen": 1,
+      "out_of_bounds": 0,
+      "timeout": 0,
+      "alignment_timeout": 0
+    },
+    "alignment_success_rate": 1.0,
+    "mean_alignment_energy_j": 57.541507720947266,
+    "mean_alignment_seconds": 0.6000000000000001,
+    "by_band": {
+      "4": {
+        "episodes": 1,
+        "success_rate": 0.0,
+        "mean_success_energy_j": null,
+        "mean_success_path_m": null,
+        "outcomes": {
+          "goal": 0,
+          "fallen": 1,
+          "out_of_bounds": 0,
+          "timeout": 0,
+          "alignment_timeout": 0
+        }
+      }
+    }
+  },
+  "episodes": [
+    {
+      "env_id": 0,
+      "layout": "real_terrains_v2",
+      "reason": "fallen",
+      "success": 0,
+      "steps": 61,
+      "alignment_steps": 3,
+      "navigation_steps": 58,
+      "alignment_energy_j": 57.541507720947266,
+      "navigation_energy_j": 3644.632568359375,
+      "alignment_path_m": 0.07047367095947266,
+      "navigation_path_m": 17.196186065673828,
+      "alignment_success": 1,
+      "alignment_end_error_rad": 0.059459805488586426,
+      "final_x": 11.587629318237305,
+      "final_y": 1.935543179512024,
+      "energy_j": 3702.174072265625,
+      "path_m": 17.266660690307617,
+      "final_distance_m": 5.346761226654053,
+      "nav_return": -568.095458984375,
+      "energy_cost": 37.02173614501953,
+      "band": 4,
+      "start_id": 3950,
+      "goal_id": 375,
+      "start_x": 10.123205868137084,
+      "start_y": 18.48535887479913,
+      "goal_x": 16.446315810950697,
+      "goal_y": -0.2962767496909552,
+      "initial_yaw": -1.4347080779137962,
+      "start_terrain": "t1_asphalt",
+      "goal_terrain": "t1_asphalt",
+      "initial_distance_m": 19.817455842767085,
+      "deadline_s": 90.0,
+      "fall_cause": "tilt",
+      "tilt_deg": 179.9515380859375,
+      "body_contact_force_n": 299.7891540527344,
+      "tilt_duration_s": 1.16,
+      "body_contact_duration_s": 0.195,
+      "max_tilt_deg": 180.0,
+      "max_body_contact_force_n": 2377.337158203125,
+      "max_tilt_duration_s": 1.16,
+      "max_body_contact_duration_s": 0.22,
+      "terrain_height_valid": true,
+      "base_clearance_m": 0.06998787075281143,
+      "low_clearance_steps": 7,
+      "invalid_height_steps": 0,
+      "legacy_fall_steps": 7,
+      "episode": 1
+    }
+  ]
+}

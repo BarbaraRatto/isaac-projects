@@ -7,11 +7,15 @@ RUNTIME="${SPOT_RUNTIME_DIR:-$PROJECT/.spot-runtime}"
 SKIP_APT=0
 SKIP_PROBE=0
 CHECK_ONLY=0
+EXPERIMENT=""
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --skip-apt) SKIP_APT=1 ;;
         --skip-probe) SKIP_PROBE=1 ;;
         --check-only) CHECK_ONLY=1 ;;
+        --experiment)
+            [[ $# -ge 2 ]] || { echo 'Missing --experiment value.' >&2; exit 2; }
+            EXPERIMENT="$2"; shift ;;
         --runtime-dir)
             [[ $# -ge 2 ]] || { echo 'Missing --runtime-dir value.' >&2; exit 2; }
             RUNTIME="$2"; shift ;;
@@ -22,6 +26,7 @@ Usage: bash spot_rl_energy_navigation/cloud/setup.sh [options]
   --skip-apt          System libraries are already installed; do not use apt/sudo
   --skip-probe        Install and check CUDA/DINO, but skip the simulator probe
   --check-only        Check package/input files without downloads or installation
+  --experiment NAME  Default: primary experiment from the package manifest
 
 Requires Ubuntu 22.04/24.04 x86_64 and a graphics-capable NVIDIA container/host.
 Use an RTX GPU (e.g. L40S/RTX 6000 Ada) with a compatible host driver.
@@ -33,8 +38,11 @@ HELP
     shift
 done
 command -v python3 >/dev/null || { echo 'python3 is required (choose an Ubuntu/PyTorch template).' >&2; exit 1; }
+EXPERIMENT_ARGS=()
+[[ -z "$EXPERIMENT" ]] || EXPERIMENT_ARGS=(--experiment "$EXPERIMENT")
+EXPERIMENT="$(python3 "$HERE/verify.py" --print-experiment "${EXPERIMENT_ARGS[@]}")"
 if [[ "$CHECK_ONLY" == 1 ]]; then
-    exec python3 "$HERE/verify.py" --check-bundle
+    exec python3 "$HERE/verify.py" --check-bundle --experiment "$EXPERIMENT"
 fi
 [[ "$(uname -s)" == Linux && "$(uname -m)" == x86_64 ]] || {
     echo 'This setup supports Linux x86_64 only.' >&2; exit 1;
@@ -50,7 +58,7 @@ source /etc/os-release
 command -v nvidia-smi >/dev/null || { echo 'GPU/driver not exposed: nvidia-smi is missing.' >&2; exit 1; }
 nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv
 # Verify exact project inputs BEFORE downloading tens of GB of simulator packages.
-python3 "$HERE/verify.py" --check-bundle
+python3 "$HERE/verify.py" --check-bundle --experiment "$EXPERIMENT"
 mkdir -p "$RUNTIME"
 RUNTIME="$(cd "$RUNTIME" && pwd)"
 mkdir -p "$RUNTIME/logs"
@@ -114,7 +122,7 @@ fi
 }
 # The default Kit experience also loads tasks; the RL base package supplies
 # h5py/hydra and other dependencies imported transitively by the core framework.
-# No optional learning-framework extras are installed for this project's custom PPO.
+# No optional learning-framework extras are installed for this project's custom algorithms.
 # Build dependencies must be present because Isaac Lab uses setup.py + toml.
 "$PY" -m pip install --no-build-isolation \
     'isaacsim[all,extscache]==5.1.0' --extra-index-url https://pypi.nvidia.com \
@@ -147,15 +155,19 @@ chmod +x "$RUNTIME/isaaclab-python.sh"
 } > "$HERE/env.sh"
 # shellcheck disable=SC1091
 source "$HERE/env.sh"
-"$PY" "$HERE/verify.py" --runtime
+"$PY" "$HERE/verify.py" --runtime --experiment "$EXPERIMENT"
 # Record resolved transitive dependencies and source revision for reproducibility.
 "$PY" -m pip freeze > "$RUNTIME/requirements-resolved.txt"
 git -C "$LAB" rev-parse HEAD > "$RUNTIME/isaaclab-commit.txt"
 if [[ "$SKIP_PROBE" == 0 ]]; then
-    echo '[INFO] Simulator probe: cameras, physics, DINO; no PPO training updates.'
+    echo '[INFO] Simulator probe: cameras, physics, DINO; no learning updates.'
     echo '[INFO] On first launch, read and accept the NVIDIA license when prompted.'
     echo '[INFO] Extension/shader initialization can take several minutes.'
-    bash "$HERE/run.sh" train_general_big_map_test3 --probe-steps 2
+    PROBE_ARGS=(--probe-steps 2)
+    if [[ "$EXPERIMENT" == train_general_big_map_test9_SAC ]]; then
+        PROBE_ARGS+=(--num-envs 2)
+    fi
+    bash "$HERE/run.sh" "$EXPERIMENT" "${PROBE_ARGS[@]}"
     touch "$RUNTIME/simulator-probe.ok"
     echo '[OK] Setup and simulator probe completed.'
 else
@@ -163,4 +175,4 @@ else
     echo '[OK] Installation and CUDA/DINO checks completed. Simulator has NOT been checked.'
 fi
 echo "[INFO] Setup log: $LOG"
-echo "Training: bash $HERE/run.sh train_general_big_map_test3"
+echo "Training: bash $HERE/run.sh $EXPERIMENT"

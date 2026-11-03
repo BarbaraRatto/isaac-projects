@@ -1,0 +1,12 @@
+{
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test8_SAC/runs/general_map_test8_sac_20261031_010201_266860/policy_final.pt",
+  "seed": 20000,
+  "requested_stage": 1,
+  "episodes": 9,
+  "num_envs": 1,
+  "map_backend": "cpu",
+  "goal_scaling": {
+    "mode": "fixed_scale",
+    "scale_m": 10.0
+  }
+}

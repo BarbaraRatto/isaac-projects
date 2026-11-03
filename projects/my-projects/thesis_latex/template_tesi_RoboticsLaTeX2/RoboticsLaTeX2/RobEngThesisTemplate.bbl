@@ -1,0 +1,9 @@
+\begin{thebibliography}{1}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{{\AA}rz{\'e}n(1999)}]{Aarzen1999}
+{\sc {\AA}rz{\'e}n, K.E.} (1999). A simple event-based {PID} controller. {\em
+  IFAC Proceedings Volumes\/}, {\bf 32}, 8687 -- 8692, 14th IFAC World Congress
+  1999, Beijing, Chia, 5-9 July.
+
+\end{thebibliography}
