@@ -1,0 +1,487 @@
+{
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test10_SAC_Re/runs/general_map_test10_sac_re_20261106_193839_739979/policy_final.pt",
+  "seed": 20000,
+  "requested_stage": null,
+  "episodes": 15,
+  "num_envs": 1,
+  "map_backend": "cpu",
+  "goal_scaling": {
+    "mode": "fixed_scale",
+    "scale_m": 10.0
+  },
+  "mission_suite": {
+    "schema": 1,
+    "name": "15 missioni: grigio-grigio vicino/6/9/12 m + un goal verde",
+    "seed": 20000,
+    "map_sha256": "f5630b4f2210bacb6e891d1d3d70a202b058a90a90dca5de48eea7adc804f341",
+    "cells_interpretation": "Euclidean XY distance: 2/3/4 cells approximately 6/9/12 m",
+    "endpoint_split": "held-out evaluation candidates; same map as training",
+    "cases": [
+      {
+        "episode": 1,
+        "category": "vicino",
+        "mission": {
+          "start_id": 745,
+          "goal_id": 720,
+          "start": [
+            7.371125279165998,
+            5.2848515958123325,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            2.0
+          ],
+          "goal": [
+            7.151205162750288,
+            3.7026168024040333,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            2.0
+          ],
+          "yaw": 0.24019216107924857,
+          "band": 0,
+          "distance_m": 1.5974453978387189,
+          "deadline_steps": 150
+        },
+        "straight_line_green_fraction": 0.0
+      },
+      {
+        "episode": 2,
+        "category": "vicino",
+        "mission": {
+          "start_id": 1175,
+          "goal_id": 620,
+          "start": [
+            3.6518949066296735,
+            7.648306564373753,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            1.0
+          ],
+          "goal": [
+            4.022343438536724,
+            5.143208308985192,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "yaw": 0.907404122173805,
+          "band": 0,
+          "distance_m": 2.532340692707619,
+          "deadline_steps": 150
+        },
+        "straight_line_green_fraction": 0.0
+      },
+      {
+        "episode": 3,
+        "category": "vicino",
+        "mission": {
+          "start_id": 650,
+          "goal_id": 1195,
+          "start": [
+            3.7592459828556692,
+            4.988446610068514,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "goal": [
+            4.361257997030754,
+            7.821433247231858,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            1.0
+          ],
+          "yaw": -0.3813118855409723,
+          "band": 0,
+          "distance_m": 2.896244421929409,
+          "deadline_steps": 150
+        },
+        "straight_line_green_fraction": 0.0
+      },
+      {
+        "episode": 4,
+        "category": "vicino",
+        "mission": {
+          "start_id": 1645,
+          "goal_id": 1605,
+          "start": [
+            4.024516135623025,
+            10.812810462318344,
+            0.0,
+            0.0,
+            0.0,
+            3.0,
+            1.0
+          ],
+          "goal": [
+            5.127418943121244,
+            9.705200648583526,
+            0.0,
+            0.0,
+            0.0,
+            3.0,
+            1.0
+          ],
+          "yaw": -0.49302094597445656,
+          "band": 0,
+          "distance_m": 1.5630720080243046,
+          "deadline_steps": 150
+        },
+        "straight_line_green_fraction": 0.0
+      },
+      {
+        "episode": 5,
+        "category": "2_celle",
+        "mission": {
+          "start_id": 1620,
+          "goal_id": 690,
+          "start": [
+            5.200226352255866,
+            10.56963843178115,
+            0.0,
+            0.0,
+            0.0,
+            3.0,
+            1.0
+          ],
+          "goal": [
+            3.711945643953525,
+            4.307944365068225,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "yaw": -0.6532245136832686,
+          "band": 1,
+          "distance_m": 6.436131761532914,
+          "deadline_steps": 204
+        },
+        "straight_line_green_fraction": 0.0
+      },
+      {
+        "episode": 6,
+        "category": "2_celle",
+        "mission": {
+          "start_id": 760,
+          "goal_id": 1690,
+          "start": [
+            7.973201836850672,
+            4.864402352084111,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            2.0
+          ],
+          "goal": [
+            4.407179071226004,
+            10.044144049623652,
+            0.0,
+            0.0,
+            0.0,
+            3.0,
+            1.0
+          ],
+          "yaw": -0.8368738262445077,
+          "band": 1,
+          "distance_m": 6.288580318178596,
+          "deadline_steps": 201
+        },
+        "straight_line_green_fraction": 0.0
+      },
+      {
+        "episode": 7,
+        "category": "2_celle",
+        "mission": {
+          "start_id": 2235,
+          "goal_id": 1140,
+          "start": [
+            8.141315775971973,
+            13.495618899631724,
+            0.0,
+            0.0,
+            0.0,
+            4.0,
+            2.0
+          ],
+          "goal": [
+            4.6307257626570095,
+            8.063944330064084,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            1.0
+          ],
+          "yaw": 2.776051392544386,
+          "band": 1,
+          "distance_m": 6.467405265736374,
+          "deadline_steps": 205
+        },
+        "straight_line_green_fraction": 0.33195020746887965
+      },
+      {
+        "episode": 8,
+        "category": "2_celle",
+        "mission": {
+          "start_id": 740,
+          "goal_id": 1045,
+          "start": [
+            7.589938004151067,
+            5.188952544845503,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            2.0
+          ],
+          "goal": [
+            1.4414491241630834,
+            6.895164739275223,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            0.0
+          ],
+          "yaw": -1.0943078371566273,
+          "band": 1,
+          "distance_m": 6.380836587764692,
+          "deadline_steps": 203
+        },
+        "straight_line_green_fraction": 0.0
+      },
+      {
+        "episode": 9,
+        "category": "3_celle",
+        "mission": {
+          "start_id": 875,
+          "goal_id": 80,
+          "start": [
+            9.723740151964252,
+            5.0360949618298125,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            3.0
+          ],
+          "goal": [
+            1.542885962986821,
+            1.240741300267544,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "yaw": -0.9159591226785255,
+          "band": 2,
+          "distance_m": 9.01837483572532,
+          "deadline_steps": 256
+        },
+        "straight_line_green_fraction": 0.2863070539419087
+      },
+      {
+        "episode": 10,
+        "category": "3_celle",
+        "mission": {
+          "start_id": 1025,
+          "goal_id": 885,
+          "start": [
+            1.9113700733757835,
+            7.576329331236476,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            0.0
+          ],
+          "goal": [
+            10.1767846772236,
+            4.192483611985956,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            3.0
+          ],
+          "yaw": -1.1907365470721532,
+          "band": 2,
+          "distance_m": 8.931264771866905,
+          "deadline_steps": 254
+        },
+        "straight_line_green_fraction": 0.0
+      },
+      {
+        "episode": 11,
+        "category": "3_celle",
+        "mission": {
+          "start_id": 1865,
+          "goal_id": 1000,
+          "start": [
+            10.670226195783078,
+            9.929103387294107,
+            0.0,
+            0.0,
+            0.0,
+            3.0,
+            3.0
+          ],
+          "goal": [
+            2.0112376885625376,
+            6.922071231829939,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            0.0
+          ],
+          "yaw": -1.4098810739557948,
+          "band": 2,
+          "distance_m": 9.166260107163275,
+          "deadline_steps": 259
+        },
+        "straight_line_green_fraction": 0.11618257261410789
+      },
+      {
+        "episode": 12,
+        "category": "4_celle",
+        "mission": {
+          "start_id": 2460,
+          "goal_id": 490,
+          "start": [
+            13.000042570926947,
+            13.272372377730989,
+            0.0,
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "goal": [
+            13.60752190822425,
+            1.582148308973054,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            4.0
+          ],
+          "yaw": -3.1183809780344656,
+          "band": 3,
+          "distance_m": 11.70599717764405,
+          "deadline_steps": 310
+        },
+        "straight_line_green_fraction": 0.7634854771784232
+      },
+      {
+        "episode": 13,
+        "category": "4_celle",
+        "mission": {
+          "start_id": 1040,
+          "goal_id": 300,
+          "start": [
+            1.7307705421574164,
+            8.270994966948292,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            0.0
+          ],
+          "goal": [
+            11.3198803828108,
+            1.7524286279253047,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            3.0
+          ],
+          "yaw": -1.5115928285846985,
+          "band": 3,
+          "distance_m": 11.594944357449892,
+          "deadline_steps": 307
+        },
+        "straight_line_green_fraction": 0.0
+      },
+      {
+        "episode": 14,
+        "category": "4_celle",
+        "mission": {
+          "start_id": 1530,
+          "goal_id": 2400,
+          "start": [
+            1.5446662309334762,
+            11.236328052341962,
+            0.0,
+            0.0,
+            0.0,
+            3.0,
+            0.0
+          ],
+          "goal": [
+            12.980458315904661,
+            13.926728203024448,
+            0.0,
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "yaw": 2.612738793583742,
+          "band": 3,
+          "distance_m": 11.748003812626294,
+          "deadline_steps": 310
+        },
+        "straight_line_green_fraction": 0.1037344398340249
+      },
+      {
+        "episode": 15,
+        "category": "goal_verde",
+        "mission": {
+          "start_id": 410,
+          "goal_id": 900,
+          "start": [
+            12.739565415302144,
+            1.3390731508193316,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            4.0
+          ],
+          "goal": [
+            13.790071460266404,
+            5.096276412116133,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            4.0
+          ],
+          "yaw": 2.5818591226696466,
+          "band": 1,
+          "distance_m": 3.901299693333719,
+          "deadline_steps": 154
+        },
+        "straight_line_green_fraction": 0.5560165975103735
+      }
+    ]
+  }
+}

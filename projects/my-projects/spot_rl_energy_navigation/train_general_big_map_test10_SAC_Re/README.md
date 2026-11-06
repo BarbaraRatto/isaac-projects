@@ -125,6 +125,47 @@ attraversamento: la scelta non dimostra da sola un criterio solo energetico.
 
 ## Test e grafici dopo il training
 
+Per confrontare la policy best sulle stesse missioni del precedente test,
+con due episodi per categoria di distanza più quello finale sul verde:
+
+```bash
+bash spot_rl_energy_navigation/train_general_big_map_test10_SAC_Re/test_best_9.sh
+```
+
+Usa `policy_best.pt` della run completata più recente, senza sostituirla
+con la final. Riprende esattamente gli episodi **1, 2, 5, 6, 9, 10, 12, 13,
+15** della suite da 15, mantenendo start, goal, yaw iniziale e deadline.
+Sono rinumerati da 1 a 9; il campo `source_episode` nei risultati conserva
+il numero originale. Nessun nuovo campionamento o aggiornamento dei pesi.
+
+Test dedicato di 15 episodi, con un solo robot visibile e il modello finale
+più recente selezionato automaticamente:
+
+```bash
+bash spot_rl_energy_navigation/train_general_big_map_test10_SAC_Re/test_15.sh
+```
+
+| Episodi | Endpoint | Distanza A–B |
+|---|---|---|
+| 1–4 | Grigio → grigio | 1,5–3 m |
+| 5–8 | Grigio → grigio | 5,5–6,5 m (circa 2 celle) |
+| 9–11 | Grigio → grigio | 8,5–9,5 m (circa 3 celle) |
+| 12–14 | Grigio → grigio | 11,5–12,5 m (circa 4 celle) |
+| 15 | Grigio → verde | 3,90 m |
+
+Le distanze sono euclidee, non il numero di celle attraversate dal percorso.
+Gli endpoint sono diversi e appartengono ai candidati di valutazione, con
+seed 20000. Il piano è congelato in `artifacts/missions_15.json` e la tabella
+con le coordinate è in `artifacts/missions_15.md`. La suite viene copiata
+nella cartella dei risultati. Start e goal sul grigio non obbligano il
+robot a restare sul grigio lungo tutto il tragitto.
+Rete e scaler sono congelati, nessun aggiornamento o nuova PCA. Allineamento,
+carico sul verde e timeout rimangono quelli del training. Le missioni sono
+indipendenti dalla fase raggiunta dal checkpoint: se il training si è fermato
+in fase 0, quelle lunghe verificano la generalizzazione oltre le distanze apprese.
+
+Il test standard con missioni casuali della fase selezionata resta disponibile:
+
 Il modello finale più recente viene selezionato automaticamente:
 
 ```bash

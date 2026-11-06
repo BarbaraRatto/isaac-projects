@@ -1,5 +1,6 @@
 """Evaluate a checkpoint on random held-out big-map missions; one visible robot by default."""
 import argparse
+import json
 from datetime import datetime
 from pathlib import Path
 import sys
@@ -18,6 +19,7 @@ def main():
     parser.add_argument('--checkpoint', type=Path, required=True)
     parser.add_argument('--episodes', type=int, default=9, help='episodes per robot on the selected stage')
     parser.add_argument('--stage', type=int, choices=range(len(MISSION_CFG.distance_bands)), help='default: last evaluated training stage')
+    parser.add_argument('--mission-suite',type=Path,help='fixed 9- or 15-episode mixed-distance lab suite')
     parser.add_argument('--num-envs', type=int, default=1)
     parser.add_argument('--seed', type=int, default=20000)
     parser.add_argument('--agent-device', default='cpu')
@@ -32,6 +34,12 @@ def main():
         parser.error('Episodes, batch size and threads must be positive')
     if not args.checkpoint.is_file():
         parser.error(f'Checkpoint missing: {args.checkpoint}')
+    if args.mission_suite:
+        if not args.mission_suite.is_file():
+            parser.error('Mission suite JSON not found')
+        count=len(json.loads(args.mission_suite.read_text())['cases'])
+        if args.num_envs!=1 or args.episodes!=count or count not in (9,15):
+            parser.error(f'This mission suite requires --num-envs 1 --episodes {count}')
     args.enable_cameras = True
     app = AppLauncher(args).app
     env = trajectory = diagnostics = None
@@ -61,12 +69,19 @@ def main():
         env = GeneralMapEnv(cfg, conditions, pca=pca, model_path=args.dino_model,
                         dino_batch_size=args.dino_batch_size, map_backend=args.map_backend)
         env.capture_fall_diagnostics = True
+        suite=None
+        if args.mission_suite:
+            from train_general_big_map_test10_SAC_Re.missions_15 import SuiteSampler
+            env.sampler=SuiteSampler(args.mission_suite)
+            suite=env.sampler.document
         output = args.output or HERE/'results'/datetime.now().strftime('evaluation_%Y%m%d_%H%M%S_%f')
         output.mkdir(parents=True, exist_ok=False)
+        if suite is not None:
+            write_json(output/f'missions_{len(suite["cases"])}.json',suite)
         write_json(output/'evaluation_config.json', dict(checkpoint=str(args.checkpoint.resolve()),
                    seed=args.seed, requested_stage=args.stage, episodes=args.episodes,
                    num_envs=args.num_envs, map_backend=args.map_backend,
-                   goal_scaling=dict(mode="fixed_scale", scale_m=10.0)))
+                   goal_scaling=dict(mode="fixed_scale", scale_m=10.0),mission_suite=suite))
         diagnostics = CSVLog(output/'fall_diagnostics.csv', DIAGNOSTIC_FIELDS)
         trajectory = CSVLog(output/'trajectories.csv', ['env_id', 'episode', 'step', 'x', 'y',
                                                          'energy_j', 'phase', 'goal_x', 'goal_y', 'yaw', 'command_vx', 'command_wz',
@@ -74,7 +89,14 @@ def main():
         summary, records, _ = evaluate(env, policy, args.agent_device, args.episodes, args.seed, app, trajectory,
                                        stage=args.stage if args.stage is not None else state['training_state'].get('last_evaluated_stage', 0),
                                        diagnostics=diagnostics)
-        log = CSVLog(output/'episodes.csv', [*EPISODE_FIELDS, 'episode'])
+        if suite is not None:
+            summary['stage_name']=suite['name']
+            summary['mission_suite']=suite['name']
+            for record in records:
+                case=suite['cases'][record['episode']-1]
+                record['mission_category']=case['category']
+                record['source_episode']=case.get('source_episode',case['episode'])
+        log = CSVLog(output/'episodes.csv', [*EPISODE_FIELDS, 'episode']+(['mission_category','source_episode'] if suite else []))
         try:
             for record in records:
                 log.write(dict(transitions=state['learner']['transitions'], **record))
@@ -83,7 +105,7 @@ def main():
         write_json(output/'summary.json', dict(checkpoint=str(args.checkpoint.resolve()), seed=args.seed,
                                               num_envs=args.num_envs,
                                               goal_scaling=dict(mode="fixed_scale", scale_m=10.0),
-                                              summary=summary, episodes=records))
+                                              summary=summary, episodes=records,mission_suite=suite))
         print(f'[GENERAL_MAP] {summary}\n[GENERAL_MAP] results={output}', flush=True)
     finally:
         if diagnostics is not None:

@@ -73,10 +73,12 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('results',type=Path)
     parser.add_argument('--output',type=Path)
+    parser.add_argument('--policy-label',help='label shown on all exported figures; default derived from checkpoint')
     parser.add_argument('--map-metadata',type=Path,default=Path(__file__).resolve().parent/'artifacts/map_metadata.json')
     args=parser.parse_args()
     out=args.output or args.results/'analysis';out.mkdir(parents=True,exist_ok=True)
     doc=json.loads((args.results/'summary.json').read_text())
+    policy_label=args.policy_label or Path(doc['checkpoint']).stem.replace('policy_','Policy ').replace('_',' ')
     meta=json.loads(args.map_metadata.read_text())
     trajectories=csv_rows(args.results/'trajectories.csv')
     diagnostics=csv_rows(args.results/'fall_diagnostics.csv')
@@ -126,7 +128,8 @@ def main():
     assert sum(e['success'] for e,_,_ in missions)==doc['summary']['successes']
     np.testing.assert_allclose(all_steps,all_steps[0]);dt=all_steps[0]
     transitions=sorted({int(r['transitions']) for r in episode_rows})
-    title=f"Test10 SAC Re · fase {doc['summary']['stage']} · checkpoint {','.join(map(str,transitions))} transizioni"
+    scenario=f"suite {len(doc['mission_suite']['cases'])} missioni" if doc.get('mission_suite') else f"fase {doc['summary']['stage']}"
+    title=f"Test10 SAC Re · {policy_label} · {scenario}\nCheckpoint {','.join(map(str,transitions))} transizioni"
     terrain_legend=[Patch(facecolor=color,label=name) for color,name in TERRAINS.values()]
     path_legend=[Line2D([],[],color=ORANGE,label='Allineamento'),Line2D([],[],color=BLUE,label='Navigazione'),
                  Line2D([],[],marker='o',color='black',ls='',label='A: partenza'),
@@ -170,7 +173,7 @@ def main():
             tiltax.plot([float(r['time_s']) for r in diag],[float(r['tilt_deg']) for r in diag],color='#c92e4c',label='Inclinazione campionata')
             tiltax.axhline(90,color='black',ls='--',label='90° (caduta solo se persistente)')
             tiltax.set(xlabel='Tempo [s]',ylabel='Inclinazione [°]',ylim=(0,190));tiltax.legend(fontsize=9);tiltax.grid(alpha=.2)
-            fig.suptitle(f"E{e['episode']} · {REASONS[e['reason']]} · {e['steps']*dt:.1f} s · {e['energy_j']:.0f} J\n"
+            fig.suptitle(f"{policy_label} · E{e['episode']} · {REASONS[e['reason']]} · {e['steps']*dt:.1f} s · {e['energy_j']:.0f} J\n"
                          f"Fine nella cella: {label(d['final_terrain'])} · causa registrata: {e['fall_cause'] or 'nessuna'}",fontsize=14)
             fig.legend(handles=path_legend,loc='lower center',bbox_to_anchor=(.5,.045),ncol=3,fontsize=9)
             fig.legend(handles=terrain_legend,loc='lower center',bbox_to_anchor=(.5,.007),ncol=2,fontsize=9)
@@ -194,7 +197,7 @@ def main():
       '- Le curve di inclinazione sono campionate ogni 0,2 s; i massimi dei record includono i sottopassi fisici. Un picco isolato non equivale alla condizione di caduta persistente.',
       '- Le durate sono tempo simulato, non tempo reale di esecuzione. Energia e percorso includono l’allineamento.',
       '- Il rapporto percorso/distanza iniziale è solo un riferimento geometrico: la retta può attraversare ostacoli e il goal ha raggio 0,55 m.',
-      '- Dieci missioni e un solo seed non bastano per concludere che una policy sia migliore di un’altra. Confrontare stessi seed, fase e missioni; aumentare il numero di episodi.',
+      '- Una singola suite e un solo seed non bastano per concludere che una policy sia migliore di un’altra. Confrontare gli stessi start, goal e orientamenti; aumentare il numero di episodi.',
       '- Le missioni non hanno una verifica preventiva di raggiungibilità; un fallimento non prova da solo un difetto della policy.',
       '', '## Osservazioni sui fallimenti','']
     for d in metrics:
