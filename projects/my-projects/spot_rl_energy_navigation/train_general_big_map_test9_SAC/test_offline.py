@@ -140,6 +140,7 @@ def environment_method(name, **extra):
 
 def test_all_40_physics_intervals_count_once():
     from types import SimpleNamespace as NS
+    from train_general_big_map_test9_SAC.timing import PhaseTimers
     from train_general_big_map_test9_SAC.alignment import heading_error
     step = environment_method('step', heading_error=heading_error)
     env = NS(device='cpu', cfg=NS(decimation=40), physics_dt=.005, _sim_step_counter=0,
@@ -151,6 +152,7 @@ def test_all_40_physics_intervals_count_once():
              alignment=NS(advance=lambda _: None), goal_w=torch.zeros(2,3),
              robot=NS(data=NS(root_pos_w=torch.zeros(2,3))), yaw=lambda:torch.zeros(2))
     env._pre_physics_step = lambda _: env.step_energy.zero_()
+    env.vision = NS(timers=PhaseTimers())
     env._measured_power = lambda: torch.full((2,), float(env._sim_step_counter))
     env._apply_action = lambda: None
     env.fall_checks = 0

@@ -150,14 +150,14 @@ def main():
     fig.legend(handles=[Line2D([],[],color=COLORS[k],lw=3,label=v) for k,v in REASONS.items() if any(e['reason']==k for e,_,_ in missions)],loc='lower center',bbox_to_anchor=(.5,.075),ncol=3)
     fig.legend(handles=terrain_legend,loc='lower center',bbox_to_anchor=(.5,.035),ncol=7)
     fig.text(.5,.015,'Sfondo: celle dei terreni della mappa congelata; non mostra la geometria dei singoli ostacoli.',ha='center',fontsize=10)
-    fig.tight_layout(rect=(0,.14,1,.93));fig.savefig(out/'mappa_percorsi.png',dpi=170,bbox_inches='tight',pad_inches=.2);fig.savefig(out/'mappa_percorsi.pdf',bbox_inches='tight',pad_inches=.2);plt.close(fig)
+    fig.tight_layout(rect=(0,.20,1,.93));fig.savefig(out/'mappa_percorsi.png',dpi=170,bbox_inches='tight',pad_inches=.2);fig.savefig(out/'mappa_percorsi.pdf',bbox_inches='tight',pad_inches=.2);plt.close(fig)
     fig,axes=plt.subplots((len(missions)+1)//2,2,figsize=(16,4.8*((len(missions)+1)//2)),squeeze=False)
     for ax,m in zip(axes.flat,missions):path_plot(ax,meta,m)
     for ax in list(axes.flat)[len(missions):]:ax.axis('off')
     fig.suptitle(title+'\nPercorsi separati — scale diverse tra episodi',fontsize=17)
     fig.legend(handles=path_legend,loc='lower center',bbox_to_anchor=(.5,.025),ncol=3)
     fig.legend(handles=terrain_legend,loc='lower center',bbox_to_anchor=(.5,.008),ncol=7)
-    fig.tight_layout(rect=(0,.065,1,.96),h_pad=2.5)
+    fig.tight_layout(rect=(0,.10,1,.96),h_pad=2.5)
     fig.savefig(out/'percorsi_per_episodio.png',dpi=140);fig.savefig(out/'percorsi_per_episodio.pdf');plt.close(fig)
     with PdfPages(out/'diagnostica_episodi.pdf') as pdf:
         for m,d in zip(missions,metrics):
@@ -197,7 +197,7 @@ def main():
       '- Le curve di inclinazione sono campionate ogni 0,2 s; i massimi dei record includono i sottopassi fisici. Un picco isolato non equivale alla condizione di caduta persistente.',
       '- Le durate sono tempo simulato, non tempo reale di esecuzione. Energia e percorso includono l’allineamento.',
       '- Il rapporto percorso/distanza iniziale è solo un riferimento geometrico: la retta può attraversare ostacoli e il goal ha raggio 0,55 m.',
-      '- Dieci missioni e un solo seed non bastano per concludere che una policy sia migliore di un’altra. Confrontare stessi seed, fase e missioni; aumentare il numero di episodi.',
+      f'- {len(missions)} missioni e un solo seed non bastano per concludere che una policy sia migliore di un’altra. Confrontare stessi seed, fase e missioni; aumentare il numero di episodi.',
       '- Le missioni non hanno una verifica preventiva di raggiungibilità; un fallimento non prova da solo un difetto della policy.',
       '', '## Osservazioni sui fallimenti','']
     for d in metrics:

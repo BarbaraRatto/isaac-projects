@@ -1,0 +1,150 @@
+{
+  "schema": 2,
+  "materials": {
+    "grey": {
+      "label": "Grigio chiaro, fisica come asfalto",
+      "color_srgb": [
+        0.82,
+        0.83,
+        0.81
+      ],
+      "static_friction": 1.0,
+      "dynamic_friction": 0.8,
+      "restitution": 0.0,
+      "roughness": 0.85
+    },
+    "green": {
+      "label": "Verde erba chiaro, rigido con resistenza viscosa orizzontale",
+      "color_srgb": [
+        0.62,
+        0.8,
+        0.35
+      ],
+      "static_friction": 1.0,
+      "dynamic_friction": 0.8,
+      "compliant_contact_stiffness": 0.0,
+      "compliant_contact_damping": 0.0,
+      "horizontal_drag_ns_per_m": 90.0,
+      "restitution": 0.0,
+      "roughness": 0.85
+    }
+  },
+  "friction_combine_mode": "average",
+  "surface_regions": {
+    "grey_tile.usda": [
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          -1.5,
+          -1.5,
+          1.5,
+          1.5
+        ]
+      }
+    ],
+    "green_tile.usda": [
+      {
+        "material": "green",
+        "bounds_xy_m": [
+          -1.5,
+          -1.5,
+          1.5,
+          1.5
+        ]
+      }
+    ],
+    "grey_flat.usda": [
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          -2,
+          -3,
+          10,
+          3
+        ]
+      }
+    ],
+    "green_flat.usda": [
+      {
+        "material": "green",
+        "bounds_xy_m": [
+          -2,
+          -3,
+          10,
+          3
+        ]
+      }
+    ],
+    "comparison.usda": [
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          -2,
+          -3,
+          10,
+          0
+        ]
+      },
+      {
+        "material": "green",
+        "bounds_xy_m": [
+          -2,
+          0,
+          10,
+          3
+        ]
+      }
+    ]
+  },
+  "runtime_drag": {
+    "model": "F_world_xy = -c * base_velocity_world_xy",
+    "region_selection": "base XY inside tile, not individual foot contacts",
+    "applied_to": "root body center of mass; zero vertical force and zero torque",
+    "requires_runtime_script": true
+  },
+  "unit_cell_m": [
+    3,
+    3
+  ],
+  "comparison_size_m": [
+    12,
+    6
+  ],
+  "surface_top_z_m": 0.0,
+  "future_training_map": {
+    "size_m": [
+      15,
+      15
+    ],
+    "rows": 5,
+    "cols": 5,
+    "green_cells": 8,
+    "grey_cells": 17,
+    "layout": "not generated yet; mix isolated and adjacent green cells"
+  },
+  "manual_spawns": {
+    "grey": [
+      0,
+      0,
+      0.75
+    ],
+    "green": [
+      0,
+      0,
+      0.75
+    ],
+    "comparison": [
+      0,
+      -1.5,
+      0.75
+    ]
+  },
+  "maps_sha256": {
+    "grey_tile.usda": "378bee0107b555d2a28d19677ec15bb5fd1a098330ec8527f81772e2a6513ede",
+    "green_tile.usda": "db9d53c9a0fc29c87647a7195dae7326c69d41e55a8a2068a5e0de91548bd3e5",
+    "grey_flat.usda": "fcb5187cf223001395a8b0aa244de34c6093af215f08605470723a61d5c825da",
+    "green_flat.usda": "c6bf2ca17942ec279642fe28372d8ba99b0f3fcf795d98271feddc4f08777a08",
+    "comparison.usda": "1fab899f6ad53e51928e566c5a92f391ea8e5992384b8a20d3825946e6aa79a5"
+  },
+  "simulation_launched": false
+}

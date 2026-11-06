@@ -24,7 +24,7 @@ class SAC:
         self.alpha_optimizer = torch.optim.Adam([self.log_alpha], lr=settings.learning_rate)
         self.transitions = self.updates = 0
 
-    def update(self, batch):
+    def update(self, batch, defer_metrics=False):
         policy, cfg = self.policy, self.cfg
         actor = policy.normalizer.actor(batch['actor'])
         critic = policy.normalizer.critic(batch['critic'])
@@ -71,13 +71,13 @@ class SAC:
                 for target_p, current_p in zip(target_network.parameters(), current.parameters()):
                     target_p.lerp_(current_p, cfg.tau)
         self.updates += 1
-        metrics = dict(actor_loss=float(actor_loss.detach()), q1_loss=float(q1_loss.detach()),
-                       q2_loss=float(q2_loss.detach()), alpha_loss=float(alpha_loss.detach()),
-                       alpha=float(self.log_alpha.detach().exp()), entropy=float(-log_prob.detach().mean()),
-                       q_mean=float(.5*(q1.detach().mean()+q2.detach().mean())), target_q_mean=float(target.mean()))
-        if not all(torch.isfinite(torch.tensor(v)) for v in metrics.values()):
+        metrics = dict(actor_loss=actor_loss.detach(), q1_loss=q1_loss.detach(),
+                       q2_loss=q2_loss.detach(), alpha_loss=alpha_loss.detach(),
+                       alpha=self.log_alpha.detach().exp(), entropy=-log_prob.detach().mean(),
+                       q_mean=.5*(q1.detach().mean()+q2.detach().mean()), target_q_mean=target.mean())
+        if not bool(torch.isfinite(torch.stack(list(metrics.values()))).all()):
             raise RuntimeError('Non-finite SAC metrics')
-        return metrics
+        return metrics if defer_metrics else materialize_metrics(metrics)
 
     def state_dict(self):
         return dict(policy=self.policy.state_dict(), target_q1=self.target_q1.state_dict(),
@@ -97,3 +97,11 @@ class SAC:
         for name in ('actor_optimizer','critic_optimizer','alpha_optimizer'):
             getattr(self,name).load_state_dict(state[name])
         self.transitions, self.updates = state['transitions'], state['updates']
+
+
+def materialize_metrics(metrics):
+    """One host transfer at log time instead of many per SAC update."""
+    if not metrics or not isinstance(next(iter(metrics.values())), torch.Tensor):
+        return metrics
+    values = torch.stack(list(metrics.values())).cpu().tolist()
+    return dict(zip(metrics, values))

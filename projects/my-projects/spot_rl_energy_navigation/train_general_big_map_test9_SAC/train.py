@@ -32,7 +32,11 @@ def main():
     parser.add_argument('--torch-threads', type=int, default=4)
     parser.add_argument('--dino-batch-size', type=int, default=4)
     parser.add_argument('--map-backend', choices=('cpu', 'cuda'), default='cpu',
-                        help='persistent map/geometry backend; RGB preprocessing stays unchanged')
+                        help='persistent map/geometry backend')
+    parser.add_argument('--rgb-backend', choices=('opencv', 'cuda'), default='opencv',
+                        help='CUDA equivalent of uint8 OpenCV resize + processor; checked on first real frames')
+    parser.add_argument('--replay-device', default='cpu', help='cpu or cuda:0; storage backend does not change checkpoint schema')
+    parser.add_argument('--profile-timing', action='store_true', help='synchronized phase timings in timing.json')
     parser.add_argument('--dino-model', type=Path, default=LOCAL_DINO)
     parser.add_argument('--eval-every', type=int, default=SAC_CFG.eval_every)
     parser.add_argument('--checkpoint-every', type=int, default=SAC_CFG.checkpoint_every)
@@ -45,6 +49,8 @@ def main():
         parser.error(f'Frozen PCA missing: {args.pca}')
     if args.recovery_minutes <= 0 or args.recovery_keep < 2 or args.recovery_reserve_gib < 0:
         parser.error('Invalid recovery interval, retention or disk reserve')
+    if args.rgb_backend == 'cuda' and (args.map_backend != 'cuda' or not args.device.startswith('cuda')):
+        parser.error('--rgb-backend cuda requires --map-backend cuda and --device cuda:0')
     from train_general_big_map_test9_SAC.recovery import (resolve_resume, RecoveryManager,
         check_space, graceful_signals)
     if args.resume:
@@ -68,7 +74,8 @@ def main():
         from train_general_big_map_test9_SAC.networks import ExportedActor
         from train_general_big_map_test9_SAC.perception import FrozenPCA
         from train_general_big_map_test9_SAC.replay import ReplayBuffer, collect_step
-        from train_general_big_map_test9_SAC.sac import SAC
+        from train_general_big_map_test9_SAC.sac import SAC, materialize_metrics
+        from train_general_big_map_test9_SAC.timing import PhaseTimers
         validate_assets()
         random.seed(args.seed)
         np.random.seed(args.seed)
@@ -92,7 +99,7 @@ def main():
         replay_bytes = settings.buffer_size*((2*OBSERVATION_SIZE+2*PRIVILEGED_SIZE+3)*4+1)
         if not args.probe_steps:
             check_space(parent, replay_bytes, args.recovery_reserve_gib)
-        replay = ReplayBuffer(settings.buffer_size)
+        replay = ReplayBuffer(settings.buffer_size, device=args.replay_device)
         learner = SAC(args.agent_device, settings=settings)
         policy, device = learner.policy, learner.device
         best_score, best_by_stage, last_evaluated_stage = None, {}, 0
@@ -116,7 +123,10 @@ def main():
         cfg.scene.num_envs = settings.num_envs
         env = GeneralMapEnv(cfg, training_conditions(settings.num_envs), pca=pca,
                             dino_batch_size=args.dino_batch_size, model_path=args.dino_model,
-                            map_backend=args.map_backend)
+                            map_backend=args.map_backend, rgb_backend=args.rgb_backend)
+        timers = PhaseTimers(args.profile_timing, args.device)
+        if hasattr(env, 'vision'):
+            env.vision.timers = timers
         if state:
             env.curriculum.load_state_dict(state['training_state']['curriculum'])
             restore_rng(state['rng'])
@@ -176,12 +186,18 @@ def main():
                 relative = complete.relative_to(run)
                 state['complete_snapshot'] = str(relative)
                 state['replay_snapshot'] = dict(file=str(relative/'replay.npz'), transitions=learner.transitions)
-            save_checkpoint(run/name, learner, pca, identity, best_score, training_state=state)
+            with timers.measure('model_checkpoint'):
+                save_checkpoint(run/name, learner, pca, identity, best_score, training_state=state)
 
         def save_complete(reason):
-            return recovery.save(learner, replay, pca, identity, best_score, training_state(), reason)
+            with timers.measure('complete_backup'):
+                result = recovery.save(learner, replay, pca, identity, best_score, training_state(), reason)
+            if timers.enabled:
+                write_json(run/'timing.json', timers.report())
+            return result
 
         def log_progress():
+            metrics = materialize_metrics(last_metrics)
             raw=obs['policy'].to(device)
             cells=raw[:,15:].reshape(len(raw),81,40)
             seconds=time.perf_counter()-started
@@ -192,12 +208,14 @@ def main():
                 visual_cells=float(cells[...,36].sum(1).mean()),geometry_cells=float(cells[...,37].sum(1).mean()),
                 visual_remembered_cells=float(((cells[...,36]>.5)&(cells[...,38]>1e-6)).float().sum(1).mean()),
                 geometry_remembered_cells=float(((cells[...,37]>.5)&(cells[...,39]>1e-6)).float().sum(1).mean()),
-                action_saturation=step_stats['action_saturation'],curriculum_level=env.curriculum.level,**last_metrics))
+                action_saturation=step_stats['action_saturation'],curriculum_level=env.curriculum.level,**metrics))
+            if timers.enabled:
+                write_json(run/'timing.json', timers.report())
             print(f'[SAC] transitions={learner.transitions}/{args.timesteps} updates={learner.updates} '
                   f'replay={replay.size} episodes={episode_count} successes={success_count} '
-                  f'alpha={last_metrics["alpha"]}',flush=True)
+                  f'alpha={metrics["alpha"]}',flush=True)
 
-        print(f'[SAC] run={run}\n[SAC] replay RAM capacity={replay.nbytes/1024**3:.2f} GiB; '
+        print(f'[SAC] run={run}\n[SAC] replay device={replay.device}, capacity={replay.nbytes/1024**3:.2f} GiB; '
               f'{settings.gradient_steps} SAC updates per vector step containing navigation samples, after warmup.',flush=True)
         save_complete('initial_or_resume')
         with graceful_signals() as stop_request:
@@ -205,8 +223,9 @@ def main():
                 while learner.transitions < args.timesteps:
                     if stop_request.signal is not None or not app.is_running():
                         raise KeyboardInterrupt
-                    obs,step_stats=collect_step(env,policy,obs,replay,device,args.timesteps-learner.transitions,
-                                               warmup=learner.transitions<settings.learning_starts)
+                    with timers.measure('collect'):
+                        obs,step_stats=collect_step(env,policy,obs,replay,device,args.timesteps-learner.transitions,
+                                                   warmup=learner.transitions<settings.learning_starts)
                     count=step_stats['count']
                     learner.transitions+=count
                     vector_steps+=1
@@ -220,8 +239,9 @@ def main():
                         episode_count+=1
                         success_count+=record['success']
                     if count and learner.transitions>=settings.learning_starts and replay.size>=settings.batch_size:
-                        for _ in range(settings.gradient_steps):
-                            last_metrics=learner.update(replay.sample(settings.batch_size,device))
+                        with timers.measure('sac_updates'):
+                            for _ in range(settings.gradient_steps):
+                                last_metrics=learner.update(replay.sample(settings.batch_size,device), defer_metrics=True)
                     if learner.transitions>=next_log or learner.transitions==args.timesteps:
                         log_progress()
                         next_log=(learner.transitions//settings.log_every+1)*settings.log_every
@@ -233,9 +253,12 @@ def main():
                     if stop_request.signal is not None:
                         raise KeyboardInterrupt
                     if (next_eval is not None and learner.transitions>=next_eval) or learner.transitions==args.timesteps:
-                        summary,records,score=evaluate(env,policy,device,episodes_per_env=settings.eval_episodes_per_env,
-                                                      seed=MISSION_CFG.evaluation_seed,app=app,
-                                                      stop_requested=lambda: stop_request.signal is not None)
+                        with timers.measure('evaluation'):
+                            summary,records,score=evaluate(env,policy,device,episodes_per_env=settings.eval_episodes_per_env,
+                                                          seed=MISSION_CFG.evaluation_seed,app=app,
+                                                          stop_requested=lambda: stop_request.signal is not None)
+                        if timers.enabled:
+                            write_json(run/'timing.json', timers.report())
                         write_json(run/f'evaluation_{learner.transitions}.json',dict(summary=summary,episodes=records))
                         eval_log.write(dict(transitions=learner.transitions,stage=summary['stage'],episodes=summary['episodes'],
                                             success_rate=summary['success_rate'],mean_success_energy_j=summary['mean_success_energy_j']))

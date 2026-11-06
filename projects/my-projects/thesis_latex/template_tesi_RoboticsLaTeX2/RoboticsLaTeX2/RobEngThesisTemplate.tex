@@ -2,6 +2,8 @@
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 % DOCUMENT CLASS
+% La classe carica babel con l'inglese: aggiungere l'italiano per il manoscritto.
+\PassOptionsToPackage{italian}{babel}
 \documentclass[oneside,12pt]{Classes/RoboticsLaTeX}
 
 % USEFUL PACKAGES
@@ -11,6 +13,7 @@
 \usepackage{amsfonts}
 \usepackage{algorithm}
 \usepackage{algorithmic}
+\AtBeginDocument{\selectlanguage{italian}}
 
 % SPECIAL COMMANDS
 % correct bad hyphenation
@@ -94,19 +97,28 @@
 
 \tableofcontents
 \listoffigures
+\listoftables
 %\printglossary  % Print the nomenclature (WAY TOO COMPLEX FOR ME NOW!)
 %\addcontentsline{toc}{chapter}{Nomenclature}
 
 \mainmatter
-\include{Chapter1/chapter1}
-\include{Conclusions/conclusions}
 
-\appendix
-\include{Appendix1/appendix1}
+\include{Chapter1/introduction}
+
+\include{Chapter2/chapter2}
+
+\include{Chapter3/chapter3}
+
+\include{Chapter4/chapter4}
+
+\include{Chapter5/conclusions}
+
+%\appendix
+%\include{Appendix1/appendix1}
 
 \bibliographystyle{Classes/RoboticsBiblio}    % bibliography style
-\renewcommand{\bibname}{References}           % change default name Bibliography to References
+\renewcommand{\bibname}{Bibliografia}
 \bibliography{references}          % References file
-\addcontentsline{toc}{chapter}{References}    % add References to contents page
+\addcontentsline{toc}{chapter}{Bibliografia}
 
 \end{document}

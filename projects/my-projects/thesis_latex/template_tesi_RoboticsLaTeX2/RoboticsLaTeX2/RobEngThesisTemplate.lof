@@ -1,5 +1,8 @@
 \babel@toc {english}{}\relax 
+\babel@toc {italian}{}\relax 
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Scan profiles: \emph {bottom}, \emph {mid} and \emph {top view}.}}{2}{figure.1.1}%
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Schema concettuale della navigazione con attenzione al costo energetico. Il robot sceglie i comandi di movimento verso il goal utilizzando la percezione locale e il feedback raccolto durante l'attraversamento. La convenienza dei percorsi dipende sia dalle superfici incontrate sia dal movimento eseguito.}}{3}{figure.1.1}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -23,7 +23,7 @@ from train_general_big_map_test9_SAC.layouts import map_metadata
 
 class GeneralMapEnv(DirectRLEnv):
     def __init__(self, cfg, conditions, pca=None, dino_batch_size=4, model_path=None,
-                 capture=False, map_backend='cpu', **kwargs):
+                 capture=False, map_backend='cpu', rgb_backend='opencv', **kwargs):
         self.conditions = conditions
         self.nav = NAV_CFG
         if len(conditions) != cfg.scene.num_envs or tuple(c.env_id for c in conditions) != tuple(range(len(conditions))):
@@ -43,7 +43,7 @@ class GeneralMapEnv(DirectRLEnv):
         self.deadline_steps = torch.full((self.num_envs,), self.nav.max_episode_steps, device=self.device, dtype=torch.long)
         self.foot_ids = [self.robot.body_names.index(name) for name in FOOT_NAMES]
         self.controller = BatchedSpotVelocityController(self.robot, self.num_envs, self.device)
-        self.vision = LocalVision(self.device, pca, dino_batch_size, model_path, capture, map_backend)
+        self.vision = LocalVision(self.device, pca, dino_batch_size, model_path, capture, map_backend, rgb_backend)
         self.contacts = PrivilegedContacts(self)
         self.goal_w = self.scene.env_origins.clone()
         self.previous_action = torch.zeros((self.num_envs, 2), device=self.device)
@@ -147,16 +147,17 @@ class GeneralMapEnv(DirectRLEnv):
         """
         self._pre_physics_step(action.to(self.device))
         power = self._measured_power()
-        for _ in range(self.cfg.decimation):
-            self._sim_step_counter += 1
-            self._apply_action()
-            self.scene.write_data_to_sim()
-            self.sim.step(render=False)
-            self.scene.update(self.physics_dt)
-            self._update_fall_detection()
-            next_power = self._measured_power()
-            self.step_energy += 0.5*(power+next_power)*self.physics_dt
-            power = next_power
+        with self.vision.timers.measure('physics_locomotion'):
+            for _ in range(self.cfg.decimation):
+                self._sim_step_counter += 1
+                self._apply_action()
+                self.scene.write_data_to_sim()
+                self.sim.step(render=False)
+                self.scene.update(self.physics_dt)
+                self._update_fall_detection()
+                next_power = self._measured_power()
+                self.step_energy += 0.5*(power+next_power)*self.physics_dt
+                power = next_power
         self.episode_length_buf += 1
         self.common_step_counter += 1
         policy_mask = ~self.step_was_alignment
@@ -285,9 +286,10 @@ class GeneralMapEnv(DirectRLEnv):
 
     def _get_observations(self):
         # One synchronized RGB/depth acquisition at the final, possibly reset, robot pose.
-        self._sync_cameras()
-        self.sim.render()
-        self.camera.update(0.0, force_recompute=True)
+        with self.vision.timers.measure('render_camera'):
+            self._sync_cameras()
+            self.sim.render()
+            self.camera.update(0.0, force_recompute=True)
         d = self.robot.data
         heading = self.yaw()
         delta = quat_apply_inverse(yaw_quat(d.root_quat_w), self.goal_w-d.root_pos_w)
@@ -312,28 +314,26 @@ class GeneralMapEnv(DirectRLEnv):
     def _reset_idx(self, env_ids):
         super()._reset_idx(env_ids)
         root = self.settled_root[env_ids].clone()
-        for j, env_id in enumerate(env_ids.detach().cpu().tolist()):
+        selected_missions = []
+        for env_id in env_ids.detach().cpu().tolist():
             if self.evaluating:
                 mission = self.sampler.evaluation_mission(env_id, int(self.eval_indices[env_id]), self.eval_seed, self.eval_stage)
                 self.eval_indices[env_id] += 1
             else:
                 mission = self.sampler.training(self.curriculum.level)
             self.missions[env_id] = mission
+            selected_missions.append(mission)
             if self.evaluating and self.num_envs == 1:
                 print(f'[MISSION] band={mission["band"]} '
                       f'A=({mission["start"][0]:.2f}, {mission["start"][1]:.2f}) '
                       f'B=({mission["goal"][0]:.2f}, {mission["goal"][1]:.2f}) '
                       f'distance={mission["distance_m"]:.2f} m', flush=True)
-            self.deadline_steps[env_id] = mission['deadline_steps']
-            root[j, :2] = self.scene.env_origins[env_id, :2] + torch.tensor(mission['start'][:2], device=self.device)
-            # Upright calibrated stance above the highest sampled footprint surface.
-            # No global simulation steps during partial resets: other episodes are unaffected.
-            root[j, 2] = self.scene.env_origins[env_id, 2]+mission['start'][3]+self.standing_clearance[env_id]+.02
-            yaw = mission['yaw']
-            root[j, 3:7] = torch.tensor([math.cos(yaw/2), 0., 0., math.sin(yaw/2)], device=self.device)
-            root[j, 7:] = 0
-            self.goal_w[env_id, :2] = self.scene.env_origins[env_id, :2]+torch.tensor(mission['goal'][:2], device=self.device)
-            self.goal_w[env_id, 2] = self.scene.env_origins[env_id, 2]+mission['goal'][3]
+        from train_general_big_map_test9_SAC.missions import place_missions
+        with self.vision.timers.measure('reset_placement'):
+            root, goals, deadlines = place_missions(root, self.scene.env_origins[env_ids],
+                                                   self.standing_clearance[env_ids], selected_missions)
+            self.goal_w[env_ids] = goals
+            self.deadline_steps[env_ids] = deadlines
         self.robot.write_root_state_to_sim(root, env_ids)
         self.robot.write_joint_state_to_sim(self.settled_joint_pos[env_ids], self.settled_joint_vel[env_ids], env_ids=env_ids)
         self.robot.reset(env_ids)

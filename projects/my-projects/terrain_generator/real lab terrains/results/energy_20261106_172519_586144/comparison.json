@@ -1,0 +1,32 @@
+{
+  "groups": [
+    {
+      "speed": 0.9,
+      "material": "grey",
+      "completed": 5,
+      "attempts": 5,
+      "mean_j_per_forward_m": 147.68916095876494,
+      "std_j_per_forward_m": 0.0,
+      "mean_actual_speed_m_s": 0.9143335490402554
+    },
+    {
+      "speed": 0.9,
+      "material": "green",
+      "completed": 5,
+      "attempts": 5,
+      "mean_j_per_forward_m": 152.89113645837833,
+      "std_j_per_forward_m": 0.0,
+      "mean_actual_speed_m_s": 0.9083941528236457
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "speed": 0.9,
+      "valid_pairs": 5,
+      "mean_green_minus_grey_j_per_m": 5.201975499613383,
+      "mean_green_percent_increase": 3.5222459561983666
+    }
+  ],
+  "measurement": "Integral of sum(abs(measured_joint_effort * joint_velocity)), fixed forward-distance window",
+  "limitations": "Mechanical joint-work proxy, not battery energy. Failures excluded from energy averages and reported separately; speed and stability must also be compared."
+}

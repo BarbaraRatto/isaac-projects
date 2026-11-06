@@ -78,6 +78,24 @@ def main():
         print('Budget raggiunto: possono essere ancora in corso valutazione finale e salvataggio.')
     else:
         print('ETA indicativa: le valutazioni e il carico della macchina possono allungarla.')
+    timing_path = run/'timing.json'
+    if timing_path.is_file():
+        try:
+            timing = json.loads(timing_path.read_text())
+            phases = timing.get('phases', {})
+            for label, names in [
+                ('Tempi medi per chiamata', ('physics_locomotion', 'render_camera', 'rgb_preprocess', 'dino_pca', 'geometry_map', 'sac_updates')),
+                ('Tempo cumulativo', ('evaluation', 'complete_backup', 'model_checkpoint'))]:
+                values = []
+                for name in names:
+                    if name in phases:
+                        p = phases[name]
+                        values.append(f'{name}: {p["mean_ms"]:.0f} ms' if label.startswith('Tempi') else
+                                      f'{name}: {p["seconds"]:.0f} s')
+                if values:
+                    print(label+': '+', '.join(values))
+        except (ValueError, OSError):
+            pass  # A report can be in the middle of being replaced/written.
     episodes = rows(run/'episodes.csv')
     recent = episodes[-args.window:]
     for label, group in [('Tutti gli episodi di training', episodes), (f'Ultimi {len(recent)} episodi', recent)]:

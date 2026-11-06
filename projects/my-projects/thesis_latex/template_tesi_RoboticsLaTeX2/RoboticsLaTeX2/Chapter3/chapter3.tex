@@ -1,0 +1,161 @@
+\chapter{Metodologia}
+\label{chap:methodology}
+
+% Descrivere il sistema finale seguendo il percorso di dati e decisioni.
+% Usare sorgenti e configurazioni delle run selezionate, senza raccontare
+% la successione dei tentativi preliminari o anticipare i risultati.
+
+\section{Formulazione del problema}
+\label{sec:metodo-problema}
+
+\subsection{Obiettivo di navigazione e costo energetico}
+% Notazione, goal e compromesso fra successo, energia e durata;
+% non attribuire al metodo garanzie di ottimalita.
+
+\subsection{Informazione disponibile e osservabilit\`a parziale}
+% Informazione locale e storia delle osservazioni; distinguere stato
+% fisico completo e osservazione fornita alla policy.
+
+\subsection{Assunzioni operative e vincoli}
+% Formalizzare le assunzioni del capitolo 1, i limiti dei comandi
+% e la dipendenza dal controllore locomotorio adottato.
+
+\section{Piattaforma robotica e ambiente di simulazione}
+\label{sec:metodo-piattaforma}
+
+\subsection{Spot e controllore di locomozione}
+% Robot e controllore preaddestrato che esegue i comandi di navigazione.
+
+\subsection{Sensori e segnali disponibili}
+% Camera, RGB-D, stato del corpo e segnali articolari realmente utilizzati.
+% Distinguere segnali per il calcolo energetico e ingressi della policy.
+
+\subsection{Simulazione mediante Isaac Sim e Isaac Lab}
+% Framework, versione software e modello del robot impiegati.
+
+\subsection{Modellazione dei terreni e delle interazioni fisiche}
+% Geometria, materiali, contatti e proprieta fisiche. Disposizione delle
+% mappe e condizioni specifiche di valutazione appartengono al capitolo 4.
+
+\section{Architettura complessiva del sistema}
+\label{sec:metodo-architettura}
+
+\subsection{Flusso delle informazioni e moduli principali}
+% Schema: RGB-D, feature, memoria/mappa, osservazione della policy,
+% comandi di velocita, controllore locomotorio e feedback del robot.
+
+\subsection{Collegamento fra policy di navigazione e controllore locomotorio}
+% Separazione dei livelli di controllo; componenti addestrati e congelati.
+
+\subsection{Frequenze operative e sincronizzazione}
+% Frequenze di fisica, locomozione, percezione e navigazione;
+% allineamento temporale di immagini, posa, azioni e misure energetiche.
+
+\section{Stima del costo energetico}
+\label{sec:metodo-energia}
+
+\subsection{Potenza meccanica articolare}
+% Somma dei valori assoluti dei prodotti fra coppia e velocita articolare;
+% indicare la sorgente dei segnali nel simulatore.
+
+\subsection{Integrazione temporale del lavoro meccanico}
+% Metodo di integrazione e intervalli inclusi nella misura.
+
+\subsection{Segnale energetico fornito alla policy e limiti della misura}
+% Potenza filtrata nell'osservazione, costo nella reward ed energia cumulata;
+% distinguere lavoro meccanico assoluto, lavoro netto e consumo elettrico.
+
+\section{Rappresentazione percettiva e memoria dell'ambiente}
+\label{sec:metodo-percezione}
+
+\subsection{Acquisizione e preparazione dei dati RGB-D}
+% Preparazione delle immagini, calibrazione geometrica e corrispondenza
+% fra immagini, profondita e posa della camera.
+
+\subsection{Estrazione delle feature visive mediante DINOv2}
+% Modello, patch e feature; backbone congelato, senza classificazione
+% esplicita dei materiali.
+
+\subsection{Riduzione dimensionale mediante PCA}
+% Trasformazione adottata e dimensione delle feature ridotte.
+
+\subsection{Proiezione spaziale e descrittori geometrici}
+% Riferimenti, proiezione dei dati e calcolo dei descrittori geometrici
+% effettivamente usati, inclusi altezza, pendenza e rugosita.
+
+\subsection{Costruzione della gridmap locale}
+% Estensione, risoluzione, ordinamento e contenuto delle celle;
+% distinguere regioni osservate e regioni prive di dati.
+
+\subsection{Memoria delle osservazioni, validit\`a ed et\`a dei dati}
+% Aggiornamento, interrogazione, trasformazioni spaziali, validita, eta
+% e reset. Non attribuire alla memoria una mappa esplicita di consumi
+% aggiornata online se il sistema non la implementa.
+
+\section{Definizione del compito di reinforcement learning}
+\label{sec:metodo-compito-rl}
+
+\subsection{Spazio delle osservazioni}
+% Tabella degli ingressi: significato, provenienza, dimensioni e unita.
+% Collegare stato del robot, goal e rappresentazione locale.
+
+\subsection{Spazio delle azioni e conversione in comandi}
+% Azioni apprese e trasformazione nei comandi di velocita.
+
+\subsection{Funzione di ricompensa}
+% Definire i termini di progresso, energia, tempo, successo e fallimento
+% e gli eventuali altri termini realmente presenti nella versione finale.
+
+\subsection{Inizializzazione e condizioni di terminazione degli episodi}
+% Reset, eventuale allineamento iniziale, successo, timeout, caduta
+% e altre condizioni operative adottate.
+
+\section{Architettura delle reti e fusione delle informazioni}
+\label{sec:metodo-reti}
+
+\subsection{Organizzazione e normalizzazione degli ingressi}
+% Ordine delle variabili, trattamento dei dati mancanti e scaling.
+
+\subsection{Rete della policy e fusione delle modalit\`a}
+% Rami di elaborazione, MLP, attivazioni e distribuzione delle azioni
+% secondo le architetture finali adottate.
+
+\subsection{Critic e informazioni privilegiate}
+% Reti/teste di valore e ingressi aggiuntivi del training, distinguendoli
+% da quelli dell'actor impiegato durante l'esecuzione.
+
+\section{Procedura di addestramento}
+\label{sec:metodo-addestramento}
+
+\subsection{Calibrazione dei componenti e preparazione dell'addestramento}
+% Dati e procedura di calibrazione di PCA e normalizzazioni, componenti
+% congelati e separazione fra dati di calibrazione e valutazione.
+
+\subsection{Aggiornamento delle reti mediante PPO e SAC}
+% Impiego concreto e particolarita implementative; rinviare ai principi
+% del capitolo 2 senza ripeterne la trattazione.
+
+\subsection{Generazione delle missioni e curriculum}
+% Campionamento di start/goal, fasi e criteri di avanzamento.
+% Distinguere gli strumenti di generazione delle missioni dagli input
+% effettivamente forniti all'actor.
+
+\subsection{Configurazioni di addestramento adottate}
+% Configurazioni finali degli scenari: iperparametri, parallelismo, budget
+% e criteri di selezione. Non ricostruire la cronologia delle prove e non
+% implicare un confronto controllato PPO/SAC se non viene svolto.
+
+\section{Esecuzione della policy e integrazione sul robot}
+\label{sec:metodo-esecuzione}
+
+\subsection{Pipeline di inferenza}
+% Caricamento della policy e componenti necessari all'esecuzione.
+
+\subsection{Gestione delle osservazioni e dei comandi durante l'esecuzione}
+% Acquisizione dei segnali, aggiornamento della mappa, scaling e invio
+% dei comandi, in coerenza con la pipeline di addestramento.
+
+\subsection{Integrazione con la piattaforma reale}
+% Da completare quando l'implementazione reale sara definita.
+% Descrivere il sistema effettivamente utilizzato; i risultati sono nel
+% capitolo 4. Non presentare il trasferimento come gia validato.

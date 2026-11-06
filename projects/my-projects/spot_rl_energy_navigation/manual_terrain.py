@@ -1,5 +1,6 @@
 """Keyboard driving with the frozen Spot locomotion controller; no navigation policy."""
 import argparse
+import sys
 from pathlib import Path
 
 from isaaclab.app import AppLauncher
@@ -10,6 +11,8 @@ parser.add_argument('--terrain', type=Path, default=Path(__file__).resolve().par
 parser.add_argument('--spawn', type=float, nargs=3, default=(0., 0., .75))
 parser.add_argument('--speed', type=float, default=.9)
 parser.add_argument('--yaw-speed', type=float, default=1.)
+parser.add_argument('--surface-drag-manifest', type=Path,
+                    help='Optional lab runtime resistance; no effect on other terrain tests.')
 AppLauncher.add_app_launcher_args(parser)
 args = parser.parse_args()
 if args.headless:
@@ -40,6 +43,12 @@ def main():
     robot = create_spot()
     controller = SpotVelocityController(robot, sim.device)
     sim.reset()
+    drag = None
+    if args.surface_drag_manifest:
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'terrain_generator' / 'real lab terrains'))
+        from surface_drag import SurfaceDrag
+        drag = SurfaceDrag(args.surface_drag_manifest, args.terrain)
+        print('[DRAG] Horizontal resistance enabled from manifest: '+str(drag.regions), flush=True)
     reset_spot(robot, tuple(args.spawn))
     controller.reset()
     robot.update(PHYSICS_DT)
@@ -113,6 +122,8 @@ def main():
                 if settle == 0:
                     print('[MANUAL] Ready.', flush=True)
             command = torch.tensor([[vx, 0., wz]], device=sim.device)
+            if drag is not None:
+                drag.apply(robot)
             controller.forward(command)
             sim.step(render=(step % 4 == 0))
             robot.update(PHYSICS_DT)

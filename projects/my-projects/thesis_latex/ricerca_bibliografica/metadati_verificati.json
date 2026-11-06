@@ -1,0 +1,4376 @@
+[
+  {
+    "key": "Gan2022Energy",
+    "group": "A",
+    "priority": "Alta",
+    "chapters": "1,2",
+    "use": "Traversabilità energetica da esterocettività e propriocezione; precedente diretto del problema.",
+    "limit": "Apprende una ricompensa mediante inverse RL e ranking di dimostrazioni; non coincide con la policy di navigazione proposta.",
+    "type": "article",
+    "fields": {
+      "author": "Gan, Lu and Grizzle, Jessy W. and Eustice, Ryan M. and Ghaffari, Maani",
+      "title": "Energy-Based Legged Robots Terrain Traversability Modeling via Deep Inverse Reinforcement Learning",
+      "year": "2022",
+      "journal": "IEEE Robotics and Automation Letters",
+      "doi": "10.1109/lra.2022.3188100",
+      "url": "https://doi.org/10.1109/lra.2022.3188100",
+      "volume": "7",
+      "number": "4",
+      "pages": "8807-8814"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.1109/LRA.2022.3188100"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "issue": "4",
+      "published-print": {
+        "date-parts": [
+          [
+            2022,
+            10
+          ]
+        ]
+      },
+      "DOI": "10.1109/lra.2022.3188100",
+      "type": "journal-article",
+      "page": "8807-8814",
+      "title": [
+        "Energy-Based Legged Robots Terrain Traversability Modeling via Deep Inverse Reinforcement Learning"
+      ],
+      "volume": "7",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0003-0911-8032",
+          "authenticated-orcid": false,
+          "given": "Lu",
+          "family": "Gan",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Robotics Institute, University of Michigan, Ann Arbor, MI, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-7586-0142",
+          "authenticated-orcid": false,
+          "given": "Jessy W.",
+          "family": "Grizzle",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Robotics Institute, University of Michigan, Ann Arbor, MI, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-9989-4942",
+          "authenticated-orcid": false,
+          "given": "Ryan M.",
+          "family": "Eustice",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Robotics Institute, University of Michigan, Ann Arbor, MI, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-4734-4295",
+          "authenticated-orcid": false,
+          "given": "Maani",
+          "family": "Ghaffari",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Robotics Institute, University of Michigan, Ann Arbor, MI, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "IEEE Robotics and Automation Letters"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2022,
+            10
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Zhang2026Traversability",
+    "group": "A",
+    "priority": "Alta",
+    "chapters": "1,2",
+    "use": "Navigazione RL da RGB-D reale e costo di traversabilità legato al controllore.",
+    "limit": "Non equiparare il costo derivato dal controllore a una misura elettrica o alla stessa funzione obiettivo della tesi.",
+    "type": "article",
+    "fields": {
+      "author": "Zhang, Hongbo and Li, Zhongyu and Zeng, Xuanqi and Smith, Laura and Stachowicz, Kyle and Shah, Dhruv and Yue, Linzhu and Song, Zhitao and Xia, Weipeng and Levine, Sergey and Sreenath, Koushil and Liu, Yun-hui",
+      "title": "Traversability-Aware Legged Navigation by Learning From Real-World Visual Data",
+      "year": "2026",
+      "journal": "IEEE Transactions on Robotics",
+      "doi": "10.1109/tro.2025.3645885",
+      "url": "https://doi.org/10.1109/tro.2025.3645885",
+      "volume": "42",
+      "pages": "400-417"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.1109/TRO.2025.3645885"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "published-print": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "DOI": "10.1109/tro.2025.3645885",
+      "type": "journal-article",
+      "page": "400-417",
+      "title": [
+        "Traversability-Aware Legged Navigation by Learning From Real-World Visual Data"
+      ],
+      "volume": "42",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0002-0769-9243",
+          "authenticated-orcid": false,
+          "given": "Hongbo",
+          "family": "Zhang",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Department of Mechanical and Automation Engineering, The Chinese University of Hong Kong, Hong Kong"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-8040-1098",
+          "authenticated-orcid": false,
+          "given": "Zhongyu",
+          "family": "Li",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mechanical and Automation Engineering, The Chinese University of Hong Kong, Hong Kong"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-2690-9629",
+          "authenticated-orcid": false,
+          "given": "Xuanqi",
+          "family": "Zeng",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mechanical and Automation Engineering, The Chinese University of Hong Kong, Hong Kong"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Laura",
+          "family": "Smith",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of California, Berkeley, CA, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-9880-7261",
+          "authenticated-orcid": false,
+          "given": "Kyle",
+          "family": "Stachowicz",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of California, Berkeley, CA, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-7541-3278",
+          "authenticated-orcid": false,
+          "given": "Dhruv",
+          "family": "Shah",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Princeton University, Princeton, NJ, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-5244-6600",
+          "authenticated-orcid": false,
+          "given": "Linzhu",
+          "family": "Yue",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mechanical and Automation Engineering, The Chinese University of Hong Kong, Hong Kong"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0009-0004-3591-036X",
+          "authenticated-orcid": false,
+          "given": "Zhitao",
+          "family": "Song",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mechanical and Automation Engineering, The Chinese University of Hong Kong, Hong Kong"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0009-0005-4045-0043",
+          "authenticated-orcid": false,
+          "given": "Weipeng",
+          "family": "Xia",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mechanical and Automation Engineering, The Chinese University of Hong Kong, Hong Kong"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-6764-2743",
+          "authenticated-orcid": false,
+          "given": "Sergey",
+          "family": "Levine",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of California, Berkeley, CA, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-5346-3637",
+          "authenticated-orcid": false,
+          "given": "Koushil",
+          "family": "Sreenath",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of California, Berkeley, CA, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-3625-6679",
+          "authenticated-orcid": false,
+          "given": "Yun-hui",
+          "family": "Liu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mechanical and Automation Engineering, The Chinese University of Hong Kong, Hong Kong"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "IEEE Transactions on Robotics"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Mattamala2025Wild",
+    "group": "A",
+    "priority": "Alta",
+    "chapters": "1,2",
+    "use": "Feature visive preaddestrate e supervisione dall'esperienza per apprendere traversabilità online.",
+    "limit": "Predire traversabilità e ottimizzare energia con RL sono obiettivi diversi; qui l'adattamento online è esplicito.",
+    "type": "article",
+    "fields": {
+      "author": "Mattamala, Matias and Frey, Jonas and Libera, Piotr and Chebrolu, Nived and Martius, Georg and Cadena, Cesar and Hutter, Marco and Fallon, Maurice",
+      "title": "Wild visual navigation: fast traversability learning via pre-trained models and online self-supervision",
+      "year": "2025",
+      "journal": "Autonomous Robots",
+      "doi": "10.1007/s10514-025-10202-x",
+      "url": "https://doi.org/10.1007/s10514-025-10202-x",
+      "volume": "49",
+      "number": "3",
+      "pages": "19"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.1007/s10514-025-10202-x"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "Springer Science and Business Media LLC",
+      "issue": "3",
+      "published-print": {
+        "date-parts": [
+          [
+            2025,
+            9
+          ]
+        ]
+      },
+      "DOI": "10.1007/s10514-025-10202-x",
+      "type": "journal-article",
+      "title": [
+        "Wild visual navigation: fast traversability learning via pre-trained models and online self-supervision"
+      ],
+      "volume": "49",
+      "author": [
+        {
+          "given": "Matias",
+          "family": "Mattamala",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jonas",
+          "family": "Frey",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Piotr",
+          "family": "Libera",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Nived",
+          "family": "Chebrolu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Georg",
+          "family": "Martius",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Cesar",
+          "family": "Cadena",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Marco",
+          "family": "Hutter",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Maurice",
+          "family": "Fallon",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "published-online": {
+        "date-parts": [
+          [
+            2025,
+            7,
+            18
+          ]
+        ]
+      },
+      "container-title": [
+        "Autonomous Robots"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            7,
+            18
+          ]
+        ]
+      },
+      "article-number": "19"
+    }
+  },
+  {
+    "key": "Aegidius2025STEPP",
+    "group": "A",
+    "priority": "Alta",
+    "chapters": "2,3",
+    "use": "DINOv2, proiezione delle osservazioni e MLP senza tassonomia manuale dei terreni.",
+    "limit": "L'errore di ricostruzione rileva familiarità/anomalie; non stima direttamente Joule o percorso energetico ottimo.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Ægidius, Sebastian and Hadjivelichkov, Dennis and Jiao, Jianhao and Embley-Riches, Jonathan and Kanoulas, Dimitrios",
+      "title": "Watch Your STEPP: Semantic Traversability Estimation Using Pose Projected Features",
+      "year": "2025",
+      "booktitle": "2025 IEEE International Conference on Robotics and Automation (ICRA)",
+      "doi": "10.1109/icra55743.2025.11127781",
+      "url": "https://doi.org/10.1109/icra55743.2025.11127781",
+      "pages": "2376-2382"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.1109/ICRA55743.2025.11127781"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "IEEE",
+      "published-print": {
+        "date-parts": [
+          [
+            2025,
+            5,
+            19
+          ]
+        ]
+      },
+      "DOI": "10.1109/icra55743.2025.11127781",
+      "type": "proceedings-article",
+      "page": "2376-2382",
+      "title": [
+        "Watch Your STEPP: Semantic Traversability Estimation Using Pose Projected Features"
+      ],
+      "author": [
+        {
+          "given": "Sebastian",
+          "family": "Ægidius",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "University College London,Robot Perception and Learning Lab,Department of Computer Science,London,UK,WC1E 6BT"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Dennis",
+          "family": "Hadjivelichkov",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University College London,Robot Perception and Learning Lab,Department of Computer Science,London,UK,WC1E 6BT"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jianhao",
+          "family": "Jiao",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University College London,Robot Perception and Learning Lab,Department of Computer Science,London,UK,WC1E 6BT"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jonathan",
+          "family": "Embley-Riches",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University College London,Robot Perception and Learning Lab,Department of Computer Science,London,UK,WC1E 6BT"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Dimitrios",
+          "family": "Kanoulas",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University College London,Robot Perception and Learning Lab,Department of Computer Science,London,UK,WC1E 6BT"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "2025 IEEE International Conference on Robotics and Automation (ICRA)"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            5,
+            19
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Wellhausen2019Where",
+    "group": "A",
+    "priority": "Alta",
+    "chapters": "1,2",
+    "use": "Collega immagini e interazioni piede-terreno tramite proiezione dei contatti.",
+    "limit": "Il ground reaction score non coincide con l'energia ai giunti.",
+    "type": "article",
+    "fields": {
+      "author": "Wellhausen, Lorenz and Dosovitskiy, Alexey and Ranftl, Rene and Walas, Krzysztof and Cadena, Cesar and Hutter, Marco",
+      "title": "Where Should I Walk? Predicting Terrain Properties From Images Via Self-Supervised Learning",
+      "year": "2019",
+      "journal": "IEEE Robotics and Automation Letters",
+      "doi": "10.1109/lra.2019.2895390",
+      "url": "https://doi.org/10.1109/lra.2019.2895390",
+      "volume": "4",
+      "number": "2",
+      "pages": "1509-1516"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.1109/LRA.2019.2895390"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "issue": "2",
+      "published-print": {
+        "date-parts": [
+          [
+            2019,
+            4
+          ]
+        ]
+      },
+      "DOI": "10.1109/lra.2019.2895390",
+      "type": "journal-article",
+      "page": "1509-1516",
+      "title": [
+        "Where Should I Walk? Predicting Terrain Properties From Images Via Self-Supervised Learning"
+      ],
+      "volume": "4",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0001-5148-754X",
+          "authenticated-orcid": false,
+          "given": "Lorenz",
+          "family": "Wellhausen",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-1851-0976",
+          "authenticated-orcid": false,
+          "given": "Alexey",
+          "family": "Dosovitskiy",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-4158-2759",
+          "authenticated-orcid": false,
+          "given": "Rene",
+          "family": "Ranftl",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-2800-2716",
+          "authenticated-orcid": false,
+          "given": "Krzysztof",
+          "family": "Walas",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-2972-6011",
+          "authenticated-orcid": false,
+          "given": "Cesar",
+          "family": "Cadena",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-4285-4990",
+          "authenticated-orcid": false,
+          "given": "Marco",
+          "family": "Hutter",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "IEEE Robotics and Automation Letters"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2019,
+            4
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Fu2022Coupling",
+    "group": "A",
+    "priority": "Alta",
+    "chapters": "1,2",
+    "use": "VP-Nav: integrazione tra navigazione visiva e feedback propriocettivo.",
+    "limit": "Il feedback di sicurezza non è una memoria esplicita di consumi; non trattarlo come ottimizzatore energetico.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Fu, Zipeng and Kumar, Ashish and Agarwal, Ananye and Qi, Haozhi and Malik, Jitendra and Pathak, Deepak",
+      "title": "Coupling Vision and Proprioception for Navigation of Legged Robots",
+      "year": "2022",
+      "booktitle": "2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+      "doi": "10.1109/cvpr52688.2022.01676",
+      "url": "https://doi.org/10.1109/cvpr52688.2022.01676",
+      "pages": "17252-17262"
+    },
+    "sources": [
+      "https://api.crossref.org/works?query.title=Coupling+Vision+and+Proprioception+for+Navigation+of+Legged+Robots&rows=2"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "IEEE",
+      "published-print": {
+        "date-parts": [
+          [
+            2022,
+            6
+          ]
+        ]
+      },
+      "DOI": "10.1109/cvpr52688.2022.01676",
+      "type": "proceedings-article",
+      "page": "17252-17262",
+      "title": [
+        "Coupling Vision and Proprioception for Navigation of Legged Robots"
+      ],
+      "author": [
+        {
+          "given": "Zipeng",
+          "family": "Fu",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Camegie Mellon University"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Ashish",
+          "family": "Kumar",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "UC Berkeley"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Ananye",
+          "family": "Agarwal",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Camegie Mellon University"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Haozhi",
+          "family": "Qi",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "UC Berkeley"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jitendra",
+          "family": "Malik",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "UC Berkeley"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Deepak",
+          "family": "Pathak",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Camegie Mellon University"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2022,
+            6
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Ren2025TOPNav",
+    "group": "A",
+    "priority": "Alta",
+    "chapters": "2",
+    "use": "Chiude il ciclo tra pianificatore, stima del terreno e valutazione propriocettiva.",
+    "limit": "L'IMU energy density è un indicatore di oscillazione e non un consumo meccanico/elettrico in Joule.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Junli Ren and Yikai Liu and Yingru Dai and Junfeng Long and Guijin Wang",
+      "title": "TOP-Nav: Legged Navigation Integrating Terrain, Obstacle and Proprioception Estimation",
+      "year": "2025",
+      "url": "https://proceedings.mlr.press/v270/ren25a.html",
+      "booktitle": "Conference on Robot Learning",
+      "publisher": "PMLR",
+      "series": "Proceedings of Machine Learning Research",
+      "volume": "270",
+      "pages": "3454--3473"
+    },
+    "sources": [
+      "https://proceedings.mlr.press/v270/ren25a.html"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "citation_publisher": [
+        "PMLR"
+      ],
+      "citation_title": [
+        "TOP-Nav: Legged Navigation Integrating Terrain, Obstacle and Proprioception Estimation"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_abstract_html_url": [
+        "https://proceedings.mlr.press/v270/ren25a.html"
+      ],
+      "citation_pdf_url": [
+        "https://raw.githubusercontent.com/mlresearch/v270/main/assets/ren25a/ren25a.pdf"
+      ],
+      "citation_firstpage": [
+        "3454"
+      ],
+      "citation_lastpage": [
+        "3473"
+      ],
+      "citation_author": [
+        "Junli Ren",
+        "Yikai Liu",
+        "Yingru Dai",
+        "Junfeng Long",
+        "Guijin Wang"
+      ],
+      "citation_publication_date": [
+        "2025/01/12"
+      ],
+      "citation_inbook_title": [
+        "Conference on Robot Learning"
+      ],
+      "citation_conference_title": [
+        "Conference on Robot Learning"
+      ],
+      "citation_issn": [
+        "2640-3498"
+      ]
+    }
+  },
+  {
+    "key": "Elnoor2024AMCO",
+    "group": "A",
+    "priority": "Alta",
+    "chapters": "2",
+    "use": "Fonde mappa semantica, storia di attraversamento e propriocezione corrente.",
+    "limit": "Usa segmentazione semantica e selezione delle andature; differisce dalle feature senza classi e dal controllore congelato.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Elnoor, Mohamed and Weerakoon, Kasun and Sathyamoorthy, Adarsh Jagan and Guan, Tianrui and Rajagopal, Vignesh and Manocha, Dinesh",
+      "title": "AMCO: Adaptive Multimodal Coupling of Vision and Proprioception for Quadruped Robot Navigation in Outdoor Environments",
+      "year": "2024",
+      "booktitle": "2024 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)",
+      "doi": "10.1109/iros58592.2024.10801962",
+      "url": "https://doi.org/10.1109/iros58592.2024.10801962",
+      "pages": "7687-7694"
+    },
+    "sources": [
+      "https://api.crossref.org/works?query.title=AMCO%3A+Adaptive+Multimodal+Coupling+of+Vision+and+Proprioception+for+Quadruped+Robot+Navigation+in+Outdoor+Environments&rows=2"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "IEEE",
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            10,
+            14
+          ]
+        ]
+      },
+      "DOI": "10.1109/iros58592.2024.10801962",
+      "type": "proceedings-article",
+      "page": "7687-7694",
+      "title": [
+        "AMCO: Adaptive Multimodal Coupling of Vision and Proprioception for Quadruped Robot Navigation in Outdoor Environments"
+      ],
+      "author": [
+        {
+          "given": "Mohamed",
+          "family": "Elnoor",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "University of Maryland,College Park,MD,USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Kasun",
+          "family": "Weerakoon",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Maryland,College Park,MD,USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Adarsh Jagan",
+          "family": "Sathyamoorthy",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Maryland,College Park,MD,USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Tianrui",
+          "family": "Guan",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Maryland,College Park,MD,USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Vignesh",
+          "family": "Rajagopal",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Maryland,College Park,MD,USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Dinesh",
+          "family": "Manocha",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Maryland,College Park,MD,USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "2024 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            10,
+            14
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Elnoor2024ProNav",
+    "group": "A",
+    "priority": "Alta",
+    "chapters": "1,2",
+    "use": "Navigazione su Spot, stima propriocettiva di traversabilità e scelta dell'andatura.",
+    "limit": "Il risparmio include cambi di andatura; la tesi interviene invece sui comandi di navigazione.",
+    "type": "article",
+    "fields": {
+      "author": "Elnoor, Mohamed and Sathyamoorthy, Adarsh Jagan and Weerakoon, Kasun and Manocha, Dinesh",
+      "title": "ProNav: Proprioceptive Traversability Estimation for Legged Robot Navigation in Outdoor Environments",
+      "year": "2024",
+      "journal": "IEEE Robotics and Automation Letters",
+      "doi": "10.1109/lra.2024.3418270",
+      "url": "https://doi.org/10.1109/lra.2024.3418270",
+      "volume": "9",
+      "number": "8",
+      "pages": "7190-7197"
+    },
+    "sources": [
+      "https://api.crossref.org/works?query.title=ProNav%3A+Proprioceptive+Traversability+Estimation+for+Legged+Robot+Navigation+in+Outdoor+Environments&rows=2"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "issue": "8",
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            8
+          ]
+        ]
+      },
+      "DOI": "10.1109/lra.2024.3418270",
+      "type": "journal-article",
+      "page": "7190-7197",
+      "title": [
+        "ProNav: Proprioceptive Traversability Estimation for Legged Robot Navigation in Outdoor Environments"
+      ],
+      "volume": "9",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0000-2326-6184",
+          "authenticated-orcid": false,
+          "given": "Mohamed",
+          "family": "Elnoor",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Department of Electrical and Computer Engineering, University of Maryland, College Park, MD, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-9678-4748",
+          "authenticated-orcid": false,
+          "given": "Adarsh Jagan",
+          "family": "Sathyamoorthy",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Electrical and Computer Engineering, University of Maryland, College Park, MD, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-6526-8652",
+          "authenticated-orcid": false,
+          "given": "Kasun",
+          "family": "Weerakoon",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Electrical and Computer Engineering, University of Maryland, College Park, MD, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-7047-9801",
+          "authenticated-orcid": false,
+          "given": "Dinesh",
+          "family": "Manocha",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Electrical and Computer Engineering, University of Maryland, College Park, MD, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "IEEE Robotics and Automation Letters"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            8
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Karnan2023STERLING",
+    "group": "A",
+    "priority": "Alta",
+    "chapters": "2",
+    "use": "Apprende rappresentazioni multimodali del terreno da esperienza non annotata.",
+    "limit": "Piattaforma e navigazione per preferenze differiscono; non dimostra l'ottimalità energetica della policy della tesi.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Haresh Karnan and Elvin Yang and Daniel Farkash and Garrett Warnell and Joydeep Biswas and Peter Stone",
+      "title": "STERLING: Self-Supervised Terrain Representation Learning from Unconstrained Robot Experience",
+      "year": "2023",
+      "url": "https://proceedings.mlr.press/v229/karnan23a.html",
+      "booktitle": "Conference on Robot Learning",
+      "publisher": "PMLR",
+      "series": "Proceedings of Machine Learning Research",
+      "volume": "229",
+      "pages": "2393--2413"
+    },
+    "sources": [
+      "https://proceedings.mlr.press/v229/karnan23a.html"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "citation_publisher": [
+        "PMLR"
+      ],
+      "citation_title": [
+        "STERLING: Self-Supervised Terrain Representation Learning from Unconstrained Robot Experience"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_abstract_html_url": [
+        "https://proceedings.mlr.press/v229/karnan23a.html"
+      ],
+      "citation_pdf_url": [
+        "https://proceedings.mlr.press/v229/karnan23a/karnan23a.pdf"
+      ],
+      "citation_firstpage": [
+        "2393"
+      ],
+      "citation_lastpage": [
+        "2413"
+      ],
+      "citation_author": [
+        "Haresh Karnan",
+        "Elvin Yang",
+        "Daniel Farkash",
+        "Garrett Warnell",
+        "Joydeep Biswas",
+        "Peter Stone"
+      ],
+      "citation_publication_date": [
+        "2023/12/02"
+      ],
+      "citation_inbook_title": [
+        "Conference on Robot Learning"
+      ],
+      "citation_conference_title": [
+        "Conference on Robot Learning"
+      ],
+      "citation_issn": [
+        "2640-3498"
+      ]
+    }
+  },
+  {
+    "key": "Chen2024Physical",
+    "group": "A",
+    "priority": "Alta",
+    "chapters": "2",
+    "use": "Associa interazione fisica e feature visive per stimare attrito e rigidezza.",
+    "limit": "Stima parametri fisici espliciti; non apprende direttamente il percorso di minimo consumo.",
+    "type": "article",
+    "fields": {
+      "author": "Chen, Jiaqi and Frey, Jonas and Zhou, Ruyi and Miki, Takahiro and Martius, Georg and Hutter, Marco",
+      "title": "Identifying Terrain Physical Parameters From Vision - Towards Physical-Parameter-Aware Locomotion and Navigation",
+      "year": "2024",
+      "journal": "IEEE Robotics and Automation Letters",
+      "doi": "10.1109/lra.2024.3455788",
+      "url": "https://doi.org/10.1109/lra.2024.3455788",
+      "volume": "9",
+      "number": "11",
+      "pages": "9279-9286"
+    },
+    "sources": [
+      "https://api.crossref.org/works?query.title=Identifying+Terrain+Physical+Parameters+From+Vision+Towards+Physical-Parameter-Aware+Locomotion+and+Navigation&rows=2"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "issue": "11",
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            11
+          ]
+        ]
+      },
+      "DOI": "10.1109/lra.2024.3455788",
+      "type": "journal-article",
+      "page": "9279-9286",
+      "title": [
+        "Identifying Terrain Physical Parameters From Vision - Towards Physical-Parameter-Aware Locomotion and Navigation"
+      ],
+      "volume": "9",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0006-3602-0291",
+          "authenticated-orcid": false,
+          "given": "Jiaqi",
+          "family": "Chen",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Robotic Systems Laboratory, ETH Zurich, Zurich, Switzerland"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-7401-2173",
+          "authenticated-orcid": false,
+          "given": "Jonas",
+          "family": "Frey",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Robotic Systems Laboratory, ETH Zurich, Zurich, Switzerland"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-1854-9451",
+          "authenticated-orcid": false,
+          "given": "Ruyi",
+          "family": "Zhou",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Robotic Systems Laboratory, ETH Zurich, Zurich, Switzerland"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-8556-2819",
+          "authenticated-orcid": false,
+          "given": "Takahiro",
+          "family": "Miki",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Robotic Systems Laboratory, ETH Zurich, Zurich, Switzerland"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-8963-7627",
+          "authenticated-orcid": false,
+          "given": "Georg",
+          "family": "Martius",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Max Planck Institute for Intelligent Systems T&#x00FC;bingen, T&#x00FC;bingen, Germany"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-4285-4990",
+          "authenticated-orcid": false,
+          "given": "Marco",
+          "family": "Hutter",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Robotic Systems Laboratory, ETH Zurich, Zurich, Switzerland"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "IEEE Robotics and Automation Letters"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            11
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Frey2022PolicyGuided",
+    "group": "A",
+    "priority": "Alta",
+    "chapters": "2",
+    "use": "Traversabilità dipendente dalle capacità di una policy di locomozione.",
+    "limit": "Rappresentazione volumetrica e stima di attraversabilità, non identiche alla gridmap RGB-D della tesi.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Frey, Jonas and Hoeller, David and Khattak, Shehryar and Hutter, Marco",
+      "title": "Locomotion Policy Guided Traversability Learning using Volumetric Representations of Complex Environments",
+      "year": "2022",
+      "booktitle": "2022 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)",
+      "doi": "10.1109/iros47612.2022.9982190",
+      "url": "https://doi.org/10.1109/iros47612.2022.9982190",
+      "pages": "5722-5729"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.1109/IROS47612.2022.9982190"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "IEEE",
+      "published-print": {
+        "date-parts": [
+          [
+            2022,
+            10,
+            23
+          ]
+        ]
+      },
+      "DOI": "10.1109/iros47612.2022.9982190",
+      "type": "proceedings-article",
+      "page": "5722-5729",
+      "title": [
+        "Locomotion Policy Guided Traversability Learning using Volumetric Representations of Complex Environments"
+      ],
+      "author": [
+        {
+          "given": "Jonas",
+          "family": "Frey",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "ETH Z&#x00FC;rich,Department of Mechanical and Process Engineering,Z&#x00FC;rich,Switzerland,8092"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "David",
+          "family": "Hoeller",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "ETH Z&#x00FC;rich,Department of Mechanical and Process Engineering,Z&#x00FC;rich,Switzerland,8092"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Shehryar",
+          "family": "Khattak",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "ETH Z&#x00FC;rich,Department of Mechanical and Process Engineering,Z&#x00FC;rich,Switzerland,8092"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Marco",
+          "family": "Hutter",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "ETH Z&#x00FC;rich,Department of Mechanical and Process Engineering,Z&#x00FC;rich,Switzerland,8092"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "2022 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2022,
+            10,
+            23
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Muhamad2024MultipleCosts",
+    "group": "A",
+    "priority": "Media",
+    "chapters": "2",
+    "use": "Predizione di molteplici costi di traversabilità con dati da simulatore.",
+    "limit": "Verificare i singoli costi prima di chiamarli energetici; non tutti rappresentano lavoro ai giunti.",
+    "type": "article",
+    "fields": {
+      "author": "Muhamad, Fikih and Kim, Jung-Su and Park, Jae-Han",
+      "title": "Robust Traversability Prediction Using Multiple Costs for Quadruped Robot in Random Terrains",
+      "year": "2024",
+      "journal": "IEEE Access",
+      "doi": "10.1109/access.2024.3371579",
+      "url": "https://doi.org/10.1109/access.2024.3371579",
+      "volume": "12",
+      "pages": "32507-32517"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.1109/ACCESS.2024.3371579"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "published-print": {
+        "date-parts": [
+          [
+            2024
+          ]
+        ]
+      },
+      "DOI": "10.1109/access.2024.3371579",
+      "type": "journal-article",
+      "page": "32507-32517",
+      "title": [
+        "Robust Traversability Prediction Using Multiple Costs for Quadruped Robot in Random Terrains"
+      ],
+      "volume": "12",
+      "author": [
+        {
+          "given": "Fikih",
+          "family": "Muhamad",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Department of Electrical and Information Engineering, Seoul National University of Science and Technology, Seoul, South Korea"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-5952-2917",
+          "authenticated-orcid": false,
+          "given": "Jung-Su",
+          "family": "Kim",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Electrical and Information Engineering, Seoul National University of Science and Technology, Seoul, South Korea"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-5837-3131",
+          "authenticated-orcid": false,
+          "given": "Jae-Han",
+          "family": "Park",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "AI Robot Research and Development Department, Korea Institute of Industrial Technology (KITECH), Ansan, South Korea"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "IEEE Access"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2024
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Belter2016Adaptive",
+    "group": "A",
+    "priority": "Media",
+    "chapters": "2",
+    "use": "Precedente di pianificazione gerarchica e regressione della traversabilità su terreno accidentato.",
+    "limit": "Piattaforma camminante e pianificatori espliciti; il percorso non è deciso dalla stessa policy RL.",
+    "type": "article",
+    "fields": {
+      "author": "Belter, Dominik and Łabęcki, Przemysław and Skrzypczyński, Piotr",
+      "title": "Adaptive Motion Planning for Autonomous Rough Terrain Traversal with a Walking Robot",
+      "year": "2016",
+      "journal": "Journal of Field Robotics",
+      "doi": "10.1002/rob.21610",
+      "url": "https://doi.org/10.1002/rob.21610",
+      "volume": "33",
+      "number": "3",
+      "pages": "337-370"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.1002/rob.21610"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "Wiley",
+      "issue": "3",
+      "published-print": {
+        "date-parts": [
+          [
+            2016,
+            5
+          ]
+        ]
+      },
+      "DOI": "10.1002/rob.21610",
+      "type": "journal-article",
+      "page": "337-370",
+      "title": [
+        "Adaptive Motion Planning for Autonomous Rough Terrain Traversal with a Walking Robot"
+      ],
+      "volume": "33",
+      "author": [
+        {
+          "given": "Dominik",
+          "family": "Belter",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Institute of Control and Information Engineering Poznań University of Technology ul Piotrowo 3A 60‐965 Poznań Poland"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Przemysław",
+          "family": "Łabęcki",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Institute of Control and Information Engineering Poznań University of Technology ul Piotrowo 3A 60‐965 Poznań Poland"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Piotr",
+          "family": "Skrzypczyński",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Institute of Control and Information Engineering Poznań University of Technology ul Piotrowo 3A 60‐965 Poznań Poland"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "published-online": {
+        "date-parts": [
+          [
+            2015,
+            6,
+            24
+          ]
+        ]
+      },
+      "container-title": [
+        "Journal of Field Robotics"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2015,
+            6,
+            24
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "SanchezDelgado2025Mapping",
+    "group": "A",
+    "priority": "Media",
+    "chapters": "2",
+    "use": "Mappatura propriocettiva delle proprietà di attraversamento su quadrupede.",
+    "limit": "Scenario planetario e mappa fisica; il PDF locale è il preprint di un lavoro poi pubblicato a iSpaRo.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Sanchez-Delgado, Alberto and Soares, João Carlos Virgolino and Barasuol, Victor and Semini, Claudio",
+      "title": "Towards Proprioceptive Terrain Mapping with Quadruped Robots for Exploration in Planetary Permanently Shadowed Regions",
+      "year": "2025",
+      "booktitle": "2025 International Conference on Space Robotics (iSpaRo)",
+      "doi": "10.1109/isparo66239.2025.11436327",
+      "url": "https://doi.org/10.1109/isparo66239.2025.11436327",
+      "pages": "189-196",
+      "note": "Preprint available as arXiv:2510.18986"
+    },
+    "sources": [
+      "https://api.crossref.org/works?query.title=Towards+Proprioceptive+Terrain+Mapping+with+Quadruped+Robots+for+Exploration+in+Planetary+Permanently+Shadowed+Regions&rows=2"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "IEEE",
+      "published-print": {
+        "date-parts": [
+          [
+            2025,
+            12,
+            1
+          ]
+        ]
+      },
+      "DOI": "10.1109/isparo66239.2025.11436327",
+      "type": "proceedings-article",
+      "page": "189-196",
+      "title": [
+        "Towards Proprioceptive Terrain Mapping with Quadruped Robots for Exploration in Planetary Permanently Shadowed Regions"
+      ],
+      "author": [
+        {
+          "given": "Alberto",
+          "family": "Sanchez-Delgado",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Istituto Italiano di Tecnologia (IIT),Dynamic Legged Systems lab (DLS),Genoa,Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "João Carlos Virgolino",
+          "family": "Soares",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Istituto Italiano di Tecnologia (IIT),Dynamic Legged Systems lab (DLS),Genoa,Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Victor",
+          "family": "Barasuol",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Istituto Italiano di Tecnologia (IIT),Dynamic Legged Systems lab (DLS),Genoa,Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Claudio",
+          "family": "Semini",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Istituto Italiano di Tecnologia (IIT),Dynamic Legged Systems lab (DLS),Genoa,Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "2025 International Conference on Space Robotics (iSpaRo)"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            12,
+            1
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Roth2025Forward",
+    "group": "A",
+    "priority": "Alta",
+    "chapters": "2",
+    "use": "Predice dinamica e rischio in funzione di geometria e storia propriocettiva per pianificazione MPPI.",
+    "limit": "Apprende un modello di dinamica usato da un planner; non una policy con costo energetico diretto.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Roth, Pascal and Frey, Jonas and Cadena, Cesar and Hutter, Marco",
+      "title": "Learned Perceptive Forward Dynamics Model for Safe and Platform-aware Robotic Navigation",
+      "year": "2025",
+      "booktitle": "Robotics: Science and Systems XXI",
+      "doi": "10.15607/rss.2025.xxi.001",
+      "url": "https://doi.org/10.15607/rss.2025.xxi.001"
+    },
+    "sources": [
+      "https://api.crossref.org/works?query.title=Learned+Perceptive+Forward+Dynamics+Model+for+Safe+and+Platform-Aware+Robotic+Navigation&rows=2"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "Robotics: Science and Systems Foundation",
+      "DOI": "10.15607/rss.2025.xxi.001",
+      "type": "proceedings-article",
+      "title": [
+        "Learned Perceptive Forward Dynamics Model for Safe and Platform-aware Robotic Navigation"
+      ],
+      "author": [
+        {
+          "given": "Pascal",
+          "family": "Roth",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jonas",
+          "family": "Frey",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Cesar",
+          "family": "Cadena",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Marco",
+          "family": "Hutter",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "published-online": {
+        "date-parts": [
+          [
+            2025,
+            6,
+            21
+          ]
+        ]
+      },
+      "container-title": [
+        "Robotics: Science and Systems XXI"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            6,
+            21
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Sevastopoulos2022Survey",
+    "group": "A",
+    "priority": "Media",
+    "chapters": "1,2",
+    "use": "Survey pubblicato per definizioni di traversabilità e tassonomia dei metodi.",
+    "limit": "Inquadra il campo ma non sostituisce i lavori primari né dimostra un gap specifico della tesi.",
+    "type": "article",
+    "fields": {
+      "author": "Sevastopoulos, Christos and Konstantopoulos, Stasinos",
+      "title": "A Survey of Traversability Estimation for Mobile Robots",
+      "year": "2022",
+      "journal": "IEEE Access",
+      "doi": "10.1109/access.2022.3202545",
+      "url": "https://doi.org/10.1109/access.2022.3202545",
+      "volume": "10",
+      "pages": "96331-96347"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.1109/ACCESS.2022.3202545"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "published-print": {
+        "date-parts": [
+          [
+            2022
+          ]
+        ]
+      },
+      "DOI": "10.1109/access.2022.3202545",
+      "type": "journal-article",
+      "page": "96331-96347",
+      "title": [
+        "A Survey of Traversability Estimation for Mobile Robots"
+      ],
+      "volume": "10",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0001-8978-1402",
+          "authenticated-orcid": false,
+          "given": "Christos",
+          "family": "Sevastopoulos",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Department of Computer Science and Computer Engineering, University of Texas at Arlington, Arlington, TX, USA"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-2586-1726",
+          "authenticated-orcid": false,
+          "given": "Stasinos",
+          "family": "Konstantopoulos",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Institute of Informatics and Telecommunications, NCSR &#x201C;Demokritos,&#x201D;, Agia Paraskevi, Greece"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "IEEE Access"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2022
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Liang2025AdaptiveEnergy",
+    "group": "B",
+    "priority": "Media",
+    "chapters": "2",
+    "use": "Mostra l'effetto di una regolarizzazione energetica sull'apprendimento della locomozione.",
+    "limit": "Ottimizza andature e controllo motorio; usarlo per delimitare la scala del contributo.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Liang, Boyuan and Sun, Lingfeng and Zhu, Xinghao and Zhang, Bike and Xiong, Ziyin and Wang, Yixiao and Li, Chenran and Sreenath, Koushil and Tomizuka, Masayoshi",
+      "title": "Adaptive Energy Regularization for Autonomous Gait Transition and Energy-Efficient Quadruped Locomotion",
+      "year": "2025",
+      "booktitle": "2025 IEEE International Conference on Robotics and Automation (ICRA)",
+      "doi": "10.1109/icra55743.2025.11128812",
+      "url": "https://doi.org/10.1109/icra55743.2025.11128812",
+      "pages": "5350-5356"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.1109/ICRA55743.2025.11128812"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "IEEE",
+      "published-print": {
+        "date-parts": [
+          [
+            2025,
+            5,
+            19
+          ]
+        ]
+      },
+      "DOI": "10.1109/icra55743.2025.11128812",
+      "type": "proceedings-article",
+      "page": "5350-5356",
+      "title": [
+        "Adaptive Energy Regularization for Autonomous Gait Transition and Energy-Efficient Quadruped Locomotion"
+      ],
+      "author": [
+        {
+          "given": "Boyuan",
+          "family": "Liang",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "University of California,Department of Mechanical Engineering,Berkeley,California,USA,94720"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Lingfeng",
+          "family": "Sun",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of California,Department of Mechanical Engineering,Berkeley,California,USA,94720"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Xinghao",
+          "family": "Zhu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of California,Department of Mechanical Engineering,Berkeley,California,USA,94720"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Bike",
+          "family": "Zhang",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of California,Department of Mechanical Engineering,Berkeley,California,USA,94720"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Ziyin",
+          "family": "Xiong",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of California,Department of Mechanical Engineering,Berkeley,California,USA,94720"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Yixiao",
+          "family": "Wang",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of California,Department of Mechanical Engineering,Berkeley,California,USA,94720"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Chenran",
+          "family": "Li",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of California,Department of Mechanical Engineering,Berkeley,California,USA,94720"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Koushil",
+          "family": "Sreenath",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of California,Department of Mechanical Engineering,Berkeley,California,USA,94720"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Masayoshi",
+          "family": "Tomizuka",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of California,Department of Mechanical Engineering,Berkeley,California,USA,94720"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "2025 IEEE International Conference on Robotics and Automation (ICRA)"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            5,
+            19
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Fu2022Gaits",
+    "group": "B",
+    "priority": "Alta",
+    "chapters": "1,2",
+    "use": "Mostra come la minimizzazione energetica possa far emergere andature.",
+    "limit": "L'oggetto appreso è la locomozione; non è un confronto diretto sulla scelta del tragitto.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Zipeng Fu and Ashish Kumar and Jitendra Malik and Deepak Pathak",
+      "title": "Minimizing Energy Consumption Leads to the Emergence of Gaits in Legged Robots",
+      "year": "2022",
+      "url": "https://proceedings.mlr.press/v164/fu22a.html",
+      "booktitle": "Conference on Robot Learning",
+      "publisher": "PMLR",
+      "series": "Proceedings of Machine Learning Research",
+      "volume": "164",
+      "pages": "928--937"
+    },
+    "sources": [
+      "https://proceedings.mlr.press/v164/fu22a.html"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "citation_publisher": [
+        "PMLR"
+      ],
+      "citation_title": [
+        "Minimizing Energy Consumption Leads to the Emergence of Gaits in Legged Robots"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_abstract_html_url": [
+        "https://proceedings.mlr.press/v164/fu22a.html"
+      ],
+      "citation_pdf_url": [
+        "https://proceedings.mlr.press/v164/fu22a/fu22a.pdf"
+      ],
+      "citation_firstpage": [
+        "928"
+      ],
+      "citation_lastpage": [
+        "937"
+      ],
+      "citation_author": [
+        "Zipeng Fu",
+        "Ashish Kumar",
+        "Jitendra Malik",
+        "Deepak Pathak"
+      ],
+      "citation_publication_date": [
+        "2022/01/11"
+      ],
+      "citation_inbook_title": [
+        "Conference on Robot Learning"
+      ],
+      "citation_conference_title": [
+        "Conference on Robot Learning"
+      ],
+      "citation_issn": [
+        "2640-3498"
+      ]
+    }
+  },
+  {
+    "key": "Yan2024Energy",
+    "group": "B",
+    "priority": "Media",
+    "chapters": "2",
+    "use": "Esempio di minimizzazione energetica con DDPG su quadrupede.",
+    "limit": "Riguarda la locomozione; non giustifica l'uso di DDPG nella tesi e non prova selezione energetica del percorso.",
+    "type": "article",
+    "fields": {
+      "author": "Yan, Zhenzhuo and Ji, Hongwei and Chang, Qing",
+      "title": "Energy Consumption Minimization of Quadruped Robot Based on Reinforcement Learning of DDPG Algorithm",
+      "year": "2024",
+      "journal": "Actuators",
+      "doi": "10.3390/act13010018",
+      "url": "https://doi.org/10.3390/act13010018",
+      "volume": "13",
+      "number": "1",
+      "pages": "18"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.3390/act13010018"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "MDPI AG",
+      "issue": "1",
+      "DOI": "10.3390/act13010018",
+      "type": "journal-article",
+      "page": "18",
+      "title": [
+        "Energy Consumption Minimization of Quadruped Robot Based on Reinforcement Learning of DDPG Algorithm"
+      ],
+      "volume": "13",
+      "author": [
+        {
+          "given": "Zhenzhuo",
+          "family": "Yan",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "School of Mechanical Engineering, Tianjin University of Commerce, Tianjin 300134, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Hongwei",
+          "family": "Ji",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "School of Mechanical Engineering, Tianjin University of Commerce, Tianjin 300134, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Qing",
+          "family": "Chang",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "School of Mechanical Engineering, Tianjin University of Commerce, Tianjin 300134, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "published-online": {
+        "date-parts": [
+          [
+            2024,
+            1,
+            2
+          ]
+        ]
+      },
+      "container-title": [
+        "Actuators"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            1,
+            2
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Pragr2019Online",
+    "group": "A",
+    "priority": "Alta",
+    "chapters": "2",
+    "use": "Apprendimento incrementale online di costi di attraversamento e uso nella scelta delle mete esplorative.",
+    "limit": "Esplorazione e regressione con Gaussian Processes su robot multigamba; differiscono da goal assegnato e policy RL.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Pragr, Milos and Cizek, Petr and Bayer, Jan and Faigl, Jan",
+      "title": "Online Incremental Learning of the Terrain Traversal Cost in Autonomous Exploration",
+      "year": "2019",
+      "booktitle": "Robotics: Science and Systems XV",
+      "doi": "10.15607/rss.2019.xv.040",
+      "url": "https://doi.org/10.15607/rss.2019.xv.040"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.15607/RSS.2019.XV.040"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "Robotics: Science and Systems Foundation",
+      "DOI": "10.15607/rss.2019.xv.040",
+      "type": "proceedings-article",
+      "title": [
+        "Online Incremental Learning of the Terrain Traversal Cost in Autonomous Exploration"
+      ],
+      "author": [
+        {
+          "given": "Milos",
+          "family": "Pragr",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Petr",
+          "family": "Cizek",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jan",
+          "family": "Bayer",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jan",
+          "family": "Faigl",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "published-online": {
+        "date-parts": [
+          [
+            2019,
+            6,
+            22
+          ]
+        ]
+      },
+      "container-title": [
+        "Robotics: Science and Systems XV"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2019,
+            6,
+            22
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Rudin2022Advanced",
+    "group": "C",
+    "priority": "Alta",
+    "chapters": "2",
+    "use": "Confronto tra decomposizione navigazione/locomozione e controllo appreso end-to-end.",
+    "limit": "Ottimizza congiuntamente comportamenti motori; la policy della tesi opera sopra un controllore congelato.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Rudin, Nikita and Hoeller, David and Bjelonic, Marko and Hutter, Marco",
+      "title": "Advanced Skills by Learning Locomotion and Local Navigation End-to-End",
+      "year": "2022",
+      "booktitle": "2022 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)",
+      "doi": "10.1109/iros47612.2022.9981198",
+      "url": "https://doi.org/10.1109/iros47612.2022.9981198",
+      "pages": "2497-2503"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.1109/IROS47612.2022.9981198"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "IEEE",
+      "published-print": {
+        "date-parts": [
+          [
+            2022,
+            10,
+            23
+          ]
+        ]
+      },
+      "DOI": "10.1109/iros47612.2022.9981198",
+      "type": "proceedings-article",
+      "page": "2497-2503",
+      "title": [
+        "Advanced Skills by Learning Locomotion and Local Navigation End-to-End"
+      ],
+      "author": [
+        {
+          "given": "Nikita",
+          "family": "Rudin",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Robotic Systems Lab, ETH Zurich"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "David",
+          "family": "Hoeller",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Robotic Systems Lab, ETH Zurich"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Marko",
+          "family": "Bjelonic",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Robotic Systems Lab, ETH Zurich"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Marco",
+          "family": "Hutter",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Robotic Systems Lab, ETH Zurich"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "2022 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2022,
+            10,
+            23
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Miki2022Perceptive",
+    "group": "C",
+    "priority": "Media",
+    "chapters": "1,2",
+    "use": "Riferimento forte sull'unione di percezione e propriocezione nella locomozione robusta.",
+    "limit": "Il successo su terreno complesso non equivale a minimizzare l'energia del percorso.",
+    "type": "article",
+    "fields": {
+      "author": "Miki, Takahiro and Lee, Joonho and Hwangbo, Jemin and Wellhausen, Lorenz and Koltun, Vladlen and Hutter, Marco",
+      "title": "Learning robust perceptive locomotion for quadrupedal robots in the wild",
+      "year": "2022",
+      "journal": "Science Robotics",
+      "doi": "10.1126/scirobotics.abk2822",
+      "url": "https://doi.org/10.1126/scirobotics.abk2822",
+      "volume": "7",
+      "number": "62",
+      "pages": "eabk2822"
+    },
+    "sources": [
+      "https://api.crossref.org/works?query.title=Learning+robust+perceptive+locomotion+for+quadrupedal+robots+in+the+wild&rows=2"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "American Association for the Advancement of Science (AAAS)",
+      "issue": "62",
+      "published-print": {
+        "date-parts": [
+          [
+            2022,
+            1,
+            26
+          ]
+        ]
+      },
+      "DOI": "10.1126/scirobotics.abk2822",
+      "type": "journal-article",
+      "title": [
+        "Learning robust perceptive locomotion for quadrupedal robots in the wild"
+      ],
+      "volume": "7",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0001-8556-2819",
+          "authenticated-orcid": true,
+          "given": "Takahiro",
+          "family": "Miki",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Robotic Systems Lab, ETH-Zürich, Zürich, Switzerland."
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-5072-7385",
+          "authenticated-orcid": true,
+          "given": "Joonho",
+          "family": "Lee",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Robotic Systems Lab, ETH-Zürich, Zürich, Switzerland."
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-3444-8079",
+          "authenticated-orcid": true,
+          "given": "Jemin",
+          "family": "Hwangbo",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Robotics &amp; Artificial Intelligence Lab, KAIST, Daejeon, Korea."
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-5148-754X",
+          "authenticated-orcid": true,
+          "given": "Lorenz",
+          "family": "Wellhausen",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Robotic Systems Lab, ETH-Zürich, Zürich, Switzerland."
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-0858-0970",
+          "authenticated-orcid": true,
+          "given": "Vladlen",
+          "family": "Koltun",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Intelligent Systems Lab, Intel, Jackson, WY, USA."
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-4285-4990",
+          "authenticated-orcid": true,
+          "given": "Marco",
+          "family": "Hutter",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Robotic Systems Lab, ETH-Zürich, Zürich, Switzerland."
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "Science Robotics"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2022,
+            1,
+            26
+          ]
+        ]
+      },
+      "article-number": "eabk2822"
+    }
+  },
+  {
+    "key": "Faigl2019Unsupervised",
+    "group": "A",
+    "priority": "Alta",
+    "chapters": "2",
+    "use": "Apprendimento non supervisionato del costo di attraversamento e identificazione del terreno.",
+    "limit": "Usa self-organizing maps su esapode; distingue l'apprendimento del costo dalla sua ottimizzazione via RL.",
+    "type": "incollection",
+    "fields": {
+      "author": "Faigl, Jan and Prágr, Miloš",
+      "title": "On Unsupervised Learning of Traversal Cost and Terrain Types Identification Using Self-organizing Maps",
+      "year": "2019",
+      "booktitle": "Artificial Neural Networks and Machine Learning – ICANN 2019: Theoretical Neural Computation",
+      "doi": "10.1007/978-3-030-30487-4_50",
+      "url": "https://doi.org/10.1007/978-3-030-30487-4_50",
+      "pages": "654-668",
+      "publisher": "Springer International Publishing"
+    },
+    "sources": [
+      "https://api.crossref.org/works?query.title=On+Unsupervised+Learning+of+Traversal+Cost+and+Terrain+Types+Identification+Using+Self-organizing+Maps&rows=2"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "Springer International Publishing",
+      "published-print": {
+        "date-parts": [
+          [
+            2019
+          ]
+        ]
+      },
+      "DOI": "10.1007/978-3-030-30487-4_50",
+      "type": "book-chapter",
+      "page": "654-668",
+      "title": [
+        "On Unsupervised Learning of Traversal Cost and Terrain Types Identification Using Self-organizing Maps"
+      ],
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0002-6193-0792",
+          "authenticated-orcid": false,
+          "given": "Jan",
+          "family": "Faigl",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-8213-893X",
+          "authenticated-orcid": false,
+          "given": "Miloš",
+          "family": "Prágr",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "published-online": {
+        "date-parts": [
+          [
+            2019,
+            9,
+            9
+          ]
+        ]
+      },
+      "container-title": [
+        "Lecture Notes in Computer Science",
+        "Artificial Neural Networks and Machine Learning – ICANN 2019: Theoretical Neural Computation"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2019
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Kumar2021RMA",
+    "group": "C",
+    "priority": "Media",
+    "chapters": "2",
+    "use": "Distingue adattamento online da policy statica e uso di informazione privilegiata in training.",
+    "limit": "Adattamento motorio, non navigazione energetica; non attribuire alla tesi un adaptation module non implementato.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Kumar, Ashish and Fu, Zipeng and Pathak, Deepak and Malik, Jitendra",
+      "title": "RMA: Rapid Motor Adaptation for Legged Robots",
+      "year": "2021",
+      "booktitle": "Robotics: Science and Systems XVII",
+      "doi": "10.15607/rss.2021.xvii.011",
+      "url": "https://doi.org/10.15607/rss.2021.xvii.011"
+    },
+    "sources": [
+      "https://api.crossref.org/works?query.title=RMA%3A+Rapid+Motor+Adaptation+for+Legged+Robots&rows=2"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "Robotics: Science and Systems Foundation",
+      "DOI": "10.15607/rss.2021.xvii.011",
+      "type": "proceedings-article",
+      "title": [
+        "RMA: Rapid Motor Adaptation for Legged Robots"
+      ],
+      "author": [
+        {
+          "given": "Ashish",
+          "family": "Kumar",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Zipeng",
+          "family": "Fu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Deepak",
+          "family": "Pathak",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jitendra",
+          "family": "Malik",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "published-online": {
+        "date-parts": [
+          [
+            2021,
+            7,
+            12
+          ]
+        ]
+      },
+      "container-title": [
+        "Robotics: Science and Systems XVII"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2021,
+            7,
+            12
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Rudin2022Massively",
+    "group": "C",
+    "priority": "Media",
+    "chapters": "2,3",
+    "use": "Giustifica simulazione parallela e curriculum per RL su robot a zampe.",
+    "limit": "Il risultato di training rapido sulla locomozione non si trasferisce automaticamente alla navigazione con RGB-D.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Nikita Rudin and David Hoeller and Philipp Reist and Marco Hutter",
+      "title": "Learning to Walk in Minutes Using Massively Parallel Deep Reinforcement Learning",
+      "year": "2022",
+      "url": "https://proceedings.mlr.press/v164/rudin22a.html",
+      "booktitle": "Conference on Robot Learning",
+      "publisher": "PMLR",
+      "series": "Proceedings of Machine Learning Research",
+      "volume": "164",
+      "pages": "91--100"
+    },
+    "sources": [
+      "https://proceedings.mlr.press/v164/rudin22a.html"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "citation_publisher": [
+        "PMLR"
+      ],
+      "citation_title": [
+        "Learning to Walk in Minutes Using Massively Parallel Deep Reinforcement Learning"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_abstract_html_url": [
+        "https://proceedings.mlr.press/v164/rudin22a.html"
+      ],
+      "citation_pdf_url": [
+        "https://proceedings.mlr.press/v164/rudin22a/rudin22a.pdf"
+      ],
+      "citation_firstpage": [
+        "91"
+      ],
+      "citation_lastpage": [
+        "100"
+      ],
+      "citation_author": [
+        "Nikita Rudin",
+        "David Hoeller",
+        "Philipp Reist",
+        "Marco Hutter"
+      ],
+      "citation_publication_date": [
+        "2022/01/11"
+      ],
+      "citation_inbook_title": [
+        "Conference on Robot Learning"
+      ],
+      "citation_conference_title": [
+        "Conference on Robot Learning"
+      ],
+      "citation_issn": [
+        "2640-3498"
+      ]
+    }
+  },
+  {
+    "key": "Schulman2017PPO",
+    "group": "D",
+    "priority": "Alta",
+    "chapters": "2,3",
+    "use": "Fonte primaria dell'algoritmo PPO usato nello scenario speculare.",
+    "limit": "La separazione delle teste di valore nel codice è una scelta implementativa aggiuntiva da descrivere.",
+    "type": "misc",
+    "fields": {
+      "author": "Schulman, John and Wolski, Filip and Dhariwal, Prafulla and Radford, Alec and Klimov, Oleg",
+      "title": "Proximal Policy Optimization Algorithms",
+      "year": "2017",
+      "url": "https://arxiv.org/abs/1707.06347",
+      "eprint": "1707.06347",
+      "archivePrefix": "arXiv",
+      "doi": "10.48550/arXiv.1707.06347",
+      "howpublished": "arXiv preprint"
+    },
+    "sources": [
+      "https://arxiv.org/abs/1707.06347"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "citation_title": [
+        "Proximal Policy Optimization Algorithms"
+      ],
+      "citation_author": [
+        "Schulman, John",
+        "Wolski, Filip",
+        "Dhariwal, Prafulla",
+        "Radford, Alec",
+        "Klimov, Oleg"
+      ],
+      "citation_date": [
+        "2017/07/20"
+      ],
+      "citation_online_date": [
+        "2017/08/28"
+      ],
+      "citation_pdf_url": [
+        "https://arxiv.org/pdf/1707.06347"
+      ],
+      "citation_arxiv_id": [
+        "1707.06347"
+      ]
+    }
+  },
+  {
+    "key": "Haarnoja2018SAC",
+    "group": "D",
+    "priority": "Alta",
+    "chapters": "2,3",
+    "use": "Fonte primaria di SAC per controllo continuo off-policy a massima entropia.",
+    "limit": "Il paper ICML descrive la formulazione iniziale; la variante concreta del codice va verificata separatamente.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Tuomas Haarnoja and Aurick Zhou and Pieter Abbeel and Sergey Levine",
+      "title": "Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor",
+      "year": "2018",
+      "url": "https://proceedings.mlr.press/v80/haarnoja18b.html",
+      "booktitle": "International Conference on Machine Learning",
+      "publisher": "PMLR",
+      "series": "Proceedings of Machine Learning Research",
+      "volume": "80",
+      "pages": "1861--1870"
+    },
+    "sources": [
+      "https://proceedings.mlr.press/v80/haarnoja18b.html"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "citation_publisher": [
+        "PMLR"
+      ],
+      "citation_title": [
+        "Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor"
+      ],
+      "citation_language": [
+        "en"
+      ],
+      "citation_abstract_html_url": [
+        "https://proceedings.mlr.press/v80/haarnoja18b.html"
+      ],
+      "citation_pdf_url": [
+        "http://proceedings.mlr.press/v80/haarnoja18b/haarnoja18b.pdf"
+      ],
+      "citation_firstpage": [
+        "1861"
+      ],
+      "citation_lastpage": [
+        "1870"
+      ],
+      "citation_author": [
+        "Tuomas Haarnoja",
+        "Aurick Zhou",
+        "Pieter Abbeel",
+        "Sergey Levine"
+      ],
+      "citation_publication_date": [
+        "2018/07/03"
+      ],
+      "citation_inbook_title": [
+        "International Conference on Machine Learning"
+      ],
+      "citation_conference_title": [
+        "International Conference on Machine Learning"
+      ],
+      "citation_issn": [
+        "2640-3498"
+      ]
+    }
+  },
+  {
+    "key": "Schulman2016GAE",
+    "group": "D",
+    "priority": "Alta",
+    "chapters": "2,3",
+    "use": "Fonte della stima generalizzata del vantaggio utilizzata in PPO.",
+    "limit": "La combinazione di vantaggi di navigazione ed energia non è automaticamente un nuovo algoritmo multiobiettivo.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Schulman, John and Moritz, Philipp and Levine, Sergey and Jordan, Michael and Abbeel, Pieter",
+      "title": "High-Dimensional Continuous Control Using Generalized Advantage Estimation",
+      "year": "2016",
+      "url": "https://arxiv.org/abs/1506.02438",
+      "eprint": "1506.02438",
+      "archivePrefix": "arXiv",
+      "doi": "10.48550/arXiv.1506.02438",
+      "booktitle": "International Conference on Learning Representations (ICLR)"
+    },
+    "sources": [
+      "https://arxiv.org/abs/1506.02438"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "citation_title": [
+        "High-Dimensional Continuous Control Using Generalized Advantage Estimation"
+      ],
+      "citation_author": [
+        "Schulman, John",
+        "Moritz, Philipp",
+        "Levine, Sergey",
+        "Jordan, Michael",
+        "Abbeel, Pieter"
+      ],
+      "citation_date": [
+        "2015/06/08"
+      ],
+      "citation_online_date": [
+        "2018/10/20"
+      ],
+      "citation_pdf_url": [
+        "https://arxiv.org/pdf/1506.02438"
+      ],
+      "citation_arxiv_id": [
+        "1506.02438"
+      ]
+    }
+  },
+  {
+    "key": "Pinto2018Asymmetric",
+    "group": "D",
+    "priority": "Alta",
+    "chapters": "2,3",
+    "use": "Fondamento dell'actor-critic asimmetrico con stato privilegiato durante il training.",
+    "limit": "Documentare precisamente quali variabili sono solo nel critic e quali arrivano all'actor.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Pinto, Lerrel and Andrychowicz, Marcin and Welinder, Peter and Zaremba, Wojciech and Abbeel, Pieter",
+      "title": "Asymmetric Actor Critic for Image-Based Robot Learning",
+      "year": "2018",
+      "booktitle": "Robotics: Science and Systems XIV",
+      "doi": "10.15607/rss.2018.xiv.008",
+      "url": "https://doi.org/10.15607/rss.2018.xiv.008"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.15607/RSS.2018.XIV.008"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "Robotics: Science and Systems Foundation",
+      "DOI": "10.15607/rss.2018.xiv.008",
+      "type": "proceedings-article",
+      "title": [
+        "Asymmetric Actor Critic for Image-Based Robot Learning"
+      ],
+      "author": [
+        {
+          "given": "Lerrel",
+          "family": "Pinto",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Marcin",
+          "family": "Andrychowicz",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Peter",
+          "family": "Welinder",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Wojciech",
+          "family": "Zaremba",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Pieter",
+          "family": "Abbeel",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "published-online": {
+        "date-parts": [
+          [
+            2018,
+            6,
+            26
+          ]
+        ]
+      },
+      "container-title": [
+        "Robotics: Science and Systems XIV"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2018,
+            6,
+            26
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Ng1999Shaping",
+    "group": "D",
+    "priority": "Media",
+    "chapters": "2,3",
+    "use": "Serve a discutere il termine di progresso verso il goal e il reward shaping.",
+    "limit": "Una differenza di distanze non garantisce invarianza della policy per gamma diverso da 1 e terminazioni arbitrarie.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Ng, Andrew Y. and Harada, Daishi and Russell, Stuart",
+      "title": "Policy Invariance Under Reward Transformations: Theory and Application to Reward Shaping",
+      "booktitle": "Proceedings of the Sixteenth International Conference on Machine Learning (ICML)",
+      "year": "1999",
+      "pages": "278--287",
+      "publisher": "Morgan Kaufmann",
+      "url": "https://people.eecs.berkeley.edu/~russell/papers/icml99-shaping.pdf"
+    },
+    "sources": [
+      "https://people.eecs.berkeley.edu/~russell/papers/icml99-shaping.pdf",
+      "https://aima.cs.berkeley.edu/~russell/publications.html"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {}
+  },
+  {
+    "key": "Oquab2023DINOv2",
+    "group": "E",
+    "priority": "Alta",
+    "chapters": "2,3",
+    "use": "Fonte del backbone congelato che produce le feature visive del progetto.",
+    "limit": "Citata qui la versione arXiv verificata dal repository ufficiale; non è un classificatore dei sette materiali.",
+    "type": "misc",
+    "fields": {
+      "author": "Oquab, Maxime and Darcet, Timothée and Moutakanni, Theo and Vo, Huy V. and Szafraniec, Marc and Khalidov, Vasil and Fernandez, Pierre and Haziza, Daniel and Massa, Francisco and El-Nouby, Alaaeldin and Howes, Russell and Huang, Po-Yao and Xu, Hu and Sharma, Vasu and Li, Shang-Wen and Galuba, Wojciech and Rabbat, Mike and Assran, Mido and Ballas, Nicolas and Synnaeve, Gabriel and Misra, Ishan and Jegou, Herve and Mairal, Julien and Labatut, Patrick and Joulin, Armand and Bojanowski, Piotr",
+      "title": "DINOv2: Learning Robust Visual Features without Supervision",
+      "year": "2023",
+      "url": "https://arxiv.org/abs/2304.07193",
+      "eprint": "2304.07193",
+      "archivePrefix": "arXiv",
+      "doi": "10.48550/arXiv.2304.07193",
+      "howpublished": "arXiv preprint"
+    },
+    "sources": [
+      "https://arxiv.org/abs/2304.07193",
+      "https://github.com/facebookresearch/dinov2#citing-dinov2"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "citation_title": [
+        "DINOv2: Learning Robust Visual Features without Supervision"
+      ],
+      "citation_author": [
+        "Oquab, Maxime",
+        "Darcet, Timothée",
+        "Moutakanni, Théo",
+        "Vo, Huy",
+        "Szafraniec, Marc",
+        "Khalidov, Vasil",
+        "Fernandez, Pierre",
+        "Haziza, Daniel",
+        "Massa, Francisco",
+        "El-Nouby, Alaaeldin",
+        "Assran, Mahmoud",
+        "Ballas, Nicolas",
+        "Galuba, Wojciech",
+        "Howes, Russell",
+        "Huang, Po-Yao",
+        "Li, Shang-Wen",
+        "Misra, Ishan",
+        "Rabbat, Michael",
+        "Sharma, Vasu",
+        "Synnaeve, Gabriel",
+        "Xu, Hu",
+        "Jegou, Hervé",
+        "Mairal, Julien",
+        "Labatut, Patrick",
+        "Joulin, Armand",
+        "Bojanowski, Piotr"
+      ],
+      "citation_date": [
+        "2023/04/14"
+      ],
+      "citation_online_date": [
+        "2024/02/02"
+      ],
+      "citation_pdf_url": [
+        "https://arxiv.org/pdf/2304.07193"
+      ],
+      "citation_arxiv_id": [
+        "2304.07193"
+      ]
+    }
+  },
+  {
+    "key": "Caron2021DINO",
+    "group": "E",
+    "priority": "Media",
+    "chapters": "2",
+    "use": "Antecedente del paradigma di apprendimento auto-supervisionato delle feature visive.",
+    "limit": "Una breve contestualizzazione è sufficiente; evitare una rassegna di visione scollegata dal progetto.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Caron, Mathilde and Touvron, Hugo and Misra, Ishan and Jegou, Herve and Mairal, Julien and Bojanowski, Piotr and Joulin, Armand",
+      "title": "Emerging Properties in Self-Supervised Vision Transformers",
+      "year": "2021",
+      "booktitle": "2021 IEEE/CVF International Conference on Computer Vision (ICCV)",
+      "doi": "10.1109/iccv48922.2021.00951",
+      "url": "https://doi.org/10.1109/iccv48922.2021.00951",
+      "pages": "9630-9640"
+    },
+    "sources": [
+      "https://api.crossref.org/works?query.title=Emerging+Properties+in+Self-Supervised+Vision+Transformers&rows=2"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "IEEE",
+      "published-print": {
+        "date-parts": [
+          [
+            2021,
+            10
+          ]
+        ]
+      },
+      "DOI": "10.1109/iccv48922.2021.00951",
+      "type": "proceedings-article",
+      "page": "9630-9640",
+      "title": [
+        "Emerging Properties in Self-Supervised Vision Transformers"
+      ],
+      "author": [
+        {
+          "given": "Mathilde",
+          "family": "Caron",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Facebook AI Research"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Hugo",
+          "family": "Touvron",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Facebook AI Research"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Ishan",
+          "family": "Misra",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Facebook AI Research"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Herve",
+          "family": "Jegou",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Facebook AI Research"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Julien",
+          "family": "Mairal",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Univ. Grenoble Alpes, Inria, CNRS,Grenoble,France,38000"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Piotr",
+          "family": "Bojanowski",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Facebook AI Research"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Armand",
+          "family": "Joulin",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Facebook AI Research"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "2021 IEEE/CVF International Conference on Computer Vision (ICCV)"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2021,
+            10
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Dosovitskiy2021ViT",
+    "group": "E",
+    "priority": "Media",
+    "chapters": "2,3",
+    "use": "Definisce patch e Vision Transformer usati per spiegare la rappresentazione visiva.",
+    "limit": "Architettura di base; non dimostra separabilità dei terreni o qualità delle decisioni energetiche.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Dosovitskiy, Alexey and Beyer, Lucas and Kolesnikov, Alexander and Weissenborn, Dirk and Zhai, Xiaohua and Unterthiner, Thomas and Dehghani, Mostafa and Minderer, Matthias and Heigold, Georg and Gelly, Sylvain and Uszkoreit, Jakob and Houlsby, Neil",
+      "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+      "year": "2021",
+      "url": "https://arxiv.org/abs/2010.11929",
+      "eprint": "2010.11929",
+      "archivePrefix": "arXiv",
+      "doi": "10.48550/arXiv.2010.11929",
+      "booktitle": "International Conference on Learning Representations (ICLR)"
+    },
+    "sources": [
+      "https://arxiv.org/abs/2010.11929"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "citation_title": [
+        "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale"
+      ],
+      "citation_author": [
+        "Dosovitskiy, Alexey",
+        "Beyer, Lucas",
+        "Kolesnikov, Alexander",
+        "Weissenborn, Dirk",
+        "Zhai, Xiaohua",
+        "Unterthiner, Thomas",
+        "Dehghani, Mostafa",
+        "Minderer, Matthias",
+        "Heigold, Georg",
+        "Gelly, Sylvain",
+        "Uszkoreit, Jakob",
+        "Houlsby, Neil"
+      ],
+      "citation_date": [
+        "2020/10/22"
+      ],
+      "citation_online_date": [
+        "2021/06/03"
+      ],
+      "citation_pdf_url": [
+        "https://arxiv.org/pdf/2010.11929"
+      ],
+      "citation_arxiv_id": [
+        "2010.11929"
+      ]
+    }
+  },
+  {
+    "key": "Erni2023MEM",
+    "group": "E",
+    "priority": "Alta",
+    "chapters": "2,3",
+    "use": "Riferimento per mappe di elevazione con più modalità, feature semantiche e uso nell'apprendimento.",
+    "limit": "La mappa personalizzata del progetto va descritta come implementata; non attribuirle automaticamente tutte le proprietà di MEM.",
+    "type": "inproceedings",
+    "fields": {
+      "author": "Erni, Gian and Frey, Jonas and Miki, Takahiro and Mattamala, Matias and Hutter, Marco",
+      "title": "MEM: Multi-Modal Elevation Mapping for Robotics and Learning",
+      "year": "2023",
+      "booktitle": "2023 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)",
+      "doi": "10.1109/iros55552.2023.10342108",
+      "url": "https://doi.org/10.1109/iros55552.2023.10342108",
+      "pages": "11011-11018"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.1109/IROS55552.2023.10342108"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "IEEE",
+      "published-print": {
+        "date-parts": [
+          [
+            2023,
+            10,
+            1
+          ]
+        ]
+      },
+      "DOI": "10.1109/iros55552.2023.10342108",
+      "type": "proceedings-article",
+      "page": "11011-11018",
+      "title": [
+        "MEM: Multi-Modal Elevation Mapping for Robotics and Learning"
+      ],
+      "author": [
+        {
+          "given": "Gian",
+          "family": "Erni",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Department of Mechanical and Process Engineering, ETH Z&#x00FC;rich,Z&#x00FC;rich,Switzerland,8092"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jonas",
+          "family": "Frey",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Max Planck Institute for Intelligent Systems,T&#x00FC;bingen,Germany,72076"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Takahiro",
+          "family": "Miki",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mechanical and Process Engineering, ETH Z&#x00FC;rich,Z&#x00FC;rich,Switzerland,8092"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Matias",
+          "family": "Mattamala",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Oxford Robotics Institute at the University of Oxford,UK"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Marco",
+          "family": "Hutter",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mechanical and Process Engineering, ETH Z&#x00FC;rich,Z&#x00FC;rich,Switzerland,8092"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "2023 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2023,
+            10,
+            1
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Fankhauser2018Mapping",
+    "group": "E",
+    "priority": "Media",
+    "chapters": "2,3",
+    "use": "Mappatura del terreno con incertezza di localizzazione; utile per collocare la gridmap.",
+    "limit": "La posa esatta del simulatore nel progetto non riproduce la deriva e l'incertezza reali.",
+    "type": "article",
+    "fields": {
+      "author": "Fankhauser, Peter and Bloesch, Michael and Hutter, Marco",
+      "title": "Probabilistic Terrain Mapping for Mobile Robots With Uncertain Localization",
+      "year": "2018",
+      "journal": "IEEE Robotics and Automation Letters",
+      "doi": "10.1109/lra.2018.2849506",
+      "url": "https://doi.org/10.1109/lra.2018.2849506",
+      "volume": "3",
+      "number": "4",
+      "pages": "3019-3026"
+    },
+    "sources": [
+      "https://api.crossref.org/works?query.title=Probabilistic+Terrain+Mapping+for+Mobile+Robots+With+Uncertain+Localization&rows=2"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "issue": "4",
+      "published-print": {
+        "date-parts": [
+          [
+            2018,
+            10
+          ]
+        ]
+      },
+      "DOI": "10.1109/lra.2018.2849506",
+      "type": "journal-article",
+      "page": "3019-3026",
+      "title": [
+        "Probabilistic Terrain Mapping for Mobile Robots With Uncertain Localization"
+      ],
+      "volume": "3",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0002-1311-4010",
+          "authenticated-orcid": false,
+          "given": "Peter",
+          "family": "Fankhauser",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-2171-696X",
+          "authenticated-orcid": false,
+          "given": "Michael",
+          "family": "Bloesch",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-4285-4990",
+          "authenticated-orcid": false,
+          "given": "Marco",
+          "family": "Hutter",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "container-title": [
+        "IEEE Robotics and Automation Letters"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2018,
+            10
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "key": "Makoviychuk2021IsaacGym",
+    "group": "F",
+    "priority": "Media",
+    "chapters": "2,3",
+    "use": "Antecedente tecnico della simulazione fisica GPU per RL parallelo.",
+    "limit": "Isaac Gym e Isaac Lab sono sistemi distinti: citare il secondo per il framework effettivamente impiegato.",
+    "type": "misc",
+    "fields": {
+      "author": "Makoviychuk, Viktor and Wawrzyniak, Lukasz and Guo, Yunrong and Lu, Michelle and Storey, Kier and Macklin, Miles and Hoeller, David and Rudin, Nikita and Allshire, Arthur and Handa, Ankur and State, Gavriel",
+      "title": "Isaac Gym: High Performance GPU-Based Physics Simulation For Robot Learning",
+      "year": "2021",
+      "url": "https://arxiv.org/abs/2108.10470",
+      "eprint": "2108.10470",
+      "archivePrefix": "arXiv",
+      "doi": "10.48550/arXiv.2108.10470",
+      "howpublished": "arXiv preprint"
+    },
+    "sources": [
+      "https://arxiv.org/abs/2108.10470"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "citation_title": [
+        "Isaac Gym: High Performance GPU-Based Physics Simulation For Robot Learning"
+      ],
+      "citation_author": [
+        "Makoviychuk, Viktor",
+        "Wawrzyniak, Lukasz",
+        "Guo, Yunrong",
+        "Lu, Michelle",
+        "Storey, Kier",
+        "Macklin, Miles",
+        "Hoeller, David",
+        "Rudin, Nikita",
+        "Allshire, Arthur",
+        "Handa, Ankur",
+        "State, Gavriel"
+      ],
+      "citation_date": [
+        "2021/08/24"
+      ],
+      "citation_online_date": [
+        "2021/08/25"
+      ],
+      "citation_pdf_url": [
+        "https://arxiv.org/pdf/2108.10470"
+      ],
+      "citation_arxiv_id": [
+        "2108.10470"
+      ]
+    }
+  },
+  {
+    "key": "Mittal2025IsaacLab",
+    "group": "F",
+    "priority": "Alta",
+    "chapters": "3",
+    "use": "Fonte scientifica per Isaac Lab e simulazione multimodale accelerata su GPU.",
+    "limit": "È un preprint; la versione software effettiva va indicata dai file di configurazione finali.",
+    "type": "misc",
+    "fields": {
+      "author": "Mittal, Mayank and Roth, Pascal and Tigue, James and Richard, Antoine and Zhang, Octi and Du, Peter and Serrano-Muñoz, Antonio and Yao, Xinjie and Zurbrügg, René and Rudin, Nikita and Wawrzyniak, Lukasz and Rakhsha, Milad and Denzler, Alain and Heiden, Eric and Borovicka, Ales and Ahmed, Ossama and Akinola, Iretiayo and Anwar, Abrar and Carlson, Mark T. and Feng, Ji Yuan and Garg, Animesh and Gasoto, Renato and Gulich, Lionel and Guo, Yijie and Gussert, M. and Hansen, Alex and Kulkarni, Mihir and Li, Chenran and Liu, Wei and Makoviychuk, Viktor and Malczyk, Grzegorz and Mazhar, Hammad and Moghani, Masoud and Murali, Adithyavairavan and Noseworthy, Michael and Poddubny, Alexander and Ratliff, Nathan and Rehberg, Welf and Schwarke, Clemens and Singh, Ritvik and Smith, James Latham and Tang, Bingjie and Thaker, Ruchik and Trepte, Matthew and Van Wyk, Karl and Yu, Fangzhou and Millane, Alex and Ramasamy, Vikram and Steiner, Remo and Subramanian, Sangeeta and Volk, Clemens and Chen, CY and Jawale, Neel and Kuruttukulam, Ashwin Varghese and Lin, Michael A. and Mandlekar, Ajay and Patzwaldt, Karsten and Welsh, John and Zhao, Huihua and Anes, Fatima and Lafleche, Jean-Francois and Moënne-Loccoz, Nicolas and Park, Soowan and Stepinski, Rob and Van Gelder, Dirk and Amevor, Chris and Carius, Jan and Chang, Jumyung and Chen, Anka He and Ciechomski, Pablo de Heras and Daviet, Gilles and Mohajerani, Mohammad and von Muralt, Julia and Reutskyy, Viktor and Sauter, Michael and Schirm, Simon and Shi, Eric L. and Terdiman, Pierre and Vilella, Kenny and Widmer, Tobias and Yeoman, Gordon and Chen, Tiffany and Grizan, Sergey and Li, Cathy and Li, Lotus and Smith, Connor and Wiltz, Rafael and Alexis, Kostas and Chang, Yan and Chu, David and Fan, Linxi \"Jim\" and Farshidian, Farbod and Handa, Ankur and Huang, Spencer and Hutter, Marco and Narang, Yashraj and Pouya, Soha and Sheng, Shiwei and Zhu, Yuke and Macklin, Miles and Moravanszky, Adam and Reist, Philipp and Guo, Yunrong and Hoeller, David and State, Gavriel",
+      "title": "Isaac Lab: A GPU-Accelerated Simulation Framework for Multi-Modal Robot Learning",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2511.04831",
+      "eprint": "2511.04831",
+      "archivePrefix": "arXiv",
+      "doi": "10.48550/arXiv.2511.04831",
+      "howpublished": "arXiv preprint"
+    },
+    "sources": [
+      "https://arxiv.org/abs/2511.04831"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "citation_title": [
+        "Isaac Lab: A GPU-Accelerated Simulation Framework for Multi-Modal Robot Learning"
+      ],
+      "citation_author": [
+        "NVIDIA",
+        ":",
+        "Mittal, Mayank",
+        "Roth, Pascal",
+        "Tigue, James",
+        "Richard, Antoine",
+        "Zhang, Octi",
+        "Du, Peter",
+        "Serrano-Muñoz, Antonio",
+        "Yao, Xinjie",
+        "Zurbrügg, René",
+        "Rudin, Nikita",
+        "Wawrzyniak, Lukasz",
+        "Rakhsha, Milad",
+        "Denzler, Alain",
+        "Heiden, Eric",
+        "Borovicka, Ales",
+        "Ahmed, Ossama",
+        "Akinola, Iretiayo",
+        "Anwar, Abrar",
+        "Carlson, Mark T.",
+        "Feng, Ji Yuan",
+        "Garg, Animesh",
+        "Gasoto, Renato",
+        "Gulich, Lionel",
+        "Guo, Yijie",
+        "Gussert, M.",
+        "Hansen, Alex",
+        "Kulkarni, Mihir",
+        "Li, Chenran",
+        "Liu, Wei",
+        "Makoviychuk, Viktor",
+        "Malczyk, Grzegorz",
+        "Mazhar, Hammad",
+        "Moghani, Masoud",
+        "Murali, Adithyavairavan",
+        "Noseworthy, Michael",
+        "Poddubny, Alexander",
+        "Ratliff, Nathan",
+        "Rehberg, Welf",
+        "Schwarke, Clemens",
+        "Singh, Ritvik",
+        "Smith, James Latham",
+        "Tang, Bingjie",
+        "Thaker, Ruchik",
+        "Trepte, Matthew",
+        "Van Wyk, Karl",
+        "Yu, Fangzhou",
+        "Millane, Alex",
+        "Ramasamy, Vikram",
+        "Steiner, Remo",
+        "Subramanian, Sangeeta",
+        "Volk, Clemens",
+        "Chen, CY",
+        "Jawale, Neel",
+        "Kuruttukulam, Ashwin Varghese",
+        "Lin, Michael A.",
+        "Mandlekar, Ajay",
+        "Patzwaldt, Karsten",
+        "Welsh, John",
+        "Zhao, Huihua",
+        "Anes, Fatima",
+        "Lafleche, Jean-Francois",
+        "Moënne-Loccoz, Nicolas",
+        "Park, Soowan",
+        "Stepinski, Rob",
+        "Van Gelder, Dirk",
+        "Amevor, Chris",
+        "Carius, Jan",
+        "Chang, Jumyung",
+        "Chen, Anka He",
+        "Ciechomski, Pablo de Heras",
+        "Daviet, Gilles",
+        "Mohajerani, Mohammad",
+        "von Muralt, Julia",
+        "Reutskyy, Viktor",
+        "Sauter, Michael",
+        "Schirm, Simon",
+        "Shi, Eric L.",
+        "Terdiman, Pierre",
+        "Vilella, Kenny",
+        "Widmer, Tobias",
+        "Yeoman, Gordon",
+        "Chen, Tiffany",
+        "Grizan, Sergey",
+        "Li, Cathy",
+        "Li, Lotus",
+        "Smith, Connor",
+        "Wiltz, Rafael",
+        "Alexis, Kostas",
+        "Chang, Yan",
+        "Chu, David",
+        "Fan, Linxi \"Jim\"",
+        "Farshidian, Farbod",
+        "Handa, Ankur",
+        "Huang, Spencer",
+        "Hutter, Marco",
+        "Narang, Yashraj",
+        "Pouya, Soha",
+        "Sheng, Shiwei",
+        "Zhu, Yuke",
+        "Macklin, Miles",
+        "Moravanszky, Adam",
+        "Reist, Philipp",
+        "Guo, Yunrong",
+        "Hoeller, David",
+        "State, Gavriel"
+      ],
+      "citation_date": [
+        "2025/11/06"
+      ],
+      "citation_online_date": [
+        "2025/11/06"
+      ],
+      "citation_pdf_url": [
+        "https://arxiv.org/pdf/2511.04831"
+      ],
+      "citation_arxiv_id": [
+        "2511.04831"
+      ]
+    }
+  },
+  {
+    "key": "Anderson2018Evaluation",
+    "group": "F",
+    "priority": "Media",
+    "chapters": "2,4",
+    "use": "Riferimento per successo e SPL nella valutazione della navigazione.",
+    "limit": "SPL misura efficienza geometrica, non energetica: occorrono anche Joule e confronti a parità di successo.",
+    "type": "misc",
+    "fields": {
+      "author": "Anderson, Peter and Chang, Angel and Chaplot, Devendra Singh and Dosovitskiy, Alexey and Gupta, Saurabh and Koltun, Vladlen and Kosecka, Jana and Malik, Jitendra and Mottaghi, Roozbeh and Savva, Manolis and Zamir, Amir R.",
+      "title": "On Evaluation of Embodied Navigation Agents",
+      "year": "2018",
+      "url": "https://arxiv.org/abs/1807.06757",
+      "eprint": "1807.06757",
+      "archivePrefix": "arXiv",
+      "doi": "10.48550/arXiv.1807.06757",
+      "howpublished": "arXiv preprint"
+    },
+    "sources": [
+      "https://arxiv.org/abs/1807.06757"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "citation_title": [
+        "On Evaluation of Embodied Navigation Agents"
+      ],
+      "citation_author": [
+        "Anderson, Peter",
+        "Chang, Angel",
+        "Chaplot, Devendra Singh",
+        "Dosovitskiy, Alexey",
+        "Gupta, Saurabh",
+        "Koltun, Vladlen",
+        "Kosecka, Jana",
+        "Malik, Jitendra",
+        "Mottaghi, Roozbeh",
+        "Savva, Manolis",
+        "Zamir, Amir R."
+      ],
+      "citation_date": [
+        "2018/07/18"
+      ],
+      "citation_online_date": [
+        "2018/07/18"
+      ],
+      "citation_pdf_url": [
+        "https://arxiv.org/pdf/1807.06757"
+      ],
+      "citation_arxiv_id": [
+        "1807.06757"
+      ]
+    }
+  },
+  {
+    "key": "Jolliffe2016PCA",
+    "group": "E",
+    "priority": "Media",
+    "chapters": "2,3",
+    "use": "Fonte metodologica per la riduzione dimensionale PCA delle feature.",
+    "limit": "La varianza preservata non prova di conservare l'informazione più utile al costo energetico.",
+    "type": "article",
+    "fields": {
+      "author": "Jolliffe, Ian T. and Cadima, Jorge",
+      "title": "Principal component analysis: a review and recent developments",
+      "year": "2016",
+      "journal": "Philosophical Transactions of the Royal Society A: Mathematical, Physical and Engineering Sciences",
+      "doi": "10.1098/rsta.2015.0202",
+      "url": "https://doi.org/10.1098/rsta.2015.0202",
+      "volume": "374",
+      "number": "2065",
+      "pages": "20150202"
+    },
+    "sources": [
+      "https://api.crossref.org/works/10.1098/rsta.2015.0202"
+    ],
+    "checked": "2026-11-06",
+    "source_metadata": {
+      "publisher": "The Royal Society",
+      "issue": "2065",
+      "published-print": {
+        "date-parts": [
+          [
+            2016,
+            4,
+            13
+          ]
+        ]
+      },
+      "DOI": "10.1098/rsta.2015.0202",
+      "type": "journal-article",
+      "page": "20150202",
+      "title": [
+        "Principal component analysis: a review and recent developments"
+      ],
+      "volume": "374",
+      "author": [
+        {
+          "given": "Ian T.",
+          "family": "Jolliffe",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "College of Engineering, Mathematics and Physical Sciences, University of Exeter, Exeter, UK"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jorge",
+          "family": "Cadima",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Secção de Matemática (DCEB), Instituto Superior de Agronomia, Universidade de Lisboa, Tapada da Ajuda, Lisboa 1340-017, Portugal"
+            },
+            {
+              "name": "Centro de Estatística e Aplicações da Universidade de Lisboa (CEAUL), Lisboa, Portugal"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "published-online": {
+        "date-parts": [
+          [
+            2016,
+            4,
+            13
+          ]
+        ]
+      },
+      "container-title": [
+        "Philosophical Transactions of the Royal Society A: Mathematical, Physical and Engineering Sciences"
+      ],
+      "published": {
+        "date-parts": [
+          [
+            2016,
+            4,
+            13
+          ]
+        ]
+      }
+    }
+  }
+]

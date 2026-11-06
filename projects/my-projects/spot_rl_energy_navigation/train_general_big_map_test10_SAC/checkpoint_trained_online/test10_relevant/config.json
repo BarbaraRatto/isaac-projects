@@ -1,0 +1,892 @@
+{
+  "signature": {
+    "schema": 2,
+    "experiment": "train_general_big_map_test10_SAC",
+    "goal_scaling": {
+      "mode": "fixed_scale_no_centering",
+      "scale_m": 10.0,
+      "clip": false
+    },
+    "normalization": "all_fixed_v1_visual_final_cell_calibration",
+    "pca_calibration": "real_terrains_v2_seven_material_views_v1",
+    "algorithm": "asymmetric_twin_Q_SAC",
+    "navigation": {
+      "physics_dt": 0.005,
+      "physics_steps_per_action": 40,
+      "settle_seconds": 2.0,
+      "max_episode_seconds": 120.0,
+      "spawn_height_m": 0.75,
+      "goal_radius_m": 0.55,
+      "minimum_body_height_m": 0.25,
+      "fall_tilt_deg": 90.0,
+      "fall_persistence_seconds": 1.0,
+      "body_contact_threshold_n": 1.0,
+      "max_forward_m_s": 1.6,
+      "max_yaw_rad_s": 1.5,
+      "progress_reward_per_m": 30.0,
+      "time_penalty_per_step": 0.1,
+      "success_bonus": 1000.0,
+      "failure_penalty": 1000.0,
+      "energy_reference_j": 100.0,
+      "energy_weight": 10.0,
+      "power_filter_seconds": 1.0,
+      "heading_penalty_start_deg": 110.0,
+      "heading_penalty_per_second": 2.0
+    },
+    "sac": {
+      "timesteps": 1500000,
+      "num_envs": 128,
+      "buffer_size": 100000,
+      "learning_starts": 4096,
+      "batch_size": 256,
+      "learning_rate": 0.0003,
+      "gamma": 0.999,
+      "tau": 0.005,
+      "initial_alpha": 1.0,
+      "target_entropy": -2.0,
+      "gradient_steps": 16,
+      "checkpoint_every": 10000,
+      "eval_every": 10000,
+      "eval_episodes_per_env": 1,
+      "log_every": 1000
+    },
+    "actor_size": 3255,
+    "critic_size": 3279,
+    "layers": [
+      128,
+      64
+    ],
+    "state_layers": [
+      64,
+      32
+    ],
+    "map_layers": [
+      1024,
+      512,
+      256,
+      128
+    ],
+    "alignment": {
+      "tolerance_deg": 10.0,
+      "stable_steps": 3,
+      "gain": 1.5,
+      "max_yaw_rad_s": 0.8,
+      "max_seconds": 12.0,
+      "max_steps_without_navigation": 300
+    },
+    "separate_actor_critic_optimizers": true,
+    "scalar_reward": "navigation_minus_weighted_energy",
+    "policy_distribution": "state_dependent_squashed_gaussian",
+    "target_critics": 2,
+    "replay_storage": "raw_actor_plus_privileged_navigation_only",
+    "critic_state_size": 41,
+    "feature_dim": 32,
+    "state_order": [
+      "goal_xy",
+      "linear_velocity_xyz",
+      "angular_velocity_xyz",
+      "projected_gravity_xyz",
+      "previous_action_xy",
+      "power_ema",
+      "time_left"
+    ],
+    "cell_order": [
+      "pca32",
+      "relative_height",
+      "slope_x",
+      "slope_y",
+      "roughness",
+      "visual_valid",
+      "geometry_valid",
+      "visual_age",
+      "geometry_age"
+    ],
+    "privileged_order": [
+      "mu_static_dynamic_4x2",
+      "contact4",
+      "normal_force4",
+      "slip4x2"
+    ],
+    "feet": [
+      "fl_foot",
+      "fr_foot",
+      "hl_foot",
+      "hr_foot"
+    ],
+    "look_x": [
+      -2.0,
+      -1.5,
+      -1.0,
+      -0.5,
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "look_y": [
+      -2.0,
+      -1.5,
+      -1.0,
+      -0.5,
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "cell_resolution_m": 0.5,
+    "map_persistent": true,
+    "memory_resolution_m": 0.1,
+    "memory_age_seconds": 90.0,
+    "memory_fusion": "latest_per_world_xy_bin",
+    "memory_age_aggregation": "sample_weighted_mean",
+    "localization": "simulator_pose",
+    "depth_stride": 4,
+    "geometry_min_points": 10,
+    "geometry_min_xy_eigenvalue": 0.0001,
+    "terminal_timeout": true,
+    "missions": {
+      "distance_bands": [
+        [
+          1.5,
+          3.0
+        ],
+        [
+          3.0,
+          6.0
+        ],
+        [
+          6.0,
+          9.0
+        ],
+        [
+          9.0,
+          12.0
+        ],
+        [
+          12.0,
+          20.0
+        ]
+      ],
+      "detour_bands": [
+        [
+          2.0,
+          4.0
+        ],
+        [
+          3.0,
+          6.0
+        ],
+        [
+          6.0,
+          9.0
+        ],
+        [
+          9.0,
+          12.0
+        ],
+        [
+          12.0,
+          20.0
+        ]
+      ],
+      "heading_limits_deg": [
+        180.0,
+        180.0,
+        180.0,
+        180.0,
+        180.0
+      ],
+      "stage_names": [
+        "misto locale 1.5\u20134 m",
+        "misto 3\u20136 m",
+        "misto + libere 6\u20139 m",
+        "misto + libere 9\u201312 m",
+        "generale 12\u201320 m"
+      ],
+      "categories": [
+        "direct",
+        "right",
+        "left",
+        "energy",
+        "free"
+      ],
+      "category_weights": [
+        [
+          0.5,
+          0.25,
+          0.25,
+          0.0,
+          0.0
+        ],
+        [
+          0.5,
+          0.25,
+          0.25,
+          0.0,
+          0.0
+        ],
+        [
+          0.24,
+          0.2,
+          0.2,
+          0.16,
+          0.2
+        ],
+        [
+          0.24,
+          0.2,
+          0.2,
+          0.16,
+          0.2
+        ],
+        [
+          0.15,
+          0.125,
+          0.125,
+          0.1,
+          0.5
+        ]
+      ],
+      "evaluation_intervals": [
+        10000,
+        10000,
+        20000,
+        30000,
+        30000
+      ],
+      "promotion_direct": 0.9,
+      "promotion_other": 0.8,
+      "promotion_evaluations": 2,
+      "spawn_excluded": [
+        "t2_slippery",
+        "t7_stairs"
+      ],
+      "goal_excluded": [
+        "t2_slippery",
+        "t7_stairs"
+      ],
+      "cell_margin_m": 0.65,
+      "footprint_radius_m": 0.55,
+      "max_spawn_relief_m": 0.16,
+      "deadline_min_s": 30.0,
+      "deadline_max_s": 120.0,
+      "deadline_base_s": 15.0,
+      "deadline_seconds_per_m": 4.0,
+      "evaluation_seed": 710031,
+      "reachability_filter": true,
+      "distance_metric": "euclidean_xy_bands_safe_reference_deadline",
+      "planner_resolution_m": 0.25,
+      "route_clearance_m": 0.55,
+      "bank_seed": 104729,
+      "bank_train_starts": 1000,
+      "bank_eval_starts": 700,
+      "material_proxy": [
+        1.0,
+        1000000.0,
+        1.15,
+        1.2,
+        1.6,
+        1.5,
+        1000000.0
+      ]
+    },
+    "fall_detection": "physics_step_persistence_v1",
+    "body_contact_name": "body",
+    "env_spacing_m": 80.0,
+    "camera_far_clip_m": 20.0,
+    "reset_pose": "startup_settled_stance_above_local_footprint",
+    "startup_clearance_m": 0.02
+  },
+  "identity": {
+    "dino": {
+      "config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d",
+      "preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+      "model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1"
+    },
+    "input_size": 518,
+    "resize": "opencv_linear_square_no_crop",
+    "terrain": {
+      "real_terrains_test10": "e5e0b6cdc2f27abfdfd33cefe697885caf3adee1f92a937c18248e9e6abd796d"
+    },
+    "missions": {
+      "spawn_bank.npz": "14ecc1fe9bcb7436fa40228fc08207fb57c85b8f87b40412a002e52c638a47c2",
+      "map_metadata.json": "c3a4b43a8ff04122e8bcb4c432c0c36b6e5cb139bbb4a1b9711942cbda0a9345",
+      "missions.npz": "89b7d25da5a9f37f6d591f1a7ea32851b0d61e2d21c0d7e3a470ee4fe65f373b"
+    }
+  },
+  "arguments": {
+    "timesteps": 1500000,
+    "num_envs": 128,
+    "gradient_steps": 16,
+    "pca": "/root/spot-test10-sac-cloud/spot_rl_energy_navigation/train_general_big_map_test10_SAC/artifacts/pca32_big_map.npz",
+    "resume": null,
+    "run_dir": "/root/test10-runs/general_map_test10_sac_20261104_210456_286364",
+    "recovery_minutes": 30.0,
+    "recovery_keep": 2,
+    "recovery_reserve_gib": 1.0,
+    "seed": 0,
+    "agent_device": "cuda:0",
+    "torch_threads": 4,
+    "dino_batch_size": 128,
+    "map_backend": "cuda",
+    "rgb_backend": "cuda",
+    "replay_device": "cuda:0",
+    "profile_timing": false,
+    "dino_model": "/root/spot-test10-sac-cloud/spot_rl_energy_navigation/extracted_features_comparison_v2/models/dinov2",
+    "eval_every": null,
+    "checkpoint_every": 10000,
+    "probe_steps": 0,
+    "enable_cameras": true,
+    "xr": false,
+    "device": "cuda:0",
+    "cpu": false,
+    "verbose": false,
+    "info": false,
+    "rendering_mode": null,
+    "kit_args": "",
+    "anim_recording_enabled": false,
+    "anim_recording_start_time": 0,
+    "anim_recording_stop_time": 10,
+    "headless": true,
+    "hide_ui": true,
+    "create_new_stage": false,
+    "physics_gpu": 0,
+    "active_gpu": 0
+  },
+  "initial_transitions": 0,
+  "replay_estimated_gib": 2.4442560970783234,
+  "parameters": 12123046,
+  "training_conditions": [
+    {
+      "env_id": 0,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 1,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 2,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 3,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 4,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 5,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 6,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 7,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 8,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 9,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 10,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 11,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 12,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 13,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 14,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 15,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 16,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 17,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 18,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 19,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 20,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 21,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 22,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 23,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 24,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 25,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 26,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 27,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 28,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 29,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 30,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 31,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 32,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 33,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 34,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 35,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 36,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 37,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 38,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 39,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 40,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 41,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 42,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 43,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 44,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 45,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 46,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 47,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 48,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 49,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 50,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 51,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 52,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 53,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 54,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 55,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 56,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 57,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 58,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 59,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 60,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 61,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 62,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 63,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 64,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 65,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 66,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 67,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 68,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 69,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 70,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 71,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 72,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 73,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 74,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 75,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 76,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 77,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 78,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 79,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 80,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 81,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 82,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 83,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 84,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 85,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 86,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 87,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 88,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 89,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 90,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 91,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 92,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 93,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 94,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 95,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 96,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 97,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 98,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 99,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 100,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 101,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 102,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 103,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 104,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 105,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 106,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 107,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 108,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 109,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 110,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 111,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 112,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 113,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 114,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 115,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 116,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 117,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 118,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 119,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 120,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 121,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 122,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 123,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 124,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 125,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 126,
+      "layout": "real_terrains_test10"
+    },
+    {
+      "env_id": 127,
+      "layout": "real_terrains_test10"
+    }
+  ],
+  "evaluation_in_training_buffer": false,
+  "resume_resets_simulation": true,
+  "recovery_interval_seconds": 1800.0,
+  "evaluation_intervals": [
+    10000,
+    10000,
+    20000,
+    30000,
+    30000
+  ],
+  "scaler_digest": "e26958b018f6de730ae84c905118b183887dce857e021700588e6f96a01b15eb",
+  "software": {
+    "python": "3.11.14 (main, Oct 14 2025, 21:26:53) [Clang 20.1.4 ]",
+    "torch": "2.7.0+cu128",
+    "numpy": "1.26.0",
+    "cuda": "12.8"
+  }
+}

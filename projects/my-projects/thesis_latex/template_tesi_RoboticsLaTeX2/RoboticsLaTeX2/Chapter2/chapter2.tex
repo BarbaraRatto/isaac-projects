@@ -1,0 +1,83 @@
+\chapter{Stato dell'arte e fondamenti}
+\label{chap:state-of-the-art}
+
+% Apertura: perimetro e criteri di selezione della letteratura.
+% Organizzare per problemi, evitando una divisione rigida fra metodi
+% algoritmici e RL che produca sovrapposizioni.
+% Bibliografia ragionata: thesis_latex/ricerca_bibliografica/.
+% Il survey locale in fase di scrittura non deve essere citato.
+
+\section{Navigazione autonoma dei robot a zampe}
+\label{sec:sota-navigazione}
+
+\subsection{Architetture gerarchiche di navigazione e locomozione}
+% Distinguere pianificazione, comandi di navigazione e controllo locomotorio.
+
+\subsection{Approcci integrati ed end-to-end}
+% Confrontare architetture integrate e gerarchiche, delimitando il livello
+% al quale interviene il contributo della tesi.
+
+\section{Traversabilit\`a e rappresentazione del terreno}
+\label{sec:sota-rappresentazioni}
+% Quali informazioni sull'ambiente possono sostenere la navigazione?
+
+\subsection{Rappresentazioni geometriche e mappe di elevazione}
+% Geometria locale, pendenza, rugosita e rappresentazioni spaziali del terreno.
+
+\subsection{Rappresentazioni semantiche e classificazione dei terreni}
+% Ruolo e limiti delle categorie di terreno nell'assegnazione dei costi.
+
+\subsection{Feature visive apprese e rappresentazioni senza classi esplicite}
+% Modelli preaddestrati, DINO e DINOv2, limitatamente alle proprieta utili
+% alla tesi. L'impiego concreto di feature, PCA e gridmap e nel capitolo 3.
+
+\section{Apprendimento delle propriet\`a di attraversamento dall'esperienza}
+\label{sec:sota-esperienza}
+% Come collegare cio che il robot vede alle conseguenze del movimento?
+
+\subsection{Informazioni esterocettive e propriocettive}
+% Complementarita dei segnali visivi, geometrici, di contatto e di movimento.
+
+\subsection{Apprendimento auto-supervisionato dall'interazione robot--terreno}
+% Associazione fra osservazioni e misure raccolte durante il moto;
+% distinguere costo, traversabilita, proprieta fisiche e stabilita.
+
+\subsection{Memoria delle osservazioni e adattamento durante la navigazione}
+% Distinguere memoria spaziale, storia propriocettiva e aggiornamento online
+% dei parametri di un modello o di una policy.
+
+\section{Efficienza energetica nei robot a zampe}
+\label{sec:sota-energia}
+
+\subsection{Grandezze energetiche e indicatori di efficienza}
+% Consumo elettrico, lavoro meccanico e indicatori indiretti.
+% La misura effettivamente implementata e descritta nel capitolo 3.
+
+\subsection{Ottimizzazione energetica della locomozione}
+% Discussione mirata su andature e movimenti articolari energeticamente
+% efficienti, chiarendo la diversa scala di controllo rispetto alla tesi.
+
+\subsection{Navigazione e pianificazione con costi energetici}
+% Dedicare maggiore spazio alla scelta di tragitto e velocita in funzione
+% del costo di attraversamento e ai lavori piu vicini al progetto.
+
+\section{Reinforcement learning per la navigazione}
+\label{sec:sota-rl}
+
+\subsection{Formulazione del problema decisionale e osservabilit\`a parziale}
+% Osservazioni, azioni, ritorno e funzioni di valore: introdurre soltanto
+% gli strumenti necessari per comprendere il metodo.
+
+\subsection{Apprendimento actor-critic: principi di PPO e SAC}
+% Principi degli algoritmi, distinzione on-policy/off-policy, GAE e massima
+% entropia quanto necessario. Configurazioni e reward sono nel capitolo 3.
+
+\subsection{Addestramento in simulazione e uso di informazioni privilegiate}
+% Simulazione parallela, apprendimento asimmetrico e differenza fra
+% informazioni disponibili durante training ed esecuzione.
+
+\section{Confronto critico e collocazione del lavoro di tesi}
+\label{sec:sota-confronto}
+% Tabella dei lavori vicini: sensori, rappresentazione, propriocezione,
+% classi esplicite, costo, livello di controllo, memoria/adattamento e
+% validazione. Motivare le scelte senza dedurre proprieta non verificate.

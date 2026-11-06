@@ -1,0 +1,13 @@
+{
+  "offline_tests_passed": 9,
+  "python_syntax_verified": true,
+  "shell_syntax_verified": true,
+  "usd_files_generated": 5,
+  "flat_collision_and_physics_bindings_verified": true,
+  "energy_integration_checked_against_analytical_examples": true,
+  "simulation_launched": false,
+  "measured_energy_results_available": false,
+  "scene_translation_regression_verified": true,
+  "exceptions_saved_before_shutdown": true,
+  "horizontal_drag_cpu_tests_passed": true
+}

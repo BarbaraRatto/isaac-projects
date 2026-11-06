@@ -203,3 +203,12 @@ Asset condivisi: `IsaacRobotics/assets/spot.usd`, policy di locomozione Spot,
 camera ZED (`SPOT_ZED_USD` o `.cloud_assets/ZED_X.usdc`), pesi DINO locali e
 texture dei terreni. Il test 7 è necessario solo per ricostruire la mappa da zero,
 non per usare il test 9 già preparato. Il pacchetto cloud completo è `cloud/dist/spot-test9-sac-cloud.tar.gz`; istruzioni in `cloud/CLOUD_TEST9.md`.
+# Aggiornamento GPU compatibile con le run esistenti
+
+Per installare il piccolo aggiornamento cloud, fermare con salvataggio e
+riprendere il training esistente: [istruzioni complete](../cloud/TEST9_GPU_UPDATE.md).
+Il launcher `resume_gpu.py RUNS_ROOT` verifica prima il salvataggio reale e il
+preprocessing sulla GPU; conserva le impostazioni della run originale.
+Le nuove opzioni sono `--rgb-backend cuda --replay-device cuda:0 --profile-timing`.
+Reward, curriculum e firma dei checkpoint restano quelli del test9.
+

@@ -3,6 +3,10 @@ set -Eeuo pipefail
 
 SCRIPT_NAME=$(basename "$0")
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Minimal cloud startup/system services may not export HOME.
+HOME="${HOME:-$(getent passwd "$(id -u)" | cut -d: -f6)}"
+[[ -n "$HOME" ]] || { printf 'Cannot determine the current user home directory.\n' >&2; exit 1; }
+export HOME
 
 # Defaults; can be overridden with environment variables.
 ISAAC_IMAGE="${ISAAC_IMAGE:-nvcr.io/nvidia/isaac-sim:5.1.0}"
@@ -30,7 +34,7 @@ CONTAINER_WORKSPACE="${CONTAINER_WORKSPACE:-/workspace/isaac-projects}"
 CONTAINER_UID="${CONTAINER_UID:-}"
 CONTAINER_GID="${CONTAINER_GID:-}"
 ZENOH_BRIDGE_CONTEXT="${ZENOH_BRIDGE_CONTEXT:-auto}"
-ISAACLAB_ENABLE="${ISAACLAB_ENABLE:-0}"
+ISAACLAB_ENABLE="${ISAACLAB_ENABLE:-1}"
 ISAACLAB_PATH="${ISAACLAB_PATH:-external/IsaacLab}"
 ISAACLAB_REPO_URL="${ISAACLAB_REPO_URL:-https://github.com/isaac-sim/IsaacLab.git}"
 ISAACLAB_REF="${ISAACLAB_REF:-v2.3.2}"
@@ -39,8 +43,14 @@ ISAACLAB_IMAGE="${ISAACLAB_IMAGE:-}"
 VSCODE_REMOTE_ENABLE="${VSCODE_REMOTE_ENABLE:-1}"
 JUPYTER_ENABLE="${JUPYTER_ENABLE:-1}"
 STUDENT_EXTRA_TOOLS="${STUDENT_EXTRA_TOOLS:-}"
-TIGERVNC_ENABLE="${TIGERVNC_ENABLE:-0}"
+# Vast full-VM preparation and the desktop are the normal student deployment.
+# Non-Vast/prepared hosts can set VAST_VM_PREPARE=0 or use --no-vast-vm.
+VAST_VM_PREPARE="${VAST_VM_PREPARE:-1}"
+TIGERVNC_ENABLE="${TIGERVNC_ENABLE:-$VAST_VM_PREPARE}"
 TIGERVNC_DISPLAY="${TIGERVNC_DISPLAY:-1}"
+if [[ -z "${TIGERVNC_PORT:-}" && -r "$HOME/.vnc/isaac-projects-port" ]]; then
+  read -r TIGERVNC_PORT < "$HOME/.vnc/isaac-projects-port"
+fi
 TIGERVNC_PORT="${TIGERVNC_PORT:-5901}"
 TIGERVNC_GEOMETRY="${TIGERVNC_GEOMETRY:-1920x1080}"
 TIGERVNC_DEPTH="${TIGERVNC_DEPTH:-24}"
@@ -48,6 +58,11 @@ TIGERVNC_LOCALHOST="${TIGERVNC_LOCALHOST:-0}"
 TIGERVNC_DESKTOP="${TIGERVNC_DESKTOP:-gnome}"
 TIGERVNC_TERMINAL="${TIGERVNC_TERMINAL:-gnome-terminal}"
 TIGERVNC_PASSWORD="${TIGERVNC_PASSWORD:-}"
+TIGERVNC_AUTOSTART="${TIGERVNC_AUTOSTART:-$VAST_VM_PREPARE}"
+APT_LOCK_TIMEOUT="${APT_LOCK_TIMEOUT:-900}"
+NVIDIA_MIN_DRIVER_VERSION="${NVIDIA_MIN_DRIVER_VERSION:-580.65.06}"
+INSTALL_STAGE_LABEL=""
+INSTALL_STDERR_FD=""
 VERBOSE=0
 LOG_FILE="${LOG_FILE:-}"
 ACTIVE_LOG_FILE=""
@@ -129,8 +144,8 @@ error()   { print_message "$COLOR_RED" "ERROR" stderr "$*"; exit 1; }
 unexpected_error() {
   local exit_code=$?
   local line="$1"
-  local command="$2"
-  local message="${SCRIPT_NAME}: line ${line}: command failed: ${command}"
+  # Commands may contain credentials; report the location without echoing them.
+  local message="${SCRIPT_NAME}: line ${line}: command failed (exit ${exit_code})"
   if [[ -n "$ACTIVE_LOG_FILE" ]]; then
     message="${message}. See ${ACTIVE_LOG_FILE}"
   fi
@@ -139,6 +154,24 @@ unexpected_error() {
 }
 
 trap 'unexpected_error "${LINENO}" "${BASH_COMMAND}"' ERR
+
+installer_exit() {
+  local result="$1"
+  # EXIT can run while a failed stage's redirections are still active.
+  # Restore the original terminal stream before printing failure details.
+  if [[ -n "$INSTALL_STDERR_FD" ]]; then
+    exec 1>&"$INSTALL_STDERR_FD" 2>&"$INSTALL_STDERR_FD"
+  fi
+  stop_install_spinner
+  # Exit 42 is the documented successful host-preparation/reboot boundary.
+  if [[ "$result" -eq 42 ]]; then return 0; fi
+  if [[ "$result" -ne 0 && -n "$INSTALL_STAGE_LABEL" ]]; then
+    print_message "$COLOR_RED" "ERROR" stderr "Failed during '${INSTALL_STAGE_LABEL}' (exit ${result}). Full log: ${ACTIVE_LOG_FILE}"
+    if [[ "$VERBOSE" -eq 0 && -r "$ACTIVE_LOG_FILE" ]]; then
+      tail -n 25 "$ACTIVE_LOG_FILE" >&2 || true
+    fi
+  fi
+}
 
 timestamp_utc() {
   date -u +%Y-%m-%dT%H:%M:%SZ
@@ -349,10 +382,30 @@ stop_install_spinner() {
   clear_progress_line
 }
 
+apply_vast_vm_profile() {
+  # Retained for compatibility with earlier explicit --vast-vm invocations.
+  VAST_VM_PREPARE=1
+  TIGERVNC_ENABLE=1
+  TIGERVNC_AUTOSTART=1
+  TIGERVNC_DESKTOP=gnome
+  TIGERVNC_TERMINAL=gnome-terminal
+}
+
+apply_non_vast_vm_profile() {
+  VAST_VM_PREPARE=0
+  TIGERVNC_AUTOSTART=0
+}
+
 parse_common_flags() {
   local -a parsed=()
   while [[ $# -gt 0 ]]; do
     case "$1" in
+      --vast-vm)
+        apply_vast_vm_profile
+        ;;
+      --no-vast-vm)
+        apply_non_vast_vm_profile
+        ;;
       --verbose|-v)
         VERBOSE=1
         ;;
@@ -374,6 +427,14 @@ parse_leading_common_flags() {
   local -a remaining=("$@")
   while [[ ${#remaining[@]} -gt 0 ]]; do
     case "${remaining[0]}" in
+      --vast-vm)
+        apply_vast_vm_profile
+        remaining=("${remaining[@]:1}")
+        ;;
+      --no-vast-vm)
+        apply_non_vast_vm_profile
+        remaining=("${remaining[@]:1}")
+        ;;
       --verbose|-v)
         VERBOSE=1
         remaining=("${remaining[@]:1}")
@@ -432,21 +493,12 @@ run_logged() {
   } >>"$ACTIVE_LOG_FILE"
 
   if [[ "$VERBOSE" -eq 1 ]]; then
-    if "$@" > >(tee -a "$ACTIVE_LOG_FILE") 2> >(tee -a "$ACTIVE_LOG_FILE" >&2); then
-      return 0
-    fi
-    return $?
-  fi
-
-  local exit_code=0
-  start_install_spinner "$total" "$index" "$label"
-  if "$@" >>"$ACTIVE_LOG_FILE" 2>&1; then
-    exit_code=0
+    "$@" > >(tee -a "$ACTIVE_LOG_FILE") 2> >(tee -a "$ACTIVE_LOG_FILE" >&2)
   else
-    exit_code=$?
+    start_install_spinner "$total" "$index" "$label"
+    "$@" >>"$ACTIVE_LOG_FILE" 2>&1
+    stop_install_spinner
   fi
-  stop_install_spinner
-  return "$exit_code"
 }
 
 run_install_step() {
@@ -460,29 +512,23 @@ run_install_step() {
     info "[${index}/${total}] ${label}"
   fi
 
-  if run_logged "$total" "$index" "$label" "$@"; then
-    if use_live_progress_ui; then
-      print_live_status_line "$(render_install_step_summary_line success "$total" "$index" "$label" "$((SECONDS - started_at))")"
-    else
-      success "[${index}/${total}] ${label}  $(format_duration "$((SECONDS - started_at))")"
-    fi
-    return 0
-  fi
-
+  # Do not put this call (or main) inside an if/!/|| condition: Bash would
+  # disable errexit throughout every nested installer function.
+  if [[ -z "$INSTALL_STDERR_FD" ]]; then exec {INSTALL_STDERR_FD}>&2; fi
+  INSTALL_STAGE_LABEL="$label"
+  run_logged "$total" "$index" "$label" "$@"
+  INSTALL_STAGE_LABEL=""
   if use_live_progress_ui; then
-    print_live_status_line "$(render_install_step_summary_line failure "$total" "$index" "$label" "$((SECONDS - started_at))")" stderr
+    print_live_status_line "$(render_install_step_summary_line success "$total" "$index" "$label" "$((SECONDS - started_at))")"
+  else
+    success "[${index}/${total}] ${label}  $(format_duration "$((SECONDS - started_at))")"
   fi
-  if [[ "$VERBOSE" -eq 0 ]]; then
-    warn "Last 25 log lines:"
-    tail -n 25 "$ACTIVE_LOG_FILE" >&2 || true
-  fi
-  error "Failed during '${label}'. Full log: ${ACTIVE_LOG_FILE}"
 }
 
 usage() {
   cat <<USAGE
 Usage:
-  ${SCRIPT_NAME} bootstrap [--verbose] [--log-file <path>]
+  ${SCRIPT_NAME} bootstrap [--no-vast-vm] [--verbose] [--log-file <path>]
                                  Install/repair Docker, NVIDIA runtime, ROS 2, default student tools, and pull the Isaac Sim image.
                                  Also installs and starts TigerVNC when TIGERVNC_ENABLE=1.
   ${SCRIPT_NAME} bootstrap zenoh|bridge [--force]
@@ -506,6 +552,7 @@ Usage:
   ${SCRIPT_NAME} stop zenoh|bridge   Stop server-side Zenoh ROS 2 bridge processes.
   ${SCRIPT_NAME} restart isaacsim    Restart Isaac Sim.
   ${SCRIPT_NAME} status              Show VM / Docker / Isaac Sim / ROS status.
+  ${SCRIPT_NAME} doctor              Check bootstrap packages, GPU container access and enabled VNC desktop (no installs/restarts).
   ${SCRIPT_NAME} logs                Show Isaac Sim container logs.
   ${SCRIPT_NAME} shell               Open a shell in the running Isaac Sim container.
   ${SCRIPT_NAME} install all [--verbose] [--log-file <path>]
@@ -549,6 +596,7 @@ Optional environment variables:
   STUDENT_EXTRA_TOOLS='tool ...'      # optional: tmux htop btop ncdu nvtop nvitop ripgrep git-lfs ffmpeg mosh
   ALLOWED_CLIENT_IP=<your-public-ip>   # only applied if ufw is already active
   TIGERVNC_ENABLE=0|1                  # when 1, bootstrap installs/starts TigerVNC
+  TIGERVNC_AUTOSTART=0|1               # optional per-user/display system service
   TIGERVNC_DISPLAY=1
   TIGERVNC_PORT=5901
   TIGERVNC_GEOMETRY=1920x1080
@@ -557,11 +605,32 @@ Optional environment variables:
   TIGERVNC_DESKTOP=gnome|gnome-flashback|xfce
   TIGERVNC_TERMINAL=gnome-terminal
   TIGERVNC_PASSWORD=<8-char-password>  # optional; generated once when unset
+  APT_LOCK_TIMEOUT=900                 # seconds to wait for existing package updates
+  NVIDIA_MIN_DRIVER_VERSION=580.65.06
+  VAST_VM_PREPARE=0|1                 # default 1; set 0 for a prepared non-Vast host
   PRIVACY_USERID=<email>
   ISAAC_EXTRA_ARGS='<extra Isaac Sim args>'
   NGC_API_KEY=<your-ngc-api-key>       # optional, only used if image pull requires login
 
+Default: Vast Ubuntu 22.04 full VM / RTX 5090:
+  ${SCRIPT_NAME} bootstrap
+    Installs/repairs the 580-open driver and firmware-capable HWE kernel when needed,
+    plus a persistent GNOME/TigerVNC desktop with direct IP/port/password access. Never use on a
+    container rental or a shared workstation. Compatible healthy drivers are preserved.
+    Exit 42 means an administrator must reboot, reconnect and rerun the same command.
+  ${SCRIPT_NAME} doctor
+    Checks the installed setup without installing packages or restarting services.
+    Isaac Lab is included by default. Set ISAACLAB_ENABLE=0 to skip it.
+  Expose TCP 5901 in the Vast template before creating a new VM (-p 5901:5901).
+    Bootstrap prints the public IP, mapped VNC port and password-file location.
+    Enter that IP and public port in your VNC viewer, then the generated password.
+    TIGERVNC_LOCALHOST=1 remains an optional SSH-tunnel mode.
+    Vast mode is the default for later commands too. Use --no-vast-vm for other prepared hosts.
+    Readiness checks do not qualify an Isaac Sim scene; test GUI/input/clipboard separately.
+
 Optional flags:
+  --no-vast-vm                       Skip Vast host repair and persistent VNC service management.
+  --vast-vm                          Explicitly select the default Vast settings (compatibility option).
   --verbose, -v                      Stream detailed bootstrap/install logs live.
   --log-file <path>                  Write bootstrap/install logs to a specific file.
 
@@ -604,6 +673,276 @@ need_root() {
 as_root() {
   need_root
   "${ROOT_PREFIX[@]}" "$@"
+}
+
+# Keep host checks embedded; deployment adds no helper files to the repository.
+cloud_python_source() {
+  cat <<'ISAAC_CLOUD_PYTHON'
+#!/usr/bin/env python3
+"""Embedded bootstrap checks; requires only the system Python standard library."""
+import argparse
+import contextlib
+import errno
+import fcntl
+import os
+import subprocess
+import sys
+import time
+import http.client
+import json
+import socket
+from pathlib import Path
+import hashlib
+import re
+import shlex
+import tempfile
+
+
+LOCKS = ('/var/lib/dpkg/lock-frontend', '/var/lib/dpkg/lock', '/var/lib/apt/lists/lock', '/var/cache/apt/archives/lock')
+
+
+def wait_for_locks(paths, deadline):
+    # APT uses POSIX record locks, rather than flock. Never remove lock files.
+    announced = False
+    while True:
+        busy = False
+        for path in paths:
+            try:
+                fd = os.open(path, os.O_RDWR)
+            except FileNotFoundError:
+                continue
+            try:
+                fcntl.lockf(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except OSError as exc:
+                if exc.errno not in (errno.EACCES, errno.EAGAIN):
+                    raise
+                busy = True
+            finally:
+                os.close(fd)
+            if busy:
+                break
+        if not busy:
+            return
+        if time.monotonic() >= deadline:
+            raise TimeoutError('Package manager is still busy. Let OS updates finish and rerun bootstrap; do not delete lock files.')
+        if not announced:
+            print('Waiting for existing package updates to finish...', flush=True)
+            announced = True
+        time.sleep(min(1, max(0, deadline - time.monotonic())))
+
+
+def apt_wait_main(argv):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--timeout', type=int, default=900)
+    parser.add_argument('command', nargs=argparse.REMAINDER)
+    args = parser.parse_args(argv)
+    command = args.command[1:] if args.command[:1] == ['--'] else args.command
+    if args.timeout < 0 or not command:
+        parser.error('Supply a nonnegative timeout and a command after --')
+    wait_for_locks(LOCKS, time.monotonic() + args.timeout)
+    # The package command takes its own locks after this bounded preflight.
+    return subprocess.call(command)
+
+
+class UnixHTTPConnection(http.client.HTTPConnection):
+
+    def connect(self):
+        self.sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        self.sock.settimeout(self.timeout)
+        self.sock.connect('/var/run/docker.sock')
+
+
+def assert_idle(connection):
+    connection.request('GET', '/containers/json?all=0')
+    response = connection.getresponse()
+    if response.status != 200:
+        raise ValueError('Cannot establish Docker workload ownership; refusing restart.')
+    containers = json.load(response)
+    if not isinstance(containers, list):
+        raise ValueError('Unexpected Docker response; refusing restart.')
+    if containers:
+        raise ValueError('Docker has running containers. Stop or coordinate those workloads before rerunning bootstrap; no restart was attempted.')
+
+
+def gpu_users(proc=Path('/proc')):
+    busy = set()
+    for process in proc.glob('[0-9]*'):
+        try:
+            for fd in (process / 'fd').iterdir():
+                try:
+                    target = os.readlink(fd)
+                    if target.startswith(('/dev/nvidia', '/dev/dri/')):
+                        busy.add(process.name)
+                except FileNotFoundError:
+                    pass
+        except FileNotFoundError:
+            pass
+    return busy
+
+
+def repair_text(original):
+    lines = original.splitlines(keepends=True)
+    output = []
+    index = 0
+    while index < len(lines):
+        line = lines[index]
+        match = re.match('^(PUBLIC_KEY|SSH_PUBLIC_KEY)=(.*)$', line.rstrip('\r\n'))
+        if not match or match[2].startswith(("'", '"')):
+            output.append(line)
+            index += 1
+            continue
+        values = [match[2]]
+        index += 1
+        while index < len(lines) and re.match('^(ssh-|ecdsa-sha2-)', lines[index]):
+            values.append(lines[index].rstrip('\r\n'))
+            index += 1
+        output.append(match[1] + '=' + shlex.quote('\n'.join(values)) + '\n')
+    return ''.join(output)
+
+
+def repair_file(path, backup_dir):
+    if path.is_symlink():
+        raise ValueError('Refusing a symlink for the provider environment file')
+    original = path.read_text()
+    updated = repair_text(original)
+    if original == updated:
+        return False
+    backup_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
+    os.chmod(backup_dir, 0o700)
+    digest = hashlib.sha256(original.encode()).hexdigest()[:16]
+    backup = backup_dir / ('environment.' + digest)
+    if not backup.exists():
+        fd = os.open(backup, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        with os.fdopen(fd, 'w') as stream:
+            stream.write(original)
+    stat = path.stat()
+    fd, temporary = tempfile.mkstemp(prefix='.isaac-environment-', dir=path.parent)
+    try:
+        with os.fdopen(fd, 'w') as stream:
+            stream.write(updated)
+        # Syntax-check only: provider environment values must never be executed.
+        subprocess.run(['/bin/sh', '-n', temporary], check=True, capture_output=True)
+        os.chmod(temporary, stat.st_mode & 0o777)
+        if os.geteuid() == 0:
+            os.chown(temporary, stat.st_uid, stat.st_gid)
+        os.replace(temporary, path)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
+    return True
+
+
+def provider_tcp_port(internal_port, path=Path('/etc/environment')):
+    # Read only the public port field; never source provider environment data.
+    try:
+        lines = path.read_text().splitlines()
+    except OSError:
+        return None
+    port = None
+    for line in lines:
+        if not line.startswith(f'VAST_TCP_PORT_{internal_port}='):
+            continue
+        try:
+            values = shlex.split(line.split('=', 1)[1], comments=True)
+        except ValueError:
+            continue
+        if len(values) == 1 and values[0].isdigit() and 1 <= int(values[0]) <= 65535:
+            port = int(values[0])
+    return port
+
+
+def provider_ssh_port(path=Path('/etc/environment')):
+    return provider_tcp_port(22, path)
+
+
+def probe(port):
+    with socket.create_connection(('127.0.0.1', port), timeout=2) as connection:
+        banner = b''
+        while len(banner) < 12:
+            data = connection.recv(12 - len(banner))
+            if not data:
+                break
+            banner += data
+        return re.fullmatch(b'RFB 003\\.00[378]\\n', banner) is not None
+
+def cloud_host_main():
+    if len(sys.argv) < 2:
+        raise ValueError("Missing bootstrap helper action")
+    action, arguments = sys.argv[1], sys.argv[2:]
+    if action == "apt-wait":
+        return apt_wait_main(arguments)
+    if action == "docker-idle":
+        with contextlib.closing(UnixHTTPConnection("localhost", timeout=10)) as connection:
+            assert_idle(connection)
+        return 0
+    if action == "gpu-idle":
+        try:
+            users = gpu_users()
+        except OSError:
+            raise ValueError("Cannot establish GPU ownership; refusing driver replacement. Run host preparation as an administrator.") from None
+        if users:
+            raise ValueError("GPU/graphics devices are in use by PID(s) " + ", ".join(sorted(users)) + ". Coordinate stopping them before driver repair.")
+        return 0
+    if action == "environment-repair":
+        parser = argparse.ArgumentParser(description="Quote provider public-key environment blocks without executing them")
+        parser.add_argument("--path", type=Path, default=Path("/etc/environment"))
+        parser.add_argument("--backup-dir", type=Path, default=Path("/var/lib/isaac-projects/environment-backups"))
+        args = parser.parse_args(arguments)
+        try:
+            changed = repair_file(args.path, args.backup_dir)
+        except (OSError, ValueError, subprocess.CalledProcessError):
+            raise ValueError("Provider environment repair failed; original preserved. Inspect the file privately.") from None
+        print("Provider environment repaired." if changed else "Provider environment already quoted.")
+        return 0
+    if action == "vnc-probe":
+        try:
+            return 0 if len(arguments) == 1 and probe(int(arguments[0])) else 1
+        except (OSError, ValueError):
+            return 1
+    if action == "provider-ssh-port":
+        port = provider_ssh_port()
+        if port is None:
+            return 1
+        print(port)
+        return 0
+    if action == "provider-tcp-port":
+        if len(arguments) != 1 or not arguments[0].isdigit() or not 1 <= int(arguments[0]) <= 65535:
+            return 1
+        port = provider_tcp_port(int(arguments[0]))
+        if port is None:
+            return 1
+        print(port)
+        return 0
+    raise ValueError("Unknown bootstrap helper action")
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(cloud_host_main())
+    except (TimeoutError, OSError, ValueError, http.client.HTTPException) as exc:
+        print(str(exc), file=sys.stderr)
+        sys.exit(1)
+ISAAC_CLOUD_PYTHON
+}
+
+cloud_python() {
+  cloud_python_source | /usr/bin/python3 - "$@"
+}
+
+cloud_python_as_root() {
+  cloud_python_source | as_root env DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=l /usr/bin/python3 - "$@"
+}
+
+package_command() {
+  cloud_python_as_root apt-wait --timeout "$APT_LOCK_TIMEOUT" -- "$@"
+}
+
+apt_get() {
+  package_command apt-get -o "DPkg::Lock::Timeout=${APT_LOCK_TIMEOUT}" -o Acquire::Retries=3 "$@"
+}
+
+package_installed() {
+  [[ "$(dpkg-query -W -f='${Status}' "$1" 2>/dev/null)" == "install ok installed" ]]
 }
 
 have_cmd() {
@@ -720,7 +1059,7 @@ init_paths() {
 }
 
 get_docker_cmd() {
-  if have_cmd docker && docker info >/dev/null 2>&1; then
+  if [[ "$EUID" -eq 0 ]] || { have_cmd docker && docker info >/dev/null 2>&1; }; then
     DOCKER=(docker)
   elif have_cmd docker; then
     DOCKER=(sudo docker)
@@ -731,7 +1070,23 @@ get_docker_cmd() {
 
 docker_cmd() {
   get_docker_cmd
-  ${DOCKER[@]} "$@"
+  "${DOCKER[@]}" "$@"
+}
+
+assert_local_docker_idle() {
+  # A local systemd restart cannot repair a remote Docker context.
+  local endpoint
+  endpoint=$(docker context inspect --format '{{.Endpoints.docker.Host}}')
+  [[ "${DOCKER_HOST:-$endpoint}" == "unix:///var/run/docker.sock" || \
+     "${DOCKER_HOST:-$endpoint}" == "unix:///run/docker.sock" ]] || \
+    error "Automatic Docker repair requires the default local Unix socket. Check DOCKER_HOST and the Docker context."
+  cloud_python_as_root docker-idle
+}
+
+restart_docker_safely() {
+  assert_local_docker_idle
+  info "No running containers; restarting the local Docker service."
+  as_root systemctl restart docker
 }
 
 require_docker_runtime() {
@@ -741,8 +1096,8 @@ require_docker_runtime() {
 }
 
 ensure_common_apt_bits() {
-  as_root apt-get update -y
-  as_root apt-get install -y ca-certificates curl gnupg software-properties-common lsb-release iproute2 net-tools netcat-openbsd rsync
+  apt_get update -y
+  apt_get install -y ca-certificates curl gnupg software-properties-common lsb-release iproute2 net-tools netcat-openbsd rsync
 }
 
 ensure_nvidia_driver_present() {
@@ -750,6 +1105,14 @@ ensure_nvidia_driver_present() {
   if ! nvidia-smi >/dev/null 2>&1; then
     error "nvidia-smi exists but the driver/GPU is not healthy. Fix that before using Isaac Sim containers."
   fi
+  local versions version
+  versions=$(nvidia-smi --query-gpu=driver_version --format=csv,noheader)
+  [[ -n "$versions" ]] || error "No NVIDIA GPU detected."
+  while IFS= read -r version; do
+    version="${version//[[:space:]]/}"
+    dpkg --compare-versions "$version" ge "$NVIDIA_MIN_DRIVER_VERSION" || \
+      error "NVIDIA driver ${version} is too old; need ${NVIDIA_MIN_DRIVER_VERSION} or later. Use a prepared GPU host, or the explicit --vast-vm mode on a new VM."
+  done <<< "$versions"
 }
 
 ensure_docker_installed() {
@@ -760,7 +1123,12 @@ ensure_docker_installed() {
     ensure_common_apt_bits
 
     # Remove conflicting packages if present.
-    as_root bash -lc 'apt remove -y $(dpkg --get-selections docker.io docker-compose docker-compose-v2 docker-doc podman-docker containerd runc 2>/dev/null | cut -f1) || true'
+    local -a conflicts=()
+    local pkg
+    for pkg in docker.io docker-compose docker-compose-v2 docker-doc podman-docker containerd runc; do
+      if package_installed "$pkg"; then conflicts+=("$pkg"); fi
+    done
+    if [[ ${#conflicts[@]} -gt 0 ]]; then apt_get remove -y "${conflicts[@]}"; fi
 
     as_root install -m 0755 -d /etc/apt/keyrings
     as_root curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
@@ -778,8 +1146,8 @@ Architectures: ${arch}
 Signed-By: /etc/apt/keyrings/docker.asc
 DOCKERREPO"
 
-    as_root apt-get update -y
-    as_root apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    apt_get update -y
+    apt_get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     as_root systemctl enable --now docker
   fi
 
@@ -795,6 +1163,10 @@ DOCKERREPO"
   fi
 
   get_docker_cmd
+  if ! docker_cmd version >/dev/null 2>&1; then
+    warn "Docker client/daemon check failed; checking whether a safe restart is possible."
+    restart_docker_safely
+  fi
   docker_cmd version >/dev/null
 }
 
@@ -813,14 +1185,15 @@ ensure_nvidia_container_runtime() {
   fi
 
   info "Installing/configuring NVIDIA Container Toolkit..."
+  assert_local_docker_idle
   ensure_common_apt_bits
 
-  as_root bash -lc 'curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg'
-  as_root bash -lc 'curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | sed "s#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g" > /etc/apt/sources.list.d/nvidia-container-toolkit.list'
-  as_root apt-get update -y
-  as_root apt-get install -y nvidia-container-toolkit
+  as_root bash -o pipefail -c 'curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | gpg --batch --yes --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg'
+  as_root bash -o pipefail -c 'curl -fsSL https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | sed "s#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g" > /etc/apt/sources.list.d/nvidia-container-toolkit.list'
+  apt_get update -y
+  apt_get install -y nvidia-container-toolkit
   as_root nvidia-ctk runtime configure --runtime=docker
-  as_root systemctl restart docker
+  restart_docker_safely
 
   if ! docker_cmd run --rm --gpus all ubuntu:24.04 nvidia-smi >/dev/null 2>&1; then
     error "Docker still cannot see the GPU after configuring NVIDIA Container Toolkit. Check driver health, reboot if needed, then retry."
@@ -840,16 +1213,16 @@ verify_nvidia_container_runtime() {
 
 install_ros_apt_source() {
   ensure_common_apt_bits
-  as_root apt-get install -y software-properties-common
-  as_root add-apt-repository -y universe
+  apt_get install -y software-properties-common
+  package_command add-apt-repository -y --no-update universe
 
   local tmpdeb version codename
   tmpdeb=/tmp/ros2-apt-source.deb
   version=$(curl -s https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -F 'tag_name' | awk -F'"' '{print $4}')
   [[ -n "$version" ]] || error "Failed to resolve ros2-apt-source release version."
   codename=$(. /etc/os-release && echo "${UBUNTU_CODENAME:-${VERSION_CODENAME}}")
-  curl -L -o "$tmpdeb" "https://github.com/ros-infrastructure/ros-apt-source/releases/download/${version}/ros2-apt-source_${version}.${codename}_all.deb"
-  as_root dpkg -i "$tmpdeb"
+  curl -fL -o "$tmpdeb" "https://github.com/ros-infrastructure/ros-apt-source/releases/download/${version}/ros2-apt-source_${version}.${codename}_all.deb"
+  package_command dpkg -i "$tmpdeb"
 }
 
 ensure_ros2_installed() {
@@ -861,11 +1234,11 @@ ensure_ros2_installed() {
   else
     info "Installing ROS 2 ${ROS_DISTRO} (${ROS_INSTALL_VARIANT})..."
     install_ros_apt_source
-    as_root apt-get update -y
+    apt_get update -y
 
     if [[ "$ROS_DISTRO" == "humble" ]]; then
       # Safer than a full distro upgrade on remote GPU VMs: update the packages ROS docs explicitly warn about.
-      as_root apt-get install -y systemd systemd-sysv libsystemd0 udev
+      apt_get install -y systemd systemd-sysv libsystemd0 udev
     fi
 
     local ros_pkg
@@ -882,7 +1255,7 @@ ensure_ros2_installed() {
       rosdep_pkg="python3-rosdep2"
     fi
 
-    as_root apt-get install -y "$ros_pkg" ros-dev-tools python3-colcon-common-extensions ${rosdep_pkg:+$rosdep_pkg}
+    apt_get install -y "$ros_pkg" ros-dev-tools python3-colcon-common-extensions ${rosdep_pkg:+$rosdep_pkg}
   fi
 
   if [[ ! -f "$ROS_SETUP" ]]; then
@@ -1209,7 +1582,7 @@ ensure_student_tooling() {
 
   if (( ${#apt_packages[@]} > 0 )); then
     ensure_common_apt_bits
-    as_root apt-get install -y "${apt_packages[@]}"
+    apt_get install -y "${apt_packages[@]}"
   fi
 
   if is_truthy "$VSCODE_REMOTE_ENABLE"; then
@@ -1380,7 +1753,7 @@ ensure_isaac_runtime_image() {
     --build-arg "ISAAC_ROS_INSTALL_VARIANT=${ISAAC_ROS_INSTALL_VARIANT}" \
     --build-arg "ISAAC_ROS_DOCKERFILE_HASH=${dockerfile_hash}" \
     -t "$runtime_image" \
-    "$SCRIPT_DIR" || error "Failed to build ROS-enabled Isaac Sim image ${runtime_image}."
+    "${SCRIPT_DIR}/containers" || error "Failed to build ROS-enabled Isaac Sim image ${runtime_image}."
 
   ISAAC_RUNTIME_IMAGE="$runtime_image"
 }
@@ -1458,12 +1831,14 @@ ensure_tigervnc_desktop_installed() {
     tigervnc-standalone-server
     tigervnc-common
     gnome-terminal
+    terminator
     nautilus
     dconf-cli
     gsettings-desktop-schemas
     dbus-x11
     xauth
     x11-xserver-utils
+    x11-utils
     xterm
     adwaita-icon-theme
     yaru-theme-gtk
@@ -1506,7 +1881,7 @@ ensure_tigervnc_desktop_installed() {
 
   local pkg
   for pkg in "${packages[@]}"; do
-    if ! dpkg -s "$pkg" >/dev/null 2>&1; then
+    if ! package_installed "$pkg"; then
       missing+=("$pkg")
     fi
   done
@@ -1518,9 +1893,9 @@ ensure_tigervnc_desktop_installed() {
 
   info "Installing TigerVNC desktop packages..."
   ensure_common_apt_bits
-  as_root add-apt-repository -y universe
-  as_root apt-get update -y
-  as_root apt-get install -y "${missing[@]}"
+  package_command add-apt-repository -y --no-update universe
+  apt_get update -y
+  apt_get install -y "${missing[@]}"
 }
 
 ensure_tigervnc_user_files() {
@@ -1602,7 +1977,9 @@ case "$TIGERVNC_DESKTOP" in
           gsettings set org.gnome.desktop.lockdown disable-lock-screen true >/dev/null 2>&1 || true
         }
         run_gnome_settings
-        exec gnome-session --session=ubuntu
+        # Trust only the terminal launcher generated by this bootstrap.
+        gio set "$HOME/Desktop/GNOME Terminal.desktop" metadata::trusted true >/dev/null 2>&1 || true
+        exec gnome-session --builtin --session=ubuntu
       '
     fi
     ;;
@@ -1722,6 +2099,8 @@ EOF_TERMINAL_DESKTOP
 }
 
 configure_tigervnc_ufw_if_active() {
+  # Loopback-only VNC is reached over SSH; no public firewall rule is needed.
+  if is_truthy "$TIGERVNC_LOCALHOST"; then return 0; fi
   if ! have_cmd ufw; then
     return 0
   fi
@@ -1770,7 +2149,7 @@ tigervnc_port_owned_by_xtigervnc() {
 
 tigervnc_display_running() {
   have_cmd vncserver || return 1
-  as_current_user vncserver -list 2>/dev/null | awk '{print $1}' | grep -qx ":${TIGERVNC_DISPLAY}"
+  as_current_user vncserver -list 2>/dev/null | awk '{print $1}' | grep -Eq "^:?${TIGERVNC_DISPLAY}$"
 }
 
 stop_tigervnc_processes_on_port() {
@@ -1849,19 +2228,155 @@ start_tigervnc_server() {
   return 1
 }
 
+tigervnc_session_failed() {
+  local pid
+  while IFS= read -r pid; do
+    if grep -zFxq "DISPLAY=:${TIGERVNC_DISPLAY}" "/proc/${pid}/environ" 2>/dev/null || \
+       grep -zFxq "DISPLAY=:${TIGERVNC_DISPLAY}.0" "/proc/${pid}/environ" 2>/dev/null; then
+      return 0
+    fi
+  done < <(pgrep -u "$USER_NAME" -f '^(/[^ ]*/)?gnome-session-failed([[:space:]]|$)' || true)
+  return 1
+}
+
+tigervnc_ready() {
+  [[ -s "${USER_HOME}/.vnc/passwd" ]] || return 1
+  tigervnc_display_running || return 1
+  tigervnc_port_owned_by_xtigervnc || return 1
+  if tigervnc_session_failed; then return 1; fi
+  if is_truthy "$TIGERVNC_LOCALHOST"; then
+    ss -lntH | awk -v port=":${TIGERVNC_PORT}" '
+      $4 ~ port "$" { seen=1; if ($4 !~ /^(127\.0\.0\.1|\[?::1\]?):/) bad=1 }
+      END { exit (!seen || bad) }
+    ' || return 1
+  fi
+  cloud_python vnc-probe "$TIGERVNC_PORT" || return 1
+  local wm_window
+  wm_window=$(as_current_user env DISPLAY=":${TIGERVNC_DISPLAY}" XAUTHORITY="${USER_HOME}/.Xauthority" \
+    xprop -root _NET_SUPPORTING_WM_CHECK 2>/dev/null | sed -nE 's/.*window id # (0x[0-9a-fA-F]+).*/\1/p') || return 1
+  [[ "$wm_window" =~ ^0x[0-9a-fA-F]*[1-9a-fA-F][0-9a-fA-F]*$ ]] || return 1
+  as_current_user env DISPLAY=":${TIGERVNC_DISPLAY}" XAUTHORITY="${USER_HOME}/.Xauthority" \
+    xwininfo -id "$wm_window" >/dev/null 2>&1 || return 1
+}
+
+verify_tigervnc_ready() {
+  have_cmd vncserver && have_cmd vncpasswd && have_cmd xprop || error "TigerVNC/X11 tools are missing after installation."
+  local attempt stable=0
+  for ((attempt=0; attempt<45; attempt++)); do
+    if tigervnc_ready; then stable=$((stable + 1)); else stable=0; fi
+    if [[ "$stable" -ge 3 ]]; then
+      info "TigerVNC protocol, password file, listener and desktop window manager are ready."
+      return 0
+    fi
+    sleep 1
+  done
+  error "TigerVNC desktop failed readiness checks. Inspect ${USER_HOME}/.vnc/*.log; bootstrap has not completed."
+}
+
+tigervnc_service_name() {
+  printf 'isaac-projects-vnc-%s-%s.service' "$(id -u "$USER_NAME")" "$TIGERVNC_DISPLAY"
+}
+
+ensure_tigervnc_service() {
+  local unit_name launcher tmp_launcher tmp_unit localhost_value=no
+  unit_name=$(tigervnc_service_name)
+  launcher="/usr/local/lib/isaac-projects/${unit_name%.service}.sh"
+  is_truthy "$TIGERVNC_LOCALHOST" && localhost_value=yes
+  tmp_launcher=$(mktemp)
+  tmp_unit=$(mktemp)
+  {
+    printf '#!/usr/bin/env bash\nset -euo pipefail\n'
+    printf 'export HOME=%q USER=%q LOGNAME=%q\n' "$USER_HOME" "$USER_NAME" "$USER_NAME"
+    printf 'export TIGERVNC_DESKTOP=%q TIGERVNC_TERMINAL=%q\n' "$TIGERVNC_DESKTOP" "$TIGERVNC_TERMINAL"
+    printf 'if [[ "${1:-}" == --stop ]]; then exec %q -kill %q; fi\n' "$(command -v vncserver)" ":${TIGERVNC_DISPLAY}"
+    printf 'exec %q -fg %q -geometry %q -depth %q -rfbport %q -localhost %q -SecurityTypes VncAuth -rfbauth %q -xstartup %q\n' \
+      "$(command -v vncserver)" ":${TIGERVNC_DISPLAY}" "$TIGERVNC_GEOMETRY" "$TIGERVNC_DEPTH" \
+      "$TIGERVNC_PORT" "$localhost_value" "${USER_HOME}/.vnc/passwd" "${USER_HOME}/.vnc/xstartup"
+  } >"$tmp_launcher"
+  cat >"$tmp_unit" <<EOF_VNC_SERVICE
+[Unit]
+Description=Isaac Projects TigerVNC desktop (${USER_NAME}, display ${TIGERVNC_DISPLAY})
+After=network.target
+
+[Service]
+Type=simple
+User=$(id -u "$USER_NAME")
+PAMName=login
+Environment=DISPLAY=:${TIGERVNC_DISPLAY} XDG_SESSION_TYPE=x11 XDG_SESSION_CLASS=user
+ExecStart=/usr/bin/bash ${launcher}
+ExecStop=/usr/bin/bash ${launcher} --stop
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+EOF_VNC_SERVICE
+  if as_root systemctl is-active --quiet "$unit_name"; then
+    if ! cmp -s "$tmp_launcher" "$launcher" || \
+       ! cmp -s "$tmp_unit" "/etc/systemd/system/${unit_name}" || [[ "$TIGERVNC_XSTARTUP_UPDATED" -eq 1 ]]; then
+      rm -f "$tmp_launcher" "$tmp_unit"
+      error "Desktop configuration changed while ${unit_name} is running. Coordinate stopping it, then rerun bootstrap."
+    fi
+    rm -f "$tmp_launcher" "$tmp_unit"
+    return 0
+  fi
+  if tigervnc_port_listening; then
+    tigervnc_display_running && tigervnc_port_owned_by_xtigervnc || error "VNC port is owned by another session; refusing service takeover."
+    as_current_user vncserver -kill ":${TIGERVNC_DISPLAY}"
+  fi
+  as_root install -d -m 0755 /usr/local/lib/isaac-projects
+  as_root install -m 0755 "$tmp_launcher" "$launcher"
+  as_root install -m 0644 "$tmp_unit" "/etc/systemd/system/${unit_name}"
+  rm -f "$tmp_launcher" "$tmp_unit"
+  as_root systemctl daemon-reload
+  as_root systemctl enable --now "$unit_name"
+  # Remember a provider-mapped custom port for later start/status/doctor calls.
+  local tmp_port
+  tmp_port=$(mktemp)
+  printf '%s\n' "$TIGERVNC_PORT" >"$tmp_port"
+  install_for_current_user 0600 "$tmp_port" "${USER_HOME}/.vnc/isaac-projects-port"
+  rm -f "$tmp_port"
+}
+
 print_tigervnc_connection_summary() {
   validate_tigervnc_config
 
-  local public_ip password_hint
-  public_ip=$(get_public_ip 2>/dev/null || true)
+  local public_ip password_hint ssh_port public_port port_variable
+  public_ip="${PUBLIC_IPADDR:-}"
+  if [[ -z "$public_ip" ]]; then public_ip=$(get_public_ip 2>/dev/null || true); fi
   password_hint="${USER_HOME}/.vnc/isaac-projects-vnc-password.txt"
+  ssh_port="${VNC_SSH_PORT:-${VAST_TCP_PORT_22:-}}"
+  if [[ -z "$ssh_port" ]]; then ssh_port=$(cloud_python provider-ssh-port || true); fi
+  if [[ -z "$ssh_port" ]]; then
+    if is_truthy "$VAST_VM_PREPARE"; then ssh_port='<public-ssh-port>'; else ssh_port=22; fi
+  fi
 
   echo
   echo "TigerVNC desktop:"
-  echo "  Target:       ${public_ip:-<server-ip>}:${TIGERVNC_PORT}"
+  if is_truthy "$TIGERVNC_LOCALHOST"; then
+    echo "  SSH tunnel on your PC (substitute your server's public SSH host/port):"
+    printf '    ssh -N -L 15901:127.0.0.1:%s -p %q %q\n' "$TIGERVNC_PORT" "$ssh_port" "${USER_NAME}@${public_ip:-<server-ip>}"
+    echo "  Viewer:       127.0.0.1::15901 (TigerVNC explicit TCP port)"
+  else
+    port_variable="VAST_TCP_PORT_${TIGERVNC_PORT}"
+    public_port="${!port_variable:-}"
+    if [[ -z "$public_port" ]]; then public_port=$(cloud_python provider-tcp-port "$TIGERVNC_PORT" || true); fi
+    if [[ ! "$public_port" =~ ^[0-9]+$ ]] || ((public_port < 1 || public_port > 65535)); then
+      if is_truthy "$VAST_VM_PREPARE"; then
+        public_port='<mapped-public-vnc-port>'
+        warn "No public VNC mapping found. Expose TCP ${TIGERVNC_PORT} in the Vast template (-p ${TIGERVNC_PORT}:${TIGERVNC_PORT}); do not use the SSH port for VNC."
+      else
+        public_port="$TIGERVNC_PORT"
+      fi
+    fi
+    echo "  IP address:   ${public_ip:-<server-ip>}"
+    echo "  Public port:  ${public_port}"
+    echo "  Target:       ${public_ip:-<server-ip>}::${public_port} (TigerVNC explicit TCP port)"
+  fi
   echo "  Display:      :${TIGERVNC_DISPLAY}"
   echo "  Geometry:     ${TIGERVNC_GEOMETRY}"
   echo "  Desktop:      $(tigervnc_desktop_label)"
+  if is_truthy "$TIGERVNC_AUTOSTART"; then echo "  Service:      $(tigervnc_service_name)"; fi
   if [[ -f "$password_hint" && -z "$TIGERVNC_PASSWORD" ]]; then
     echo "  Password:     ${password_hint}"
   else
@@ -1876,7 +2391,12 @@ ensure_tigervnc_ready() {
   ensure_tigervnc_desktop_installed
   ensure_tigervnc_user_files
   configure_tigervnc_ufw_if_active
-  start_tigervnc_server
+  if is_truthy "$TIGERVNC_AUTOSTART"; then
+    ensure_tigervnc_service
+  else
+    start_tigervnc_server
+  fi
+  verify_tigervnc_ready
 }
 
 stop_tigervnc_server() {
@@ -1885,6 +2405,10 @@ stop_tigervnc_server() {
   validate_tigervnc_config
 
   local display=":${TIGERVNC_DISPLAY}"
+  if as_root systemctl is-active --quiet "$(tigervnc_service_name)"; then
+    as_root systemctl stop "$(tigervnc_service_name)"
+    return 0
+  fi
   if have_cmd vncserver; then
     info "Stopping TigerVNC display ${display}..."
     as_current_user vncserver -kill "$display" || warn "TigerVNC display ${display} was not running."
@@ -1997,7 +2521,7 @@ ensure_git_installed() {
     return 0
   fi
   ensure_common_apt_bits
-  as_root apt-get install -y git
+  apt_get install -y git
 }
 
 ensure_isaaclab_runtime_link() {
@@ -2068,7 +2592,35 @@ ensure_isaaclab_checkout() {
   local current_rev
   current_rev=$(as_current_user git -C "$checkout_path" rev-parse --short HEAD)
   ensure_isaaclab_runtime_link "$checkout_path"
+  # This generated dependency is local installation data, not a project change.
+  local local_exclude
+  local_exclude=$(git -C "$HOST_WORKSPACE_ROOT" rev-parse --path-format=absolute --git-path info/exclude 2>/dev/null || true)
+  if [[ -f "$local_exclude" ]] && ! grep -Fxq "/${ISAACLAB_PATH}/" "$local_exclude"; then
+    as_current_user bash -c 'printf "\n%s\n" "$1" >> "$2"' _ "/${ISAACLAB_PATH}/" "$local_exclude"
+  fi
   info "Isaac Lab checkout ready at ${checkout_path} (${current_rev})."
+}
+
+isaaclab_dockerfile_source() {
+  # Keep the repository Dockerfile unchanged. Kit 5.1 bundles packaging 23;
+  # replacing it breaks pip's vendored imports during Lab installation.
+  if [[ "$ISAAC_IMAGE" != *:5.1.0 ]]; then cat "$1"; return; fi
+  /usr/bin/python3 - "$1" <<'ISAACLAB_DOCKERFILE'
+from pathlib import Path
+import sys
+
+source = Path(sys.argv[1]).read_text()
+anchor = "WORKDIR /workspace/isaac-projects\n"
+if anchor not in source:
+    raise SystemExit("Cannot locate the Isaac Lab Dockerfile installation section")
+compatibility = r'''# Preserve Kit's packaging and satisfy Lab's Starlette/FastAPI combination.
+ENV PIP_CONSTRAINT=/tmp/isaaclab-constraints.txt
+RUN printf '%s\n' 'packaging==23.0' 'fastapi==0.121.3' > "$PIP_CONSTRAINT" && \
+    /isaac-sim/python.sh -m pip install 'fastapi==0.121.3'
+
+'''
+print(source.replace(anchor, compatibility + anchor, 1), end="")
+ISAACLAB_DOCKERFILE
 }
 
 ensure_isaaclab_image() {
@@ -2086,8 +2638,9 @@ ensure_isaaclab_image() {
   dirty_checkout=$(as_current_user git -C "$checkout_path" status --porcelain --untracked-files=no 2>/dev/null || true)
   local dockerfile_path="${HOST_WORKSPACE_ROOT}/containers/isaac-lab.Dockerfile"
   [[ -f "$dockerfile_path" ]] || error "Isaac Lab Dockerfile not found at ${dockerfile_path}"
-  local dockerfile_hash
-  dockerfile_hash=$(sha256sum "$dockerfile_path" | awk '{print $1}')
+  local dockerfile_hash dockerfile_source
+  dockerfile_source=$(isaaclab_dockerfile_source "$dockerfile_path")
+  dockerfile_hash=$(printf '%s\n' "$dockerfile_source" | sha256sum | awk '{print $1}')
   [[ -n "$dockerfile_hash" ]] || error "Unable to compute the Dockerfile hash for ${dockerfile_path}"
 
   local isaaclab_image isaaclab_base_image
@@ -2114,7 +2667,7 @@ ensure_isaaclab_image() {
   fi
   info "Building Isaac Lab image ${isaaclab_image} from ${checkout_path} (${ISAACLAB_REF}, ${ISAACLAB_FRAMEWORKS}, ${checkout_rev:0:12})..."
   docker_cmd build \
-    -f "${HOST_WORKSPACE_ROOT}/containers/isaac-lab.Dockerfile" \
+    -f - \
     --build-arg "ISAAC_IMAGE=${isaaclab_base_image}" \
     --build-arg "ISAACLAB_PATH=${ISAACLAB_PATH}" \
     --build-arg "ISAACLAB_REF=${ISAACLAB_REF}" \
@@ -2122,7 +2675,7 @@ ensure_isaaclab_image() {
     --build-arg "ISAACLAB_CHECKOUT_REV=${checkout_rev}" \
     --build-arg "ISAACLAB_DOCKERFILE_HASH=${dockerfile_hash}" \
     -t "$isaaclab_image" \
-    "$HOST_WORKSPACE_ROOT" || error "Failed to build Isaac Lab image ${isaaclab_image}."
+    "$HOST_WORKSPACE_ROOT" <<< "$dockerfile_source" || error "Failed to build Isaac Lab image ${isaaclab_image}."
 }
 
 prepare_gui_x11_access() {
@@ -2177,6 +2730,9 @@ build_common_docker_args() {
     --ipc=host
     -e ACCEPT_EULA=Y
     -e PRIVACY_CONSENT=Y
+    # The ROS image is built as root; keep Kit's user files in the mounted
+    # Isaac home even when Docker chooses /root for the selected UID.
+    -e HOME=/isaac-sim
     -e "ROS_DOMAIN_ID=${ROS_DOMAIN_ID}"
     -e "CONTAINER_WORKSPACE=${CONTAINER_WORKSPACE}"
     -v "${ISAAC_HOST_ROOT}/cache/main:/isaac-sim/.cache:rw"
@@ -2970,9 +3526,184 @@ run_isaaclab() {
   return "$run_status"
 }
 
+vast_driver_compatible() {
+  local versions version
+  have_cmd nvidia-smi || return 1
+  versions=$(nvidia-smi --query-gpu=driver_version --format=csv,noheader 2>/dev/null) || return 1
+  [[ -n "$versions" ]] || return 1
+  while IFS= read -r version; do
+    version="${version//[[:space:]]/}"
+    dpkg --compare-versions "$version" ge "$NVIDIA_MIN_DRIVER_VERSION" || return 1
+  done <<< "$versions"
+}
+
+vast_kernel_supports_firmware() {
+  local config="/boot/config-$(uname -r)"
+  [[ -r "$config" ]] || error "Cannot inspect ${config}; have the administrator verify CONFIG_FW_LOADER before driver repair."
+  grep -Eq '^CONFIG_FW_LOADER=(y|m)$' "$config"
+}
+
+install_vast_environment_repair() {
+  local target=/usr/local/lib/isaac-projects/cloud_host.py
+  local helper unit
+  cloud_python_as_root environment-repair
+  helper=$(mktemp)
+  cloud_python_source >"$helper"
+  as_root install -d -m 0755 /usr/local/lib/isaac-projects
+  as_root install -m 0755 "$helper" "$target"
+  rm -f "$helper"
+  unit=$(mktemp)
+  cat >"$unit" <<'EOF_VAST_ENV'
+[Unit]
+Description=Quote Vast public-key environment entries before package updates
+After=local-fs.target
+Before=apt-daily.service apt-daily-upgrade.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /usr/local/lib/isaac-projects/cloud_host.py environment-repair
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF_VAST_ENV
+  as_root install -m 0644 "$unit" /etc/systemd/system/isaac-projects-vast-environment.service
+  rm -f "$unit"
+  as_root systemctl daemon-reload
+  as_root systemctl enable isaac-projects-vast-environment.service
+}
+
+ensure_vast_vm_stays_awake() {
+  # A GNOME idle timer can suspend the guest while Vast still reports its
+  # outer VM container as running. This cloud server must remain reachable.
+  local policy
+  policy=$(mktemp)
+  cat >"$policy" <<'EOF_VAST_SLEEP'
+[Sleep]
+AllowSuspend=no
+AllowHibernation=no
+AllowSuspendThenHibernate=no
+AllowHybridSleep=no
+EOF_VAST_SLEEP
+  as_root install -d -m 0755 /etc/systemd/sleep.conf.d
+  as_root install -m 0644 "$policy" /etc/systemd/sleep.conf.d/99-isaac-projects-server.conf
+  rm -f "$policy"
+  as_root systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
+  info "Cloud VM automatic sleep and hibernation are disabled."
+}
+
+verify_vast_vm_stays_awake() {
+  local target
+  for target in sleep.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target; do
+    [[ "$(systemctl is-enabled "$target" 2>/dev/null || true)" == masked ]] || \
+      error "Cloud VM sleep protection is missing (${target}); rerun bootstrap to prevent idle SSH outages."
+  done
+  grep -Fxq 'AllowSuspend=no' /etc/systemd/sleep.conf.d/99-isaac-projects-server.conf || \
+    error "Cloud VM sleep policy is missing; rerun bootstrap."
+}
+
+vast_reboot_required() {
+  warn "Vast host preparation requires a reboot (exit 42). No reboot is performed automatically."
+  warn "Ask the server administrator to reboot this VM, reconnect, rerun bootstrap with the same settings."
+  exit 42
+}
+
+prepare_vast_vm() {
+  [[ "${ID:-}" == ubuntu && "${VERSION_ID:-}" == 22.04 && "${ARCH:-}" == amd64 ]] || \
+    error "VAST_VM_PREPARE supports Ubuntu 22.04 amd64 full VMs only."
+  if systemd-detect-virt --container --quiet; then
+    error "This is a container rental. Driver/kernel installation requires a full VM; ask the provider for a prepared GPU host."
+  fi
+  systemd-detect-virt --vm --quiet || error "VAST_VM_PREPARE is for a new full VM, not a workstation."
+  install_vast_environment_repair
+  ensure_vast_vm_stays_awake
+
+  local state_dir="${VAST_HOST_STATE_DIR:-/var/lib/isaac-projects}"
+  local marker="${state_dir}/vast-host-reboot-required"
+  local boot_id
+  boot_id=$(cat /proc/sys/kernel/random/boot_id)
+  if [[ -r "$marker" && "$(cat "$marker")" == "$boot_id" ]]; then
+    vast_reboot_required
+  fi
+  if vast_driver_compatible && vast_kernel_supports_firmware; then
+    info "NVIDIA driver/kernel already meet the configured minimum; preserving them."
+    as_root rm -f "$marker"
+    return 0
+  fi
+  [[ ! -e "$marker" ]] || error "Driver/kernel still unhealthy after reboot. Check the booted kernel and nvidia-smi before retrying; no repeated package repair attempted."
+
+  # Changing a driver on a shared/busy machine can interrupt graphics and
+  # compute. Inspect current workloads, not historical allocation records.
+  cloud_python_as_root gpu-idle
+  if have_cmd docker && as_root systemctl is-active --quiet docker; then
+    assert_local_docker_idle
+  fi
+  local driver_repair=0
+  if ! vast_driver_compatible; then driver_repair=1; fi
+  local -a old_packages=()
+  local pkg
+  while IFS= read -r pkg; do
+    if [[ "$driver_repair" -eq 1 && "$pkg" =~ ^nvidia-(driver|dkms|kernel-source|kernel-common)-[0-9]+(-open)?$ &&
+          ! "$pkg" =~ -580(-open)?$ ]] && package_installed "$pkg"; then
+      old_packages+=("$pkg")
+    fi
+  done < <(dpkg-query -W -f='${binary:Package}\n' 'nvidia-*' 2>/dev/null || true)
+  apt_get update -y
+  if [[ ${#old_packages[@]} -gt 0 ]]; then
+    apt_get remove -y "${old_packages[@]}"
+  fi
+  if ! vast_kernel_supports_firmware; then
+    apt_get install -y --no-install-recommends linux-generic-hwe-22.04
+    as_root update-grub
+  fi
+  if [[ "$driver_repair" -eq 1 ]]; then
+    apt_get install -y --no-install-recommends nvidia-driver-580-open vulkan-tools
+  fi
+  as_root install -d -m 0755 "$state_dir"
+  printf '%s\n' "$boot_id" | as_root tee "$marker" >/dev/null
+  vast_reboot_required
+}
+
 prepare_host_context() {
   require_supported_host
   init_paths
+  if is_truthy "$VAST_VM_PREPARE"; then
+    prepare_vast_vm
+  fi
+}
+
+doctor() {
+  # Deliberately avoid prepare_host_context: doctor must never repair/reboot.
+  require_supported_host
+  init_paths
+  if is_truthy "$VAST_VM_PREPARE"; then
+    verify_vast_vm_stays_awake
+  fi
+  ensure_nvidia_driver_present
+  require_docker_runtime
+  local audit runtime_image
+  audit=$(dpkg --audit)
+  [[ -z "$audit" ]] || error "Unfinished package configuration found; have the administrator complete OS updates before bootstrap."
+  [[ -f "$ROS_SETUP" ]] || error "ROS setup is missing: ${ROS_SETUP}"
+  docker_cmd image inspect "$ISAAC_IMAGE" >/dev/null
+  runtime_image=$(resolve_isaac_runtime_image)
+  docker_cmd image inspect "$runtime_image" >/dev/null
+  if is_truthy "$ISAACLAB_ENABLE"; then
+    [[ -f "${HOST_WORKSPACE_ROOT}/${ISAACLAB_PATH}/isaaclab.sh" ]] || error "Isaac Lab checkout is missing; rerun bootstrap."
+    docker_cmd image inspect "$(resolve_isaaclab_image)" >/dev/null || error "Isaac Lab image is missing; rerun bootstrap."
+  fi
+  docker_cmd run --rm --pull=never --network=none --gpus all --entrypoint nvidia-smi "$runtime_image" >/dev/null
+  if is_truthy "$VSCODE_REMOTE_ENABLE"; then
+    [[ -x "${USER_HOME}/.local/bin/code" ]] || have_cmd code || error "VS Code CLI is missing."
+  fi
+  if is_truthy "$JUPYTER_ENABLE"; then
+    [[ -x "${USER_HOME}/.local/bin/jupyter-lab" ]] || error "JupyterLab wrapper is missing."
+  fi
+  if is_truthy "$TIGERVNC_ENABLE"; then
+    validate_tigervnc_config
+    verify_tigervnc_ready
+  fi
+  success "Bootstrap readiness checks passed. This does not launch or qualify an Isaac Sim scene."
 }
 
 begin_install_session() {
@@ -3257,13 +3988,19 @@ main() {
         *)
           shift
           parse_common_flags "$@"
-          [[ ${#PARSED_ARGS[@]} -eq 0 ]] || error "Usage: ${SCRIPT_NAME} bootstrap [--verbose] [--log-file <path>] | ${SCRIPT_NAME} bootstrap {zenoh|bridge} [--force]"
+          [[ ${#PARSED_ARGS[@]} -eq 0 ]] || error "Usage: ${SCRIPT_NAME} bootstrap [--no-vast-vm] [--verbose] [--log-file <path>] | ${SCRIPT_NAME} bootstrap {zenoh|bridge} [--force]"
           install_all
           ;;
       esac
       ;;
     status)
       status_all
+      ;;
+    doctor)
+      shift
+      parse_common_flags "$@"
+      [[ ${#PARSED_ARGS[@]} -eq 0 ]] || error "Usage: ${SCRIPT_NAME} doctor [--no-vast-vm]"
+      doctor
       ;;
     logs)
       logs_isaacsim
@@ -3316,9 +4053,7 @@ main() {
   esac
 }
 
-if main "$@"; then
-  exit 0
-else
-  main_status=$?
-  exit "$main_status"
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+  trap 'installer_exit "$?"' EXIT
+  main "$@"
 fi

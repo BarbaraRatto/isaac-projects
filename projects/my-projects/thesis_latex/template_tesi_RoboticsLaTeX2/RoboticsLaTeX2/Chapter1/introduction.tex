@@ -1,0 +1,117 @@
+\chapter{Introduzione}
+\label{chap:introduction}
+
+I robot quadrupedi offrono la possibilità di muoversi in ambienti nei quali la geometria del terreno richiede di adattare continuamente gli appoggi e il movimento del corpo. Superfici irregolari, dislivelli e passaggi con caratteristiche differenti rendono queste piattaforme interessanti per attività di ispezione ed esplorazione. I progressi nel controllo della locomozione hanno ampliato le condizioni nelle quali un quadrupede può operare, anche attraverso l'integrazione di informazioni propriocettive ed esterocettive~\citep{Miki2022Perceptive}. Per sfruttare queste capacità in una missione autonoma occorre, inoltre, decidere come raggiungere una destinazione e quali regioni dell'ambiente attraversare.
+
+La navigazione introduce quindi scelte che riguardano sia la direzione del movimento sia il modo in cui il robot avanza. Due percorsi che conducono allo stesso obiettivo possono differire per lunghezza, caratteristiche delle superfici e velocità di attraversamento. Il loro costo dipende dall'interazione fra terreno, robot e controllore: una regione percorribile può richiedere uno sforzo meccanico elevato, mentre una deviazione può offrire condizioni di avanzamento più favorevoli. Per una piattaforma alimentata a batteria, valutare queste differenze è rilevante per l'autonomia della missione.
+
+Il lavoro presentato in questa tesi affronta il problema della navigazione con attenzione al costo energetico sulla piattaforma quadrupede Spot. Si propone di apprendere, mediante \emph{reinforcement learning} (RL), una strategia che utilizzi la percezione dell'ambiente e il feedback del robot per scegliere i comandi di movimento verso un obiettivo assegnato. L'interesse è rivolto all'associazione fra ciò che il robot osserva davanti a sé e il costo che sperimenta durante l'attraversamento, affinché tale esperienza possa orientare le decisioni successive.
+
+Il capitolo introduce il problema e la domanda di ricerca, ne discute le motivazioni e precisa le assunzioni del lavoro. Presenta quindi i contributi metodologici e l'organizzazione del manoscritto. I dettagli della rappresentazione percettiva, del controllo e dell'addestramento sono sviluppati nei capitoli successivi.
+
+\section{Definizione del problema e domanda di ricerca}
+\label{sec:intro-problema}
+
+Si considera un robot quadrupede al quale viene assegnata una posizione obiettivo, indicata nel seguito anche con il termine \emph{goal}. Il robot deve raggiungerla muovendosi in un ambiente composto da superfici con proprietà geometriche e fisiche differenti. La strategia di navigazione deve determinare i comandi di avanzamento e rotazione in modo da tenere conto del costo energetico del movimento, insieme alla necessità di completare il compito entro le condizioni operative previste.
+
+In questo contesto, il percorso seguito dal robot emerge dalla sequenza dei comandi impartiti durante la missione. La scelta della velocità è parte dello stesso problema: modifica la durata dell'attraversamento e la risposta del controllore alle caratteristiche della superficie. Di conseguenza, la convenienza energetica di un tragitto deve essere valutata insieme al comportamento del robot lungo quel tragitto. La semplice distanza fra partenza e destinazione non descrive tutte le conseguenze di una decisione di navigazione.
+
+L'architettura adottata separa due livelli di controllo. Un controllore locomotorio preaddestrato gestisce il movimento delle zampe, mentre una \emph{policy} di navigazione, ossia una regola di decisione appresa, produce i comandi di velocità destinati a tale controllore. Questa distinzione permette di studiare il contributo delle scelte di navigazione mantenendo fissata la componente responsabile della locomozione. Il rapporto fra architetture gerarchiche e approcci che apprendono congiuntamente navigazione e movimento articolare costituisce un tema della letteratura sui robot a zampe~\citep{Rudin2022Advanced}.
+
+Le decisioni utilizzano due gruppi di informazioni complementari. Le informazioni \emph{esterocettive}, acquisite mediante una camera RGB-D montata sul robot, descrivono l'aspetto e la geometria delle regioni osservate. Le informazioni \emph{propriocettive} descrivono invece lo stato e il movimento del robot; fra queste assume un ruolo centrale il segnale di potenza derivato dalle coppie e dalle velocità articolari. La visione consente di osservare una regione prima di raggiungerla, mentre le misure raccolte durante il moto forniscono un riscontro sull'interazione effettiva con il terreno. L'associazione fra immagini e misure di interazione è stata utilizzata anche per apprendere proprietà del terreno rilevanti per la navigazione~\citep{Wellhausen2019Where}.
+
+Nel sistema proposto, le immagini sono elaborate mediante DINOv2, un modello visivo preaddestrato con apprendimento auto-supervisionato~\citep{Oquab2023DINOv2}. Le feature estratte, cioè descrittori numerici dell'informazione visiva, vengono integrate con informazioni geometriche in una rappresentazione spaziale locale. La policy riceve questa rappresentazione insieme al goal relativo e allo stato del robot. L'apprendimento deve quindi stabilire in quale modo le informazioni disponibili possano guidare scelte favorevoli rispetto al costo energetico, senza richiedere alla policy una classificazione esplicita dei materiali.
+
+La conoscenza dell'ambiente rimane limitata alle regioni osservate e alle informazioni conservate dalle osservazioni precedenti. Un goal distante può trovarsi oltre il campo visivo della camera e il robot può incontrare condizioni che non erano riconoscibili all'inizio della missione. La decisione viene pertanto aggiornata durante il movimento sulla base di una conoscenza parziale dell'ambiente.
+
+La domanda di ricerca che guida il lavoro è la seguente:
+
+\begin{quote}
+\emph{In quale misura una policy di navigazione che combina rappresentazioni visive locali e feedback propriocettivo riesce a ridurre il lavoro meccanico necessario per raggiungere un obiettivo, mantenendo un adeguato tasso di successo, rispetto a strategie di riferimento?}
+\end{quote}
+
+Questa domanda richiede di valutare congiuntamente il completamento della missione e il costo del movimento. Un consumo inferiore ottenuto interrompendo il percorso o rinunciando a raggiungere il goal non soddisfa l'obiettivo del lavoro. Analogamente, una preferenza sistematica per una determinata superficie deve essere confrontata con l'energia effettivamente richiesta per attraversare l'intero percorso. La Figura~\ref{fig:intro-scelta-percorso} illustra il tipo di scelta considerato.
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{%
+        \begin{minipage}[c][0.19\textheight][c]{0.88\linewidth}
+            \centering
+            \textbf{Segnaposto per la figura concettuale}\par\medskip
+            Spot, posizione iniziale e goal su un ambiente con superfici differenti.\par\smallskip
+            Rappresentare due percorsi alternativi e il campo visivo locale della camera.\par\smallskip
+            Evidenziare che lunghezza del percorso e costo energetico\newline
+            sono criteri distinti, senza riportare risultati numerici.
+        \end{minipage}%
+    }
+    \caption{Schema concettuale della navigazione con attenzione al costo energetico. Il robot sceglie i comandi di movimento verso il goal utilizzando la percezione locale e il feedback raccolto durante l'attraversamento. La convenienza dei percorsi dipende sia dalle superfici incontrate sia dal movimento eseguito.}
+    \label{fig:intro-scelta-percorso}
+\end{figure}
+
+\section{Motivazioni}
+\label{sec:intro-motivazioni}
+
+Una prima motivazione riguarda la possibilità di agire sul costo della missione attraverso decisioni prese a livello di navigazione. L'efficienza energetica dei quadrupedi può essere studiata intervenendo sulle andature e sul controllo articolare: ad esempio, la minimizzazione dell'energia meccanica è stata impiegata come principio per apprendere comportamenti locomotori~\citep{Fu2022Gaits}. In questa tesi l'attenzione è rivolta alle decisioni che restano disponibili una volta scelto il controllore di locomozione: dove dirigersi e a quale velocità procedere. Anche con lo stesso controllore, tragitti differenti espongono il robot a diverse sequenze di interazioni con il terreno.
+
+Una seconda motivazione riguarda il significato della \emph{traversabilità}. Sapere se una regione può essere attraversata è essenziale per la navigazione, ma il completamento dell'attraversamento non ne esaurisce la descrizione. Fra più alternative percorribili possono esistere differenze di sforzo, durata e difficoltà di controllo. Il costo energetico offre un criterio legato al comportamento del sistema robotico e consente di formulare una preferenza fra alternative che soddisfano entrambe il requisito di raggiungibilità.
+
+La percezione geometrica contribuisce a riconoscere dislivelli e irregolarità, mentre l'aspetto visivo può fornire ulteriori indizi sulle caratteristiche delle superfici. La relazione fra questi indizi e il costo del movimento deve però essere riferita al robot che esegue il compito. L'esperienza di attraversamento costituisce quindi una fonte di informazione utile per dare significato operativo alle osservazioni. Questo orientamento è presente nei lavori che apprendono la traversabilità da immagini e interazioni, anche utilizzando feature visive preaddestrate e supervisione generata durante il funzionamento del robot~\citep{Mattamala2025Wild}.
+
+L'utilizzo di rappresentazioni visive senza classi esplicite permette di studiare tale relazione senza definire preliminarmente un costo fisso per ciascuna categoria di terreno. Nel progetto, l'informazione fornita alla policy descrive le regioni osservate attraverso feature e geometria; l'obiettivo energetico viene introdotto tramite il feedback del movimento e la funzione di ricompensa. Questa scelta lascia all'apprendimento il compito di individuare le associazioni utili alle decisioni. La loro efficacia deve essere verificata sperimentalmente: la disponibilità di descrittori visivi non garantisce, da sola, che la policy utilizzi l'informazione rilevante per il consumo.
+
+Il reinforcement learning è impiegato perché permette di valutare le azioni attraverso le conseguenze accumulate durante la missione. Una deviazione può richiedere un allontanamento temporaneo dalla direzione del goal e risultare conveniente solo considerando il costo dei tratti successivi. Attraverso l'interazione con l'ambiente simulato, la policy viene addestrata a bilanciare progresso, energia e completamento del compito. Questa impostazione rende centrale la progettazione della ricompensa, poiché i termini utilizzati devono mantenere coerenti l'incentivo a muoversi e quello a contenere il costo.
+
+Il collegamento fra energia, percezione e decisione ha precedenti diretti. \citet{Gan2022Energy} affrontano l'apprendimento di una rappresentazione della traversabilità con informazioni esterocettive e propriocettive, utilizzando anche un ordinamento energetico delle traiettorie nell'inverse reinforcement learning. \citet{Zhang2026Traversability} studiano invece la navigazione appresa da dati RGB-D reali con una valutazione della traversabilità legata al controllore. Questi lavori motivano l'analisi del rapporto fra ciò che il robot osserva e il costo della sua interazione con l'ambiente. La presente tesi studia questo rapporto attraverso una policy di navigazione addestrata in simulazione, con un costo meccanico ricavato durante il moto e una rappresentazione visiva locale che non fornisce categorie di terreno alla policy.
+
+\section{Assunzioni e vincoli}
+\label{sec:intro-vincoli}
+
+Il primo vincolo riguarda il livello di controllo. Il controllore locomotorio rimane fissato durante l'apprendimento della navigazione e la policy ne utilizza i comandi di velocità disponibili. Le scelte apprese dipendono quindi dalle capacità e dalla risposta di questo controllore. Un percorso conveniente per il sistema considerato potrebbe avere un costo diverso con un'altra strategia locomotoria, un diverso robot o differenti condizioni operative. I risultati devono essere interpretati rispetto alla piattaforma e al controllore adottati.
+
+Il secondo vincolo riguarda l'informazione disponibile. La policy conosce la posizione relativa del goal, ma non riceve un percorso globale già risolto o una mappa completa dei costi energetici. La rappresentazione dell'ambiente è costruita a partire dalla camera e dalle osservazioni conservate durante la missione. Le regioni mai osservate non possono essere valutate con la stessa informazione delle regioni già percepite. L'obiettivo è quindi migliorare le decisioni in presenza di informazione locale; il metodo non fornisce una garanzia di minimo energetico globale fra tutti i percorsi possibili.
+
+La memoria delle osservazioni e l'apprendimento della policy svolgono ruoli distinti. La prima conserva informazioni visive e geometriche raccolte nell'episodio, permettendo di utilizzare anche regioni momentaneamente fuori dal campo visivo. L'associazione fra queste informazioni e le azioni viene invece appresa attraverso gli aggiornamenti dei parametri durante l'addestramento. Nell'esecuzione di una policy congelata, la disponibilità di nuove osservazioni e di un segnale di potenza recente modifica l'ingresso della rete, senza implicare un aggiornamento online dei suoi pesi. La memoria spaziale implementata non contiene una tabella esplicita dei consumi associati ai diversi materiali.
+
+Il costo energetico richiede una definizione operativa precisa. In simulazione, il sistema utilizza le coppie e le velocità articolari per calcolare la somma dei valori assoluti delle potenze dei giunti e integrarla nel tempo. La grandezza ottenuta rappresenta il \emph{lavoro meccanico assoluto ai giunti}. Nel seguito, i riferimenti al costo energetico del metodo sono intesi rispetto a questa misura, salvo diversa indicazione. Essa attribuisce un contributo anche al lavoro meccanico negativo attraverso il suo valore assoluto e non corrisponde direttamente all'energia prelevata dalla batteria. Rendimento degli attuatori, perdite elettriche e alimentazione dei componenti di bordo richiederebbero una caratterizzazione ulteriore. Il suo impiego permette di studiare il costo del movimento simulato con una misura definita e riproducibile.
+
+L'addestramento è svolto in ambienti simulati contenenti tipologie di terreno con caratteristiche geometriche e fisiche differenti. La varietà delle superfici permette di esporre la policy a interazioni diverse, ma la simulazione rimane una rappresentazione delle condizioni reali. Materiali, contatti e risposta dei sensori dipendono dai modelli adottati. Inoltre, la costruzione della memoria spaziale utilizza la posa disponibile nel simulatore; la robustezza a errori di localizzazione e deriva odometrica costituisce una proprietà da verificare separatamente.
+
+L'assenza di classificazione esplicita riguarda gli ingressi e il funzionamento della policy di navigazione. L'identità delle superfici può essere nota nella preparazione degli ambienti, nella calibrazione o nell'analisi dei risultati, senza essere fornita alla policy come categoria o costo assegnato al materiale. Analogamente, eventuali informazioni privilegiate impiegate durante l'addestramento dalle reti che stimano il valore delle decisioni, dette \emph{critic}, devono essere distinte dalle osservazioni necessarie alla policy durante l'esecuzione. Queste scelte sono documentate nella metodologia per precisare quali informazioni sostengono effettivamente le decisioni.
+
+Infine, il costo del movimento viene considerato insieme al successo della navigazione e alla durata della missione. Il sistema deve evitare che la riduzione dell'energia si traduca nell'inattività del robot o nel mancato raggiungimento dell'obiettivo. La valutazione deve pertanto specificare le condizioni di confronto e considerare anche gli episodi falliti. L'esecuzione su nuove missioni in una mappa nota, il comportamento su nuove disposizioni del terreno e il trasferimento alla piattaforma reale rappresentano verifiche differenti, da distinguere nell'interpretazione dei risultati.
+
+\section{Contributi della tesi}
+\label{sec:intro-contributi}
+
+Il lavoro sviluppa un sistema per studiare l'impiego congiunto di percezione visiva e feedback energetico nella navigazione di Spot. I contributi metodologici si articolano nei seguenti punti:
+
+\begin{enumerate}
+    \item \textbf{Architettura di navigazione con obiettivo energetico.}
+    Viene realizzata una policy che produce comandi di velocità verso un goal assegnato, utilizzando un controllore locomotorio preaddestrato. L'architettura permette di intervenire sulle scelte di tragitto e velocità mantenendo fissata la componente di controllo delle zampe e rendendo esplicito il collegamento fra decisioni di navigazione e costo del movimento.
+
+    \item \textbf{Rappresentazione locale dell'ambiente con memoria delle osservazioni.}
+    Le feature visive estratte mediante DINOv2 vengono integrate con descrittori geometrici in una gridmap locale. La rappresentazione conserva informazioni raccolte durante l'episodio e ne descrive la disponibilità, così da fornire alla policy il contesto osservato senza richiedere categorie esplicite dei terreni come ingressi.
+
+    \item \textbf{Integrazione del feedback meccanico nell'apprendimento.}
+    La stima della potenza articolare viene utilizzata per definire il costo del movimento e un segnale propriocettivo fornito alla policy. La procedura di reinforcement learning collega questo feedback al raggiungimento dell'obiettivo, consentendo di studiare il compromesso fra energia, progresso e completamento della missione.
+
+    \item \textbf{Ambiente di simulazione e strumenti per l'analisi delle decisioni.}
+    Vengono predisposti scenari con percorsi alternativi, comprendenti configurazioni speculari e un ambiente più esteso, insieme a strumenti per registrare traiettorie, esiti ed energia. Questa impostazione permette di esaminare le scelte della policy e confrontarle con il costo effettivamente osservato, distinguendo la preferenza per un percorso dal conseguimento di un risparmio energetico.
+\end{enumerate}
+
+Questi contributi riguardano la progettazione e l'integrazione del sistema e degli strumenti necessari a valutarlo. L'entità dell'eventuale riduzione energetica, il mantenimento del tasso di successo e la capacità di operare in condizioni diverse da quelle di addestramento sono oggetto della valutazione sperimentale. Le conclusioni sul comportamento della policy devono quindi essere ricavate dai confronti presentati, tenendo conto delle assunzioni appena discusse.
+
+% Revisione finale: allineare i contributi alle configurazioni selezionate e
+% alle evidenze effettivamente riportate nel capitolo 4. Integrare l'eventuale
+% validazione reale solo dopo lo svolgimento e l'analisi degli esperimenti.
+
+\section{Organizzazione del manoscritto}
+\label{sec:intro-organizzazione}
+
+Il manoscritto è organizzato in cinque capitoli. Dopo questa introduzione, il Capitolo~\ref{chap:state-of-the-art} presenta lo stato dell'arte sulla navigazione dei robot a zampe, sulle rappresentazioni del terreno e sull'apprendimento delle proprietà di attraversamento dall'esperienza. Discute gli approcci all'efficienza energetica e introduce i fondamenti di reinforcement learning necessari alla comprensione del lavoro. Il confronto fra i contributi più vicini permette di collocare le scelte della tesi nel contesto della letteratura.
+
+Il Capitolo~\ref{chap:methodology} descrive il metodo sviluppato. A partire dalla formulazione del problema e dalla piattaforma robotica, illustra l'architettura complessiva, la stima del costo energetico, l'elaborazione dei dati RGB-D e la memoria dell'ambiente. Presenta quindi osservazioni, azioni, ricompensa, architetture delle reti e procedura di addestramento, chiarendo il rapporto fra training ed esecuzione della policy.
+
+Il Capitolo~\ref{chap:experiments} è dedicato alla valutazione sperimentale. Definisce le condizioni dei confronti e affronta la caratterizzazione del costo dei terreni, l'analisi della rappresentazione visiva e il comportamento della navigazione negli scenari considerati. La discussione collega traiettorie, energia ed esiti delle missioni, includendo l'analisi dei casi di fallimento. Le eventuali prove sulla piattaforma reale vengono trattate distinguendo le misure disponibili e le condizioni di esecuzione da quelle simulate.
+
+Il Capitolo~\ref{chap:conclusions} riprende infine la domanda di ricerca e sintetizza i contributi alla luce delle evidenze sperimentali. Discute i limiti del metodo e della validazione e individua gli sviluppi futuri motivati dai risultati.

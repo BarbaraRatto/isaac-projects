@@ -1,5 +1,6 @@
 """CPU float32 ring buffer of raw observations; no duplicated actor in critic storage."""
 import os
+import zipfile
 from pathlib import Path
 import numpy as np
 import torch
@@ -7,20 +8,29 @@ from train_general_big_map_test9_SAC.config import OBSERVATION_SIZE, PRIVILEGED_
 
 
 class ReplayBuffer:
-    def __init__(self, capacity):
+    def __init__(self, capacity, device='cpu', tensor_storage=None):
         if capacity < 1:
             raise ValueError('Replay capacity must be positive')
         self.capacity = int(capacity)
+        self.device = torch.device(device)
+        self.tensor_storage = self.device.type == 'cuda' if tensor_storage is None else tensor_storage
+        if self.device.type != 'cpu' and not self.tensor_storage:
+            raise ValueError('Non-CPU replay requires tensor storage')
         self.size = self.position = self.total = 0
         shapes = dict(actor=(OBSERVATION_SIZE,), privileged=(PRIVILEGED_SIZE,),
                       next_actor=(OBSERVATION_SIZE,), next_privileged=(PRIVILEGED_SIZE,),
                       actions=(2,), rewards=(), terminals=())
-        self.arrays = {key: np.empty((self.capacity, *shape), dtype=np.bool_ if key == 'terminals' else np.float32)
-                       for key, shape in shapes.items()}
+        self.arrays = {
+            key: (torch.empty((self.capacity, *shape), device=self.device,
+                              dtype=torch.bool if key == 'terminals' else torch.float32)
+                  if self.tensor_storage else np.empty((self.capacity, *shape),
+                                               dtype=np.bool_ if key == 'terminals' else np.float32))
+            for key, shape in shapes.items()}
 
     @property
     def nbytes(self):
-        return sum(array.nbytes for array in self.arrays.values())
+        return sum(array.numel()*array.element_size() if isinstance(array, torch.Tensor) else array.nbytes
+                   for array in self.arrays.values())
 
     def add(self, actor, critic, actions, rewards, terminals, next_actor, next_critic):
         values = dict(actor=actor, privileged=critic[:, OBSERVATION_SIZE:], actions=actions,
@@ -31,14 +41,19 @@ class ReplayBuffer:
             raise ValueError('Replay insertion size out of range')
         if critic.shape != (count, CRITIC_SIZE) or next_critic.shape != (count, CRITIC_SIZE):
             raise ValueError('Critic observation size mismatch')
+        finite = []
         for key, value in values.items():
-            value = value.detach().cpu().numpy() if isinstance(value, torch.Tensor) else np.asarray(value)
+            value = (torch.as_tensor(value, device=self.device).detach() if self.tensor_storage else
+                     value.detach().cpu().numpy() if isinstance(value, torch.Tensor) else np.asarray(value))
             if value.shape != (count, *self.arrays[key].shape[1:]):
                 raise ValueError(f'Replay shape mismatch: {key}')
-            if key != 'terminals' and not np.isfinite(value).all():
-                raise ValueError(f'Non-finite replay data: {key}')
+            if key != 'terminals':
+                finite.append(torch.isfinite(value).all() if self.tensor_storage else np.isfinite(value).all())
             values[key] = value
-        ids = (np.arange(count) + self.position) % self.capacity
+        if not (bool(torch.stack(finite).all()) if self.tensor_storage else all(finite)):
+            raise ValueError('Non-finite replay data')
+        ids = ((torch.arange(count, device=self.device) if self.tensor_storage else np.arange(count))
+               + self.position) % self.capacity
         for key, value in values.items():
             self.arrays[key][ids] = value
         self.position = (self.position + count) % self.capacity
@@ -48,7 +63,8 @@ class ReplayBuffer:
     def sample(self, count, device):
         if not self.size:
             raise ValueError('Cannot sample an empty replay')
-        ids = np.random.randint(self.size, size=count)
+        ids = (torch.randint(self.size, (count,), device=self.device) if self.tensor_storage else
+               np.random.randint(self.size, size=count))
         batch = {key: torch.as_tensor(value[ids], device=device) for key, value in self.arrays.items()}
         batch['critic'] = torch.cat((batch['actor'], batch.pop('privileged')), dim=1)
         batch['next_critic'] = torch.cat((batch['next_actor'], batch.pop('next_privileged')), dim=1)
@@ -59,8 +75,24 @@ class ReplayBuffer:
         path = Path(path)
         temporary = path.with_suffix('.tmp')
         with temporary.open('wb') as stream:
-            np.savez(stream, capacity=self.capacity, size=self.size, position=self.position, total=self.total,
-                     **{key: value[:self.size] for key, value in self.arrays.items()})
+            # Same .npz schema as before. Stream one small GPU chunk at a time;
+            # never mirror the whole replay in RAM during recovery snapshots.
+            with zipfile.ZipFile(stream, 'w', compression=zipfile.ZIP_STORED, allowZip64=True) as archive:
+                for key, value in dict(capacity=self.capacity, size=self.size,
+                                       position=self.position, total=self.total).items():
+                    with archive.open(key+'.npy', 'w', force_zip64=True) as member:
+                        np.lib.format.write_array(member, np.asarray(value), allow_pickle=False)
+                for key, value in self.arrays.items():
+                    dtype = np.dtype(np.bool_ if key == 'terminals' else np.float32)
+                    with archive.open(key+'.npy', 'w', force_zip64=True) as member:
+                        np.lib.format.write_array_header_1_0(member, dict(
+                            descr=np.lib.format.dtype_to_descr(dtype), fortran_order=False,
+                            shape=(self.size, *value.shape[1:])))
+                        for start in range(0, self.size, 1024):
+                            chunk = value[start:min(start+1024, self.size)]
+                            if isinstance(chunk, torch.Tensor):
+                                chunk = chunk.cpu().numpy()
+                            member.write(np.ascontiguousarray(chunk).tobytes())
             stream.flush()
             os.fsync(stream.fileno())
         temporary.replace(path)
@@ -74,9 +106,15 @@ class ReplayBuffer:
                 raise ValueError('Invalid replay metadata')
             for key, value in self.arrays.items():
                 data = stored[key]
-                if data.shape != value[:size].shape or data.dtype != value.dtype:
+                expected_dtype = np.dtype(np.bool_ if key == 'terminals' else np.float32)
+                if data.shape != value[:size].shape or data.dtype != expected_dtype:
                     raise ValueError(f'Replay snapshot shape/dtype mismatch: {key}')
-                value[:size] = data
+                if self.tensor_storage:
+                    for start in range(0, size, 1024):
+                        value[start:min(start+1024, size)] = torch.as_tensor(
+                            data[start:min(start+1024, size)], device=self.device)
+                else:
+                    value[:size] = data
             self.size, self.position, self.total = size, position, total
 
 

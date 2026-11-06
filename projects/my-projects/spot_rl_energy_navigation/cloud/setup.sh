@@ -163,11 +163,17 @@ if [[ "$SKIP_PROBE" == 0 ]]; then
     echo '[INFO] Simulator probe: cameras, physics, DINO; no learning updates.'
     echo '[INFO] On first launch, read and accept the NVIDIA license when prompted.'
     echo '[INFO] Extension/shader initialization can take several minutes.'
-    PROBE_ARGS=(--probe-steps 2)
-    if [[ "$EXPERIMENT" == train_general_big_map_test9_SAC ]]; then
-        PROBE_ARGS+=(--num-envs 2)
+    if [[ "$EXPERIMENT" == train_general_big_map_test10_SAC ]]; then
+        # Bypass train.sh: frozen scalers are calibrated only at the first real
+        # training launch. This checks sensors/physics without fitting them.
+        bash "$HERE/run.sh" --python "$HERE/../$EXPERIMENT/probe_env.py" --headless --device cuda:0
+    else
+        PROBE_ARGS=(--probe-steps 2)
+        if [[ "$EXPERIMENT" == train_general_big_map_test9_SAC ]]; then
+            PROBE_ARGS+=(--num-envs 2)
+        fi
+        bash "$HERE/run.sh" "$EXPERIMENT" "${PROBE_ARGS[@]}"
     fi
-    bash "$HERE/run.sh" "$EXPERIMENT" "${PROBE_ARGS[@]}"
     touch "$RUNTIME/simulator-probe.ok"
     echo '[OK] Setup and simulator probe completed.'
 else

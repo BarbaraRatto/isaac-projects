@@ -1,0 +1,111 @@
+{
+  "arguments": {
+    "speeds": [
+      0.9
+    ],
+    "repeats": 5,
+    "distance": 6.0,
+    "approach": 1.0,
+    "settle_seconds": 2.0,
+    "output": null,
+    "headless": false,
+    "livestream": -1,
+    "enable_cameras": false,
+    "xr": false,
+    "device": "cuda:0",
+    "cpu": false,
+    "verbose": false,
+    "info": false,
+    "experience": "",
+    "rendering_mode": null,
+    "kit_args": "",
+    "anim_recording_enabled": false,
+    "anim_recording_start_time": 0,
+    "anim_recording_stop_time": 10,
+    "device_explicit": true
+  },
+  "terrain": {
+    "schema": 1,
+    "materials": {
+      "grey": {
+        "label": "Grigio chiaro, fisica come asfalto",
+        "color_srgb": [
+          0.82,
+          0.83,
+          0.81
+        ],
+        "static_friction": 1.0,
+        "dynamic_friction": 0.8,
+        "restitution": 0.0,
+        "roughness": 0.85
+      },
+      "green": {
+        "label": "Verde erba chiaro, attrito ridotto",
+        "color_srgb": [
+          0.62,
+          0.8,
+          0.35
+        ],
+        "static_friction": 0.3,
+        "dynamic_friction": 0.2,
+        "restitution": 0.0,
+        "roughness": 0.85
+      }
+    },
+    "friction_combine_mode": "average",
+    "unit_cell_m": [
+      3,
+      3
+    ],
+    "comparison_size_m": [
+      12,
+      6
+    ],
+    "surface_top_z_m": 0.0,
+    "future_training_map": {
+      "size_m": [
+        15,
+        15
+      ],
+      "rows": 5,
+      "cols": 5,
+      "green_cells": 8,
+      "grey_cells": 17,
+      "layout": "not generated yet; mix isolated and adjacent green cells"
+    },
+    "manual_spawns": {
+      "grey": [
+        0,
+        0,
+        0.75
+      ],
+      "green": [
+        0,
+        0,
+        0.75
+      ],
+      "comparison": [
+        0,
+        -1.5,
+        0.75
+      ]
+    },
+    "maps_sha256": {
+      "grey_tile.usda": "748573411285c0b09d9fe43d3a689560c480ddcf9c2c4e39fde2209b31162511",
+      "green_tile.usda": "270a767105119f5eacd0daba00aeb347307aaa6304876f6aba6040330400a2c7",
+      "grey_flat.usda": "19667a5c70a8ae0ba5672f91cc42350b189888e73f74ce2d654353f518c290ab",
+      "green_flat.usda": "5dc2f7a6fc862da8a1868dd074d676d3df5fa9b28d419f2bf7dd4de31f5c98f7",
+      "comparison.usda": "27d3128677992bfa4641fbacaa67b8e9365315bbefc15d756d2345f9c51af4cd"
+    },
+    "simulation_launched": false
+  },
+  "measurement": {
+    "physics_dt_s": 0.005,
+    "approach_m": 1.0,
+    "forward_distance_m": 6.0,
+    "power": "sum(abs(measured_joint_effort * joint_velocity))",
+    "excludes": "settling and initial approach; includes every physics step within measurement gates"
+  },
+  "robot_sha256": "79aa68380357daf3b8aea3bb93ebf71b4b7f4015dc97ecb53c286de232ef60dd",
+  "locomotion_sha256": "d95d675e8b080d5c84a2a2779d165ff7ecd3e34d24b233c083242e615a3d589a"
+}

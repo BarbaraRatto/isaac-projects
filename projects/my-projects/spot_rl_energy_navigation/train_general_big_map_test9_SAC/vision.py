@@ -12,7 +12,7 @@ from train_general_big_map_test9_SAC.memory import MapBank
 
 
 class LocalVision:
-    def __init__(self, device, pca=None, batch_size=4, model_path=None, capture=False, map_backend='cpu'):
+    def __init__(self, device, pca=None, batch_size=4, model_path=None, capture=False, map_backend='cpu', rgb_backend='opencv'):
         source = str(model_path or (LOCAL_DINO if LOCAL_DINO.is_dir() else DINO_MODEL))
         self.extractor = DinoFeatureExtractor(source, device, DINO_INPUT_SIZE)
         self.pca = pca
@@ -29,7 +29,15 @@ class LocalVision:
             self.memory = TorchMapBank(device)
         else:
             self.memory = MapBank()
-        print(f'[MAP] backend={"cuda" if self.gpu_maps else "cpu"}; RGB preprocessing=original OpenCV', flush=True)
+        if rgb_backend not in ('opencv', 'cuda') or (rgb_backend == 'cuda' and not self.gpu_maps):
+            raise ValueError('CUDA RGB requires CUDA maps and no calibration capture')
+        self.device_rgb = None
+        if rgb_backend == 'cuda':
+            from train_general_big_map_test9_SAC.fast_rgb import DeviceRGB
+            self.device_rgb = DeviceRGB(self.extractor.processor, device, DINO_INPUT_SIZE)
+        from train_general_big_map_test9_SAC.timing import PhaseTimers
+        self.timers = PhaseTimers(False, device)
+        print(f'[MAP] backend={"cuda" if self.gpu_maps else "cpu"}; RGB preprocessing={rgb_backend}', flush=True)
         self.samples = []
         self.last_ms = 0.0
         if self.extractor.feature_dim != 384:
@@ -93,25 +101,38 @@ class LocalVision:
         from train_general_big_map_test9_SAC.gpu_memory import backproject_batch
         start = time.perf_counter()
         data = camera.data
-        # Preserve exact RGB/PCA preprocessing; geometry and DINO outputs never
-        # cross back to NumPy on this path.
-        rgb = data.output['rgb'][..., :3].cpu().numpy()
+        # Device RGB uses the same fixed-point interpolation and processor LUT.
+        rgb = data.output['rgb'][..., :3]
+        if self.device_rgb is not None:
+            if not self.device_rgb.verified_real:
+                report = self.device_rgb.verify(rgb)
+                print(f'[RGB] Real-frame equivalence PASSED: {report}', flush=True)
+        else:
+            with self.timers.measure('rgb_preprocess'):
+                rgb = rgb.cpu().numpy()
         features = []
         model = self.extractor
         for first in range(0, len(rgb), self.batch_size):
-            chunk = [cv2.resize(im, (518, 518), interpolation=cv2.INTER_LINEAR)
-                     for im in rgb[first:first+self.batch_size]]
-            inputs = model.processor(images=chunk, return_tensors='pt', do_resize=False, do_center_crop=False)
-            raw = model.model(pixel_values=inputs['pixel_values'].to(model.device)).last_hidden_state[:, 1:, :]
-            compressed = (raw-self.mean) @ self.components.T if self.mean is not None else raw[..., :32]*0
+            with self.timers.measure('rgb_preprocess'):
+                if self.device_rgb is not None:
+                    pixels = self.device_rgb(rgb[first:first+self.batch_size])
+                else:
+                    chunk = [cv2.resize(im, (518, 518), interpolation=cv2.INTER_LINEAR)
+                             for im in rgb[first:first+self.batch_size]]
+                    pixels = model.processor(images=chunk, return_tensors='pt', do_resize=False,
+                                             do_center_crop=False)['pixel_values'].to(model.device)
+            with self.timers.measure('dino_pca'):
+                raw = model.model(pixel_values=pixels).last_hidden_state[:, 1:, :]
+                compressed = (raw-self.mean) @ self.components.T if self.mean is not None else raw[..., :32]*0
             features.append(compressed.float())
         features = torch.cat(features)
         depth = data.output['distance_to_image_plane'].reshape(len(rgb), 360, 640)
         args = (depth, data.intrinsic_matrices, data.pos_w, data.quat_w_ros, body_pos)
-        patches, patch_envs, patch_ids = backproject_batch(*args, patches=True)
-        dense, dense_envs, _ = backproject_batch(*args)
-        result = self.memory.observe(patches, features[patch_envs, patch_ids], patch_envs,
-                                     dense, dense_envs, base_pos, yaw, episode_times)
+        with self.timers.measure('geometry_map'):
+            patches, patch_envs, patch_ids = backproject_batch(*args, patches=True)
+            dense, dense_envs, _ = backproject_batch(*args)
+            result = self.memory.observe(patches, features[patch_envs, patch_ids], patch_envs,
+                                         dense, dense_envs, base_pos, yaw, episode_times)
         self.samples = []
         self.last_ms = (time.perf_counter()-start)*1000
         return result

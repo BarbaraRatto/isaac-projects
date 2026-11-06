@@ -1,11 +1,85 @@
 \babel@toc {english}{}\relax 
-\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Content}{1}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Basic commands}{1}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Equation}{1}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Figure}{2}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Table}{3}{section.1.5}%
-\contentsline {section}{\numberline {1.6}Algorithm}{3}{section.1.6}%
-\contentsline {chapter}{\numberline {2}Conclusions}{5}{chapter.2}%
-\contentsline {chapter}{\numberline {A}Extra}{6}{appendix.A}%
-\contentsline {chapter}{References}{7}{appendix*.3}%
+\babel@toc {italian}{}\relax 
+\contentsline {chapter}{\numberline {1}Introduzione}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Definizione del problema e domanda di ricerca}{2}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Motivazioni}{3}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Assunzioni e vincoli}{5}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Contributi della tesi}{6}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Organizzazione del manoscritto}{7}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Stato dell'arte e fondamenti}{9}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Navigazione autonoma dei robot a zampe}{10}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Architetture gerarchiche di navigazione e locomozione}{10}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Approcci integrati ed end-to-end}{10}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Traversabilit\`a e rappresentazione del terreno}{10}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Rappresentazioni geometriche e mappe di elevazione}{10}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Rappresentazioni semantiche e classificazione dei terreni}{10}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Feature visive apprese e rappresentazioni senza classi esplicite}{10}{subsection.2.2.3}%
+\contentsline {section}{\numberline {2.3}Apprendimento delle propriet\`a di attraversamento dall'esperienza}{10}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Informazioni esterocettive e propriocettive}{10}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Apprendimento auto-supervisionato dall'interazione robot--terreno}{10}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Memoria delle osservazioni e adattamento durante la navigazione}{10}{subsection.2.3.3}%
+\contentsline {section}{\numberline {2.4}Efficienza energetica nei robot a zampe}{10}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Grandezze energetiche e indicatori di efficienza}{10}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Ottimizzazione energetica della locomozione}{10}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Navigazione e pianificazione con costi energetici}{10}{subsection.2.4.3}%
+\contentsline {section}{\numberline {2.5}Reinforcement learning per la navigazione}{10}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Formulazione del problema decisionale e osservabilit\`a parziale}{10}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Apprendimento actor-critic: principi di PPO e SAC}{10}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Addestramento in simulazione e uso di informazioni privilegiate}{10}{subsection.2.5.3}%
+\contentsline {section}{\numberline {2.6}Confronto critico e collocazione del lavoro di tesi}{10}{section.2.6}%
+\contentsline {chapter}{\numberline {3}Metodologia}{11}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Formulazione del problema}{12}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Obiettivo di navigazione e costo energetico}{12}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Informazione disponibile e osservabilit\`a parziale}{12}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Assunzioni operative e vincoli}{12}{subsection.3.1.3}%
+\contentsline {section}{\numberline {3.2}Piattaforma robotica e ambiente di simulazione}{12}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Spot e controllore di locomozione}{12}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Sensori e segnali disponibili}{12}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Simulazione mediante Isaac Sim e Isaac Lab}{12}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Modellazione dei terreni e delle interazioni fisiche}{12}{subsection.3.2.4}%
+\contentsline {section}{\numberline {3.3}Architettura complessiva del sistema}{12}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Flusso delle informazioni e moduli principali}{12}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Collegamento fra policy di navigazione e controllore locomotorio}{12}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Frequenze operative e sincronizzazione}{12}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}Stima del costo energetico}{12}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Potenza meccanica articolare}{12}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Integrazione temporale del lavoro meccanico}{12}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Segnale energetico fornito alla policy e limiti della misura}{12}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Rappresentazione percettiva e memoria dell'ambiente}{12}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Acquisizione e preparazione dei dati RGB-D}{12}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Estrazione delle feature visive mediante DINOv2}{12}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Riduzione dimensionale mediante PCA}{12}{subsection.3.5.3}%
+\contentsline {subsection}{\numberline {3.5.4}Proiezione spaziale e descrittori geometrici}{12}{subsection.3.5.4}%
+\contentsline {subsection}{\numberline {3.5.5}Costruzione della gridmap locale}{12}{subsection.3.5.5}%
+\contentsline {subsection}{\numberline {3.5.6}Memoria delle osservazioni, validit\`a ed et\`a dei dati}{12}{subsection.3.5.6}%
+\contentsline {section}{\numberline {3.6}Definizione del compito di reinforcement learning}{12}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Spazio delle osservazioni}{12}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Spazio delle azioni e conversione in comandi}{12}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {3.6.3}Funzione di ricompensa}{12}{subsection.3.6.3}%
+\contentsline {subsection}{\numberline {3.6.4}Inizializzazione e condizioni di terminazione degli episodi}{12}{subsection.3.6.4}%
+\contentsline {section}{\numberline {3.7}Architettura delle reti e fusione delle informazioni}{12}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Organizzazione e normalizzazione degli ingressi}{12}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}Rete della policy e fusione delle modalit\`a}{12}{subsection.3.7.2}%
+\contentsline {subsection}{\numberline {3.7.3}Critic e informazioni privilegiate}{12}{subsection.3.7.3}%
+\contentsline {section}{\numberline {3.8}Procedura di addestramento}{12}{section.3.8}%
+\contentsline {subsection}{\numberline {3.8.1}Calibrazione dei componenti e preparazione dell'addestramento}{12}{subsection.3.8.1}%
+\contentsline {subsection}{\numberline {3.8.2}Aggiornamento delle reti mediante PPO e SAC}{12}{subsection.3.8.2}%
+\contentsline {subsection}{\numberline {3.8.3}Generazione delle missioni e curriculum}{12}{subsection.3.8.3}%
+\contentsline {subsection}{\numberline {3.8.4}Configurazioni di addestramento adottate}{12}{subsection.3.8.4}%
+\contentsline {section}{\numberline {3.9}Esecuzione della policy e integrazione sul robot}{12}{section.3.9}%
+\contentsline {subsection}{\numberline {3.9.1}Pipeline di inferenza}{12}{subsection.3.9.1}%
+\contentsline {subsection}{\numberline {3.9.2}Gestione delle osservazioni e dei comandi durante l'esecuzione}{12}{subsection.3.9.2}%
+\contentsline {subsection}{\numberline {3.9.3}Integrazione con la piattaforma reale}{12}{subsection.3.9.3}%
+\contentsline {chapter}{\numberline {4}Valutazione sperimentale e discussione}{13}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Obiettivi della valutazione e protocollo sperimentale}{13}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Caratterizzazione del costo energetico sui diversi terreni}{13}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Analisi della rappresentazione visiva dei terreni}{13}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Navigazione nello scenario con percorsi speculari}{13}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Navigazione nello scenario esteso}{13}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Esperimenti sul robot reale}{13}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Discussione complessiva dei risultati e dei casi di fallimento}{13}{section.4.7}%
+\contentsline {chapter}{\numberline {5}Conclusioni}{14}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Sintesi del lavoro e dei contributi}{14}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Limiti del metodo e della validazione}{14}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Sviluppi futuri}{14}{section.5.3}%
+\contentsline {chapter}{Bibliografia}{16}{chapter*.4}%

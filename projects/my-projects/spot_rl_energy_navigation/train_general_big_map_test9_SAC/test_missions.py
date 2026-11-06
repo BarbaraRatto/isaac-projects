@@ -129,7 +129,8 @@ def test_partial_reset_preserves_other_goals_and_robot_states():
     written={}
     e.robot=NS(write_root_state_to_sim=lambda root, ids: written.update(root=root.clone(),ids=ids.clone()),
                write_joint_state_to_sim=lambda *args, **kw: None, reset=lambda ids: None, update=lambda dt: None)
-    e.controller=NS(reset=lambda ids: None); e.vision=NS(reset=lambda ids: None)
+    from train_general_big_map_test9_SAC.timing import PhaseTimers
+    e.controller=NS(reset=lambda ids: None); e.vision=NS(reset=lambda ids: None, timers=PhaseTimers())
     e._reset_idx(torch.tensor([1]))
     assert torch.all(e.goal_w[[0,2]]==999.)
     assert e.episode_length_buf.tolist()==[50,0,50]

@@ -2,9 +2,33 @@
 from dataclasses import dataclass, asdict
 from pathlib import Path
 import numpy as np
+import math
+import torch
 from train_general_big_map_test9_SAC.config import MISSION_CFG, NAV_CFG, TERRAIN_NAMES
 
 BANK = Path(__file__).resolve().parent/'artifacts/spawn_bank.npz'
+
+
+def place_missions(root, origins, clearance, missions):
+    """Batch device placement; keep the existing NumPy sampler/RNG and missions.
+
+    Upload coordinates and yaw quaternions in ONE packed transfer, instead of
+    constructing many small CUDA tensors/scalar assignments for each robot.
+    """
+    rows = [[*m['start'][:4], *m['goal'][:4], math.cos(m['yaw']/2), math.sin(m['yaw']/2),
+             m['deadline_steps']] for m in missions]
+    if not rows:
+        return root, origins.clone(), torch.empty(0, dtype=torch.long, device=root.device)
+    data = torch.tensor(rows, dtype=root.dtype, device=root.device)
+    root[:, :2] = origins[:, :2]+data[:, :2]
+    root[:, 2] = origins[:, 2]+data[:, 3]+clearance+.02
+    root[:, 3:7] = 0
+    root[:, 3], root[:, 6] = data[:, 8], data[:, 9]
+    root[:, 7:] = 0
+    goals = origins.clone()
+    goals[:, :2] += data[:, 4:6]
+    goals[:, 2] += data[:, 7]
+    return root, goals, data[:, 10].long()
 
 @dataclass
 class Curriculum:

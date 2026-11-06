@@ -1,0 +1,20 @@
+{
+  "grey": {
+    "label": "Grigio chiaro, fisica come asfalto",
+    "color_srgb": [0.82, 0.83, 0.81],
+    "static_friction": 1.0,
+    "dynamic_friction": 0.8,
+    "restitution": 0.0,
+    "roughness": 0.85
+  },
+  "green": {
+    "label": "Verde erba chiaro, contatto cedevole e smorzato",
+    "color_srgb": [0.62, 0.80, 0.35],
+    "static_friction": 0.5,
+    "dynamic_friction": 0.3,
+    "compliant_contact_stiffness": 10000.0,
+    "compliant_contact_damping": 200.0,
+    "restitution": 0.0,
+    "roughness": 0.85
+  }
+}

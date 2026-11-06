@@ -1,9 +1,62 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{8}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
-\bibitem[{{\AA}rz{\'e}n(1999)}]{Aarzen1999}
-{\sc {\AA}rz{\'e}n, K.E.} (1999). A simple event-based {PID} controller. {\em
-  IFAC Proceedings Volumes\/}, {\bf 32}, 8687 -- 8692, 14th IFAC World Congress
-  1999, Beijing, Chia, 5-9 July.
+\bibitem[{Fu {\em et~al.\/}(2022)Fu, Kumar, Malik \& Pathak}]{Fu2022Gaits}
+{\sc Fu, Z., Kumar, A., Malik, J. \& Pathak, D.} (2022). {Minimizing Energy
+  Consumption Leads to the Emergence of Gaits in Legged Robots}. In {\em
+  Conference on Robot Learning\/}, vol. 164 of {\em Proceedings of Machine
+  Learning Research\/}, 928--937, PMLR.
+
+\bibitem[{Gan {\em et~al.\/}(2022)Gan, Grizzle, Eustice \&
+  Ghaffari}]{Gan2022Energy}
+{\sc Gan, L., Grizzle, J.W., Eustice, R.M. \& Ghaffari, M.} (2022).
+  {Energy-Based Legged Robots Terrain Traversability Modeling via Deep Inverse
+  Reinforcement Learning}. {\em IEEE Robotics and Automation Letters\/}, {\bf
+  7}, 8807--8814.
+
+\bibitem[{Mattamala {\em et~al.\/}(2025)Mattamala, Frey, Libera, Chebrolu,
+  Martius, Cadena, Hutter \& Fallon}]{Mattamala2025Wild}
+{\sc Mattamala, M., Frey, J., Libera, P., Chebrolu, N., Martius, G., Cadena,
+  C., Hutter, M. \& Fallon, M.} (2025). {Wild visual navigation: fast
+  traversability learning via pre-trained models and online self-supervision}.
+  {\em Autonomous Robots\/}, {\bf 49}, 19.
+
+\bibitem[{Miki {\em et~al.\/}(2022)Miki, Lee, Hwangbo, Wellhausen, Koltun \&
+  Hutter}]{Miki2022Perceptive}
+{\sc Miki, T., Lee, J., Hwangbo, J., Wellhausen, L., Koltun, V. \& Hutter, M.}
+  (2022). {Learning robust perceptive locomotion for quadrupedal robots in the
+  wild}. {\em Science Robotics\/}, {\bf 7}, eabk2822.
+
+\bibitem[{Oquab {\em et~al.\/}(2023)Oquab, Darcet, Moutakanni, Vo, Szafraniec,
+  Khalidov, Fernandez, Haziza, Massa, El-Nouby, Howes, Huang, Xu, Sharma, Li,
+  Galuba, Rabbat, Assran, Ballas, Synnaeve, Misra, Jegou, Mairal, Labatut,
+  Joulin \& Bojanowski}]{Oquab2023DINOv2}
+{\sc Oquab, M., Darcet, T., Moutakanni, T., Vo, H.V., Szafraniec, M., Khalidov,
+  V., Fernandez, P., Haziza, D., Massa, F., El-Nouby, A., Howes, R., Huang,
+  P.Y., Xu, H., Sharma, V., Li, S.W., Galuba, W., Rabbat, M., Assran, M.,
+  Ballas, N., Synnaeve, G., Misra, I., Jegou, H., Mairal, J., Labatut, P.,
+  Joulin, A. \& Bojanowski, P.} (2023). {DINOv2: Learning Robust Visual
+  Features without Supervision}. arXiv preprint.
+
+\bibitem[{Rudin {\em et~al.\/}(2022)Rudin, Hoeller, Bjelonic \&
+  Hutter}]{Rudin2022Advanced}
+{\sc Rudin, N., Hoeller, D., Bjelonic, M. \& Hutter, M.} (2022). {Advanced
+  Skills by Learning Locomotion and Local Navigation End-to-End}. In {\em 2022
+  IEEE/RSJ International Conference on Intelligent Robots and Systems
+  (IROS)\/}, 2497--2503.
+
+\bibitem[{Wellhausen {\em et~al.\/}(2019)Wellhausen, Dosovitskiy, Ranftl,
+  Walas, Cadena \& Hutter}]{Wellhausen2019Where}
+{\sc Wellhausen, L., Dosovitskiy, A., Ranftl, R., Walas, K., Cadena, C. \&
+  Hutter, M.} (2019). {Where Should I Walk? Predicting Terrain Properties From
+  Images Via Self-Supervised Learning}. {\em IEEE Robotics and Automation
+  Letters\/}, {\bf 4}, 1509--1516.
+
+\bibitem[{Zhang {\em et~al.\/}(2026)Zhang, Li, Zeng, Smith, Stachowicz, Shah,
+  Yue, Song, Xia, Levine, Sreenath \& Liu}]{Zhang2026Traversability}
+{\sc Zhang, H., Li, Z., Zeng, X., Smith, L., Stachowicz, K., Shah, D., Yue, L.,
+  Song, Z., Xia, W., Levine, S., Sreenath, K. \& Liu, Y.h.} (2026).
+  {Traversability-Aware Legged Navigation by Learning From Real-World Visual
+  Data}. {\em IEEE Transactions on Robotics\/}, {\bf 42}, 400--417.
 
 \end{thebibliography}
