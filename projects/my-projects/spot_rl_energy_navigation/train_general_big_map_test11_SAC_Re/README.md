@@ -132,6 +132,10 @@ non riutilizzano i punti del vecchio test10. Piano e coordinate sono in
 `artifacts/missions_9.md` e `artifacts/missions_9.json`.
 Salva percorsi, start, goal, energia ed esiti in una nuova cartella `results/`.
 Non avvia apprendimento, aggiornamento scaler o calibrazione PCA.
+Se la run è una ripresa che non ha migliorato la best precedente, la selezione
+risale alla run originaria e usa quel checkpoint, controllando configurazione
+e asset. Le nuove run interrotte e incomplete vengono ignorate; nessun modello
+viene sovrascritto o sostituito con quello avviato per errore.
 
 `test.sh` seleziona la **policy best della run completata più recente**:
 

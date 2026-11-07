@@ -15,19 +15,7 @@ for arg in "$@"; do
 done
 GENERAL_MAP_CHECKPOINT_ARGS=()
 if [[ "$GENERAL_MAP_AUTO_CHECKPOINT" == 1 ]]; then
-    GENERAL_MAP_CHECKPOINT=""
-    for candidate in "$GENERAL_MAP_DIR"/runs/*/policy_final.pt; do
-        [[ -f "$candidate" ]] || continue
-        if [[ -z "$GENERAL_MAP_CHECKPOINT" || "$candidate" -nt "$GENERAL_MAP_CHECKPOINT" ]]; then
-            GENERAL_MAP_CHECKPOINT="$candidate"
-        fi
-    done
-    if [[ -z "$GENERAL_MAP_CHECKPOINT" ]]; then
-        echo 'Nessun policy_final.pt trovato nel test11 SAC Re. Attendi la fine del training oppure indica --checkpoint /percorso/policy_latest.pt.' >&2
-        exit 1
-    fi
-    GENERAL_MAP_CHECKPOINT="$(dirname -- "$GENERAL_MAP_CHECKPOINT")/policy_best.pt"
-    [[ -f "$GENERAL_MAP_CHECKPOINT" ]] || { echo "Policy best mancante: $GENERAL_MAP_CHECKPOINT" >&2; exit 1; }
+    GENERAL_MAP_CHECKPOINT="$(python3 "$GENERAL_MAP_DIR/select_checkpoint.py" --runs-root "$GENERAL_MAP_DIR/runs")"
     GENERAL_MAP_CHECKPOINT_ARGS=(--checkpoint "$GENERAL_MAP_CHECKPOINT")
     echo "[TEST11_SAC_RE] Modello selezionato: $GENERAL_MAP_CHECKPOINT"
 fi

@@ -22,22 +22,7 @@ while [[ $# -gt 0 ]]; do
 done
 LAB_CHECKPOINT_ARGS=()
 if [[ "$LAB_EXPLICIT_CHECKPOINT" == 0 ]]; then
-    LAB_FINAL=""
-    if [[ -f "$LAB_RUNS_ROOT/latest_run.txt" ]]; then
-        LAB_LATEST="$(cat "$LAB_RUNS_ROOT/latest_run.txt")"
-        [[ -f "$LAB_LATEST/policy_final.pt" ]] || {
-            echo 'Latest run has no policy_final.pt yet. Wait for completion or supply --checkpoint.' >&2; exit 1;
-        }
-        LAB_FINAL="$LAB_LATEST/policy_final.pt"
-    else
-        for candidate in "$LAB_RUNS_ROOT"/*/policy_final.pt; do
-            [[ -f "$candidate" ]] || continue
-            if [[ -z "$LAB_FINAL" || "$candidate" -nt "$LAB_FINAL" ]]; then LAB_FINAL="$candidate"; fi
-        done
-    fi
-    [[ -n "$LAB_FINAL" ]] || { echo 'No completed run found. Supply --checkpoint or --runs-root.' >&2; exit 1; }
-    LAB_BEST="$(dirname -- "$LAB_FINAL")/policy_best.pt"
-    [[ -f "$LAB_BEST" ]] || { echo "Missing checkpoint: $LAB_BEST" >&2; exit 1; }
+    LAB_BEST="$(python3 "$LAB_TEST_DIR/select_checkpoint.py" --runs-root "$LAB_RUNS_ROOT")"
     LAB_CHECKPOINT_ARGS=(--checkpoint "$LAB_BEST")
     echo "[TEST11_RE_9] Selected policy: $LAB_BEST"
 fi

@@ -51,3 +51,20 @@ open(os.environ['ARGS_LOG'],'w').write(json.dumps(sys.argv[1:]))
     assert args[max(i for i,x in enumerate(args) if x=='--num-envs')+1]=='1'
     assert Path(args[args.index('--mission-suite')+1])==HERE/'artifacts/missions_9.json'
     assert '--headless' not in args
+
+
+def test_selection_skips_accidental_incomplete_run_and_follows_inherited_best(tmp_path):
+    from train_general_big_map_test11_SAC_Re.select_checkpoint import select_best
+    root=tmp_path/'runs'
+    parent=root/'original';parent.mkdir(parents=True)
+    checkpoint=parent/'policy_interrupted.pt';checkpoint.write_text('checkpoint')
+    best=parent/'policy_best.pt';best.write_text('best')
+    base=dict(signature={'algorithm':'SAC'},identity={'map':'lab'})
+    (parent/'config.json').write_text(json.dumps(dict(**base,arguments={'resume':None},initial_transitions=0)))
+    resumed=root/'completed';resumed.mkdir()
+    (resumed/'policy_final.pt').write_text('final')
+    (resumed/'config.json').write_text(json.dumps(dict(**base,arguments={'resume':str(checkpoint)},initial_transitions=60057)))
+    accidental=root/'accidental';accidental.mkdir()
+    (accidental/'policy_interrupted.pt').write_text('untrained')
+    (accidental/'policy_best.pt').write_text('untrained best')
+    assert select_best(root)==best
