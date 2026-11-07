@@ -1,0 +1,45 @@
+{
+  "orientation": "first_row_is_top_high_y",
+  "cell_size_m": 3.0,
+  "rows_top_to_bottom": [
+    [
+      "v",
+      "g",
+      "g",
+      "v",
+      "g"
+    ],
+    [
+      "g",
+      "v",
+      "g",
+      "g",
+      "g"
+    ],
+    [
+      "g",
+      "v",
+      "g",
+      "v",
+      "g"
+    ],
+    [
+      "g",
+      "g",
+      "g",
+      "v",
+      "v"
+    ],
+    [
+      "v",
+      "g",
+      "g",
+      "g",
+      "g"
+    ]
+  ],
+  "legend": {
+    "v": "lab_green",
+    "g": "t1_asphalt"
+  }
+}

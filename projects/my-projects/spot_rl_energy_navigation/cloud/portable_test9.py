@@ -116,11 +116,11 @@ def copy_camera(source, destination):
     return references
 
 
-def verify_usd_assets(project, experiment=EXPERIMENT, map_name='real_terrains_test9'):
+def verify_usd_assets(project, experiment=EXPERIMENT, map_name='real_terrains_test9', map_suffix='.usd'):
     """All non-runtime USD asset references must resolve inside the relocated bundle."""
     from pxr import Usd, Sdf
     project = Path(project).resolve()
-    paths = [project/'spot_rl_energy_navigation'/experiment/'maps'/f'{map_name}.usd',
+    paths = [project/'spot_rl_energy_navigation'/experiment/'maps'/f'{map_name}{map_suffix}',
              project/'IsaacRobotics/assets/spot.usd', project/'.cloud_assets/ZED_X.usdc']
     count = 0
     for path in paths:

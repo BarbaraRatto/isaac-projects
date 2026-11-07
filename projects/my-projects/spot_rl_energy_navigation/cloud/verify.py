@@ -49,11 +49,22 @@ def verify_files(project, zed=None, experiment=None):
     manifest = json.loads((experiment / "artifacts/manifest.json").read_text())
     identity = manifest['identity']
     pca = experiment / manifest.get('pca_source', 'artifacts/pca32.npz')
-    if not pca.resolve().is_relative_to(experiment.resolve()) or not pca.is_file():
+    pending=(manifest.get('pca_status')=='pending_new_lab_calibration'
+             and manifest.get('pca_lifecycle')=='calibrate_on_first_training')
+    if not pca.resolve().is_relative_to(experiment.resolve()) or (not pca.is_file() and not pending):
         raise FileNotFoundError(f'Missing/invalid frozen PCA: {pca}')
     checks = {dino / name: digest for name, digest in identity["dino"].items()}
     checks.update({experiment / "artifacts" / name: digest for name, digest in identity["missions"].items()})
-    checks.update({experiment / "maps" / (name + ".usd"): digest for name, digest in identity["terrain"].items()})
+    for name,digest in identity['terrain'].items():
+        path=experiment/manifest.get('terrain_files',{}).get(name,'maps/'+name+'.usd')
+        if not path.resolve().is_relative_to(experiment.resolve()):
+            raise ValueError('Invalid terrain path: '+str(path))
+        checks[path]=digest
+    for name,digest in manifest.get('runtime_input_files',{}).items():
+        path=experiment/name
+        if not path.resolve().is_relative_to(experiment.resolve()):
+            raise ValueError('Invalid runtime input path: '+str(path))
+        checks[path]=digest
     if manifest.get('pca_sha256'):
         checks[pca] = manifest['pca_sha256']
     for name, digest in manifest.get('portable_texture_sha256', {}).items():
@@ -110,12 +121,18 @@ def verify_runtime(experiment=None):
     artifacts = importlib.import_module(experiment+'.artifacts')
     perception = importlib.import_module(experiment+'.perception')
     identity = artifacts.source_identity(config.LOCAL_DINO)
-    pca = perception.FrozenPCA.load(config.DEFAULT_PCA)
-    if not artifacts.pca_compatible(pca.metadata.get("identity", {}), identity):
-        raise ValueError("Frozen PCA and DINO weights/preprocessing do not match.")
-    calibration_name = experiment+'.calibration'
-    if importlib.util.find_spec(calibration_name) is not None:
-        importlib.import_module(calibration_name).validate_calibration(pca, identity)
+    manifest=json.loads((HERE.parent/experiment/'artifacts/manifest.json').read_text())
+    pending=(manifest.get('pca_status')=='pending_new_lab_calibration'
+             and manifest.get('pca_lifecycle')=='calibrate_on_first_training')
+    if not config.DEFAULT_PCA.exists() and pending:
+        print('[OK] PCA pending: will be fitted and validated before the first training run.')
+    else:
+        pca = perception.FrozenPCA.load(config.DEFAULT_PCA)
+        if not artifacts.pca_compatible(pca.metadata.get("identity", {}), identity):
+            raise ValueError("Frozen PCA and DINO weights/preprocessing do not match.")
+        calibration_name = experiment+'.calibration'
+        if importlib.util.find_spec(calibration_name) is not None:
+            importlib.import_module(calibration_name).validate_calibration(pca, identity)
     processor = AutoImageProcessor.from_pretrained(str(config.LOCAL_DINO), local_files_only=True)
     model = AutoModel.from_pretrained(str(config.LOCAL_DINO), local_files_only=True).to("cuda").eval()
     import numpy as np
@@ -125,7 +142,7 @@ def verify_runtime(experiment=None):
         output = model(**inputs).last_hidden_state
     if tuple(output.shape) != (1, 1370, 384):
         raise ValueError(f"Unexpected DINO output shape: {tuple(output.shape)}")
-    print(f"[OK] Frozen PCA and DINO CUDA inference; OpenCV {cv2.__version__}.")
+    print(f"[OK] DINO CUDA inference and PCA lifecycle checked; OpenCV {cv2.__version__}.")
     versions = {name: metadata.version(name) for name in
                 ("isaacsim", "isaaclab", "torch", "torchvision", "numpy", "transformers")}
     print(json.dumps(versions, indent=2))
