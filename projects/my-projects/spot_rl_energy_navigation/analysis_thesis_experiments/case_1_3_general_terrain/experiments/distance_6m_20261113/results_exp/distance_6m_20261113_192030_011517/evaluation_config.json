@@ -1,0 +1,329 @@
+{
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test7_SAC/runs/general_map_test7_sac_20261030_003829_628341/policy_best.pt",
+  "checkpoint_sha256": "62dae8dc1ba519cd8b68d97c6d7b75ced88cb977712a49fa4fa27c434532709f",
+  "checkpoint_transitions": 650065,
+  "requested_distance": "6",
+  "selected_episodes": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40
+  ],
+  "checkpoint_best_score": [
+    3,
+    0.625,
+    -1975.246452331543
+  ],
+  "checkpoint_training_state": {
+    "curriculum": {
+      "level": 3,
+      "streak": 0
+    },
+    "best_by_stage": {
+      "0": [
+        0.859375,
+        -821.1460526899858
+      ],
+      "1": [
+        0.84375,
+        -1096.222082067419
+      ],
+      "2": [
+        0.8984375,
+        -1054.1044566278872
+      ],
+      "3": [
+        0.625,
+        -1975.246452331543
+      ]
+    },
+    "last_evaluated_stage": 3,
+    "replay_snapshot": null
+  },
+  "map": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_6m_20261113/maps/real_terrains_v2_eval_01.usd",
+  "map_sha256": "c00ecd296f70f91af8665fa9dc927cd120ad988c8ae7b7e253ec49856c2e2836",
+  "map_metadata_sha256": "6c6b5fd8338f5f9c83a806b0c8a6bdd95db264a430458f531442708dc8a8ab07",
+  "mission_file": "selected_missions.json",
+  "coordinate_source": "exp_coordinates.json",
+  "missions_sha256": "7092612bd16df4e4c985e7f58cd61400c21ff5f08fda091ce92db2407725bf2c",
+  "signature": {
+    "schema": 2,
+    "experiment": "train_general_big_map_test7_SAC",
+    "goal_scaling": {
+      "mode": "fixed_scale_no_centering",
+      "scale_m": 10.0,
+      "clip": false
+    },
+    "pca_calibration": "real_terrains_v2_seven_material_views_v1",
+    "algorithm": "asymmetric_twin_Q_SAC",
+    "navigation": {
+      "physics_dt": 0.005,
+      "physics_steps_per_action": 40,
+      "settle_seconds": 2.0,
+      "max_episode_seconds": 90.0,
+      "spawn_height_m": 0.75,
+      "goal_radius_m": 0.55,
+      "minimum_body_height_m": 0.25,
+      "fall_tilt_deg": 90.0,
+      "fall_persistence_seconds": 1.0,
+      "body_contact_threshold_n": 1.0,
+      "max_forward_m_s": 1.6,
+      "max_yaw_rad_s": 1.5,
+      "progress_reward_per_m": 30.0,
+      "time_penalty_per_step": 0.02,
+      "success_bonus": 1000.0,
+      "failure_penalty": 1000.0,
+      "energy_reference_j": 100.0,
+      "energy_weight": 1.0,
+      "power_filter_seconds": 1.0,
+      "heading_penalty_start_deg": 110.0,
+      "heading_penalty_per_second": 2.0
+    },
+    "sac": {
+      "timesteps": 200000,
+      "num_envs": 128,
+      "buffer_size": 100000,
+      "learning_starts": 4096,
+      "batch_size": 256,
+      "learning_rate": 0.0003,
+      "gamma": 0.999,
+      "tau": 0.005,
+      "initial_alpha": 1.0,
+      "target_entropy": -2.0,
+      "gradient_steps": 16,
+      "checkpoint_every": 10000,
+      "eval_every": 10000,
+      "eval_episodes_per_env": 1,
+      "log_every": 1000
+    },
+    "actor_size": 3255,
+    "critic_size": 3279,
+    "layers": [
+      128,
+      64
+    ],
+    "state_layers": [
+      64,
+      32
+    ],
+    "map_layers": [
+      1024,
+      512,
+      256,
+      128
+    ],
+    "alignment": {
+      "tolerance_deg": 10.0,
+      "stable_steps": 3,
+      "gain": 1.5,
+      "max_yaw_rad_s": 0.8,
+      "max_seconds": 12.0,
+      "max_steps_without_navigation": 300
+    },
+    "separate_actor_critic_optimizers": true,
+    "scalar_reward": "navigation_minus_weighted_energy",
+    "policy_distribution": "state_dependent_squashed_gaussian",
+    "target_critics": 2,
+    "replay_storage": "raw_actor_plus_privileged_navigation_only",
+    "critic_state_size": 41,
+    "feature_dim": 32,
+    "state_order": [
+      "goal_xy",
+      "linear_velocity_xyz",
+      "angular_velocity_xyz",
+      "projected_gravity_xyz",
+      "previous_action_xy",
+      "power_ema",
+      "time_left"
+    ],
+    "cell_order": [
+      "pca32",
+      "relative_height",
+      "slope_x",
+      "slope_y",
+      "roughness",
+      "visual_valid",
+      "geometry_valid",
+      "visual_age",
+      "geometry_age"
+    ],
+    "privileged_order": [
+      "mu_static_dynamic_4x2",
+      "contact4",
+      "normal_force4",
+      "slip4x2"
+    ],
+    "feet": [
+      "fl_foot",
+      "fr_foot",
+      "hl_foot",
+      "hr_foot"
+    ],
+    "look_x": [
+      -2.0,
+      -1.5,
+      -1.0,
+      -0.5,
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "look_y": [
+      -2.0,
+      -1.5,
+      -1.0,
+      -0.5,
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "cell_resolution_m": 0.5,
+    "map_persistent": true,
+    "memory_resolution_m": 0.1,
+    "memory_age_seconds": 90.0,
+    "memory_fusion": "latest_per_world_xy_bin",
+    "memory_age_aggregation": "sample_weighted_mean",
+    "localization": "simulator_pose",
+    "depth_stride": 4,
+    "geometry_min_points": 10,
+    "geometry_min_xy_eigenvalue": 0.0001,
+    "terminal_timeout": true,
+    "missions": {
+      "distance_bands": [
+        [
+          1.5,
+          3.0
+        ],
+        [
+          3.0,
+          6.0
+        ],
+        [
+          3.0,
+          6.0
+        ],
+        [
+          6.0,
+          12.0
+        ],
+        [
+          12.0,
+          20.0
+        ]
+      ],
+      "heading_limits_deg": [
+        180.0,
+        180.0,
+        180.0,
+        180.0,
+        180.0
+      ],
+      "same_asphalt_cell_stages": 1,
+      "stage_names": [
+        "asfalto 1.5\u20133 m",
+        "terreni misti 3\u20136 m senza scale/ostacoli",
+        "tutti i terreni ammessi 3\u20136 m",
+        "tutti i terreni ammessi 6\u201312 m",
+        "tutti i terreni ammessi 12\u201320 m"
+      ],
+      "easier_probability": 0.25,
+      "promotion_success": 0.8,
+      "promotion_evaluations": 2,
+      "spawn_excluded": [
+        "t2_slippery"
+      ],
+      "goal_excluded": [
+        "t2_slippery",
+        "t7_stairs"
+      ],
+      "cell_margin_m": 0.65,
+      "footprint_radius_m": 0.55,
+      "max_spawn_relief_m": 0.16,
+      "deadline_min_s": 30.0,
+      "deadline_max_s": 90.0,
+      "deadline_base_s": 15.0,
+      "deadline_seconds_per_m": 4.0,
+      "evaluation_seed": 710031,
+      "reachability_filter": false,
+      "distance_metric": "euclidean_xy"
+    },
+    "fall_detection": "physics_step_persistence_v1",
+    "body_contact_name": "body",
+    "env_spacing_m": 80.0,
+    "camera_far_clip_m": 20.0,
+    "reset_pose": "startup_settled_stance_above_local_footprint",
+    "startup_clearance_m": 0.02
+  },
+  "training_identity": {
+    "dino": {
+      "config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d",
+      "preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+      "model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1"
+    },
+    "input_size": 518,
+    "resize": "opencv_linear_square_no_crop",
+    "terrain": {
+      "real_terrains_v2": "3656ff462e51ef6935e3d572834965a39bdf9345f9ecdfc1af509a665903925c"
+    },
+    "missions": {
+      "spawn_bank.npz": "465cb98bec8b37b9da50ae579310b0cfc7f73bcb11a9f029f13d9e44aa7c7821",
+      "map_metadata.json": "794f0f2233c2bcff4b3692bec944ac6cf606362c3c0c1e7e64460637322e15ea"
+    }
+  },
+  "command": [
+    "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_6m_20261113/create_exp.py",
+    "--device",
+    "cuda:0",
+    "--headless"
+  ],
+  "device": "cuda:0",
+  "agent_device": "cpu",
+  "map_backend": "cpu",
+  "simulation_seed": 20000,
+  "energy": "Absolute joint mechanical work; physics-step trapezoidal integration",
+  "time": "Simulated time; includes automatic initial alignment",
+  "policy": "Deterministic; no learning or normalizer/PCA updates",
+  "goal_radius_m": 0.55,
+  "physics_dt_s": 0.005,
+  "navigation_dt_s": 0.2
+}

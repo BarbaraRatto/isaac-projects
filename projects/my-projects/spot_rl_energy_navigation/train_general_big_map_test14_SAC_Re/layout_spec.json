@@ -1,0 +1,45 @@
+{
+  "orientation": "first_row_is_top_high_y",
+  "cell_size_m": 3.0,
+  "rows_top_to_bottom": [
+    [
+      "n",
+      "g",
+      "g",
+      "n",
+      "g"
+    ],
+    [
+      "g",
+      "n",
+      "g",
+      "g",
+      "g"
+    ],
+    [
+      "g",
+      "n",
+      "g",
+      "n",
+      "g"
+    ],
+    [
+      "g",
+      "g",
+      "g",
+      "n",
+      "n"
+    ],
+    [
+      "n",
+      "g",
+      "g",
+      "g",
+      "g"
+    ]
+  ],
+  "legend": {
+    "n": "lab_blackice",
+    "g": "t1_asphalt"
+  }
+}

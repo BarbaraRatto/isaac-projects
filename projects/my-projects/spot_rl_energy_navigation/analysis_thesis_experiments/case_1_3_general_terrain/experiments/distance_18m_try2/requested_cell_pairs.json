@@ -1,0 +1,66 @@
+[
+  {
+    "start_cell": [
+      6,
+      2
+    ],
+    "goal_cell": [
+      4,
+      0
+    ],
+    "min_distance_m": 8.472307831990053,
+    "max_distance_m": 18.389671013914306,
+    "distance_18m_possible": true,
+    "excluded_as_saved_pair": false,
+    "selected_episodes": [
+      151
+    ]
+  },
+  {
+    "start_cell": [
+      6,
+      0
+    ],
+    "goal_cell": [
+      4,
+      2
+    ],
+    "min_distance_m": 8.472307831990053,
+    "max_distance_m": 18.389671013914306,
+    "distance_18m_possible": true,
+    "excluded_as_saved_pair": false,
+    "selected_episodes": []
+  },
+  {
+    "start_cell": [
+      6,
+      0
+    ],
+    "goal_cell": [
+      3,
+      2
+    ],
+    "min_distance_m": 10.323759005323593,
+    "max_distance_m": 19.833809518093087,
+    "distance_18m_possible": true,
+    "excluded_as_saved_pair": false,
+    "selected_episodes": [
+      152
+    ]
+  },
+  {
+    "start_cell": [
+      6,
+      6
+    ],
+    "goal_cell": [
+      2,
+      6
+    ],
+    "min_distance_m": 10.299999999999999,
+    "max_distance_m": 14.483784035948618,
+    "distance_18m_possible": false,
+    "excluded_as_saved_pair": false,
+    "selected_episodes": []
+  }
+]

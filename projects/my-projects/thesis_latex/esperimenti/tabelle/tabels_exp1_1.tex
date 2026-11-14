@@ -1,0 +1,75 @@
+% Recorded results only. Requires booktabs in the thesis preamble.
+% Insert with \input{path/to/tabels_exp1_1.tex}.
+% Coordinates: x on the first line, y on the second line.
+\begin{table}[H]
+\centering
+\caption{Risultati dei cinque episodi sulla mappa A, con le rocce a destra.}
+\label{tab:exp1-1-map-a}
+\begingroup
+\fontsize{9.5}{11.5}\selectfont
+\setlength{\tabcolsep}{2.5pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}c cc rrr c@{}}
+\toprule
+\shortstack{Ep.} &
+\shortstack{Start\\$x/y$ [m]} &
+\shortstack{Goal\\$x/y$ [m]} &
+\shortstack{Distanza\\percorsa [m]} &
+\shortstack{Energia\\{}[J]} &
+\shortstack{Tempo\\{}[s]} &
+\shortstack{Esito} \\
+\midrule
+1 & \shortstack{$-0{,}0289$\\$0{,}0005$} & \shortstack{$3{,}9883$\\$4{,}0234$} & $6{,}78$ & $1204{,}0$ & $10{,}6$ & Successo \\
+2 & \shortstack{$-0{,}0250$\\$0{,}0104$} & \shortstack{$3{,}9616$\\$4{,}0260$} & $6{,}56$ & $1113{,}6$ & $9{,}4$ & Successo \\
+3 & \shortstack{$-0{,}0065$\\$-0{,}0324$} & \shortstack{$3{,}9974$\\$3{,}9708$} & $6{,}83$ & $1263{,}1$ & $11{,}0$ & Successo \\
+4 & \shortstack{$-0{,}0269$\\$-0{,}0069$} & \shortstack{$3{,}9525$\\$3{,}9805$} & $6{,}85$ & $1209{,}4$ & $10{,}6$ & Successo \\
+5 & \shortstack{$-0{,}0408$\\$0{,}0188$} & \shortstack{$4{,}0362$\\$4{,}0170$} & $6{,}79$ & $1171{,}9$ & $10{,}0$ & Successo \\
+\bottomrule
+\end{tabular}
+\endgroup
+\par\smallskip
+\begin{minipage}{\linewidth}
+\footnotesize
+Gli episodi 1--5 corrispondono alle missioni A1--A5. Nelle colonne Start e Goal, la prima riga indica $x$ e la seconda $y$.
+La distanza percorsa indica la lunghezza della traiettoria effettivamente seguita dal robot.
+L'energia \`e il lavoro meccanico assoluto ai giunti, misurato fino alla conclusione dell'episodio.
+Il successo richiede una distanza dal goal non superiore a $0{,}55$~m, senza cadute o uscite dalla mappa; il timeout \`e fissato a $40$~s.
+\end{minipage}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Risultati dei cinque episodi sulla mappa B, con le rocce a sinistra.}
+\label{tab:exp1-1-map-b}
+\begingroup
+\fontsize{9.5}{11.5}\selectfont
+\setlength{\tabcolsep}{2.5pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}c cc rrr c@{}}
+\toprule
+\shortstack{Ep.} &
+\shortstack{Start\\$x/y$ [m]} &
+\shortstack{Goal\\$x/y$ [m]} &
+\shortstack{Distanza\\percorsa [m]} &
+\shortstack{Energia\\{}[J]} &
+\shortstack{Tempo\\{}[s]} &
+\shortstack{Esito} \\
+\midrule
+1 & \shortstack{$-0{,}0159$\\$0{,}0339$} & \shortstack{$4{,}0441$\\$3{,}9516$} & $5{,}93$ & $952{,}4$ & $6{,}0$ & Successo \\
+2 & \shortstack{$0{,}0123$\\$-0{,}0173$} & \shortstack{$4{,}0349$\\$3{,}9913$} & $5{,}93$ & $923{,}2$ & $6{,}0$ & Successo \\
+3 & \shortstack{$-0{,}0204$\\$-0{,}0445$} & \shortstack{$4{,}0249$\\$4{,}0129$} & $5{,}99$ & $923{,}0$ & $6{,}0$ & Successo \\
+4 & \shortstack{$0{,}0158$\\$-0{,}0329$} & \shortstack{$3{,}9567$\\$4{,}0159$} & $6{,}11$ & $977{,}9$ & $6{,}2$ & Successo \\
+5 & \shortstack{$0{,}0060$\\$0{,}0283$} & \shortstack{$3{,}9837$\\$3{,}9914$} & $6{,}07$ & $959{,}0$ & $6{,}2$ & Successo \\
+\bottomrule
+\end{tabular}
+\endgroup
+\par\smallskip
+\begin{minipage}{\linewidth}
+\footnotesize
+Gli episodi 1--5 corrispondono alle missioni B1--B5. Nelle colonne Start e Goal, la prima riga indica $x$ e la seconda $y$.
+La distanza percorsa indica la lunghezza della traiettoria effettivamente seguita dal robot.
+L'energia \`e il lavoro meccanico assoluto ai giunti, misurato fino alla conclusione dell'episodio.
+Il successo richiede una distanza dal goal non superiore a $0{,}55$~m, senza cadute o uscite dalla mappa; il timeout \`e fissato a $40$~s.
+\end{minipage}
+\end{table}
+

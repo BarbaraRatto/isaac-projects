@@ -13,44 +13,44 @@ A level-1 auxiliary file: Chapter5/conclusions.aux
 The style file: Classes/RoboticsBiblio.bst
 Database file #1: references.bib
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
-You've used 8 entries,
+You've used 43 entries,
             3018 wiz_defined-function locations,
-            701 strings with 7244 characters,
-and the built_in function-call counts, 8045 in all, are:
-= -- 605
-> -- 638
-< -- 1
-+ -- 218
-- -- 210
-* -- 742
-:= -- 1196
-add.period$ -- 24
-call.type$ -- 8
-change.case$ -- 114
-chr.to.int$ -- 8
-cite$ -- 8
-duplicate$ -- 474
-empty$ -- 434
-format.name$ -- 234
-if$ -- 1576
-int.to.chr$ -- 1
+            908 strings with 18142 characters,
+and the built_in function-call counts, 42360 in all, are:
+= -- 3247
+> -- 3211
+< -- 8
++ -- 1103
+- -- 1056
+* -- 3774
+:= -- 6205
+add.period$ -- 129
+call.type$ -- 43
+change.case$ -- 614
+chr.to.int$ -- 39
+cite$ -- 43
+duplicate$ -- 2572
+empty$ -- 2397
+format.name$ -- 1191
+if$ -- 8436
+int.to.chr$ -- 5
 int.to.str$ -- 1
-missing$ -- 118
-newline$ -- 28
-num.names$ -- 32
-pop$ -- 287
+missing$ -- 603
+newline$ -- 133
+num.names$ -- 172
+pop$ -- 1543
 preamble$ -- 1
-purify$ -- 102
+purify$ -- 524
 quote$ -- 0
-skip$ -- 198
+skip$ -- 1151
 stack$ -- 0
-substring$ -- 277
-swap$ -- 307
-text.length$ -- 1
+substring$ -- 1471
+swap$ -- 1615
+text.length$ -- 5
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 72
+type$ -- 387
 warning$ -- 0
-while$ -- 38
+while$ -- 204
 width$ -- 0
-write$ -- 92
+write$ -- 477

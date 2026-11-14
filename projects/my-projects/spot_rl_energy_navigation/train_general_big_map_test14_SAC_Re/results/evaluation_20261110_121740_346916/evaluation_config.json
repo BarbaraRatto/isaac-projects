@@ -1,0 +1,301 @@
+{
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test14_SAC_Re/runs/general_map_test14_sac_re_20261109_121123_675209/policy_best.pt",
+  "seed": 231313,
+  "requested_stage": null,
+  "episodes": 9,
+  "num_envs": 1,
+  "map_backend": "cpu",
+  "goal_scaling": {
+    "mode": "fixed_scale",
+    "scale_m": 10.0
+  },
+  "mission_suite": {
+    "schema": 1,
+    "name": "9 missioni grigio-grigio: vicino/6/9/12 m + deviazione ghiaccio",
+    "seed": 231313,
+    "map_sha256": "532e908d018c4b67e06f299fe7efb379efd06dae8f7d6e53902fb74c26eef0b7",
+    "cells_interpretation": "Euclidean XY distance: 2/3/4 cells approximately 6/9/12 m",
+    "endpoint_split": "held-out evaluation candidates; black excluded from spawn and goal",
+    "cases": [
+      {
+        "episode": 1,
+        "category": "vicino",
+        "mission": {
+          "start_id": 140,
+          "goal_id": 255,
+          "start": [
+            4.982516727884643,
+            1.1175436451492529,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "goal": [
+            7.38882461465353,
+            0.8894833942131928,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2.0
+          ],
+          "yaw": 1.05231156620051,
+          "band": 0,
+          "distance_m": 2.417091045861361,
+          "deadline_steps": 150
+        },
+        "straight_line_black_fraction": 0.0
+      },
+      {
+        "episode": 2,
+        "category": "vicino",
+        "mission": {
+          "start_id": 1285,
+          "goal_id": 1740,
+          "start": [
+            8.020425341612786,
+            7.315618480331122,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            2.0
+          ],
+          "goal": [
+            6.992652745177069,
+            10.015347335703922,
+            0.0,
+            0.0,
+            0.0,
+            3.0,
+            2.0
+          ],
+          "yaw": 2.5761255306503443,
+          "band": 0,
+          "distance_m": 2.888745818260364,
+          "deadline_steps": 150
+        },
+        "straight_line_black_fraction": 0.0
+      },
+      {
+        "episode": 3,
+        "category": "2_celle",
+        "mission": {
+          "start_id": 1790,
+          "goal_id": 700,
+          "start": [
+            7.245131647271716,
+            11.034010134086962,
+            0.0,
+            0.0,
+            0.0,
+            3.0,
+            2.0
+          ],
+          "goal": [
+            7.193608579075775,
+            5.031181377518034,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            2.0
+          ],
+          "yaw": -2.357516873815489,
+          "band": 1,
+          "distance_m": 6.003049867129806,
+          "deadline_steps": 196
+        },
+        "straight_line_black_fraction": 0.0
+      },
+      {
+        "episode": 4,
+        "category": "2_celle",
+        "mission": {
+          "start_id": 445,
+          "goal_id": 270,
+          "start": [
+            13.960336207547922,
+            0.8336126667231856,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            4.0
+          ],
+          "goal": [
+            7.98728922056539,
+            1.8565227844669012,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2.0
+          ],
+          "yaw": 1.8242198295884862,
+          "band": 1,
+          "distance_m": 6.060002922250415,
+          "deadline_steps": 197
+        },
+        "straight_line_black_fraction": 0.0
+      },
+      {
+        "episode": 5,
+        "category": "3_celle",
+        "mission": {
+          "start_id": 2445,
+          "goal_id": 2180,
+          "start": [
+            13.824181511249904,
+            12.679128247492281,
+            0.0,
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "goal": [
+            4.430884894068173,
+            12.66286538484945,
+            0.0,
+            0.0,
+            0.0,
+            4.0,
+            1.0
+          ],
+          "yaw": 1.0614531528830327,
+          "band": 2,
+          "distance_m": 9.393310695333094,
+          "deadline_steps": 263
+        },
+        "straight_line_black_fraction": 0.31950207468879666
+      },
+      {
+        "episode": 6,
+        "category": "3_celle",
+        "mission": {
+          "start_id": 1570,
+          "goal_id": 1895,
+          "start": [
+            1.3401596693060633,
+            11.326626872059071,
+            0.0,
+            0.0,
+            0.0,
+            3.0,
+            0.0
+          ],
+          "goal": [
+            9.973563647586078,
+            10.793708297069358,
+            0.0,
+            0.0,
+            0.0,
+            3.0,
+            3.0
+          ],
+          "yaw": 0.5144553460781647,
+          "band": 2,
+          "distance_m": 8.649836209995554,
+          "deadline_steps": 248
+        },
+        "straight_line_black_fraction": 0.34439834024896265
+      },
+      {
+        "episode": 7,
+        "category": "4_celle",
+        "mission": {
+          "start_id": 1980,
+          "goal_id": 670,
+          "start": [
+            14.005965283359787,
+            11.093591474286582,
+            0.0,
+            0.0,
+            0.0,
+            3.0,
+            4.0
+          ],
+          "goal": [
+            4.380872167639316,
+            4.140863969337898,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "yaw": -2.0388385015320796,
+          "band": 3,
+          "distance_m": 11.873619382663382,
+          "deadline_steps": 313
+        },
+        "straight_line_black_fraction": 0.2157676348547718
+      },
+      {
+        "episode": 8,
+        "category": "4_celle",
+        "mission": {
+          "start_id": 1530,
+          "goal_id": 240,
+          "start": [
+            1.5446662309334762,
+            11.236328052341962,
+            0.0,
+            0.0,
+            0.0,
+            3.0,
+            0.0
+          ],
+          "goal": [
+            7.575676100300981,
+            0.7485550447249563,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2.0
+          ],
+          "yaw": -2.3485487196032704,
+          "band": 3,
+          "distance_m": 12.098200804405096,
+          "deadline_steps": 317
+        },
+        "straight_line_black_fraction": 0.2572614107883817
+      },
+      {
+        "episode": 9,
+        "category": "deviazione_ghiaccio",
+        "mission": {
+          "start_id": 1850,
+          "goal_id": 1240,
+          "start": [
+            10.741398660139692,
+            10.320570163265806,
+            0.0,
+            0.0,
+            0.0,
+            3.0,
+            3.0
+          ],
+          "goal": [
+            8.237238547229172,
+            7.486180595914385,
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            2.0
+          ],
+          "yaw": -0.44441603229715865,
+          "band": 1,
+          "distance_m": 3.782139882474287,
+          "deadline_steps": 151
+        },
+        "straight_line_black_fraction": 0.22821576763485477
+      }
+    ]
+  }
+}

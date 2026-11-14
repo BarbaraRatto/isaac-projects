@@ -1,0 +1,3028 @@
+{
+  "schema": 1,
+  "name": "80 fixed missions on unseen seven-terrain map",
+  "map_sha256": "c00ecd296f70f91af8665fa9dc927cd120ad988c8ae7b7e253ec49856c2e2836",
+  "metadata_sha256": "9edb4ab06057f59cb84a6ea5bac5659b5fe6952d8e62f1dc1a9c8153c326adbd",
+  "selection": {
+    "seed": 2026111308,
+    "rng": "numpy.random.Generator(PCG64)",
+    "numpy_version": "1.26.0",
+    "start_sampling": "Uniform XY over inset map bounding box, followed by rejection",
+    "start_bounds_xy_m": [
+      [
+        -2.35,
+        -0.85
+      ],
+      [
+        38.35,
+        18.85
+      ]
+    ],
+    "goal_sampling": "Uniform bearing in [-pi, pi); goal = start + distance * unit bearing",
+    "distances_m": [
+      6,
+      18
+    ],
+    "distance_tolerance_m": 1e-08,
+    "endpoint_margin_m": 0.65,
+    "endpoint_excluded_terrains": [
+      "t2_slippery",
+      "t7_stairs"
+    ],
+    "footprint_half_width_m": 0.55,
+    "footprint_grid_shape": [
+      11,
+      11
+    ],
+    "max_endpoint_relief_m": 0.16,
+    "min_start_separation_m": 0.6,
+    "min_goal_separation_m": 0.6,
+    "initial_yaw": "Independent uniform [-pi, pi); frozen in the mission list",
+    "hazard_min_direct_intersection_m": 1.0,
+    "multiple_min_direct_cells": 5,
+    "multiple_min_distinct_terrains": 4,
+    "category_priority": "18 m: multiple_choices first; 6 m: surface_choice before regular",
+    "regular_6m": "Asphalt, ramp or gravel only; at most two terrain types; no qualifying alternative",
+    "regular_18m": "No ice/stairs and fewer than five cells or four terrain types",
+    "surface_choice": "No ice/stairs; >=2 direct terrain types and >=1.5 m rocks/obstacles; one-bend alternative <=1.8x direct length, >=1.08x direct length and >=1 m less rocks/obstacles",
+    "alternative_clearance_m": 0.55,
+    "energy_note": "Surface contrast is a geometric selection criterion, not a measured energy ranking",
+    "sampling": [
+      {
+        "distance_m": 6,
+        "attempts": 2015,
+        "accepted": 40,
+        "counts": {
+          "regular": 10,
+          "ice": 10,
+          "stairs": 10,
+          "surface_choice": 10
+        }
+      },
+      {
+        "distance_m": 18,
+        "attempts": 6302,
+        "accepted": 40,
+        "counts": {
+          "regular": 10,
+          "ice": 10,
+          "stairs": 10,
+          "multiple_choices": 10
+        }
+      }
+    ]
+  },
+  "path_note": "Only endpoints are assigned to the policy. Alternative waypoints are selection evidence, never policy commands. No geodesic distance is computed.",
+  "cases": [
+    {
+      "episode": 41,
+      "distance_group_m": 18,
+      "category": "regular",
+      "category_name": "Simple route on traversable terrain",
+      "mission": {
+        "start_id": 80,
+        "goal_id": 81,
+        "start": [
+          12.527965769909365,
+          0.5829497939492253,
+          0.02200689420997083,
+          0.04764748811045305,
+          4,
+          0,
+          2
+        ],
+        "goal": [
+          30.503835242631524,
+          -0.3487780094652172,
+          0.0,
+          0.0,
+          0,
+          0,
+          5
+        ],
+        "yaw": -1.531020271582534,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 0,
+          "col": 2,
+          "terrain": "t5_large_rocks",
+          "length_m": 2.4753526503490533
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "terrain": "t1_asphalt",
+          "length_m": 6.008054306573975
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "terrain": "t6_obstacles",
+          "length_m": 6.008054306573974
+        },
+        {
+          "row": 0,
+          "col": 5,
+          "terrain": "t1_asphalt",
+          "length_m": 3.5085387365029987
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t5_large_rocks": 2.4753526503490533,
+        "t1_asphalt": 9.516593043076973,
+        "t6_obstacles": 6.008054306573974
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 77
+    },
+    {
+      "episode": 42,
+      "distance_group_m": 18,
+      "category": "regular",
+      "category_name": "Simple route on traversable terrain",
+      "mission": {
+        "start_id": 82,
+        "goal_id": 83,
+        "start": [
+          16.727812622384164,
+          3.3379319268477636,
+          0.005139027120824548,
+          0.014775339602409277,
+          3,
+          1,
+          3
+        ],
+        "goal": [
+          34.49874772776673,
+          6.200424805490707,
+          0.0051061965914499,
+          0.014832290352480362,
+          3,
+          2,
+          6
+        ],
+        "yaw": 2.3153720993627953,
+        "band": 4,
+        "distance_m": 17.999999999999996,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 1,
+          "col": 3,
+          "terrain": "t4_fine_gravel",
+          "length_m": 4.327255281788369
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 2.9800905190706133
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 3.0972486507341492
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 6.077339169804764
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "terrain": "t4_fine_gravel",
+          "length_m": 1.5180663786021014
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t4_fine_gravel": 5.84532166039047,
+        "t5_large_rocks": 6.0773391698047625,
+        "t6_obstacles": 6.077339169804764
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 1154
+    },
+    {
+      "episode": 43,
+      "distance_group_m": 18,
+      "category": "regular",
+      "category_name": "Simple route on traversable terrain",
+      "mission": {
+        "start_id": 84,
+        "goal_id": 85,
+        "start": [
+          16.984718275524894,
+          17.574945835946423,
+          0.02058423569307307,
+          0.04993180178951591,
+          4,
+          6,
+          3
+        ],
+        "goal": [
+          -1.0104896249180655,
+          17.99026814432313,
+          0.0,
+          0.0,
+          0,
+          6,
+          0
+        ],
+        "yaw": -1.292177514380389,
+        "band": 4,
+        "distance_m": 18.000000000000004,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 6,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 1.9852468033208284
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "terrain": "t1_asphalt",
+          "length_m": 6.00159779189556
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "terrain": "t4_fine_gravel",
+          "length_m": 6.001597791895561
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "terrain": "t1_asphalt",
+          "length_m": 4.011557612888051
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t5_large_rocks": 1.9852468033208284,
+        "t1_asphalt": 10.01315540478361,
+        "t4_fine_gravel": 6.001597791895561
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 1612
+    },
+    {
+      "episode": 44,
+      "distance_group_m": 18,
+      "category": "regular",
+      "category_name": "Simple route on traversable terrain",
+      "mission": {
+        "start_id": 86,
+        "goal_id": 87,
+        "start": [
+          22.627295432897057,
+          -0.44209202388991475,
+          0.0,
+          0.027000000700354576,
+          5,
+          0,
+          4
+        ],
+        "goal": [
+          32.22414463028871,
+          14.786187113377142,
+          0.0,
+          0.07000000029802322,
+          5,
+          5,
+          5
+        ],
+        "yaw": 1.8369059710663667,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 0,
+          "col": 4,
+          "terrain": "t6_obstacles",
+          "length_m": 2.295574970416003
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 3.5460342901024022
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 2.359903609897996
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 1.1861306802044056
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 3.5460342901024005
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "terrain": "t3_ramp",
+          "length_m": 3.5460342901024027
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 1.5202878691743897
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t6_obstacles": 8.548027809897198,
+        "t5_large_rocks": 5.905937900000398,
+        "t3_ramp": 3.5460342901024027
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 1679
+    },
+    {
+      "episode": 45,
+      "distance_group_m": 18,
+      "category": "regular",
+      "category_name": "Simple route on traversable terrain",
+      "mission": {
+        "start_id": 88,
+        "goal_id": 89,
+        "start": [
+          2.1792270026138785,
+          11.644474151616176,
+          0.005262328665498902,
+          0.014569175297235625,
+          3,
+          4,
+          0
+        ],
+        "goal": [
+          20.060717741310892,
+          9.582366258732565,
+          0.022864835509793065,
+          0.048092976652606034,
+          4,
+          3,
+          3
+        ],
+        "yaw": 1.382933748507841,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 4,
+          "col": 0,
+          "terrain": "t4_fine_gravel",
+          "length_m": 0.8262126558038154
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "terrain": "t3_ramp",
+          "length_m": 6.039764893106991
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "terrain": "t4_fine_gravel",
+          "length_m": 3.1240597329327673
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "terrain": "t3_ramp",
+          "length_m": 2.9157051601742223
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 5.094257557982204
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t4_fine_gravel": 3.9502723887365825,
+        "t3_ramp": 8.955470053281214,
+        "t5_large_rocks": 5.094257557982204
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 1797
+    },
+    {
+      "episode": 46,
+      "distance_group_m": 18,
+      "category": "regular",
+      "category_name": "Simple route on traversable terrain",
+      "mission": {
+        "start_id": 90,
+        "goal_id": 91,
+        "start": [
+          23.65646540361257,
+          18.176020353498107,
+          0.09411920839711825,
+          0.164000004529953,
+          2,
+          6,
+          4
+        ],
+        "goal": [
+          5.66603718797953,
+          17.589085418301256,
+          0.00528960025387212,
+          0.014497078697651168,
+          3,
+          6,
+          1
+        ],
+        "yaw": 1.8058003304803902,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 6,
+          "col": 4,
+          "terrain": "t3_ramp",
+          "length_m": 2.6578787726395285
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 6.003192292340871
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "terrain": "t1_asphalt",
+          "length_m": 6.003192292340872
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "terrain": "t4_fine_gravel",
+          "length_m": 3.3357366426787296
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t3_ramp": 2.6578787726395285,
+        "t5_large_rocks": 6.003192292340871,
+        "t1_asphalt": 6.003192292340872,
+        "t4_fine_gravel": 3.3357366426787296
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 2444
+    },
+    {
+      "episode": 47,
+      "distance_group_m": 18,
+      "category": "regular",
+      "category_name": "Simple route on traversable terrain",
+      "mission": {
+        "start_id": 92,
+        "goal_id": 93,
+        "start": [
+          16.097156693619347,
+          9.30614657123918,
+          0.021073570752482992,
+          0.047596283020229724,
+          4,
+          3,
+          3
+        ],
+        "goal": [
+          -1.0838207018990254,
+          14.674015397383005,
+          0.03971049911789685,
+          0.164000004529953,
+          2,
+          5,
+          0
+        ],
+        "yaw": -1.7678928432254473,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 3,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 1.1494584988104162
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "terrain": "t3_ramp",
+          "length_m": 2.8538736267870535
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "terrain": "t4_fine_gravel",
+          "length_m": 3.432148263223209
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "terrain": "t3_ramp",
+          "length_m": 6.286021890010264
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "terrain": "t4_fine_gravel",
+          "length_m": 0.3416881907329121
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "terrain": "t3_ramp",
+          "length_m": 3.936809530436146
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t5_large_rocks": 1.1494584988104162,
+        "t3_ramp": 13.076705047233464,
+        "t4_fine_gravel": 3.7738364539561213
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 2493
+    },
+    {
+      "episode": 48,
+      "distance_group_m": 18,
+      "category": "regular",
+      "category_name": "Simple route on traversable terrain",
+      "mission": {
+        "start_id": 94,
+        "goal_id": 95,
+        "start": [
+          24.665620267079717,
+          17.555802651186163,
+          0.03708937444956124,
+          0.164000004529953,
+          2,
+          6,
+          4
+        ],
+        "goal": [
+          35.39047242634091,
+          3.099746959470302,
+          0.0925615819705819,
+          0.164000004529953,
+          2,
+          1,
+          6
+        ],
+        "yaw": -2.9757268247731794,
+        "band": 4,
+        "distance_m": 17.999999999999996,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 6,
+          "col": 4,
+          "terrain": "t3_ramp",
+          "length_m": 1.3146357572654868
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "terrain": "t6_obstacles",
+          "length_m": 2.603258360862821
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 1.1322004082221009
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "terrain": "t3_ramp",
+          "length_m": 3.7354587690849215
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 3.7354587690849206
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 1.466950936258265
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "terrain": "t4_fine_gravel",
+          "length_m": 2.2685078328266566
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "terrain": "t3_ramp",
+          "length_m": 1.7435291663948285
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t3_ramp": 6.7936236927452365,
+        "t6_obstacles": 8.937868474428107,
+        "t4_fine_gravel": 2.2685078328266566
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 3354
+    },
+    {
+      "episode": 49,
+      "distance_group_m": 18,
+      "category": "regular",
+      "category_name": "Simple route on traversable terrain",
+      "mission": {
+        "start_id": 96,
+        "goal_id": 97,
+        "start": [
+          29.999108031900825,
+          0.8115832491591933,
+          0.0,
+          0.0,
+          0,
+          0,
+          5
+        ],
+        "goal": [
+          12.023124505232168,
+          -0.11794149442597157,
+          0.021671894512694773,
+          0.048211662099383455,
+          4,
+          0,
+          2
+        ],
+        "yaw": 2.0075134864204403,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 0,
+          "col": 5,
+          "terrain": "t1_asphalt",
+          "length_m": 3.0031149335515246
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "terrain": "t6_obstacles",
+          "length_m": 6.008016186695669
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "terrain": "t1_asphalt",
+          "length_m": 6.008016186695671
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "terrain": "t5_large_rocks",
+          "length_m": 2.980852693057135
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t1_asphalt": 9.011131120247196,
+        "t6_obstacles": 6.008016186695669,
+        "t5_large_rocks": 2.980852693057135
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 4092
+    },
+    {
+      "episode": 50,
+      "distance_group_m": 18,
+      "category": "regular",
+      "category_name": "Simple route on traversable terrain",
+      "mission": {
+        "start_id": 98,
+        "goal_id": 99,
+        "start": [
+          23.63575497656343,
+          0.7004634811749687,
+          0.0,
+          0.027000000700354576,
+          5,
+          0,
+          4
+        ],
+        "goal": [
+          5.640083138881533,
+          0.3057545878591726,
+          0.0,
+          0.0,
+          0,
+          0,
+          1
+        ],
+        "yaw": 1.5690006132873702,
+        "band": 4,
+        "distance_m": 17.999999999999996,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 0,
+          "col": 4,
+          "terrain": "t6_obstacles",
+          "length_m": 2.63638890540322
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "terrain": "t1_asphalt",
+          "length_m": 6.001443067763341
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "terrain": "t5_large_rocks",
+          "length_m": 6.001443067763341
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "terrain": "t1_asphalt",
+          "length_m": 3.360724959070099
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t6_obstacles": 2.63638890540322,
+        "t1_asphalt": 9.36216802683344,
+        "t5_large_rocks": 6.001443067763341
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 4917
+    },
+    {
+      "episode": 51,
+      "distance_group_m": 18,
+      "category": "ice",
+      "category_name": "Ice on the direct segment, without stairs",
+      "mission": {
+        "start_id": 100,
+        "goal_id": 101,
+        "start": [
+          18.413669053968253,
+          2.58211453277527,
+          0.005317264147668391,
+          0.01481654311744242,
+          3,
+          1,
+          3
+        ],
+        "goal": [
+          36.393453124015295,
+          3.434971375676005,
+          0.045081653867918,
+          0.164000004529953,
+          2,
+          1,
+          6
+        ],
+        "yaw": 0.295059866873427,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 1,
+          "col": 3,
+          "terrain": "t4_fine_gravel",
+          "length_m": 2.589238938977405
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 6.006746220046091
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "terrain": "t2_slippery",
+          "length_m": 6.006746220046092
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "terrain": "t3_ramp",
+          "length_m": 3.3972686209304115
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t4_fine_gravel": 2.589238938977405,
+        "t5_large_rocks": 6.006746220046091,
+        "t2_slippery": 6.006746220046092,
+        "t3_ramp": 3.3972686209304115
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 216
+    },
+    {
+      "episode": 52,
+      "distance_group_m": 18,
+      "category": "ice",
+      "category_name": "Ice on the direct segment, without stairs",
+      "mission": {
+        "start_id": 102,
+        "goal_id": 103,
+        "start": [
+          9.916302077364518,
+          14.79133887996493,
+          0.0202834718688934,
+          0.04864569272971053,
+          4,
+          5,
+          2
+        ],
+        "goal": [
+          23.716767082917954,
+          3.2350779954705455,
+          0.02129026679256494,
+          0.04750721300641277,
+          4,
+          1,
+          4
+        ],
+        "yaw": 3.0969533954005106,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 5,
+          "col": 2,
+          "terrain": "t5_large_rocks",
+          "length_m": 2.0113858688112978
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "terrain": "t4_fine_gravel",
+          "length_m": 4.6193010370730745
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 0.053490667764128697
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 4.672791704837202
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 3.0995408845526713
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 1.5732508202845312
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 1.9702390166770947
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t5_large_rocks": 10.227667410610126,
+        "t4_fine_gravel": 4.6193010370730745,
+        "t2_slippery": 3.1530315523167998
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 918
+    },
+    {
+      "episode": 53,
+      "distance_group_m": 18,
+      "category": "ice",
+      "category_name": "Ice on the direct segment, without stairs",
+      "mission": {
+        "start_id": 104,
+        "goal_id": 105,
+        "start": [
+          13.102765050589282,
+          5.417949477743018,
+          0.005615114602320289,
+          0.014451712110058027,
+          3,
+          2,
+          2
+        ],
+        "goal": [
+          31.092019066426104,
+          6.039833674116145,
+          0.0,
+          0.02500000037252903,
+          5,
+          2,
+          5
+        ],
+        "yaw": 2.4327423606741405,
+        "band": 4,
+        "distance_m": 17.999999999999996,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 2,
+          "col": 2,
+          "terrain": "t4_fine_gravel",
+          "length_m": 1.8983682735998277
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 6.003584134446168
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 6.003584134446169
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 4.094463457507827
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t4_fine_gravel": 1.8983682735998277,
+        "t2_slippery": 6.003584134446168,
+        "t5_large_rocks": 6.003584134446169,
+        "t6_obstacles": 4.094463457507827
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 1056
+    },
+    {
+      "episode": 54,
+      "distance_group_m": 18,
+      "category": "ice",
+      "category_name": "Ice on the direct segment, without stairs",
+      "mission": {
+        "start_id": 106,
+        "goal_id": 107,
+        "start": [
+          13.790490924933758,
+          5.520098385347536,
+          0.005034514079619615,
+          0.014931239852584799,
+          3,
+          2,
+          2
+        ],
+        "goal": [
+          31.790459452850875,
+          5.553758361482652,
+          0.0,
+          0.02500000037252903,
+          5,
+          2,
+          5
+        ],
+        "yaw": -1.261789406895795,
+        "band": 4,
+        "distance_m": 18.000000000000004,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 2,
+          "col": 2,
+          "terrain": "t4_fine_gravel",
+          "length_m": 1.2095111898349316
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 6.000010490712637
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 6.000010490712636
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 4.790467828739798
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t4_fine_gravel": 1.2095111898349316,
+        "t2_slippery": 6.000010490712637,
+        "t5_large_rocks": 6.000010490712636,
+        "t6_obstacles": 4.790467828739798
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 1847
+    },
+    {
+      "episode": 55,
+      "distance_group_m": 18,
+      "category": "ice",
+      "category_name": "Ice on the direct segment, without stairs",
+      "mission": {
+        "start_id": 108,
+        "goal_id": 109,
+        "start": [
+          36.61319596353196,
+          11.512695510292764,
+          0.02036199282980976,
+          0.04910981424387037,
+          4,
+          4,
+          6
+        ],
+        "goal": [
+          23.366413486611016,
+          -0.6742956692043443,
+          0.0,
+          0.027000000700354576,
+          5,
+          0,
+          4
+        ],
+        "yaw": 2.537716217484408,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 4,
+          "col": 6,
+          "terrain": "t5_large_rocks",
+          "length_m": 1.4957358150826148
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "terrain": "t2_slippery",
+          "length_m": 3.413949042873355
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 1.0170051774634388
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 4.430954220336796
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "terrain": "t2_slippery",
+          "length_m": 2.7049637885026883
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 1.7259904318341048
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "terrain": "t6_obstacles",
+          "length_m": 3.2114015239070017
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t5_large_rocks": 3.2217262469167194,
+        "t2_slippery": 6.1189128313760435,
+        "t6_obstacles": 8.659360921707236
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 2329
+    },
+    {
+      "episode": 56,
+      "distance_group_m": 18,
+      "category": "ice",
+      "category_name": "Ice on the direct segment, without stairs",
+      "mission": {
+        "start_id": 110,
+        "goal_id": 111,
+        "start": [
+          12.168097942578903,
+          6.2187990096408035,
+          0.0051801844018810475,
+          0.014799731824376596,
+          3,
+          2,
+          2
+        ],
+        "goal": [
+          30.162058632719503,
+          5.752560142025857,
+          0.0,
+          0.02500000037252903,
+          5,
+          2,
+          5
+        ],
+        "yaw": 1.6828351623557616,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 2,
+          "col": 2,
+          "terrain": "t4_fine_gravel",
+          "length_m": 2.832852528210199
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 6.002013778943968
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 6.002013778943969
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 3.1631199139018644
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t4_fine_gravel": 2.832852528210199,
+        "t2_slippery": 6.002013778943968,
+        "t5_large_rocks": 6.002013778943969,
+        "t6_obstacles": 3.1631199139018644
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 2461
+    },
+    {
+      "episode": 57,
+      "distance_group_m": 18,
+      "category": "ice",
+      "category_name": "Ice on the direct segment, without stairs",
+      "mission": {
+        "start_id": 112,
+        "goal_id": 113,
+        "start": [
+          31.234458628307998,
+          15.826838192527982,
+          0.0,
+          0.07000000029802322,
+          5,
+          5,
+          5
+        ],
+        "goal": [
+          13.599145774242153,
+          12.221877646388812,
+          0.005093857847443246,
+          0.014419066624938776,
+          3,
+          4,
+          2
+        ],
+        "yaw": -2.758883246203292,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 5,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 4.3220245617571384
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "terrain": "t6_obstacles",
+          "length_m": 6.124076215359029
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 1.172081150106171
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 4.951995065252858
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "terrain": "t4_fine_gravel",
+          "length_m": 1.4298230075248037
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t6_obstacles": 10.446100777116168,
+        "t2_slippery": 6.124076215359029,
+        "t4_fine_gravel": 1.4298230075248037
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 4045
+    },
+    {
+      "episode": 58,
+      "distance_group_m": 18,
+      "category": "ice",
+      "category_name": "Ice on the direct segment, without stairs",
+      "mission": {
+        "start_id": 114,
+        "goal_id": 115,
+        "start": [
+          25.49172391011969,
+          3.620318262694607,
+          0.02046917282418089,
+          0.04897474280209777,
+          4,
+          1,
+          4
+        ],
+        "goal": [
+          11.451088909745478,
+          14.883557973642194,
+          0.020671916866290826,
+          0.04808707007802542,
+          4,
+          5,
+          2
+        ],
+        "yaw": -0.8499915056455492,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 1,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 1.4058363026853238
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 4.3525236561056815
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 0.441834040775559
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 4.794357696881241
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 2.4557680631016114
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "terrain": "t4_fine_gravel",
+          "length_m": 2.3385896337796286
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "terrain": "t5_large_rocks",
+          "length_m": 2.2110906066709544
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t5_large_rocks": 12.7638082623432,
+        "t2_slippery": 2.8976021038771704,
+        "t4_fine_gravel": 2.3385896337796286
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 5682
+    },
+    {
+      "episode": 59,
+      "distance_group_m": 18,
+      "category": "ice",
+      "category_name": "Ice on the direct segment, without stairs",
+      "mission": {
+        "start_id": 116,
+        "goal_id": 117,
+        "start": [
+          6.229517638257898,
+          6.573802452200885,
+          0.0,
+          0.023000000044703484,
+          5,
+          2,
+          1
+        ],
+        "goal": [
+          24.206714643714704,
+          5.668049822066817,
+          0.020497113496075064,
+          0.04576884463085529,
+          4,
+          2,
+          4
+        ],
+        "yaw": -1.0137907622051796,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 2,
+          "col": 1,
+          "terrain": "t6_obstacles",
+          "length_m": 2.7739965522000274
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "terrain": "t4_fine_gravel",
+          "length_m": 6.007610639590677
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 6.007610639590679
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 3.210782168618616
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t6_obstacles": 2.7739965522000274,
+        "t4_fine_gravel": 6.007610639590677,
+        "t2_slippery": 6.007610639590679,
+        "t5_large_rocks": 3.210782168618616
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 5959
+    },
+    {
+      "episode": 60,
+      "distance_group_m": 18,
+      "category": "ice",
+      "category_name": "Ice on the direct segment, without stairs",
+      "mission": {
+        "start_id": 118,
+        "goal_id": 119,
+        "start": [
+          30.15083687070795,
+          15.453136973861502,
+          0.0,
+          0.07000000029802322,
+          5,
+          5,
+          5
+        ],
+        "goal": [
+          12.154744020921374,
+          15.078114118743885,
+          0.02114192612540107,
+          0.04822031697360341,
+          4,
+          5,
+          2
+        ],
+        "yaw": -0.26962180011744996,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 5,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 3.151520952139102
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "terrain": "t6_obstacles",
+          "length_m": 6.001302666166275
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 6.001302666166275
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "terrain": "t5_large_rocks",
+          "length_m": 2.845873715528348
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t6_obstacles": 9.152823618305376,
+        "t2_slippery": 6.001302666166275,
+        "t5_large_rocks": 2.845873715528348
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 6302
+    },
+    {
+      "episode": 61,
+      "distance_group_m": 18,
+      "category": "stairs",
+      "category_name": "Stairs on the direct segment, without ice",
+      "mission": {
+        "start_id": 120,
+        "goal_id": 121,
+        "start": [
+          26.312125581674728,
+          2.200609061746786,
+          0.020794976754824102,
+          0.048830705823310165,
+          4,
+          1,
+          4
+        ],
+        "goal": [
+          8.319932779587678,
+          2.7307016692475505,
+          0.004999999888241291,
+          0.014645575631684862,
+          3,
+          1,
+          1
+        ],
+        "yaw": -1.7373671486724698,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 1,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 5.3144306267690515
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "terrain": "t4_fine_gravel",
+          "length_m": 6.002603528541128
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "terrain": "t7_stairs",
+          "length_m": 6.002603528541127
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "terrain": "t4_fine_gravel",
+          "length_m": 0.6803623161486936
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t5_large_rocks": 5.3144306267690515,
+        "t4_fine_gravel": 6.6829658446898215,
+        "t7_stairs": 6.002603528541127
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 593
+    },
+    {
+      "episode": 62,
+      "distance_group_m": 18,
+      "category": "stairs",
+      "category_name": "Stairs on the direct segment, without ice",
+      "mission": {
+        "start_id": 122,
+        "goal_id": 123,
+        "start": [
+          16.083858167783887,
+          18.615116423681197,
+          0.021738087876321487,
+          0.046115293224141186,
+          4,
+          6,
+          3
+        ],
+        "goal": [
+          34.03288373987124,
+          17.26142479980438,
+          0.0,
+          0.13800211180566588,
+          2,
+          6,
+          6
+        ],
+        "yaw": -1.010438203466935,
+        "band": 4,
+        "distance_m": 17.999999999999996,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 6,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 4.930103454613284
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "terrain": "t3_ramp",
+          "length_m": 6.017039731000858
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "terrain": "t7_stairs",
+          "length_m": 6.017039731000856
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "terrain": "t3_ramp",
+          "length_m": 1.0358170833849996
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t5_large_rocks": 4.930103454613284,
+        "t3_ramp": 7.052856814385857,
+        "t7_stairs": 6.017039731000856
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 834
+    },
+    {
+      "episode": 63,
+      "distance_group_m": 18,
+      "category": "stairs",
+      "category_name": "Stairs on the direct segment, without ice",
+      "mission": {
+        "start_id": 124,
+        "goal_id": 125,
+        "start": [
+          -0.031135611785402695,
+          5.628750052187093,
+          0.0,
+          0.04899999871850014,
+          5,
+          2,
+          0
+        ],
+        "goal": [
+          17.855261481404874,
+          3.609641579441146,
+          0.005236923698594694,
+          0.014736926022315992,
+          3,
+          1,
+          3
+        ],
+        "yaw": -0.8680994697502586,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 2,
+          "col": 0,
+          "terrain": "t6_obstacles",
+          "length_m": 3.0503874384467036
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "terrain": "t6_obstacles",
+          "length_m": 6.038108146504127
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "terrain": "t4_fine_gravel",
+          "length_m": 0.9741143310663503
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "terrain": "t7_stairs",
+          "length_m": 5.063993815437781
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "terrain": "t4_fine_gravel",
+          "length_m": 2.8733962685450365
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t6_obstacles": 9.08849558495083,
+        "t4_fine_gravel": 3.847510599611387,
+        "t7_stairs": 5.063993815437781
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 1002
+    },
+    {
+      "episode": 64,
+      "distance_group_m": 18,
+      "category": "stairs",
+      "category_name": "Stairs on the direct segment, without ice",
+      "mission": {
+        "start_id": 126,
+        "goal_id": 127,
+        "start": [
+          4.175799877121481,
+          3.3115529133973056,
+          0.005714712477641552,
+          0.014844650892365625,
+          3,
+          1,
+          1
+        ],
+        "goal": [
+          22.153433181953336,
+          2.414501768255331,
+          0.02100853343938624,
+          0.04932476294310896,
+          4,
+          1,
+          4
+        ],
+        "yaw": -1.3977365957073502,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 1,
+          "col": 1,
+          "terrain": "t4_fine_gravel",
+          "length_m": 4.830202103881745
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "terrain": "t7_stairs",
+          "length_m": 6.00746484082378
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "terrain": "t4_fine_gravel",
+          "length_m": 6.007464840823781
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 1.1548682144706934
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t4_fine_gravel": 10.837666944705525,
+        "t7_stairs": 6.00746484082378,
+        "t5_large_rocks": 1.1548682144706934
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 1955
+    },
+    {
+      "episode": 65,
+      "distance_group_m": 18,
+      "category": "stairs",
+      "category_name": "Stairs on the direct segment, without ice",
+      "mission": {
+        "start_id": 128,
+        "goal_id": 129,
+        "start": [
+          27.909541906961095,
+          8.555212735848084,
+          0.0,
+          0.04899999871850014,
+          5,
+          3,
+          5
+        ],
+        "goal": [
+          9.927088628870578,
+          9.349803260138223,
+          0.003864264050388895,
+          0.1475928613968634,
+          2,
+          3,
+          2
+        ],
+        "yaw": 1.6252576152554195,
+        "band": 4,
+        "distance_m": 18.000000000000004,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 3,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 0.9104294098317918
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "terrain": "t7_stairs",
+          "length_m": 6.005854614486065
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 6.005854614486064
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "terrain": "t3_ramp",
+          "length_m": 5.077861361196079
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t6_obstacles": 0.9104294098317918,
+        "t7_stairs": 6.005854614486065,
+        "t5_large_rocks": 6.005854614486064,
+        "t3_ramp": 5.077861361196079
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 2416
+    },
+    {
+      "episode": 66,
+      "distance_group_m": 18,
+      "category": "stairs",
+      "category_name": "Stairs on the direct segment, without ice",
+      "mission": {
+        "start_id": 130,
+        "goal_id": 131,
+        "start": [
+          10.044533751131063,
+          9.148727938447767,
+          0.01272669403545783,
+          0.15864414997187554,
+          2,
+          3,
+          2
+        ],
+        "goal": [
+          28.042869499367388,
+          9.393493732133035,
+          0.0,
+          0.04899999871850014,
+          5,
+          3,
+          5
+        ],
+        "yaw": -1.7061084301223597,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 3,
+          "col": 2,
+          "terrain": "t3_ramp",
+          "length_m": 4.955924465870768
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 6.000554801884005
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "terrain": "t7_stairs",
+          "length_m": 6.000554801884003
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 1.0429659303612242
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t3_ramp": 4.955924465870768,
+        "t5_large_rocks": 6.000554801884005,
+        "t7_stairs": 6.000554801884003,
+        "t6_obstacles": 1.0429659303612242
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 2585
+    },
+    {
+      "episode": 67,
+      "distance_group_m": 18,
+      "category": "stairs",
+      "category_name": "Stairs on the direct segment, without ice",
+      "mission": {
+        "start_id": 132,
+        "goal_id": 133,
+        "start": [
+          16.423961972137622,
+          9.809345166086509,
+          0.022433971137374872,
+          0.048864990531293596,
+          4,
+          3,
+          3
+        ],
+        "goal": [
+          34.28303333786715,
+          12.057359835473598,
+          0.022404379897678114,
+          0.048050240742679225,
+          4,
+          4,
+          6
+        ],
+        "yaw": -2.7822387198428373,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 3,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 4.61214823630658
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "terrain": "t7_stairs",
+          "length_m": 0.9179700408274011
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "terrain": "t7_stairs",
+          "length_m": 5.1293768669880535
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "terrain": "t3_ramp",
+          "length_m": 6.047346907815455
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "terrain": "t5_large_rocks",
+          "length_m": 1.2931579480625106
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t5_large_rocks": 5.90530618436909,
+        "t7_stairs": 6.047346907815455,
+        "t3_ramp": 6.047346907815455
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 2601
+    },
+    {
+      "episode": 68,
+      "distance_group_m": 18,
+      "category": "stairs",
+      "category_name": "Stairs on the direct segment, without ice",
+      "mission": {
+        "start_id": 134,
+        "goal_id": 135,
+        "start": [
+          35.31299313344819,
+          17.825325198770702,
+          0.07644845162876898,
+          0.164000004529953,
+          2,
+          6,
+          6
+        ],
+        "goal": [
+          17.315796417838666,
+          17.50766125738949,
+          0.020058468962994506,
+          0.04940674746726409,
+          4,
+          6,
+          3
+        ],
+        "yaw": 2.203187620140433,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 6,
+          "col": 6,
+          "terrain": "t3_ramp",
+          "length_m": 2.3133534105318216
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "terrain": "t7_stairs",
+          "length_m": 6.000934573678815
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "terrain": "t3_ramp",
+          "length_m": 6.000934573678815
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 3.6847774421105486
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t3_ramp": 8.314287984210637,
+        "t7_stairs": 6.000934573678815,
+        "t5_large_rocks": 3.6847774421105486
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 4571
+    },
+    {
+      "episode": 69,
+      "distance_group_m": 18,
+      "category": "stairs",
+      "category_name": "Stairs on the direct segment, without ice",
+      "mission": {
+        "start_id": 136,
+        "goal_id": 137,
+        "start": [
+          34.25553074075738,
+          11.601333419638456,
+          0.02195894281844861,
+          0.04815296120217174,
+          4,
+          4,
+          6
+        ],
+        "goal": [
+          16.353240150336774,
+          9.728370094813878,
+          0.020958403294737776,
+          0.047273311887736535,
+          4,
+          3,
+          3
+        ],
+        "yaw": -0.6083534676250557,
+        "band": 4,
+        "distance_m": 18.000000000000004,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 4,
+          "col": 6,
+          "terrain": "t5_large_rocks",
+          "length_m": 1.2623833368968826
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "terrain": "t3_ramp",
+          "length_m": 6.03274756682757
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "terrain": "t7_stairs",
+          "length_m": 3.2891668722872174
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "terrain": "t7_stairs",
+          "length_m": 2.743580694540351
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 4.6721215294479785
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t5_large_rocks": 5.934504866344861,
+        "t3_ramp": 6.03274756682757,
+        "t7_stairs": 6.0327475668275685
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 5189
+    },
+    {
+      "episode": 70,
+      "distance_group_m": 18,
+      "category": "stairs",
+      "category_name": "Stairs on the direct segment, without ice",
+      "mission": {
+        "start_id": 138,
+        "goal_id": 139,
+        "start": [
+          37.98839853886635,
+          17.53428617313159,
+          0.004294399875160788,
+          0.15658884918708565,
+          2,
+          6,
+          6
+        ],
+        "goal": [
+          19.988407736549465,
+          17.552482780168116,
+          0.020729819398966835,
+          0.048248278949935615,
+          4,
+          6,
+          3
+        ],
+        "yaw": -0.9444820204419124,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 6,
+          "col": 6,
+          "terrain": "t3_ramp",
+          "length_m": 4.988401087851486
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "terrain": "t7_stairs",
+          "length_m": 6.000003065895939
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "terrain": "t3_ramp",
+          "length_m": 6.000003065895938
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 1.0115927803566374
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t3_ramp": 10.988404153747425,
+        "t7_stairs": 6.000003065895939,
+        "t5_large_rocks": 1.0115927803566374
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 5832
+    },
+    {
+      "episode": 71,
+      "distance_group_m": 18,
+      "category": "multiple_choices",
+      "category_name": "Several surfaces and successive choices",
+      "mission": {
+        "start_id": 140,
+        "goal_id": 141,
+        "start": [
+          35.82373783422806,
+          18.653128394007442,
+          0.007374428795712689,
+          0.164000004529953,
+          2,
+          6,
+          6
+        ],
+        "goal": [
+          25.633826852605075,
+          3.8151462472801025,
+          0.022087262311880115,
+          0.04648641111846762,
+          4,
+          1,
+          4
+        ],
+        "yaw": -0.5106023887037447,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 6,
+          "col": 6,
+          "terrain": "t3_ramp",
+          "length_m": 2.6119664189434304
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "terrain": "t1_asphalt",
+          "length_m": 2.376034075640838
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 1.263274791697989
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "terrain": "t3_ramp",
+          "length_m": 3.639308867338825
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 3.6393088673388263
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 2.056826166532746
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 1.5824827008060802
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 0.8307981117012657
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t3_ramp": 6.251275286282255,
+        "t1_asphalt": 2.376034075640838,
+        "t6_obstacles": 6.959409825569561,
+        "t5_large_rocks": 2.413280812507346
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 37
+    },
+    {
+      "episode": 72,
+      "distance_group_m": 18,
+      "category": "multiple_choices",
+      "category_name": "Several surfaces and successive choices",
+      "mission": {
+        "start_id": 142,
+        "goal_id": 143,
+        "start": [
+          28.066496005496475,
+          0.3635775221306522,
+          0.0,
+          0.0,
+          0,
+          0,
+          5
+        ],
+        "goal": [
+          12.374140006860797,
+          9.181171480353207,
+          0.09155871030117678,
+          0.164000004529953,
+          2,
+          3,
+          2
+        ],
+        "yaw": 2.149492845523546,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 0,
+          "col": 5,
+          "terrain": "t1_asphalt",
+          "length_m": 1.2233298875328578
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "terrain": "t6_obstacles",
+          "length_m": 1.0965325033377338
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 5.7857992516511105
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "terrain": "t4_fine_gravel",
+          "length_m": 0.338320350118951
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 6.124119601770062
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 0.41989180309983243
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "terrain": "t3_ramp",
+          "length_m": 3.0120066024894534
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t1_asphalt": 1.2233298875328578,
+        "t6_obstacles": 1.0965325033377338,
+        "t5_large_rocks": 6.205691054750943,
+        "t4_fine_gravel": 0.338320350118951,
+        "t2_slippery": 6.124119601770062,
+        "t3_ramp": 3.0120066024894534
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 89
+    },
+    {
+      "episode": 73,
+      "distance_group_m": 18,
+      "category": "multiple_choices",
+      "category_name": "Several surfaces and successive choices",
+      "mission": {
+        "start_id": 144,
+        "goal_id": 145,
+        "start": [
+          6.5605952085167765,
+          9.743391599186674,
+          0.0,
+          0.0,
+          0,
+          3,
+          1
+        ],
+        "goal": [
+          22.297144731241744,
+          18.48187024931935,
+          0.009999999776482582,
+          0.164000004529953,
+          2,
+          6,
+          4
+        ],
+        "yaw": -0.6913006138361224,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 3,
+          "col": 1,
+          "terrain": "t1_asphalt",
+          "length_m": 1.5585036892472222
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "terrain": "t3_ramp",
+          "length_m": 1.2317703910579383
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "terrain": "t4_fine_gravel",
+          "length_m": 4.947794972894758
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "terrain": "t5_large_rocks",
+          "length_m": 1.9152088796358404
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 4.264356484316856
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 2.598647368213741
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "terrain": "t3_ramp",
+          "length_m": 1.4837182146336432
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t1_asphalt": 1.5585036892472222,
+        "t3_ramp": 2.7154886056915815,
+        "t4_fine_gravel": 4.947794972894758,
+        "t5_large_rocks": 4.513856247849581,
+        "t2_slippery": 4.264356484316856
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 189
+    },
+    {
+      "episode": 74,
+      "distance_group_m": 18,
+      "category": "multiple_choices",
+      "category_name": "Several surfaces and successive choices",
+      "mission": {
+        "start_id": 146,
+        "goal_id": 147,
+        "start": [
+          19.556864364290487,
+          17.758851952514448,
+          0.02180124673215151,
+          0.04762585284642932,
+          4,
+          6,
+          3
+        ],
+        "goal": [
+          24.59695345257709,
+          0.47887793684722624,
+          0.0,
+          0.027000000700354576,
+          5,
+          0,
+          4
+        ],
+        "yaw": 2.055663902897016,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 6,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 1.3113060890436254
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 3.125004699141322
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 0.7176539508792246
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "terrain": "t7_stairs",
+          "length_m": 2.407350748262097
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "terrain": "t7_stairs",
+          "length_m": 3.125004699141321
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 3.125004699141323
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 3.125004699141321
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "terrain": "t6_obstacles",
+          "length_m": 1.0636704152497665
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t5_large_rocks": 7.5613154873262705,
+        "t2_slippery": 3.8426586500205464,
+        "t7_stairs": 5.532355447403418,
+        "t6_obstacles": 1.0636704152497665
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 240
+    },
+    {
+      "episode": 75,
+      "distance_group_m": 18,
+      "category": "multiple_choices",
+      "category_name": "Several surfaces and successive choices",
+      "mission": {
+        "start_id": 148,
+        "goal_id": 149,
+        "start": [
+          29.620363169229492,
+          11.378129073846322,
+          0.012219365125688804,
+          0.164000004529953,
+          2,
+          4,
+          5
+        ],
+        "goal": [
+          12.976934923809686,
+          18.233513544433094,
+          0.0,
+          0.0,
+          0,
+          6,
+          2
+        ],
+        "yaw": 1.9689328171098657,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 4,
+          "col": 5,
+          "terrain": "t3_ramp",
+          "length_m": 2.8339436052852194
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "terrain": "t7_stairs",
+          "length_m": 2.737396242193399
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "terrain": "t6_obstacles",
+          "length_m": 3.751651471261976
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 4.125368443768112
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 2.363679269687263
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "terrain": "t1_asphalt",
+          "length_m": 2.18796096780403
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t3_ramp": 2.8339436052852194,
+        "t7_stairs": 2.737396242193399,
+        "t6_obstacles": 3.751651471261976,
+        "t2_slippery": 4.125368443768112,
+        "t5_large_rocks": 2.363679269687263,
+        "t1_asphalt": 2.18796096780403
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 281
+    },
+    {
+      "episode": 76,
+      "distance_group_m": 18,
+      "category": "multiple_choices",
+      "category_name": "Several surfaces and successive choices",
+      "mission": {
+        "start_id": 150,
+        "goal_id": 151,
+        "start": [
+          6.863274584189432,
+          6.412364766068888,
+          0.0,
+          0.023000000044703484,
+          5,
+          2,
+          1
+        ],
+        "goal": [
+          24.352751260822664,
+          2.155816213837606,
+          0.020255363342827945,
+          0.046032102950211005,
+          4,
+          1,
+          4
+        ],
+        "yaw": -1.1723135603594426,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 2,
+          "col": 1,
+          "terrain": "t6_obstacles",
+          "length_m": 2.199097102543727
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "terrain": "t4_fine_gravel",
+          "length_m": 5.8878694542445595
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "terrain": "t7_stairs",
+          "length_m": 0.2872724323216126
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "terrain": "t4_fine_gravel",
+          "length_m": 6.1751418865661725
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "terrain": "t5_large_rocks",
+          "length_m": 3.450619124323928
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t6_obstacles": 2.199097102543727,
+        "t4_fine_gravel": 12.063011340810732,
+        "t7_stairs": 0.2872724323216126,
+        "t5_large_rocks": 3.450619124323928
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 314
+    },
+    {
+      "episode": 77,
+      "distance_group_m": 18,
+      "category": "multiple_choices",
+      "category_name": "Several surfaces and successive choices",
+      "mission": {
+        "start_id": 152,
+        "goal_id": 153,
+        "start": [
+          3.7521371520568203,
+          -0.598996878160523,
+          0.0,
+          0.0,
+          0,
+          0,
+          1
+        ],
+        "goal": [
+          11.197973819604734,
+          15.788788705016938,
+          0.02093155535816746,
+          0.04832960925592882,
+          4,
+          5,
+          2
+        ],
+        "yaw": -2.8096830031310494,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 0,
+          "col": 1,
+          "terrain": "t1_asphalt",
+          "length_m": 2.3054941508188684
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "terrain": "t4_fine_gravel",
+          "length_m": 3.2951370840141196
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "terrain": "t6_obstacles",
+          "length_m": 3.2951370840141188
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "terrain": "t1_asphalt",
+          "length_m": 3.2951370840141188
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "terrain": "t3_ramp",
+          "length_m": 0.49558444114519884
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "terrain": "t4_fine_gravel",
+          "length_m": 2.799552642868921
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "terrain": "t5_large_rocks",
+          "length_m": 2.513957513124655
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t1_asphalt": 5.600631234832987,
+        "t4_fine_gravel": 6.094689726883041,
+        "t6_obstacles": 3.2951370840141188,
+        "t3_ramp": 0.49558444114519884,
+        "t5_large_rocks": 2.513957513124655
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 357
+    },
+    {
+      "episode": 78,
+      "distance_group_m": 18,
+      "category": "multiple_choices",
+      "category_name": "Several surfaces and successive choices",
+      "mission": {
+        "start_id": 154,
+        "goal_id": 155,
+        "start": [
+          7.361043130827076,
+          0.20429412245482304,
+          0.0,
+          0.0,
+          0,
+          0,
+          1
+        ],
+        "goal": [
+          10.426729721341802,
+          17.94130530609955,
+          0.0,
+          0.0,
+          0,
+          6,
+          2
+        ],
+        "yaw": -0.7409357624406971,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 0,
+          "col": 1,
+          "terrain": "t1_asphalt",
+          "length_m": 1.3149174657632856
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "terrain": "t4_fine_gravel",
+          "length_m": 3.0444813639060744
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "terrain": "t6_obstacles",
+          "length_m": 3.0444813639060744
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "terrain": "t1_asphalt",
+          "length_m": 2.219159466248175
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "terrain": "t3_ramp",
+          "length_m": 0.8253218976579
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "terrain": "t4_fine_gravel",
+          "length_m": 3.0444813639060753
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "terrain": "t5_large_rocks",
+          "length_m": 3.0444813639060753
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "terrain": "t1_asphalt",
+          "length_m": 1.46267571470634
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t1_asphalt": 4.996752646717801,
+        "t4_fine_gravel": 6.08896272781215,
+        "t6_obstacles": 3.0444813639060744,
+        "t3_ramp": 0.8253218976579,
+        "t5_large_rocks": 3.0444813639060753
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 376
+    },
+    {
+      "episode": 79,
+      "distance_group_m": 18,
+      "category": "multiple_choices",
+      "category_name": "Several surfaces and successive choices",
+      "mission": {
+        "start_id": 156,
+        "goal_id": 157,
+        "start": [
+          17.645612038040888,
+          17.69761854327144,
+          0.02065823610934779,
+          0.047761844628145714,
+          4,
+          6,
+          3
+        ],
+        "goal": [
+          30.588520905084458,
+          5.188377556728531,
+          0.0,
+          0.02500000037252903,
+          5,
+          2,
+          5
+        ],
+        "yaw": 0.3756195393695876,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 6,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 1.7232967053777652
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 2.941727512555698
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "terrain": "t6_obstacles",
+          "length_m": 1.375081161774878
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "terrain": "t7_stairs",
+          "length_m": 4.316808674330575
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "terrain": "t7_stairs",
+          "length_m": 2.652447677928935
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 1.6643609964016415
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "terrain": "t6_obstacles",
+          "length_m": 3.3262772716305062
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t5_large_rocks": 1.7232967053777652,
+        "t2_slippery": 2.941727512555698,
+        "t6_obstacles": 6.365719429807026,
+        "t7_stairs": 6.96925635225951
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 388
+    },
+    {
+      "episode": 80,
+      "distance_group_m": 18,
+      "category": "multiple_choices",
+      "category_name": "Several surfaces and successive choices",
+      "mission": {
+        "start_id": 158,
+        "goal_id": 159,
+        "start": [
+          9.93974174943971,
+          18.25103538227028,
+          0.0,
+          0.0,
+          0,
+          6,
+          2
+        ],
+        "goal": [
+          19.63942480377593,
+          3.0880492434708806,
+          0.005516498724752389,
+          0.014827400577077978,
+          3,
+          1,
+          3
+        ],
+        "yaw": -2.638693078005526,
+        "band": 4,
+        "distance_m": 18.0,
+        "deadline_steps": 435
+      },
+      "direct_cells": [
+        {
+          "row": 6,
+          "col": 2,
+          "terrain": "t1_asphalt",
+          "length_m": 2.078656314287226
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "terrain": "t5_large_rocks",
+          "length_m": 3.5613037897478215
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "terrain": "t4_fine_gravel",
+          "length_m": 3.561303789747822
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "terrain": "t3_ramp",
+          "length_m": 0.18921288776166034
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "terrain": "t5_large_rocks",
+          "length_m": 3.3720909019861627
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "terrain": "t2_slippery",
+          "length_m": 3.561303789747821
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "terrain": "t4_fine_gravel",
+          "length_m": 1.6761285267214863
+        }
+      ],
+      "direct_terrain_lengths_m": {
+        "t1_asphalt": 2.078656314287226,
+        "t5_large_rocks": 6.933394691733984,
+        "t4_fine_gravel": 5.237432316469308,
+        "t3_ramp": 0.18921288776166034,
+        "t2_slippery": 3.561303789747821
+      },
+      "alternative_geometry": null,
+      "draw_attempt": 394
+    }
+  ]
+}

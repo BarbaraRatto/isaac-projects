@@ -1,0 +1,164 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{lmodern,microtype}
+\usepackage[margin=2cm]{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlist[itemize]{nosep,leftmargin=1.4em,topsep=3pt}
+\newcommand{\completare}[1]{\textit{[Da completare: #1]}}
+\begin{document}
+\begin{center}
+{\Large\bfseries Piano degli esperimenti: simulazione e prove sul robot reale}
+\end{center}
+
+\textbf{Missione vs esecuzione}
+
+Una missione è una scena con un punto di partenza e un goal assegnato. Un'esecuzione è una singola prova della missione. La stessa missione può quindi essere eseguita più volte.
+
+\textbf{Scopo generale}
+
+L'obiettivo è verificare se Spot, usando una policy che combina immagini e stato del robot, riesce a raggiungere il goal minimizzando il consumo energetico. Considero insieme raggiungimento del goal, consumo energetico, tempo, distanza e cadute. In tutti gli esperimenti, sia simulati sia reali, con \textbf{costo energetico} intendo il \textbf{lavoro meccanico assoluto ai giunti}.
+
+Uso Spot con una camera RGB-D: una ZED X in simulazione e una ZED 2 nelle prove reali. Gli esperimenti sono divisi in simulazione e realtà; per il reale considero le prove indoor in laboratorio. Le eventuali prove outdoor restano da definire.
+
+\section{Esperimenti in simulazione}
+
+\subsection{Primo esempio: scelta fra due percorsi}
+
+Il primo caso è un esempio breve per mostrare in modo semplice il funzionamento del'algoritmo.
+Le altre prove più complesse sono fatte in seguito.
+
+Ho allenato una policy con PPO su due disposizioni speculari della stessa scena: un ramo asfaltato, uno roccioso e una zona centrale scivolosa (che simula una lastra di ghiaccio).
+L'obiettivo è mostrare la scelta fra due alternative, raggiungendo il goal senza cadere.
+
+\begin{itemize}
+\item \textbf{Prove:} 10 esecuzioni, cinque per ciascuna disposizione.
+\item \textbf{Start e goal:} partenza nominale a (0, 0) m e arrivo a (4, 4) m, con piccole variazioni iniziali della posizione.
+\item \textbf{Cosa mostro:} andamento del training, traiettorie sulle due mappe, raggiungimenti del goal e costo di ogni esecuzione.
+
+\end{itemize}
+
+\subsection{Primo esempio con SAC e sette terreni}
+
+Da questo esperimento in poi, e per tutti quelli successivi, come algoritmo ho usato SAC, che include un incentivo all'esplorazione.
+Considero sette terreni con geometrie, attriti e texture scelti per rappresentare superfici reali.
+
+Prima della valutazione più ampia mostro un breve esempio con partenza e goal assegnati, riportando i tragitti di 19 esecuzioni.
+Serve a osservare come si comporta la policy in alcuni casi specifici.
+Qui mostro il confronto energetico di vari percorsi possibili.
+
+(mi riferisco a quell'esempio che ti avevo mostrato allenato con start e goal fissi, da cui avevo ricavato i due grafici che erano molto interessanti.)
+
+
+\subsection{Valutazione sulla mappa 7 x 7}
+
+La scena principale è una mappa di 49 celle, ciascuna di 6~m per 3~m, con sette tipi di terreno distribuiti casualmente e presenti in sette celle ciascuno.
+La policy è stata allenata con SAC usando punti di partenza e arrivo casuali. La mappa è rimasta fissa durante l'addestramento, per limitarne il carico computazionale, e viene mantenuta uguale anche negli esperimenti: a variare sono i punti di partenza e i goal.
+
+L'obiettivo è osservare il comportamento di Spot quando gli vengono assegnati goal su terreni diversi e a distanze diverse dalla partenza. Verifico se li raggiunge entro il tempo previsto, registrando eventuali timeout o cadute. Osservo inoltre se le scelte di percorso tengono conto del costo del movimento.
+
+
+\textbf{Prevedo 30 missioni diverse, con un'esecuzione per missione:}
+\begin{itemize}
+\item 10 con start e goal vicini, a circa 3--6 m;
+\item 10 a distanza intermedia, circa 6--12 m;
+\item 10 a distanza maggiore, circa 12--18 m.
+\end{itemize}
+
+(qui non sono sicurissima di fare 10 10 e 10, e forse ha più senso farne di più nei percorsi lunghi. devo valutare.)
+
+Scelgo \textbf{casualmente} tutte le coppie all'interno di queste fasce, includendo:
+\begin{itemize}
+\item tragitto semplice su terreno regolare;
+\item ghiaccio sul percorso diretto, con spazio per aggirarlo;
+\item scale sul percorso diretto, con un passaggio alternativo;
+\item scelta fra due percorsi su superfici con costi diversi;
+\item più cambi di terreno o più scelte successive.
+\end{itemize}
+
+Per queste prove scelgo start e goal fuori da ghiaccio e scale, lasciando però che tali terreni possano trovarsi lungo il tragitto.
+Le casistiche possono sovrapporsi: una missione può includere una deviazione e più cambi di superficie.
+
+Mostro una panoramica delle 30 traiettorie, confrontandole con il percorso rettilineo e confrontandone i costi.
+Faccio quindi un riepilogo di energia consumata (magari mostrando il guadagno rispetto al non utilizzo della policy), tempo impiegato, fallimenti e eventuali cadute.
+
+\section{Esperimenti sul robot reale}
+
+\subsection{Indoor: pavimento grigio vs telo verde}
+
+Per le prove in laboratorio semplifico la scena a due superfici: un terreno grigio (che simula il pavimento del laboratorio) e un terreno verde (che simula un telo/cartoncino verde disposto sul pavimento in alcune aree).
+In simulazione il grigio consente il movimento ordinario; sul verde è applicata una maggiore resistenza al moto, per rendere l'attraversamento più faticoso e costoso anche dal punto di vista temporale.
+Nella realtà il terreno verde non ha le stesse caratteristiche fisiche della simulazione, ma serve a rappresentare visivamente la superficie e a distinguerla dal pavimento grigio.
+
+Lo scopo è verificare se il comportamento appreso in simulazione si trasferisce alla stanza reale: Spot dovrebbe valutare quando è conveniente attraversare la zona verde e quando invece conviene deviare, e di quanto.
+
+\textbf{Prima della prova reale prevedo 10 missioni simulate} in cui start e goal sono scelti \textbf{randomicamente} (a una distnaza che va dai 2 m ai 10 m), considerando le seguenti fasce:
+
+\begin{itemize}
+\item tragitti sul solo grigio;
+\item una zona verde davanti al robot e una deviazione disponibile;
+\item più zone verdi lungo il tragitto;
+\item zona verde a destra o a sinistra, per variare il lato della deviazione;
+\item goal sul verde, per verificare che la superficie venga attraversata quando serve.
+\end{itemize}
+
+
+\textbf{Nel laboratorio propongo cinque missioni, ciascuna ripetuta due volte: 10 esecuzioni.}
+\begin{itemize}
+\item un tragitto sul grigio;
+\item due tragitti con una zona verde sul percorso diretto;
+\item un tragitto con più zone verdi da evitare (deviando leggermente);
+\item un tragitto con goal sulla zona verde.
+\end{itemize}
+
+Le coordinate saranno scelte in base allo spazio della stanza e poi mantenute uguali nelle due ripetizioni.
+
+Mostro la scena reale, i percorsi seguiti e il confronto fra raggiungimento del goal, energia e tempo utilizando la policy e senza utilizzarla. 
+
+(poi qui in base ai tempi e alla fattibilità valutiamo se estendere gli esperimenti con altre ripetizioni o altre nuove missioni)
+
+\subsection{Indoor: pavimento grigio vs zona nera}
+
+La seconda scena ha la stessa impostazione, ma il verde viene sostituito dal nero.
+In simulazione il nero rappresenta una superficie scivolosa con le stesse proprietà fisiche del ghiaccio, sulla quale Spot perde l'equilibrio e cade molto facilmente.
+Lo scopo è verificare se la policy impara a evitarla e mantiene questo comportamento nel laboratorio.
+
+\textbf{Prevedo 10 missioni simulate}, sempre ad una distanza che varia dai 2 m ai 10 m, con start e goal scelti randomicamente all'interno di varie fasce: tragitti senza nero, una zona nera sul percorso diretto, più zone nere e passaggi alternativi su lati diversi.
+In questo caso escludo casistiche in cui il goal si trova sul terreno nero, in quanto sarebbe non raggiungibile dal robot.
+
+\textbf{Sul reale propongo cinque missioni ripetute due volte: 10 esecuzioni.}
+\begin{itemize}
+\item un tragitto sul grigio;
+\item due tragitti con una zona nera davanti al robot, variando il lato del passaggio libero;
+\item un tragitto con più zone nere;
+\item un tragitto più lungo con scelte successive.
+\end{itemize}
+
+(anche qui in base alle tempistiche valuto ulteriori esperimenti)
+
+Nel laboratorio delimito le zone con cartelloni neri.
+Questi rappresentano visivamente la superficie da evitare, ma non riproducono necessariamente l'attrito del ghiaccio. La prova reale verifica quindi soprattutto se Spot evita la regione associata al terreno scivoloso in simulazione. Mostro traiettorie, goal raggiunti, eventuali attraversamenti del nero e altri esiti.
+
+\subsection{Outdoor}
+
+Le prove all'aperto sono un'estensione possibile. Per ora non ne definisco il protocollo; la scena e l'eventuale training su asfalto, erba e una terza superficie verranno valutati in seguito.
+
+\section{Dati da salvare e risultati da mostrare}
+
+Per ogni esecuzione salvo:
+\begin{itemize}
+\item scena, modello utilizzato, posizione dello start e del goal;
+\item distanza in linea retta fra start e goal;
+\item traiettoria e distanza effettivamente percorsa;
+\item lavoro meccanico assoluto ai giunti dell'intera missione;
+\item tempo fino al raggiungimento del goal o all'interruzione;
+\item esito: successo, caduta, timeout, uscita dall'area o arresto dell'operatore;
+\end{itemize}
+
+Il tempo e il costo energetico includono l'eventuale allineamento iniziale, che fanno parte dell'esecuzione.
+
+\end{document}

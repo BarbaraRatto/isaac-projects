@@ -3,6 +3,17 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Schema concettuale della navigazione con attenzione al costo energetico. Il robot sceglie i comandi di movimento verso il goal utilizzando la percezione locale e il feedback raccolto durante l'attraversamento. La convenienza dei percorsi dipende sia dalle superfici incontrate sia dal movimento eseguito.}}{3}{figure.1.1}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Geometria, semantica e feature per la navigazione}}{13}{figure.2.1}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Percezione, esperienza e memoria del terreno}}{17}{figure.2.2}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Schema del problema di navigazione energetica}}{26}{figure.3.1}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Configurazione della camera sul robot simulato}}{29}{figure.3.2}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Architettura del sistema di navigazione}}{30}{figure.3.3}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Calcolo e impiego del segnale energetico}}{34}{figure.3.4}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Associazione fra patch visiva e punto nello spazio}}{36}{figure.3.5}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Memoria persistente e lettura locale}}{40}{figure.3.6}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Ciclo degli episodi di navigazione}}{46}{figure.3.7}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Architetture della policy di navigazione}}{49}{figure.3.8}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Curriculum delle missioni di navigazione}}{54}{figure.3.9}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -1,0 +1,271 @@
+{
+  "schema": 2,
+  "materials": {
+    "grey": {
+      "label": "Grigio chiaro, fisica come asfalto",
+      "color_srgb": [
+        0.82,
+        0.83,
+        0.81
+      ],
+      "static_friction": 1.0,
+      "dynamic_friction": 0.8,
+      "restitution": 0.0,
+      "roughness": 0.85
+    },
+    "green": {
+      "label": "Verde erba chiaro, rigido con resistenza viscosa orizzontale",
+      "color_srgb": [
+        0.62,
+        0.8,
+        0.35
+      ],
+      "static_friction": 1.0,
+      "dynamic_friction": 0.8,
+      "compliant_contact_stiffness": 0.0,
+      "compliant_contact_damping": 0.0,
+      "horizontal_drag_ns_per_m": 90.0,
+      "restitution": 0.0,
+      "roughness": 0.85
+    }
+  },
+  "surface_regions": {
+    "lab_15x15_eval_01.usda": [
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          0,
+          0,
+          3,
+          3
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          3,
+          0,
+          6,
+          3
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          6,
+          0,
+          9,
+          3
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          9,
+          0,
+          12,
+          3
+        ]
+      },
+      {
+        "material": "green",
+        "bounds_xy_m": [
+          12,
+          0,
+          15,
+          3
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          0,
+          3,
+          3,
+          6
+        ]
+      },
+      {
+        "material": "green",
+        "bounds_xy_m": [
+          3,
+          3,
+          6,
+          6
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          6,
+          3,
+          9,
+          6
+        ]
+      },
+      {
+        "material": "green",
+        "bounds_xy_m": [
+          9,
+          3,
+          12,
+          6
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          12,
+          3,
+          15,
+          6
+        ]
+      },
+      {
+        "material": "green",
+        "bounds_xy_m": [
+          0,
+          6,
+          3,
+          9
+        ]
+      },
+      {
+        "material": "green",
+        "bounds_xy_m": [
+          3,
+          6,
+          6,
+          9
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          6,
+          6,
+          9,
+          9
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          9,
+          6,
+          12,
+          9
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          12,
+          6,
+          15,
+          9
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          0,
+          9,
+          3,
+          12
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          3,
+          9,
+          6,
+          12
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          6,
+          9,
+          9,
+          12
+        ]
+      },
+      {
+        "material": "green",
+        "bounds_xy_m": [
+          9,
+          9,
+          12,
+          12
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          12,
+          9,
+          15,
+          12
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          0,
+          12,
+          3,
+          15
+        ]
+      },
+      {
+        "material": "green",
+        "bounds_xy_m": [
+          3,
+          12,
+          6,
+          15
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          6,
+          12,
+          9,
+          15
+        ]
+      },
+      {
+        "material": "green",
+        "bounds_xy_m": [
+          9,
+          12,
+          12,
+          15
+        ]
+      },
+      {
+        "material": "grey",
+        "bounds_xy_m": [
+          12,
+          12,
+          15,
+          15
+        ]
+      }
+    ]
+  },
+  "maps_sha256": {
+    "lab_15x15_eval_01.usda": "775ad4abcc6717e97b86d8d4b7a2915126464b482cd512a6865189bbcda972fb"
+  },
+  "runtime_drag": {
+    "model": "F_world_xy=-c*v_world_xy",
+    "selection": "base XY inside green",
+    "body": "Spot body, at COM",
+    "alignment": true,
+    "artificial_energy_addition": false
+  }
+}

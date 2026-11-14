@@ -1,0 +1,301 @@
+{
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test12_SAC_Re/runs/general_map_test12_sac_re_20261109_203415_65592/policy_best.pt",
+  "checkpoint_sha256": "7c14b0a4157cce6251d5f9fd04ace0c0c4e67fdba40f3d14814bb48be6cc3c63",
+  "checkpoint_transitions": 912178,
+  "training_budget": 1500000,
+  "checkpoint_best_score": [
+    3,
+    1.0,
+    -2227.861364364624
+  ],
+  "map": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test12_SAC_Re/maps/lab_15x15_eval_01.usda",
+  "map_sha256": "775ad4abcc6717e97b86d8d4b7a2915126464b482cd512a6865189bbcda972fb",
+  "map_metadata_sha256": "76e30edf7cb968417dceeb878c4d1e9a6c7402ed06434c06c9f7c6b5539d37cc",
+  "drag_manifest_sha256": "334bf0533eb53de64833f67cd216ab82720bc69328ddcd3ec50023af28ba70af",
+  "mission_file": "missions_20.json",
+  "missions_sha256": "ea23c0db4ad07a949dde45d86e8a0120536c44114fcbd6ce6702032a6ffb6d38",
+  "signature": {
+    "schema": 3,
+    "experiment": "train_general_big_map_test12_SAC_Re",
+    "terrain_model": {
+      "grid_shape": [
+        5,
+        5
+      ],
+      "cell_size_m": 3.0,
+      "green_cells": 8,
+      "horizontal_drag_ns_per_m": 90.0,
+      "activation": "base_xy_inside_green",
+      "force": "world_xy_opposite_actual_base_velocity",
+      "applies_during_alignment": true,
+      "artificial_energy_addition": false
+    },
+    "goal_scaling": {
+      "mode": "fixed_scale_no_centering",
+      "scale_m": 10.0,
+      "clip": false
+    },
+    "pca_calibration": "lab_two_material_views_v1",
+    "algorithm": "asymmetric_twin_Q_SAC",
+    "navigation": {
+      "physics_dt": 0.005,
+      "physics_steps_per_action": 40,
+      "settle_seconds": 2.0,
+      "max_episode_seconds": 90.0,
+      "spawn_height_m": 0.75,
+      "goal_radius_m": 0.55,
+      "minimum_body_height_m": 0.25,
+      "fall_tilt_deg": 90.0,
+      "fall_persistence_seconds": 1.0,
+      "body_contact_threshold_n": 1.0,
+      "max_forward_m_s": 1.6,
+      "max_yaw_rad_s": 1.5,
+      "progress_reward_per_m": 30.0,
+      "time_penalty_per_step": 0.02,
+      "success_bonus": 1000.0,
+      "failure_penalty": 1000.0,
+      "energy_reference_j": 100.0,
+      "energy_weight": 1.0,
+      "power_filter_seconds": 1.0,
+      "heading_penalty_start_deg": 110.0,
+      "heading_penalty_per_second": 2.0
+    },
+    "sac": {
+      "timesteps": 1500000,
+      "num_envs": 128,
+      "buffer_size": 100000,
+      "learning_starts": 4096,
+      "batch_size": 256,
+      "learning_rate": 0.0003,
+      "gamma": 0.999,
+      "tau": 0.005,
+      "initial_alpha": 1.0,
+      "target_entropy": -2.0,
+      "gradient_steps": 16,
+      "checkpoint_every": 10000,
+      "eval_every": 10000,
+      "eval_episodes_per_env": 1,
+      "log_every": 1000
+    },
+    "actor_size": 3255,
+    "critic_size": 3279,
+    "layers": [
+      128,
+      64
+    ],
+    "state_layers": [
+      64,
+      32
+    ],
+    "map_layers": [
+      1024,
+      512,
+      256,
+      128
+    ],
+    "alignment": {
+      "tolerance_deg": 10.0,
+      "stable_steps": 3,
+      "gain": 1.5,
+      "max_yaw_rad_s": 0.8,
+      "max_seconds": 12.0,
+      "max_steps_without_navigation": 300
+    },
+    "separate_actor_critic_optimizers": true,
+    "scalar_reward": "navigation_minus_weighted_energy",
+    "policy_distribution": "state_dependent_squashed_gaussian",
+    "target_critics": 2,
+    "replay_storage": "raw_actor_plus_privileged_navigation_only",
+    "critic_state_size": 41,
+    "feature_dim": 32,
+    "state_order": [
+      "goal_xy",
+      "linear_velocity_xyz",
+      "angular_velocity_xyz",
+      "projected_gravity_xyz",
+      "previous_action_xy",
+      "power_ema",
+      "time_left"
+    ],
+    "cell_order": [
+      "pca32",
+      "relative_height",
+      "slope_x",
+      "slope_y",
+      "roughness",
+      "visual_valid",
+      "geometry_valid",
+      "visual_age",
+      "geometry_age"
+    ],
+    "privileged_order": [
+      "mu_static_dynamic_4x2",
+      "contact4",
+      "normal_force4",
+      "slip4x2"
+    ],
+    "feet": [
+      "fl_foot",
+      "fr_foot",
+      "hl_foot",
+      "hr_foot"
+    ],
+    "look_x": [
+      -2.0,
+      -1.5,
+      -1.0,
+      -0.5,
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "look_y": [
+      -2.0,
+      -1.5,
+      -1.0,
+      -0.5,
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "cell_resolution_m": 0.5,
+    "map_persistent": true,
+    "memory_resolution_m": 0.1,
+    "memory_age_seconds": 90.0,
+    "memory_fusion": "latest_per_world_xy_bin",
+    "memory_age_aggregation": "sample_weighted_mean",
+    "localization": "simulator_pose",
+    "depth_stride": 4,
+    "geometry_min_points": 10,
+    "geometry_min_xy_eigenvalue": 0.0001,
+    "terminal_timeout": true,
+    "missions": {
+      "distance_bands": [
+        [
+          1.5,
+          3.0
+        ],
+        [
+          3.0,
+          6.0
+        ],
+        [
+          6.0,
+          10.0
+        ],
+        [
+          10.0,
+          14.0
+        ]
+      ],
+      "heading_limits_deg": [
+        180.0,
+        180.0,
+        180.0,
+        180.0
+      ],
+      "evaluation_intervals": [
+        10000,
+        10000,
+        30000,
+        30000
+      ],
+      "white_only_stages": 1,
+      "stage_names": [
+        "grigio 1.5\u20133 m",
+        "grigio/verde 3\u20136 m",
+        "grigio/verde 6\u201310 m",
+        "grigio/verde 10\u201314 m"
+      ],
+      "easier_probability": 0.25,
+      "promotion_success": 0.8,
+      "promotion_evaluations": 2,
+      "spawn_excluded": [],
+      "goal_excluded": [],
+      "cell_margin_m": 0.65,
+      "footprint_radius_m": 0.55,
+      "max_spawn_relief_m": 0.16,
+      "deadline_min_s": 30.0,
+      "deadline_max_s": 90.0,
+      "deadline_base_s": 15.0,
+      "deadline_seconds_per_m": 4.0,
+      "evaluation_seed": 710031,
+      "reachability_filter": false,
+      "distance_metric": "euclidean_xy"
+    },
+    "fall_detection": "physics_step_persistence_v1",
+    "body_contact_name": "body",
+    "env_spacing_m": 80.0,
+    "camera_far_clip_m": 20.0,
+    "reset_pose": "startup_settled_stance_above_local_footprint",
+    "startup_clearance_m": 0.02
+  },
+  "training_identity": {
+    "runtime_drag": "0b8cb71ac0afa1fedbf79202cd7e2c350b0b7d4157d057ac4d1b1aa28d8a99ab",
+    "drag_manifest": "0898a08896af3fd39012fdecdb58488e16986e049867ce0af55cf70c6fd08c39",
+    "dino": {
+      "config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d",
+      "preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+      "model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1"
+    },
+    "input_size": 518,
+    "resize": "opencv_linear_square_no_crop",
+    "terrain": {
+      "lab_15x15": "7d3e7c8e1fd9d68dba370219b1702cb1ab687e281e690b4d513bb5f2ce26ac78"
+    },
+    "missions": {
+      "spawn_bank.npz": "476186aac7efe77cc076b4e4ca98e0a18f82b6c78fe4614ece1675305e3768da",
+      "map_metadata.json": "21f4d60cf462e87adb90aec7db36d7332e75e7c49f9880f1cf77ca30d15c1faf"
+    }
+  },
+  "command": [
+    "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test12_SAC_Re/new_map_eval/run.py",
+    "--device",
+    "cuda:0",
+    "--headless"
+  ],
+  "device": "cuda:0",
+  "agent_device": "cpu",
+  "map_backend": "cpu",
+  "rgb_backend": "opencv",
+  "simulation_seed": 20000,
+  "energy": "Absolute joint mechanical work; physics-step trapezoidal integration",
+  "time": "Simulated time; includes automatic initial alignment",
+  "policy": "Deterministic; no learning or normalizer/PCA updates",
+  "goal_radius_m": 0.55,
+  "physics_dt_s": 0.005,
+  "navigation_dt_s": 0.2,
+  "friction_and_resistance": {
+    "grey": {
+      "label": "Grigio chiaro, fisica come asfalto",
+      "color_srgb": [
+        0.82,
+        0.83,
+        0.81
+      ],
+      "static_friction": 1.0,
+      "dynamic_friction": 0.8,
+      "restitution": 0.0,
+      "roughness": 0.85
+    },
+    "green": {
+      "label": "Verde erba chiaro, rigido con resistenza viscosa orizzontale",
+      "color_srgb": [
+        0.62,
+        0.8,
+        0.35
+      ],
+      "static_friction": 1.0,
+      "dynamic_friction": 0.8,
+      "compliant_contact_stiffness": 0.0,
+      "compliant_contact_damping": 0.0,
+      "horizontal_drag_ns_per_m": 90.0,
+      "restitution": 0.0,
+      "roughness": 0.85
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "generator": "missions.py",
+  "generator_sha256": "0a6db9dd7d276f98a336c05fa194c41770a76270028cc0dbbfa7dca0ef185ff9",
+  "mission_sha256": "7092612bd16df4e4c985e7f58cd61400c21ff5f08fda091ce92db2407725bf2c",
+  "python_version": "3.11.13",
+  "numpy_version": "1.26.0",
+  "scipy_version": "1.15.3",
+  "surface_checks_source": "train_general_big_map_test7_SAC/prepare_map.py",
+  "surface_checks_sha256": "0bd093f60da21475171f8b5229598336294a49d2db65c0e5da1e624a72f8c557",
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test7_SAC/runs/general_map_test7_sac_20261030_003829_628341/policy_best.pt",
+  "checkpoint_sha256": "62dae8dc1ba519cd8b68d97c6d7b75ced88cb977712a49fa4fa27c434532709f",
+  "checkpoint_transitions": 650065,
+  "previous_checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test7_SAC/checkpoints_importati/policy_best_stage_3.pt",
+  "previous_checkpoint_sha256": "1c12f5f18e1285463456423a2ae5e6e043f311d310b2ba04bf9575ed5609c02f",
+  "policy_state_identical_to_previous_checkpoint": true,
+  "checkpoint_note": "Different checkpoint file and best-score metadata; all 66 policy tensors are identical to the previous model",
+  "study_note": "Separate redesigned mission panel after preliminary evaluations; no previous outcomes merged"
+}

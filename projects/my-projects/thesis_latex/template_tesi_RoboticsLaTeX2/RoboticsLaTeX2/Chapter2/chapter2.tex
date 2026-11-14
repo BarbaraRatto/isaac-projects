@@ -1,83 +1,292 @@
 \chapter{Stato dell'arte e fondamenti}
 \label{chap:state-of-the-art}
 
-% Apertura: perimetro e criteri di selezione della letteratura.
-% Organizzare per problemi, evitando una divisione rigida fra metodi
-% algoritmici e RL che produca sovrapposizioni.
-% Bibliografia ragionata: thesis_latex/ricerca_bibliografica/.
-% Il survey locale in fase di scrittura non deve essere citato.
+Per raggiungere una destinazione consumando poca energia, un robot a zampe deve scegliere dove passare e come muoversi. La forma del terreno aiuta a riconoscere ostacoli e dislivelli, ma da sola non basta a prevedere lo sforzo richiesto. Servono anche informazioni su ciò che accade quando il robot appoggia i piedi e avanza. Questo capitolo presenta i lavori che collegano questi aspetti: navigazione, percezione del terreno, esperienza di attraversamento ed efficienza energetica. Introduce inoltre i principi del reinforcement learning necessari per comprendere il metodo della tesi.
+
+La rassegna comprende soprattutto studi su robot a zampe, insieme ad alcuni riferimenti generali sulla visione e sull'apprendimento. Per confrontarli si considerano tre domande: quali informazioni riceve il sistema, che cosa apprende e quali decisioni può prendere. Questa lettura aiuta a distinguere, per esempio, un metodo che riconosce un passaggio sicuro da uno che cerca di ridurre l'energia necessaria per percorrerlo. Il survey di \citet{Sevastopoulos2022Survey} offre un quadro delle diverse definizioni di traversabilità e dei metodi usati per stimarla.
 
 \section{Navigazione autonoma dei robot a zampe}
 \label{sec:sota-navigazione}
 
+La navigazione porta il robot dalla posizione iniziale a un obiettivo, evitando gli ostacoli e rispettando le sue capacità di movimento. Nei quadrupedi, la scelta del percorso è legata al controllo degli appoggi: una regione libera da ostacoli può comunque essere difficile da attraversare. I sistemi esistenti affrontano questo legame separando le decisioni in più livelli oppure apprendendo insieme una parte più ampia del comportamento.
+
 \subsection{Architetture gerarchiche di navigazione e locomozione}
-% Distinguere pianificazione, comandi di navigazione e controllo locomotorio.
+
+In un'architettura gerarchica, i moduli hanno compiti distinti. Un pianificatore sceglie il percorso su una mappa; un modulo locale produce comandi di velocità; il controllore locomotorio li trasforma in movimenti dei giunti. Questa divisione facilita l'uso di componenti specializzati e permette di esaminare separatamente il piano e la sua esecuzione. Il pianificatore deve però conoscere, almeno in modo approssimato, quali movimenti il robot riesce a compiere.
+
+\citet{Belter2016Adaptive} affrontano il problema con una descrizione del terreno a due risoluzioni. Un algoritmo A* cerca un percorso a scala più ampia, mentre una variante guidata di RRT pianifica il movimento in maggior dettaglio. La traversabilità viene stimata con un modello di regressione. Il sistema collega così la scelta del percorso alla difficoltà prevista per il robot, invece di basarsi soltanto sulla distanza dall'obiettivo.
+
+La relazione con il controllore è ancora più esplicita nel lavoro di \citet{Frey2022PolicyGuided}. Gli autori raccolgono in simulazione gli esiti dei movimenti di una policy locomotoria e apprendono a prevederli dalla geometria tridimensionale. La valutazione riguarda la capacità di raggiungere pose assegnate. In questo modo il costo del terreno dipende dalle capacità del controllore usato: cambiando policy, può cambiare anche la difficoltà del passaggio. La previsione indica se il movimento riesce, senza misurare direttamente quanta energia richiede.
+
+Un'altra possibilità consiste nell'apprendere come il robot si muoverà in risposta a una sequenza di comandi. \citet{Roth2025Forward} usano geometria e storia dei segnali propriocettivi per prevedere stati futuri e possibili fallimenti. Il modello viene impiegato da un pianificatore Model Predictive Path Integral (MPPI), che valuta diverse sequenze di azioni prima di sceglierne una. L'apprendimento fornisce quindi al pianificatore un modello del comportamento del robot.
+
+Questi lavori mostrano che una gerarchia può usare l'apprendimento in punti diversi: per assegnare costi alle regioni, prevedere il successo di un passaggio o stimare gli effetti dei comandi. Per una navigazione energetica, il passaggio ulteriore è collegare tali previsioni al costo del movimento. Un tragitto facile da eseguire può infatti avere un consumo diverso da un altro tragitto altrettanto sicuro.
 
 \subsection{Approcci integrati ed end-to-end}
-% Confrontare architetture integrate e gerarchiche, delimitando il livello
-% al quale interviene il contributo della tesi.
 
-\section{Traversabilit\`a e rappresentazione del terreno}
+Negli approcci end-to-end, una rete apprende una relazione più diretta fra osservazioni e azioni. \citet{Rudin2022Advanced} addestrano una policy a raggiungere una posizione entro un tempo assegnato, lasciandole scegliere insieme il percorso locale e il comportamento locomotorio. Il compito offre più libertà rispetto al solo inseguimento di una velocità: la rete può adattare il movimento al modo in cui intende raggiungere l'obiettivo.
+
+Anche quando il compito principale resta la locomozione, combinare percezione e stato del robot può migliorare le decisioni. \citet{Miki2022Perceptive} uniscono dati esterocettivi e propriocettivi con una rete ricorrente e un meccanismo di attenzione. Il sistema affronta terreni complessi e condizioni in cui le informazioni esterne sono poco affidabili. Il robot può così usare ciò che vede insieme a ciò che avverte durante il movimento.
+
+Il livello al quale agisce la rete è essenziale per interpretare i risultati. Una policy che controlla i giunti può modificare gli appoggi e l'andatura; una policy che invia comandi di velocità a un controllore già addestrato ha possibilità diverse. Un risparmio energetico può derivare dal tragitto, dal modo di camminare o da entrambi. Nella tesi, il controllore locomotorio viene mantenuto fisso per studiare le scelte del livello di navigazione.
+
+\section{Traversabilità e rappresentazione del terreno}
 \label{sec:sota-rappresentazioni}
-% Quali informazioni sull'ambiente possono sostenere la navigazione?
+
+La traversabilità descrive se e con quale difficoltà un robot può attraversare una regione. Non è una proprietà del solo terreno: dipende anche dalla piattaforma e dal suo controllore. Come mostra la rassegna di \citet{Sevastopoulos2022Survey}, può essere espressa con categorie, probabilità di successo o costi continui. Prima di stimarla occorre scegliere come descrivere l'ambiente. Le soluzioni principali usano la geometria, le classi semantiche oppure descrittori visivi appresi.
 
 \subsection{Rappresentazioni geometriche e mappe di elevazione}
-% Geometria locale, pendenza, rugosita e rappresentazioni spaziali del terreno.
 
-\subsection{Rappresentazioni semantiche e classificazione dei terreni}
-% Ruolo e limiti delle categorie di terreno nell'assegnazione dei costi.
+Una mappa di elevazione divide il piano in celle e associa a ciascuna una stima dell'altezza del terreno. Da queste altezze si possono ricavare pendenze, dislivelli e irregolarità. La rappresentazione è detta 2.5D perché descrive una superficie nello spazio senza ricostruire tutti i dettagli di un volume tridimensionale. È compatta e facilmente consultabile, ma incontra limiti quando più superfici si trovano una sopra l'altra.
+
+Per accumulare misure nella mappa serve una stima della posizione del robot. Se questa è imprecisa, osservazioni della stessa superficie possono essere inserite in celle sbagliate e produrre ostacoli apparenti. \citet{Fankhauser2018Mapping} tengono conto sia dell'incertezza della localizzazione sia di quella del sensore di distanza. La loro mappa probabilistica associa alle altezze anche limiti di confidenza, rendendo visibile quanto siano affidabili le stime.
+
+La geometria è utile per capire dove il robot può appoggiare i piedi, ma non descrive tutte le proprietà del contatto. Due superfici piane possono avere attrito o deformabilità diversi. Per conservarne anche l'aspetto si possono aggiungere altri livelli alla mappa. MEM, proposto da \citet{Erni2023MEM}, fonde immagini e nuvole di punti in una mappa di elevazione multimodale, con elaborazione su GPU. La stessa struttura spaziale può contenere informazioni geometriche, visive e semantiche. Spetta poi al modello che usa la mappa attribuire a queste informazioni un significato per la navigazione.
+
+\subsection[Rappresentazioni semantiche e classificazione dei terreni]{Rappresentazioni semantiche e\\classificazione dei terreni}
+
+La descrizione semantica assegna una categoria a ogni regione osservata, distinguendo per esempio vegetazione e terreno pavimentato. Le categorie rendono semplice esprimere regole come preferire alcune superfici o evitarne altre. Per usarle nella navigazione bisogna però stabilire quale costo attribuire a ciascuna. La stessa classe può comprendere condizioni fisiche diverse, e il costo cambia anche con la velocità e lo stato del robot.
+
+AMCO combina tre fonti di informazione: una mappa semantica basata sulla conoscenza generale, una mappa dell'esperienza recente e una mappa propriocettiva corrente~\citep{Elnoor2024AMCO}. Il sistema considera anche luminosità e sfocatura per valutare l'affidabilità della visione. L'esperienza di movimento può quindi correggere le indicazioni iniziali ottenute dalle immagini.
+
+Le classi offrono una descrizione leggibile, ma richiedono una scelta delle categorie da riconoscere. Un'alternativa è fornire al modello descrittori numerici dell'immagine e lasciare che apprenda quali differenze siano utili al compito. In questo caso il sistema può associare aspetti simili a comportamenti simili senza ricevere il nome del materiale. La capacità di estendere tale associazione a superfici nuove deve comunque essere verificata.
 
 \subsection{Feature visive apprese e rappresentazioni senza classi esplicite}
-% Modelli preaddestrati, DINO e DINOv2, limitatamente alle proprieta utili
-% alla tesi. L'impiego concreto di feature, PCA e gridmap e nel capitolo 3.
 
-\section{Apprendimento delle propriet\`a di attraversamento dall'esperienza}
+Le feature visive sono vettori numerici che riassumono caratteristiche di un'immagine o di una sua regione. Possono essere usate da una rete successiva senza passare per una classificazione esplicita. Il Vision Transformer di \citet{Dosovitskiy2021ViT} divide l'immagine in piccole porzioni, dette patch, ed elabora le relazioni fra queste attraverso l'attenzione. I descrittori delle patch permettono di mantenere informazioni locali, utili quando occorre associare ciò che si vede a una posizione sul terreno.
+
+Con DINO, \citet{Caron2021DINO} mostrano che rappresentazioni utili possono essere apprese senza annotare le immagini con le categorie del compito. DINOv2 sviluppa questa direzione e produce feature riutilizzabili in applicazioni diverse~\citep{Oquab2023DINOv2}. Il modello visivo può essere mantenuto congelato: i suoi pesi restano fissi, mentre viene addestrata la rete che usa i descrittori. Questo evita di dover apprendere da zero l'intera elaborazione delle immagini insieme alla navigazione.
+
+STEPP è un esempio di impiego di DINOv2 per la traversabilità~\citep{Aegidius2025STEPP}. Da dimostrazioni di cammino umano vengono ricavate regioni di terreno da usare nell'addestramento. Una rete MLP impara a codificarne e ricostruirne i descrittori; l'errore di ricostruzione aiuta a individuare regioni diverse da quelle familiari. Il metodo viene dimostrato su ANYmal. L'informazione ottenuta riguarda quanto una superficie sia simile a quelle conosciute come attraversabili, non una previsione diretta del consumo.
+
+I descrittori visivi possono avere molte componenti e occupare spazio nella mappa. La Principal Component Analysis (PCA) riduce la dimensione proiettando i dati lungo direzioni che ne conservano la maggiore varianza~\citep{Jolliffe2016PCA}. La compressione facilita l'uso delle feature nella rete di navigazione, ma il criterio statistico non garantisce che tutte le informazioni importanti per l'energia siano mantenute. L'effetto della riduzione va quindi valutato anche attraverso il comportamento del robot.
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.17\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: rappresentazioni del terreno}\par\medskip
+        Mostrare la stessa scena come mappa di elevazione,\newline
+        mappa di classi semantiche e mappa di feature visive.\par\smallskip
+        Indicare quali informazioni conserva ciascuna descrizione.
+    \end{minipage}}
+    \caption[Geometria, semantica e feature per la navigazione]{Tre modi di descrivere il terreno. La geometria rappresenta la forma, le classi identificano categorie e le feature conservano caratteristiche visive utilizzabili da un modello successivo.}
+    \label{fig:sota-rappresentazioni}
+\end{figure}
+
+La Figura~\ref{fig:sota-rappresentazioni} riassume queste possibilità. Usare feature senza etichette in ingresso alla policy non significa eliminare ogni informazione semantica: il modello visivo può aver appreso regolarità legate agli oggetti e ai materiali. La differenza riguarda il modo in cui la rete riceve l'informazione, sotto forma di descrittori continui invece che di classi assegnate esplicitamente.
+
+\section{Apprendimento delle proprietà di attraversamento dall'esperienza}
 \label{sec:sota-esperienza}
-% Come collegare cio che il robot vede alle conseguenze del movimento?
+
+Prima del contatto, il robot dispone soprattutto delle informazioni raccolte dai sensori esterni. Durante l'attraversamento può misurare anche la propria risposta: quanto scivola, quanto oscilla e quanto lavoro richiedono i giunti. Collegare questi segnali alle regioni viste in precedenza permette di apprendere proprietà utili per le decisioni successive. I lavori di questa sezione si distinguono per i segnali scelti e per il modo in cui usano l'esperienza raccolta.
 
 \subsection{Informazioni esterocettive e propriocettive}
-% Complementarita dei segnali visivi, geometrici, di contatto e di movimento.
+
+I sensori esterocettivi descrivono l'ambiente esterno, per esempio attraverso immagini e misure di profondità. La propriocezione riguarda invece lo stato e il movimento del robot: posizioni e velocità articolari, dati inerziali, forze e correnti. Le due fonti si completano. La visione può anticipare un cambiamento di terreno; il feedback del corpo permette di verificare cosa accade quando il robot lo incontra.
+
+VP-Nav usa questa relazione per correggere la navigazione in base alle capacità del controllore locomotorio~\citep{Fu2022Coupling}. Il sistema genera un percorso da mappe di occupazione e costo, poi usa un modulo propriocettivo per rilevare difficoltà inattese. Il feedback può correggere le decisioni e limitare la velocità. Il piano iniziale viene così confrontato con l'esecuzione, invece di essere seguito senza considerare la risposta del robot.
+
+ProNav impiega encoder articolari, forze e correnti per valutare stabilità, resistenza al moto e rischio di intrappolamento~\citep{Elnoor2024ProNav}. Queste stime sostengono la scelta dell'andatura e vengono integrate con la percezione esterna. Le prove su Spot e l'attenzione anche al consumo rendono il lavoro vicino al problema della tesi. Il sistema può però intervenire sull'andatura, mentre una policy di sola navigazione sceglie i comandi da inviare a un controllore mantenuto fisso.
+
+TOP-Nav combina informazioni sul terreno, ostacoli e feedback del controllore locomotorio~\citep{Ren2025TOPNav}. Un valutatore propriocettivo aiuta a correggere le stime usate dal pianificatore quando l'attraversamento risulta diverso da quanto previsto. Il lavoro conferma l'utilità di valutare il terreno dal punto di vista del robot che deve percorrerlo. Gli indicatori ricavati dal movimento, compresi quelli inerziali, vanno però letti secondo la loro definizione: descrivono aspetti diversi dall'energia meccanica o elettrica espressa in joule.
+
+\citet{Chen2024Physical} cercano invece di stimare proprietà fisiche esplicite. Un modello addestrato in simulazione ricava attrito e rigidezza da dati multimodali. Le stime vengono poi usate per insegnare a una rete visiva a prevedere tali proprietà durante il funzionamento sul robot. Il sistema cerca quindi di capire, prima del contatto, come risponderà una superficie. Per scegliere un percorso energeticamente conveniente occorre ancora collegare questi parametri al costo del movimento.
 
 \subsection{Apprendimento auto-supervisionato dall'interazione robot--terreno}
-% Associazione fra osservazioni e misure raccolte durante il moto;
-% distinguere costo, traversabilita, proprieta fisiche e stabilita.
+
+Nell'apprendimento auto-supervisionato, gli esempi di addestramento vengono costruiti dai dati stessi. In questo contesto, una misura raccolta durante il passaggio può fornire l'informazione con cui addestrare una previsione dalle immagini precedenti. Per farlo occorre associare correttamente il segnale alla regione attraversata. Errori di posizione o di sincronizzazione possono attribuire a una superficie la risposta prodotta da un'altra.
+
+\citet{Wellhausen2019Where} proiettano nelle immagini le posizioni degli appoggi e generano etichette a partire da segnali di forza e coppia. La rete impara così a collegare l'aspetto del terreno alla risposta misurata dal robot. Il punteggio usato per descrivere la reazione del suolo ha un significato specifico e non coincide con una misura del lavoro articolare. Il contributo centrale è il modo in cui l'esperienza fisica fornisce supervisione alla visione.
+
+Wild Visual Navigation (WVN) usa feature preaddestrate e apprende la traversabilità online a partire da brevi dimostrazioni sul campo~\citep{Mattamala2025Wild}. Il sistema sfrutta quindi una descrizione visiva già disponibile e deve imparare come valutarla per la navigazione. Non richiede una classificazione manuale completa dei materiali. L'aggiornamento online riguarda il modello di traversabilità, un passaggio distinto dalla semplice esecuzione di una policy già addestrata.
+
+STERLING apprende da esperienze di movimento prive di annotazioni e non necessariamente raccolte da un esperto~\citep{Karnan2023STERLING}. Il metodo associa immagini e segnali non visivi dello stesso terreno. L'addestramento cerca descrittori coerenti tra punti di vista diversi e tra modalità sensoriali. La rappresentazione viene poi usata per una navigazione che rispetta preferenze assegnate. Questo amplia le possibilità di raccolta dei dati, anche se una preferenza di attraversamento non definisce da sola un costo energetico fisico.
+
+\citet{Faigl2019Unsupervised} usano invece self-organizing maps per associare forma e aspetto del terreno ai costi misurati da un esapode. Il modello prevede il costo anche per regioni osservate ma non ancora attraversate e fornisce tale previsione a un pianificatore. Questa soluzione separa due passaggi: imparare quanto costa passare in una regione e cercare un percorso con i costi ottenuti.
+
+Il punto comune è l'uso dell'interazione per dare un significato alle immagini. Cambia però ciò che viene appreso: una rappresentazione, una proprietà fisica, un punteggio di traversabilità o un costo. Una policy RL può utilizzare gli stessi tipi di dati apprendendo direttamente l'azione da scegliere. Il confronto richiede quindi di guardare sia alla qualità delle previsioni sia al comportamento finale del robot.
 
 \subsection{Memoria delle osservazioni e adattamento durante la navigazione}
-% Distinguere memoria spaziale, storia propriocettiva e aggiornamento online
-% dei parametri di un modello o di una policy.
+
+Conservare l'esperienza può significare cose diverse. Una mappa ricorda dove sono state osservate certe informazioni. Una breve storia di misure aiuta a stimare la condizione corrente del robot. Un aggiornamento dei pesi modifica invece ciò che la rete ha imparato. Questi meccanismi possono essere presenti nello stesso sistema, ma producono effetti diversi.
+
+\citet{Pragr2019Online} apprendono progressivamente i costi di attraversamento con Gaussian Processes, che forniscono una previsione insieme alla sua incertezza. Il robot esapode usa tale incertezza anche per scegliere dove esplorare. Una regione può quindi essere interessante perché raccogliervi dati migliora il modello, oltre che per il suo costo previsto. Questo obiettivo esplorativo differisce dal raggiungere una destinazione già assegnata.
+
+In RMA, un modulo di adattamento usa la storia recente di stati e azioni per stimare una variabile che riassume le condizioni esterne~\citep{Kumar2021RMA}. La variabile viene fornita alla policy locomotoria e cambia durante l'esecuzione. Non occorre per questo aggiornare online i pesi della rete. RMA offre dunque un esempio di adattamento tramite la stima di informazioni nascoste, senza costruire una mappa spaziale dei costi.
+
+\citet{SanchezDelgado2025Mapping} conservano invece le misure in una gridmap con livelli dedicati a elevazione, scivolamento, costo di trasporto e stabilità. Il lavoro, motivato dall'esplorazione planetaria con quadrupedi, descrive nello spazio ciò che il robot ha sperimentato. La mappa informa sulle regioni già visitate; per prevedere il costo di una superficie ancora lontana serve un collegamento con osservazioni disponibili prima del contatto.
+
+Nella tesi la memoria conserva osservazioni visive e geometriche durante l'episodio. Non è una tabella che assegna un consumo a ogni materiale. L'associazione fra ciò che la policy osserva e le azioni convenienti viene appresa durante il training. Mantenendo fissi i pesi in esecuzione, la rete può scegliere azioni diverse quando cambiano gli ingressi, senza che questo costituisca un nuovo addestramento online. La Figura~\ref{fig:sota-esperienza} distingue questi usi dell'esperienza.
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.17\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: percezione, esperienza e memoria}\par\medskip
+        Collegare l'immagine del terreno alle misure raccolte\newline
+        durante il successivo attraversamento.\par\smallskip
+        Distinguere una mappa delle osservazioni, una storia\newline
+        di segnali e un aggiornamento dei pesi della rete.
+    \end{minipage}}
+    \caption[Percezione, esperienza e memoria del terreno]{Modi di usare l'esperienza del robot. Conservare osservazioni, stimare le condizioni correnti e aggiornare un modello sono operazioni distinte.}
+    \label{fig:sota-esperienza}
+\end{figure}
 
 \section{Efficienza energetica nei robot a zampe}
 \label{sec:sota-energia}
 
+Superare una regione con successo e attraversarla con poca energia sono obiettivi diversi. La letteratura cerca di migliorare l'efficienza sia modificando il modo di camminare sia scegliendo percorsi più convenienti. Per leggere i risultati occorre prima chiarire quale energia viene misurata e su quale parte del movimento viene calcolata.
+
 \subsection{Grandezze energetiche e indicatori di efficienza}
-% Consumo elettrico, lavoro meccanico e indicatori indiretti.
-% La misura effettivamente implementata e descritta nel capitolo 3.
+
+L'energia elettrica prelevata dalla batteria si ottiene integrando la potenza nel tempo. Indicando con $V_b$ la tensione e con $I_b$ la corrente, positiva quando viene assorbita, su un intervallo di durata $T$ si ha
+\begin{equation}
+    E_{\mathrm{el}}=\int_0^T V_b(t)I_b(t)\,\mathrm{d}t.
+    \label{eq:sota-energia-elettrica}
+\end{equation}
+Una misura alla batteria può comprendere motori, sensori e calcolo. Una misura sulla sola alimentazione degli attuatori riguarda invece una parte del sistema. Se è presente recupero di energia, occorre inoltre precisare come vengono conteggiati i flussi verso la batteria.
+
+A livello dei giunti si può calcolare la potenza meccanica. Per il giunto $j$, il prodotto $\tau_j\dot q_j$ combina la coppia con la velocità angolare. Sommando i valori assoluti e integrando nel tempo si ottiene
+\begin{equation}
+    E_{\mathrm{abs}}=\int_0^T\sum_{j=1}^{n_j}
+    \left|\tau_j(t)\dot q_j(t)\right|\,\mathrm{d}t,
+    \label{eq:sota-energia-meccanica}
+\end{equation}
+dove $n_j$ è il numero di giunti considerati. Il valore assoluto conta sia le fasi in cui il giunto fornisce lavoro sia quelle in cui assorbe energia meccanica. Il lavoro netto manterrebbe invece i segni, mentre il lavoro positivo conterebbe soltanto i contributi positivi.
+
+L'equazione~\eqref{eq:sota-energia-meccanica} è utile per valutare l'attività meccanica del robot, ma non restituisce direttamente il consumo della batteria. Tra le due misure intervengono perdite, rendimento degli attuatori e consumi degli altri componenti. Una riduzione del lavoro articolare va quindi descritta con questo significato, senza presentarla come un'identica riduzione dell'energia elettrica.
+
+Per confrontare movimenti su distanze diverse si usano anche l'energia per metro e il \emph{cost of transport} (CoT). Una forma adimensionale è
+\begin{equation}
+    \mathrm{CoT}=\frac{E}{m g d},\qquad d>0,
+    \label{eq:sota-cot}
+\end{equation}
+dove $m$ è la massa, $g$ l'accelerazione di gravità e $d$ la distanza. Occorre indicare sia quale energia compare al numeratore sia come viene misurata la distanza. Indicatori di questo tipo compaiono nell'ottimizzazione delle andature~\citep{Fu2022Gaits,Liang2025AdaptiveEnergy} e nella mappatura delle proprietà del terreno~\citep{SanchezDelgado2025Mapping}.
+
+Un costo per metro più basso non garantisce un costo totale inferiore. Per esempio, un tragitto di $10\,\mathrm{m}$ a $20\,\mathrm{J/m}$ richiede $200\,\mathrm{J}$; uno di $15\,\mathrm{m}$ a $15\,\mathrm{J/m}$ richiede $225\,\mathrm{J}$. Il secondo è più efficiente per metro, ma consuma di più per completare la missione. Anche il tempo conta, perché alcuni componenti assorbono potenza mentre il robot rallenta o attende. Per questo energia totale, distanza, durata e successo vanno letti insieme.
+
+Esistono infine indicatori che descrivono la difficoltà del terreno senza misurare energia. \citet{Muhamad2024MultipleCosts} prevedono più costi di traversabilità da dati simulati, usando reti convoluzionali e MLP e considerando il rumore delle osservazioni. Tenere separati più indicatori permette di descrivere aspetti diversi del moto. Una minore oscillazione, per esempio, può essere favorevole ma non equivale di per sé a un risparmio in joule.
 
 \subsection{Ottimizzazione energetica della locomozione}
-% Discussione mirata su andature e movimenti articolari energeticamente
-% efficienti, chiarendo la diversa scala di controllo rispetto alla tesi.
+
+I metodi di locomozione possono agire direttamente sugli appoggi, sulle traiettorie dei piedi e sui giunti. \citet{Fu2022Gaits} mostrano che minimizzare l'energia meccanica può far emergere andature differenti al variare della velocità, con verifiche in simulazione e su hardware. Il risparmio viene cercato modificando il comportamento motorio, senza dover assegnare in anticipo un unico schema di cammino.
+
+\citet{Liang2025AdaptiveEnergy} studiano una regolarizzazione energetica riferita alla distanza e il suo effetto sulle transizioni di andatura. Il peso della penalità è importante: se ridurre il costo diventa troppo vantaggioso rispetto ad avanzare, la policy può muoversi meno di quanto richiede il compito. Lo stesso problema si presenta nella navigazione. Una ricompensa deve rendere conveniente raggiungere il goal, oltre che contenere il lavoro durante il moto.
+
+\citet{Yan2024Energy} usano DDPG per ottimizzare le traiettorie dei piedi di Cyber Dog, confrontando i risultati in simulazione e su un prototipo. Anche qui l'energia viene ridotta intervenendo sulla locomozione. Questi studi sono utili per capire la misura del costo e la progettazione della ricompensa, ma affrontano una scelta diversa da quella del tragitto.
+
+Con un controllore locomotorio fisso, l'energia continua a dipendere dal modo in cui il robot cammina. La policy di navigazione può però sfruttare solo le possibilità offerte da quel controllore, attraverso il percorso e i comandi di velocità. Un eventuale miglioramento riguarda quindi questa combinazione di navigatore e controllore e deve essere verificato nelle condizioni considerate.
 
 \subsection{Navigazione e pianificazione con costi energetici}
-% Dedicare maggiore spazio alla scelta di tragitto e velocita in funzione
-% del costo di attraversamento e ai lavori piu vicini al progetto.
+
+Quando il goal è assegnato, la scelta deve bilanciare lunghezza del percorso e costo delle regioni attraversate. Una deviazione può convenire se evita una superficie molto onerosa. Il vantaggio dipende però anche dalla velocità, dalle svolte e dalle transizioni fra terreni. Assegnare un unico costo a ciascun materiale è quindi una semplificazione del comportamento fisico.
+
+\citet{Gan2022Energy} affrontano direttamente il legame fra traversabilità ed energia con l'inverse reinforcement learning. Il metodo combina descrittori esterocettivi e caratteristiche inerziali apprese dalla propriocezione. Usa inoltre un ordinamento delle traiettorie dimostrate basato sull'energia media per unità di lunghezza, così da sfruttare anche dimostrazioni non ottime rispetto al consumo. La valutazione impiega dati e simulazione del Mini-Cheetah. Il sistema apprende una ricompensa dalle dimostrazioni; nel reinforcement learning diretto, invece, la policy viene aggiornata sulla base della ricompensa ricevuta per le proprie azioni.
+
+\citet{Zhang2026Traversability} apprendono la navigazione da dati RGB-D e interazioni reali, combinando dimostrazioni offline e apprendimento online. La traversabilità viene ricavata dalla funzione di valore del controllore locomotorio. Questo collega la valutazione del terreno alle capacità del robot. Il valore può però comprendere obiettivi diversi, come stabilità e inseguimento dei comandi, e non coincide necessariamente con il lavoro meccanico richiesto dal percorso.
+
+Si possono quindi seguire due strade: prevedere un costo e usarlo in un pianificatore, oppure addestrare una policy con una ricompensa che includa il costo del movimento. Nel primo caso si può verificare separatamente la previsione. Nel secondo occorre osservare le decisioni per capire come la rete usa la percezione. In entrambi, un costo previsto inferiore o un ritorno RL maggiore devono essere confrontati con l'energia effettivamente misurata nelle missioni completate.
 
 \section{Reinforcement learning per la navigazione}
 \label{sec:sota-rl}
 
-\subsection{Formulazione del problema decisionale e osservabilit\`a parziale}
-% Osservazioni, azioni, ritorno e funzioni di valore: introdurre soltanto
-% gli strumenti necessari per comprendere il metodo.
+Nel reinforcement learning un agente impara interagendo con un ambiente. A ogni passo sceglie un'azione, osserva le conseguenze e riceve una ricompensa. L'obiettivo è migliorare il risultato dell'intera sequenza di decisioni. Per la navigazione questo è importante perché una scelta conveniente nell'immediato può portare, poco dopo, a una deviazione o a un terreno più costoso.
+
+\subsection{Formulazione del problema decisionale e osservabilità parziale}
+
+Un processo decisionale di Markov (MDP) descrive il problema attraverso uno stato $s_t$, un'azione $a_t$, le transizioni dell'ambiente e una ricompensa $r_t$. La proprietà di Markov richiede che lo stato contenga l'informazione necessaria a descrivere la transizione successiva, senza dover aggiungere il passato. La policy $\pi$ stabilisce come scegliere l'azione. Per un episodio che termina al passo $T$, si definisce il ritorno
+\begin{equation}
+    G_t=\sum_{k=0}^{T-t-1}\gamma^k r_{t+k},
+    \qquad 0<\gamma\leq 1.
+    \label{eq:sota-ritorno}
+\end{equation}
+Il fattore di sconto $\gamma$ controlla il peso delle ricompense future. Valori più bassi danno maggiore importanza agli effetti vicini nel tempo. L'addestramento cerca una policy che massimizzi il ritorno atteso, cioè il risultato medio previsto dalle interazioni.
+
+Per una navigazione energetica la ricompensa può premiare il raggiungimento del goal e penalizzare lavoro, tempo o comportamenti indesiderati. I pesi definiscono il compromesso che la rete cerca di realizzare. La sola presenza di un termine energetico non rende l'obiettivo equivalente alla minima energia totale: intervengono anche gli altri termini e lo sconto temporale.
+
+Sul robot, lo stato completo non è direttamente disponibile. La policy riceve osservazioni $o_t$, per esempio immagini e misure articolari. Una superficie può sembrare uguale a un'altra e rispondere diversamente al contatto; una regione fuori dal campo visivo può modificare il percorso migliore. I processi decisionali parzialmente osservabili (POMDP) descrivono questa distinzione fra stato e osservazione~\citep{Kaelbling1998POMDP}. Una mappa o una rete ricorrente aiutano a conservare informazioni passate, ma non garantiscono di ricostruire tutto lo stato nascosto.
+
+Le funzioni di valore stimano quanto una situazione sia favorevole per la policy. In un MDP, $V^\pi(s)$ è il ritorno atteso partendo dallo stato $s$, mentre $Q^\pi(s,a)$ considera anche una prima azione assegnata. La differenza $A^\pi(s,a)=Q^\pi(s,a)-V^\pi(s)$ è detta vantaggio: indica se quell'azione è migliore o peggiore del comportamento medio previsto nello stato. Queste quantità vengono approssimate da reti e usate per guidare gli aggiornamenti.
+
+Per facilitare l'apprendimento si possono aggiungere ricompense di progresso, una tecnica detta \emph{reward shaping}. \citet{Ng1999Shaping} mostrano come preservare la policy ottima con un termine basato su una funzione potenziale $\Phi$:
+\begin{equation}
+    F(s_t,s_{t+1})=\gamma\Phi(s_{t+1})-\Phi(s_t).
+    \label{eq:sota-shaping}
+\end{equation}
+Il risultato richiede le condizioni del modello e un trattamento coerente degli stati terminali. Una semplice differenza fra distanze consecutive dal goal non ha questa forma per ogni $\gamma$. Premiare l'avvicinamento può dunque aiutare il training, ma può anche modificare il compromesso fra tragitto, tempo ed energia.
 
 \subsection{Apprendimento actor-critic: principi di PPO e SAC}
-% Principi degli algoritmi, distinzione on-policy/off-policy, GAE e massima
-% entropia quanto necessario. Configurazioni e reward sono nel capitolo 3.
+
+Nei metodi actor-critic, l'actor rappresenta la policy e produce le azioni. Il critic stima il valore e aiuta a valutare gli esiti delle scelte. La separazione è adatta anche ad azioni continue, come velocità di avanzamento e velocità angolare. PPO e SAC appartengono a questa famiglia, ma utilizzano i dati e aggiornano la policy in modi diversi.
+
+PPO raccoglie un insieme di esperienze con una versione recente della policy e lo usa per alcune epoche di addestramento~\citep{Schulman2017PPO}. L'idea è aumentare la probabilità delle azioni vantaggiose senza incoraggiare cambiamenti eccessivi in un solo aggiornamento. Nella variante con clipping si usa il rapporto
+$\rho_t(\theta)=\pi_\theta(a_t\mid s_t)/\pi_{\theta_{\mathrm{old}}}(a_t\mid s_t)$
+fra la probabilità dell'azione con i nuovi pesi e quella con i pesi che hanno generato i dati. L'obiettivo è
+\begin{equation}
+    L^{\mathrm{clip}}(\theta)=\mathbb{E}_t\!\left[
+        \min\!\left(\rho_t(\theta)\widehat A_t,
+        \operatorname{clip}(\rho_t(\theta),1-\epsilon,1+\epsilon)\widehat A_t\right)
+    \right].
+    \label{eq:sota-ppo}
+\end{equation}
+Qui $\widehat A_t$ è il vantaggio stimato ed $\epsilon$ determina l'intervallo di clipping. Il minimo riduce l'incentivo ad alcuni cambiamenti troppo ampi; non impone però un limite rigido a ogni variazione della policy. Dopo gli aggiornamenti, si raccolgono nuove esperienze. Questa organizzazione permette di usare insieme dati prodotti da molti ambienti simulati.
+
+La Generalized Advantage Estimation (GAE) combina errori di previsione del valore su più passi~\citep{Schulman2016GAE}. Per una sequenza residua di $K$ passi si può scrivere
+\begin{equation}
+\begin{split}
+    \delta_t&=r_t+\gamma V(s_{t+1})-V(s_t),\\
+    \widehat A_t^{\mathrm{GAE}}&=\sum_{\ell=0}^{K-1}(\gamma\lambda)^\ell\delta_{t+\ell}.
+\end{split}
+    \label{eq:sota-gae}
+\end{equation}
+Il primo termine confronta la ricompensa e il valore futuro con la previsione corrente. Il parametro $\lambda$ regola quanto estendere il confronto nel tempo, bilanciando errori sistematici e variabilità della stima. Negli stati terminali il valore futuro deve essere gestito in modo coerente con la fine dell'episodio.
+
+SAC conserva invece le transizioni in una memoria di esperienze, detta \emph{replay buffer}, e può riutilizzarle anche dopo che la policy è cambiata~\citep{Haarnoja2018SAC}. Per questo viene definito off-policy. L'obiettivo comprende la ricompensa e l'entropia della distribuzione delle azioni:
+\begin{equation}
+    J_{\mathrm{SAC}}(\pi)=\mathbb{E}_{\pi}\!\left[
+        \sum_{t=0}^{T-1}\gamma^t
+        \left(r_t+\alpha\mathcal H(\pi(\cdot\mid s_t))\right)
+    \right].
+    \label{eq:sota-sac}
+\end{equation}
+L'entropia $\mathcal H$ favorisce la varietà delle azioni durante l'apprendimento, aiutando l'esplorazione. Il coefficiente $\alpha$ ne regola il peso ed è distinto da quello della penalità energetica. \citet{Haarnoja2018Applications} presentano anche la regolazione automatica di $\alpha$. La formulazione usa due critic e il minimo delle loro stime per contenere la tendenza a sovrastimare il valore delle azioni.
+
+Il replay permette a SAC di sfruttare più volte i dati raccolti, ma richiede memoria e aggiornamenti coerenti con le osservazioni conservate. PPO usa invece gruppi di dati recenti e li sostituisce durante il training. La scelta pratica dipende dal costo delle simulazioni, dall'elaborazione visiva e dalle risorse disponibili. Per confrontare i due algoritmi occorrono compiti, ingressi, ricompense e budget comparabili: risultati su ambienti diversi non permettono di attribuire il vantaggio al solo algoritmo.
 
 \subsection{Addestramento in simulazione e uso di informazioni privilegiate}
-% Simulazione parallela, apprendimento asimmetrico e differenza fra
-% informazioni disponibili durante training ed esecuzione.
+
+La simulazione permette di ripetere molti tentativi, cambiare i terreni e raccogliere dati anche quando l'esplorazione porta a cadute. Consente inoltre di conoscere proprietà fisiche difficili da misurare sul robot. L'utilità di questi dati dipende dalla qualità dei modelli di contatto, degli attuatori e dei sensori.
+
+Isaac Gym porta simulazione fisica e parti del ciclo di apprendimento sulla GPU~\citep{Makoviychuk2021IsaacGym}. \citet{Rudin2022Massively} sfruttano molti ambienti paralleli per addestrare la locomozione, aumentando gradualmente la difficoltà con un curriculum. Isaac Lab integra fisica, rendering e strumenti per l'apprendimento multimodale~\citep{Mittal2025IsaacLab}. Questi lavori sostengono l'uso del parallelismo, ma i tempi della locomozione non si trasferiscono direttamente a una navigazione che deve anche generare immagini ed estrarre feature.
+
+L'addestramento asimmetrico permette al critic di ricevere informazioni più complete di quelle disponibili all'actor~\citep{Pinto2018Asymmetric}. Per esempio, il simulatore può conoscere proprietà di contatto che il robot dovrà inferire dai sensori. Il critic le usa durante il training per valutare le azioni, mentre l'actor deve basarsi su ingressi disponibili anche in esecuzione. Questa separazione va mantenuta anche quando si costruiscono mappe e si normalizzano le osservazioni.
+
+Per ridurre la dipendenza dalle condizioni simulate si può variare l'ambiente di addestramento. \citet{Tobin2017Randomization} studiano la domain randomization del rendering per trasferire modelli visivi alla realtà. La varietà delle immagini aiuta il trasferimento percettivo, ma non dimostra da sola che i contatti simulati riproducano quelli reali. Anche la generalizzazione va precisata: raggiungere nuovi goal su una mappa nota, affrontare una disposizione diversa dei terreni e attraversare materiali mai visti sono verifiche differenti.
 
 \section{Confronto critico e collocazione del lavoro di tesi}
 \label{sec:sota-confronto}
-% Tabella dei lavori vicini: sensori, rappresentazione, propriocezione,
-% classi esplicite, costo, livello di controllo, memoria/adattamento e
-% validazione. Motivare le scelte senza dedurre proprieta non verificate.
+
+I lavori esaminati mostrano più modi per collegare la percezione alla navigazione. Le mappe geometriche descrivono la forma, le classi semantiche identificano categorie e le feature apprese conservano informazioni visive senza richiedere un'etichetta esplicita. L'esperienza del robot aggiunge ciò che la sola immagine non rivela: la risposta al contatto e il costo del movimento.
+
+Il confronto deve mantenere chiaro che cosa viene ottimizzato. Una probabilità di successo, un punteggio di anomalia e una previsione energetica rispondono a domande diverse. Contano anche le azioni disponibili: cambiare percorso, limitare la velocità e modificare l'andatura non offrono le stesse possibilità. Fra i riferimenti più vicini alla tesi, \citet{Gan2022Energy} apprendono una ricompensa da dimostrazioni ordinate anche per costo energetico; \citet{Zhang2026Traversability} usano il valore locomotorio per valutare la traversabilità; ProNav sfrutta la propriocezione anche per scegliere l'andatura~\citep{Elnoor2024ProNav}.
+
+\begin{table}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.17\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: confronto dei lavori più pertinenti}\par\medskip
+        Colonne: riferimento, robot, descrizione del terreno,\newline
+        feedback, obiettivo, azioni, memoria e validazione.\par\smallskip
+        Specificare se il costo indica energia fisica,\newline
+        costo del controllore o difficoltà di attraversamento.
+    \end{minipage}}
+    \caption[Criteri di confronto fra i metodi di navigazione]{Confronto qualitativo dei metodi. Per ciascun lavoro si distinguono le informazioni usate, la quantità ottimizzata e le decisioni che il sistema può prendere.}
+    \label{tab:sota-confronto}
+\end{table}
+
+La Tabella~\ref{tab:sota-confronto} raccoglierà queste differenze. Una classifica numerica richiederebbe invece prove nelle stesse condizioni. Anche le metriche devono rispondere alla domanda posta: il successo pesato per la lunghezza del percorso (SPL), discusso da \citet{Anderson2018Evaluation}, combina completamento ed efficienza geometrica, ma non distingue il costo delle superfici. Per la navigazione energetica servono misure del costo fisico, affiancate da successo, distanza e durata.
+
+La tesi studia una policy che sceglie comandi di velocità per un controllore locomotorio preaddestrato e mantenuto fisso. La policy usa una rappresentazione locale con feature visive e geometria, insieme allo stato del robot e a un feedback legato alla potenza meccanica. L'apprendimento deve collegare queste informazioni al raggiungimento del goal con meno lavoro articolare. La memoria conserva le osservazioni dell'episodio, mentre l'associazione utile alle decisioni viene appresa nel training.
+
+La domanda è quindi se la policy sfrutti ciò che vede e misura per scegliere movimenti meno costosi, mantenendo la capacità di raggiungere la destinazione. Poiché osserva solo una parte dell'ambiente, non si assume che trovi il percorso globalmente migliore. Il Capitolo~\ref{chap:methodology} descrive il sistema realizzato; il Capitolo~\ref{chap:experiments} presenterà le verifiche del suo comportamento.

@@ -1,0 +1,114 @@
+{
+  "name": "lab_15x15_eval_01",
+  "purpose": "Unseen-map evaluation; no training",
+  "grid": [
+    [
+      "t1_asphalt",
+      "t1_asphalt",
+      "t1_asphalt",
+      "t1_asphalt",
+      "lab_blackice"
+    ],
+    [
+      "t1_asphalt",
+      "lab_blackice",
+      "t1_asphalt",
+      "lab_blackice",
+      "t1_asphalt"
+    ],
+    [
+      "lab_blackice",
+      "lab_blackice",
+      "t1_asphalt",
+      "t1_asphalt",
+      "t1_asphalt"
+    ],
+    [
+      "t1_asphalt",
+      "t1_asphalt",
+      "t1_asphalt",
+      "lab_blackice",
+      "t1_asphalt"
+    ],
+    [
+      "t1_asphalt",
+      "lab_blackice",
+      "t1_asphalt",
+      "lab_blackice",
+      "t1_asphalt"
+    ]
+  ],
+  "rows_top_to_bottom": [
+    [
+      "g",
+      "n",
+      "g",
+      "n",
+      "g"
+    ],
+    [
+      "g",
+      "g",
+      "g",
+      "n",
+      "g"
+    ],
+    [
+      "n",
+      "n",
+      "g",
+      "g",
+      "g"
+    ],
+    [
+      "g",
+      "n",
+      "g",
+      "n",
+      "g"
+    ],
+    [
+      "g",
+      "g",
+      "g",
+      "g",
+      "n"
+    ]
+  ],
+  "row_convention": "row 0 at low Y; column 0 at low X",
+  "cell_width_m": 3.0,
+  "cell_height_m": 3.0,
+  "bounds_min": [
+    0.0,
+    0.0,
+    -0.1
+  ],
+  "bounds_max": [
+    15.0,
+    15.0,
+    0.0
+  ],
+  "counts": {
+    "grey": 17,
+    "black": 8
+  },
+  "black_fraction": 0.32,
+  "usd_sha256": "e22a86e6e11b6e3a5291f94359af3f188c239040e59ff77b59579f237ddebd10",
+  "training_map_sha256": "532e908d018c4b67e06f299fe7efb379efd06dae8f7d6e53902fb74c26eef0b7",
+  "materials_sha256": "f6511aa51e5641327fa2cc6538a373ac8332a3c542724fe062eff1605c1f8a36",
+  "drag_manifest": "lab_15x15_eval_01_drag_manifest.json",
+  "generation": {
+    "method": "Exact current test12 evaluation layout; green replaced by test13 black ice",
+    "source_layout": "train_general_big_map_test12_SAC_Re/maps/lab_15x15_eval_01_metadata.json",
+    "source_metadata_sha256": "76e30edf7cb968417dceeb878c4d1e9a6c7402ed06434c06c9f7c6b5539d37cc"
+  },
+  "checks": {
+    "matches_test12_special_cells": true,
+    "grey_side_connected": true,
+    "cell_bounds_and_materials_checked": true,
+    "visual_materials_checked": true,
+    "added_resistance_disabled": true
+  },
+  "missions": "Not assigned yet",
+  "runtime_note": "Use this map with its matching metadata and disabled-drag manifest. Black uses test13 trained friction, not test12 green resistance."
+}

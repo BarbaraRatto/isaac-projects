@@ -1,0 +1,146 @@
+{
+  "name": "lab_15x15_eval_01",
+  "purpose": "Unseen-map evaluation; no training",
+  "grid": [
+    [
+      "t1_asphalt",
+      "t1_asphalt",
+      "t1_asphalt",
+      "t1_asphalt",
+      "lab_green"
+    ],
+    [
+      "t1_asphalt",
+      "lab_green",
+      "t1_asphalt",
+      "lab_green",
+      "t1_asphalt"
+    ],
+    [
+      "lab_green",
+      "lab_green",
+      "t1_asphalt",
+      "t1_asphalt",
+      "t1_asphalt"
+    ],
+    [
+      "t1_asphalt",
+      "t1_asphalt",
+      "t1_asphalt",
+      "lab_green",
+      "t1_asphalt"
+    ],
+    [
+      "t1_asphalt",
+      "lab_green",
+      "t1_asphalt",
+      "lab_green",
+      "t1_asphalt"
+    ]
+  ],
+  "rows_top_to_bottom": [
+    [
+      "g",
+      "v",
+      "g",
+      "v",
+      "g"
+    ],
+    [
+      "g",
+      "g",
+      "g",
+      "v",
+      "g"
+    ],
+    [
+      "v",
+      "v",
+      "g",
+      "g",
+      "g"
+    ],
+    [
+      "g",
+      "v",
+      "g",
+      "v",
+      "g"
+    ],
+    [
+      "g",
+      "g",
+      "g",
+      "g",
+      "v"
+    ]
+  ],
+  "row_convention": "row 0 at low Y; column 0 at low X",
+  "cell_width_m": 3.0,
+  "cell_height_m": 3.0,
+  "bounds_min": [
+    0.0,
+    0.0,
+    -0.1
+  ],
+  "bounds_max": [
+    15.0,
+    15.0,
+    0.0
+  ],
+  "counts": {
+    "grey": 17,
+    "green": 8
+  },
+  "green_fraction": 0.32,
+  "usd_sha256": "775ad4abcc6717e97b86d8d4b7a2915126464b482cd512a6865189bbcda972fb",
+  "training_map_sha256": "7d3e7c8e1fd9d68dba370219b1702cb1ab687e281e690b4d513bb5f2ce26ac78",
+  "materials_sha256": "a7597070c0716464ec7ca795f5f0aad707fc8731cb511bd077311ae1d141475a",
+  "drag_manifest": "lab_15x15_eval_01_drag_manifest.json",
+  "generation": {
+    "method": "Uniform eight-cell sampling with connectivity and grouping constraints",
+    "seed": 20261113,
+    "rejected_candidates": 79,
+    "manual_changes": [
+      {
+        "reason": "Requested cell swaps",
+        "swaps": [
+          {
+            "first": [
+              4,
+              4
+            ],
+            "second": [
+              4,
+              3
+            ]
+          },
+          {
+            "first": [
+              3,
+              4
+            ],
+            "second": [
+              3,
+              3
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "checks": {
+    "grey_side_connected": true,
+    "green_component_sizes": [
+      1,
+      1,
+      1,
+      2,
+      3
+    ],
+    "differs_from_training_symmetries": true,
+    "cell_bounds_and_materials_checked": true
+  },
+  "missions": "Not assigned yet",
+  "runtime_note": "Load the matching metadata and drag manifest when evaluating this map. The USD alone does not apply green surface resistance."
+}

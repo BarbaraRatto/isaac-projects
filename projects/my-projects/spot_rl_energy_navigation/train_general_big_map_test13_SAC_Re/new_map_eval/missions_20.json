@@ -1,0 +1,942 @@
+{
+  "schema": 1,
+  "name": "20 fixed missions on unseen test13 map 01",
+  "map_file": "lab_15x15_eval_01.usda",
+  "map_sha256": "e22a86e6e11b6e3a5291f94359af3f188c239040e59ff77b59579f237ddebd10",
+  "metadata_sha256": "c5770192f5f42c5df45b506f4505433bb3679a5c8fa7f954c8196b17ff015bff",
+  "drag_sha256": "83089f6d4d6ffb305cdf854bfd30ce1b798ed9416fbd5ee2e725e9e89ebb3511",
+  "selection": "Sixteen matching test12 missions; four green goals replaced by random grey goals in the same distance band",
+  "reference_suite": "train_general_big_map_test12_SAC_Re/new_map_eval/missions_20.json",
+  "reference_suite_sha256": "ea23c0db4ad07a949dde45d86e8a0120536c44114fcbd6ce6702032a6ffb6d38",
+  "unchanged_reference_episodes": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "replaced_goal_episodes": [
+    17,
+    18,
+    19,
+    20
+  ],
+  "endpoint_margin_m": 0.65,
+  "all_starts_grey": true,
+  "all_goals_grey": true,
+  "goal_black_count": 0,
+  "initial_heading": "Same fixed headings as test12; original automatic alignment is retained",
+  "path_note": "Intersections describe only the direct line; the policy chooses its actual route freely",
+  "cases": [
+    {
+      "episode": 1,
+      "category": "grey_only",
+      "mission": {
+        "start_id": 0,
+        "goal_id": 1,
+        "start": [
+          7.4336,
+          7.6024,
+          0.0,
+          0.0,
+          0,
+          2,
+          2
+        ],
+        "goal": [
+          8.14,
+          10.2477,
+          0.0,
+          0.0,
+          0,
+          3,
+          2
+        ],
+        "yaw": -0.9310271619121333,
+        "band": 0,
+        "distance_m": 2.7379943480584465,
+        "deadline_steps": 150
+      },
+      "distance_range_m": [
+        1.5,
+        3.0
+      ],
+      "direct_black_length_m": 0,
+      "direct_black_cells": [],
+      "source_episode": 1,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 2,
+      "category": "isolated_black_short",
+      "mission": {
+        "start_id": 2,
+        "goal_id": 3,
+        "start": [
+          2.1119,
+          13.4771,
+          0.0,
+          0.0,
+          0,
+          4,
+          0
+        ],
+        "goal": [
+          8.0426,
+          13.7515,
+          0.0,
+          0.0,
+          0,
+          4,
+          2
+        ],
+        "yaw": -1.8642092765016887,
+        "band": 1,
+        "distance_m": 5.937044538320392,
+        "deadline_steps": 194
+      },
+      "distance_range_m": [
+        3.0,
+        6.0
+      ],
+      "direct_black_length_m": 3.003209337002576,
+      "direct_black_cells": [
+        [
+          4,
+          1
+        ]
+      ],
+      "source_episode": 2,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 3,
+      "category": "isolated_black_short",
+      "mission": {
+        "start_id": 4,
+        "goal_id": 5,
+        "start": [
+          11.2648,
+          1.1533,
+          0.0,
+          0.0,
+          0,
+          0,
+          3
+        ],
+        "goal": [
+          10.5725,
+          6.6706,
+          0.0,
+          0.0,
+          0,
+          2,
+          3
+        ],
+        "yaw": 0.2213815221540063,
+        "band": 1,
+        "distance_m": 5.5605645918377755,
+        "deadline_steps": 187
+      },
+      "distance_range_m": [
+        3.0,
+        6.0
+      ],
+      "direct_black_length_m": 3.0235248718600274,
+      "direct_black_cells": [
+        [
+          1,
+          3
+        ]
+      ],
+      "source_episode": 3,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 4,
+      "category": "isolated_black_short",
+      "mission": {
+        "start_id": 6,
+        "goal_id": 7,
+        "start": [
+          0.7997,
+          13.6744,
+          0.0,
+          0.0,
+          0,
+          4,
+          0
+        ],
+        "goal": [
+          6.6549,
+          12.9992,
+          0.0,
+          0.0,
+          0,
+          4,
+          2
+        ],
+        "yaw": -1.569209181351183,
+        "band": 1,
+        "distance_m": 5.894002212418995,
+        "deadline_steps": 193
+      },
+      "distance_range_m": [
+        3.0,
+        6.0
+      ],
+      "direct_black_length_m": 3.0198808985614476,
+      "direct_black_cells": [
+        [
+          4,
+          1
+        ]
+      ],
+      "source_episode": 4,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 5,
+      "category": "isolated_black_medium",
+      "mission": {
+        "start_id": 8,
+        "goal_id": 9,
+        "start": [
+          7.3989,
+          5.1005,
+          0.0,
+          0.0,
+          0,
+          1,
+          2
+        ],
+        "goal": [
+          14.2765,
+          4.7261,
+          0.0,
+          0.0,
+          0,
+          1,
+          4
+        ],
+        "yaw": -0.5109859119201832,
+        "band": 2,
+        "distance_m": 6.887783178933553,
+        "deadline_steps": 213
+      },
+      "distance_range_m": [
+        6.0,
+        10.0
+      ],
+      "direct_black_length_m": 3.004441889147472,
+      "direct_black_cells": [
+        [
+          1,
+          3
+        ]
+      ],
+      "source_episode": 5,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 6,
+      "category": "isolated_black_medium",
+      "mission": {
+        "start_id": 10,
+        "goal_id": 11,
+        "start": [
+          11.083,
+          7.0284,
+          0.0,
+          0.0,
+          0,
+          2,
+          3
+        ],
+        "goal": [
+          7.9906,
+          1.4234,
+          0.0,
+          0.0,
+          0,
+          0,
+          2
+        ],
+        "yaw": -2.3035256002648614,
+        "band": 2,
+        "distance_m": 6.401481294200586,
+        "deadline_steps": 204
+      },
+      "distance_range_m": [
+        6.0,
+        10.0
+      ],
+      "direct_black_length_m": 3.1374160516608995,
+      "direct_black_cells": [
+        [
+          1,
+          3
+        ]
+      ],
+      "source_episode": 6,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 7,
+      "category": "isolated_black_medium",
+      "mission": {
+        "start_id": 12,
+        "goal_id": 13,
+        "start": [
+          7.2171,
+          2.2538,
+          0.0,
+          0.0,
+          0,
+          0,
+          2
+        ],
+        "goal": [
+          13.6537,
+          8.2621,
+          0.0,
+          0.0,
+          0,
+          2,
+          4
+        ],
+        "yaw": -2.750049619631348,
+        "band": 2,
+        "distance_m": 8.8050831029582,
+        "deadline_steps": 252
+      },
+      "distance_range_m": [
+        6.0,
+        10.0
+      ],
+      "direct_black_length_m": 3.051050115563461,
+      "direct_black_cells": [
+        [
+          1,
+          3
+        ]
+      ],
+      "source_episode": 7,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 8,
+      "category": "black_cluster_medium",
+      "mission": {
+        "start_id": 14,
+        "goal_id": 15,
+        "start": [
+          4.6806,
+          11.0487,
+          0.0,
+          0.0,
+          0,
+          3,
+          1
+        ],
+        "goal": [
+          1.1171,
+          2.283,
+          0.0,
+          0.0,
+          0,
+          0,
+          0
+        ],
+        "yaw": 0.5848047081775278,
+        "band": 2,
+        "distance_m": 9.462347950693845,
+        "deadline_steps": 265
+      },
+      "distance_range_m": [
+        6.0,
+        10.0
+      ],
+      "direct_black_length_m": 3.238422927100121,
+      "direct_black_cells": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "source_episode": 8,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 9,
+      "category": "black_cluster_medium",
+      "mission": {
+        "start_id": 16,
+        "goal_id": 17,
+        "start": [
+          4.255,
+          10.2955,
+          0.0,
+          0.0,
+          0,
+          3,
+          1
+        ],
+        "goal": [
+          12.8615,
+          12.8719,
+          0.0,
+          0.0,
+          0,
+          4,
+          4
+        ],
+        "yaw": -0.33426207427034393,
+        "band": 2,
+        "distance_m": 8.983856588904345,
+        "deadline_steps": 255
+      },
+      "distance_range_m": [
+        6.0,
+        10.0
+      ],
+      "direct_black_length_m": 3.1315366021859097,
+      "direct_black_cells": [
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "source_episode": 9,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 10,
+      "category": "black_cluster_medium",
+      "mission": {
+        "start_id": 18,
+        "goal_id": 19,
+        "start": [
+          13.6535,
+          14.1325,
+          0.0,
+          0.0,
+          0,
+          4,
+          4
+        ],
+        "goal": [
+          6.8405,
+          10.3947,
+          0.0,
+          0.0,
+          0,
+          3,
+          2
+        ],
+        "yaw": 1.8462350625272377,
+        "band": 2,
+        "distance_m": 7.770979207281409,
+        "deadline_steps": 231
+      },
+      "distance_range_m": [
+        6.0,
+        10.0
+      ],
+      "direct_black_length_m": 3.4218314431005763,
+      "direct_black_cells": [
+        [
+          4,
+          3
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "source_episode": 10,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 11,
+      "category": "multiple_black_regions_long",
+      "mission": {
+        "start_id": 20,
+        "goal_id": 21,
+        "start": [
+          13.8792,
+          7.9661,
+          0.0,
+          0.0,
+          0,
+          2,
+          4
+        ],
+        "goal": [
+          2.247,
+          1.3422,
+          0.0,
+          0.0,
+          0,
+          0,
+          0
+        ],
+        "yaw": -2.633860391140347,
+        "band": 3,
+        "distance_m": 13.385967579895,
+        "deadline_steps": 343
+      },
+      "distance_range_m": [
+        10.0,
+        14.0
+      ],
+      "direct_black_length_m": 2.6102717967998217,
+      "direct_black_cells": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "source_episode": 11,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 12,
+      "category": "multiple_black_regions_long",
+      "mission": {
+        "start_id": 22,
+        "goal_id": 23,
+        "start": [
+          4.0325,
+          2.1427,
+          0.0,
+          0.0,
+          0,
+          0,
+          1
+        ],
+        "goal": [
+          12.9793,
+          11.0635,
+          0.0,
+          0.0,
+          0,
+          3,
+          4
+        ],
+        "yaw": 0.08611558728272684,
+        "band": 3,
+        "distance_m": 12.63431449980568,
+        "deadline_steps": 328
+      },
+      "distance_range_m": [
+        10.0,
+        14.0
+      ],
+      "direct_black_length_m": 3.103808719510268,
+      "direct_black_cells": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "source_episode": 12,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 13,
+      "category": "multiple_black_regions_long",
+      "mission": {
+        "start_id": 24,
+        "goal_id": 25,
+        "start": [
+          6.7284,
+          13.7468,
+          0.0,
+          0.0,
+          0,
+          4,
+          2
+        ],
+        "goal": [
+          0.7409,
+          4.5949,
+          0.0,
+          0.0,
+          0,
+          1,
+          0
+        ],
+        "yaw": -1.7310763017105306,
+        "band": 3,
+        "distance_m": 10.936518178104036,
+        "deadline_steps": 294
+      },
+      "distance_range_m": [
+        10.0,
+        14.0
+      ],
+      "direct_black_length_m": 4.34195968657375,
+      "direct_black_cells": [
+        [
+          4,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "source_episode": 13,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 14,
+      "category": "black_cluster_long",
+      "mission": {
+        "start_id": 26,
+        "goal_id": 27,
+        "start": [
+          1.4171,
+          13.3981,
+          0.0,
+          0.0,
+          0,
+          4,
+          0
+        ],
+        "goal": [
+          5.3334,
+          1.6801,
+          0.0,
+          0.0,
+          0,
+          0,
+          1
+        ],
+        "yaw": -1.3008648841614254,
+        "band": 3,
+        "distance_m": 12.355117550634635,
+        "deadline_steps": 323
+      },
+      "distance_range_m": [
+        10.0,
+        14.0
+      ],
+      "direct_black_length_m": 6.32622506432905,
+      "direct_black_cells": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "source_episode": 14,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 15,
+      "category": "black_cluster_long",
+      "mission": {
+        "start_id": 28,
+        "goal_id": 29,
+        "start": [
+          1.4982,
+          11.1649,
+          0.0,
+          0.0,
+          0,
+          3,
+          0
+        ],
+        "goal": [
+          9.9327,
+          0.9887,
+          0.0,
+          0.0,
+          0,
+          0,
+          3
+        ],
+        "yaw": -0.011124943202827975,
+        "band": 3,
+        "distance_m": 13.217255263102093,
+        "deadline_steps": 340
+      },
+      "distance_range_m": [
+        10.0,
+        14.0
+      ],
+      "direct_black_length_m": 4.242672123090264,
+      "direct_black_cells": [
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "source_episode": 15,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 16,
+      "category": "black_cluster_long",
+      "mission": {
+        "start_id": 30,
+        "goal_id": 31,
+        "start": [
+          4.6956,
+          0.839,
+          0.0,
+          0.0,
+          0,
+          0,
+          1
+        ],
+        "goal": [
+          6.8716,
+          13.6725,
+          0.0,
+          0.0,
+          0,
+          4,
+          2
+        ],
+        "yaw": -2.3547903212590016,
+        "band": 3,
+        "distance_m": 13.016670013870673,
+        "deadline_steps": 336
+      },
+      "distance_range_m": [
+        10.0,
+        14.0
+      ],
+      "direct_black_length_m": 5.6109801709475295,
+      "direct_black_cells": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "source_episode": 16,
+      "reference_goal_replaced": false
+    },
+    {
+      "episode": 17,
+      "category": "black_detour_short",
+      "mission": {
+        "start_id": 32,
+        "goal_id": 33,
+        "start": [
+          0.9648,
+          10.3003,
+          0.0,
+          0.0,
+          0,
+          3,
+          0
+        ],
+        "goal": [
+          1.3545,
+          5.1342,
+          0.0,
+          0.0,
+          0,
+          1,
+          0
+        ],
+        "yaw": 0.3692528690587671,
+        "band": 1,
+        "distance_m": 5.180777480262977,
+        "deadline_steps": 179
+      },
+      "distance_range_m": [
+        3.0,
+        6.0
+      ],
+      "direct_black_length_m": 3.0085233427128646,
+      "direct_black_cells": [
+        [
+          2,
+          0
+        ]
+      ],
+      "source_episode": 17,
+      "reference_goal_replaced": true
+    },
+    {
+      "episode": 18,
+      "category": "black_detour_short",
+      "mission": {
+        "start_id": 34,
+        "goal_id": 35,
+        "start": [
+          2.2104,
+          9.9459,
+          0.0,
+          0.0,
+          0,
+          3,
+          0
+        ],
+        "goal": [
+          7.3711,
+          7.9032,
+          0.0,
+          0.0,
+          0,
+          2,
+          2
+        ],
+        "yaw": 0.6334692389453012,
+        "band": 1,
+        "distance_m": 5.55026555941245,
+        "deadline_steps": 187
+      },
+      "distance_range_m": [
+        3.0,
+        6.0
+      ],
+      "direct_black_length_m": 1.505539479059485,
+      "direct_black_cells": [
+        [
+          2,
+          1
+        ]
+      ],
+      "source_episode": 18,
+      "reference_goal_replaced": true
+    },
+    {
+      "episode": 19,
+      "category": "black_detour_medium",
+      "mission": {
+        "start_id": 36,
+        "goal_id": 37,
+        "start": [
+          13.8206,
+          10.6564,
+          0.0,
+          0.0,
+          0,
+          3,
+          4
+        ],
+        "goal": [
+          6.8008,
+          11.1845,
+          0.0,
+          0.0,
+          0,
+          3,
+          2
+        ],
+        "yaw": 0.8667000239217044,
+        "band": 2,
+        "distance_m": 7.039636471437997,
+        "deadline_steps": 216
+      },
+      "distance_range_m": [
+        6.0,
+        10.0
+      ],
+      "direct_black_length_m": 3.008477366066553,
+      "direct_black_cells": [
+        [
+          3,
+          3
+        ]
+      ],
+      "source_episode": 19,
+      "reference_goal_replaced": true
+    },
+    {
+      "episode": 20,
+      "category": "black_detour_medium",
+      "mission": {
+        "start_id": 38,
+        "goal_id": 39,
+        "start": [
+          13.1059,
+          7.7602,
+          0.0,
+          0.0,
+          0,
+          2,
+          4
+        ],
+        "goal": [
+          6.9057,
+          0.9772,
+          0.0,
+          0.0,
+          0,
+          0,
+          2
+        ],
+        "yaw": 1.4554732937442587,
+        "band": 2,
+        "distance_m": 9.189753480915579,
+        "deadline_steps": 259
+      },
+      "distance_range_m": [
+        6.0,
+        10.0
+      ],
+      "direct_black_length_m": 3.7008872119866174,
+      "direct_black_cells": [
+        [
+          1,
+          3
+        ]
+      ],
+      "source_episode": 20,
+      "reference_goal_replaced": true
+    }
+  ]
+}

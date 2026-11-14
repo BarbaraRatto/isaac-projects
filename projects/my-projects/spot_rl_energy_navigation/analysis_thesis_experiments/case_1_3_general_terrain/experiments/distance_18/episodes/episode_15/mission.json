@@ -1,0 +1,71 @@
+{
+  "episode": 15,
+  "distance_group_m": 18,
+  "category": "regular",
+  "category_name": "Simple route on traversable terrain",
+  "mission": {
+    "start_id": 62,
+    "goal_id": 63,
+    "start": [
+      30.009827427377505,
+      -0.18725403172645705,
+      0.0,
+      0.0,
+      0,
+      0,
+      5
+    ],
+    "goal": [
+      12.009946574152,
+      -0.2527465479847314,
+      0.021373208067028825,
+      0.04774135839714005,
+      4,
+      0,
+      2
+    ],
+    "yaw": -2.6455467536541697,
+    "band": 4,
+    "distance_m": 18.0,
+    "deadline_steps": 435
+  },
+  "direct_cells": [
+    {
+      "row": 0,
+      "col": 5,
+      "terrain": "t1_asphalt",
+      "length_m": 3.0098473503554786
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "terrain": "t6_obstacles",
+      "length_m": 6.000039715854388
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "terrain": "t1_asphalt",
+      "length_m": 6.000039715854388
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "terrain": "t5_large_rocks",
+      "length_m": 2.990073217935746
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t1_asphalt": 9.009887066209867,
+    "t6_obstacles": 6.000039715854388,
+    "t5_large_rocks": 2.990073217935746
+  },
+  "alternative_geometry": null,
+  "minimum_saved_endpoint_rms_m": 6.213311537270076,
+  "pool_index": 517,
+  "selection_note": "meh",
+  "review_status": "tentative",
+  "source_episode": 32,
+  "source_episode_18m": 32,
+  "source_run": "distance_18m_all_20261113_235009_130946_82d42a66"
+}

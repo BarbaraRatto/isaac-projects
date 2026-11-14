@@ -1,0 +1,6 @@
+mission_id,map,start_x_m,start_y_m,goal_x_m,goal_y_m,start_yaw_deg
+A1,rocks_right,-0.0289,0.0005,3.9883,4.0234,45.0
+A2,rocks_right,-0.025,0.0104,3.9616,4.026,45.0
+A3,rocks_right,-0.0065,-0.0324,3.9974,3.9708,45.0
+A4,rocks_right,-0.0269,-0.0069,3.9525,3.9805,45.0
+A5,rocks_right,-0.0408,0.0188,4.0362,4.017,45.0

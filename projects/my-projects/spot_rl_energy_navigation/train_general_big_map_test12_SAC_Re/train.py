@@ -28,6 +28,8 @@ def main():
     parser.add_argument('--recovery-minutes', type=float, default=30., help='wall-time interval between complete snapshots')
     parser.add_argument('--recovery-keep', type=int, default=2, help='completed recovery generations to retain (minimum 2)')
     parser.add_argument('--recovery-reserve-gib', type=float, default=1., help='free disk reserve after a new full snapshot')
+    parser.add_argument('--mission-distribution', choices=('curriculum','uniform'), default=None,
+                        help='uniform: equal episode probability for all four bands, no curriculum promotion; default inherits resume')
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--agent-device', default='cpu')
     parser.add_argument('--torch-threads', type=int, default=4)
@@ -79,7 +81,7 @@ def main():
         from train_general_big_map_test12_SAC_Re.replay import ReplayBuffer, collect_step
         from train_general_big_map_test12_SAC_Re.sac import SAC, materialize_metrics
         from train_general_big_map_test12_SAC_Re.timing import PhaseTimers
-        from train_general_big_map_test12_SAC_Re.missions import evaluation_interval
+        from train_general_big_map_test12_SAC_Re.missions import evaluation_interval, configure_training_distribution
         validate_assets()
         random.seed(args.seed)
         np.random.seed(args.seed)
@@ -89,6 +91,9 @@ def main():
         state = torch.load(args.resume, map_location='cpu', weights_only=False) if args.resume else None
         if state is not None and (state['signature'] != runtime_signature(settings) or state['identity'] != identity):
             raise ValueError('Checkpoint configuration, model or assets differ')
+        previous_distribution=state['training_state'].get('mission_distribution','curriculum') if state else 'curriculum'
+        args.mission_distribution=args.mission_distribution or previous_distribution
+        distribution_changed=args.mission_distribution!=previous_distribution
         pca = FrozenPCA(**state['pca']) if state else FrozenPCA.load(args.pca)
         if not pca_compatible(pca.metadata.get('identity', {}), identity):
             raise ValueError('PCA DINO/preprocessing mismatch')
@@ -135,6 +140,11 @@ def main():
         if state:
             env.curriculum.load_state_dict(state['training_state']['curriculum'])
             restore_rng(state['rng'])
+        configure_training_distribution(env.sampler,env.curriculum,args.mission_distribution)
+        if distribution_changed:
+            best_score,best_by_stage=None,{}
+        print(f'[MISSIONS] distribution={args.mission_distribution}; '
+              f'evaluation stage={env.curriculum.level}; curriculum promotions={args.mission_distribution=="curriculum"}',flush=True)
         obs, _ = env.reset(seed=None if state else args.seed)
         if args.probe_steps:
             for _ in range(args.probe_steps):
@@ -186,7 +196,8 @@ def main():
         recovery = RecoveryManager(run, args.recovery_minutes*60, args.recovery_keep, args.recovery_reserve_gib)
 
         def training_state():
-            return dict(next_evaluation_transition=next_eval,curriculum=env.curriculum.state_dict(), best_by_stage=best_by_stage,
+            return dict(mission_distribution=args.mission_distribution,next_evaluation_transition=next_eval,
+                        curriculum=env.curriculum.state_dict(), best_by_stage=best_by_stage,
                         last_evaluated_stage=last_evaluated_stage,
                         counters=dict(episode_count=episode_count, success_count=success_count,
                                       vector_steps=vector_steps, alignment_count=alignment_count,
@@ -278,7 +289,7 @@ def main():
                                             success_rate=summary['success_rate'],mean_success_energy_j=summary['mean_success_energy_j']))
                         last_evaluated_stage=summary['stage']
                         rate=summary['by_band'][str(env.curriculum.level)]['success_rate']
-                        promoted=env.curriculum.update(rate)
+                        promoted=env.curriculum.update(rate) if args.mission_distribution=='curriculum' else False
                         interval=evaluation_interval(env.curriculum.level,args.eval_every)
                         next_eval=learner.transitions+interval if interval else None
                         write_json(run/'curriculum.json',dict(transitions=learner.transitions,**env.curriculum.state_dict(),promoted=promoted))

@@ -1,0 +1,29 @@
+{
+  "grey": {
+    "label": "Grigio chiaro, fisica come asfalto",
+    "color_srgb": [
+      0.82,
+      0.83,
+      0.81
+    ],
+    "static_friction": 1.0,
+    "dynamic_friction": 0.8,
+    "restitution": 0.0,
+    "roughness": 0.85
+  },
+  "black": {
+    "label": "Nero, ghiaccio piano rigido dei test precedenti",
+    "color_srgb": [
+      0.02,
+      0.02,
+      0.02
+    ],
+    "static_friction": 0.1,
+    "dynamic_friction": 0.08,
+    "compliant_contact_stiffness": 0.0,
+    "compliant_contact_damping": 0.0,
+    "horizontal_drag_ns_per_m": 0.0,
+    "restitution": 0.0,
+    "roughness": 0.2
+  }
+}

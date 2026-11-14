@@ -1,0 +1,21 @@
+{
+  "generator": "missions.py",
+  "generator_sha256": "e5a4b2807dd83f3c513c1138151e11cf5ed1bc5b3f6bb56c8c819b8a8fe8553e",
+  "surface_checks_source": "train_general_big_map_test7_SAC/prepare_map.py",
+  "surface_checks_sha256": "0bd093f60da21475171f8b5229598336294a49d2db65c0e5da1e624a72f8c557",
+  "mission_sha256": "e91100e765e23200803e25fb21cca6e023bf1d8553bc0fa7084ed2281382ebff",
+  "python_version": "3.11.13",
+  "numpy_version": "1.26.0",
+  "scipy_version": "1.15.3",
+  "note": "Final generator includes input validation. Coordinates were selected by build_suite with these selection rules.",
+  "relocation_history": [
+    {
+      "action": "Group initial files and use the shared case-level maps directory",
+      "previous_generator_sha256": "b07ed183c9dac04f6705fef7f1b864c9361bcc8e68e3f55093b1c750e957d0ff",
+      "previous_mission_sha256": "e91100e765e23200803e25fb21cca6e023bf1d8553bc0fa7084ed2281382ebff",
+      "previous_metadata_sha256": "9edb4ab06057f59cb84a6ea5bac5659b5fe6952d8e62f1dc1a9c8153c326adbd",
+      "mission_coordinates_and_case_data_unchanged": true,
+      "results_and_input_snapshots_unchanged": true
+    }
+  ]
+}

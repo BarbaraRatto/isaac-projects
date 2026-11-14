@@ -102,6 +102,8 @@ class MissionSampler:
         raise RuntimeError(f'No endpoint pair in band {band}; no reachability filtering was applied')
 
     def training(self, level):
+        if getattr(self, 'mission_distribution', 'curriculum') == 'uniform':
+            return self.sample(int(np.random.randint(len(MISSION_CFG.distance_bands))))
         band = level
         if level and np.random.random() < MISSION_CFG.easier_probability:
             band = int(np.random.randint(level))
@@ -112,3 +114,13 @@ class MissionSampler:
         band = int(stage)
         rng = np.random.default_rng(np.random.SeedSequence([seed, band, env_id, episode_index]))
         return self.sample(band, rng, evaluation=True)
+
+
+def configure_training_distribution(sampler, curriculum, mode):
+    """Explicit fine-tuning mode; keep evaluation at stage 3 for comparability."""
+    if mode not in ('curriculum', 'uniform'):
+        raise ValueError('Unknown mission distribution: '+str(mode))
+    sampler.mission_distribution=mode
+    if mode=='uniform':
+        curriculum.level=len(MISSION_CFG.distance_bands)-1
+        curriculum.streak=0

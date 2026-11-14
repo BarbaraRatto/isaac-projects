@@ -1,0 +1,14 @@
+{
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/runs/test13_ppo_20261023_122929_726370/policy_final.pt",
+  "checkpoint_sha256": "9d60c837f34356cc221e5ce97e02b6e2b8cf3e8653ab1caaad608d311cea579e",
+  "coordinates_sha256": "4f7761278b2a295e36bc2f96b6fdb9cb18552f68ba566783a8d3ae02bdaa7ae7",
+  "runner_sha256": "d3bda593bf8f9fbdfb19c61e381e102afcd0242bbc55d6a615382ab40c8bcffd",
+  "map_selection": "both",
+  "command": [
+    "spot_rl_energy_navigation/analysis_thesis_experiments/case_1_1_binary_terrain/experiments/create_exp.py",
+    "--device",
+    "cuda:0",
+    "--headless"
+  ],
+  "started_at": "2026-11-12T18:42:53.980873+01:00"
+}

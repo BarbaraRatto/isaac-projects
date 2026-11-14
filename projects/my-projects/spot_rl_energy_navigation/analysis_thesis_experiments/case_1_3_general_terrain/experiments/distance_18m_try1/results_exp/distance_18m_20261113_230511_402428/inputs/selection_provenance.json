@@ -1,0 +1,41 @@
+{
+  "generator": "missions.py",
+  "generator_sha256": "05b712e7a9af2cafa13619bbca38bb6293a8ee40bb54d0f680562b6f48bc20d7",
+  "mission_sha256": "4c21c75d5631cda6f03623063a7ef398949bf2a5725ae31236d21ac832cbee2b",
+  "surface_checks_source": "train_general_big_map_test7_SAC/prepare_map.py",
+  "surface_checks_sha256": "0bd093f60da21475171f8b5229598336294a49d2db65c0e5da1e624a72f8c557",
+  "python_version": "3.11.13",
+  "numpy_version": "1.26.0",
+  "scipy_version": "1.15.3",
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test7_SAC/checkpoints_importati/policy_best_stage_3.pt",
+  "checkpoint_sha256": "1c12f5f18e1285463456423a2ae5e6e043f311d310b2ba04bf9575ed5609c02f",
+  "checkpoint_transitions": 650065,
+  "checkpoint_training_state": {
+    "curriculum": {
+      "level": 3,
+      "streak": 0
+    },
+    "best_by_stage": {
+      "0": [
+        0.859375,
+        -821.1460526899858
+      ],
+      "1": [
+        0.84375,
+        -1096.222082067419
+      ],
+      "2": [
+        0.8984375,
+        -1054.1044566278872
+      ],
+      "3": [
+        0.625,
+        -1975.246452331543
+      ]
+    },
+    "last_evaluated_stage": 3,
+    "replay_snapshot": null
+  },
+  "study_note": "Independent prospective attempt; all outcomes retained; collection of manually selected cases is separate",
+  "distance_note": "Stage 3 checkpoint; eighteen metres exceeds its training distance band"
+}

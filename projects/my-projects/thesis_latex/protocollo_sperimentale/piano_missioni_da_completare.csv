@@ -1,0 +1,26 @@
+gruppo,casistica_o_fascia,missioni_distinte,esecuzioni_per_missione,esecuzioni_previste,stato,criteri_start_goal,note
+PPO_speculare,rocce_destra,1,5,5,gia_disponibili,"start (0,0) m; goal (4,4) m",Piccole perturbazioni iniziali; stessa policy per entrambe le mappe
+PPO_speculare,rocce_sinistra,1,5,5,gia_disponibili,"start (0,0) m; goal (4,4) m",Piccole perturbazioni iniziali; stessa policy per entrambe le mappe
+SAC_preliminare,esempio_specifico,DA CONFERMARE,1,9 O 10 DA CONFERMARE,da_identificare,DA CONFERMARE,Identificare prova e modello prima di riportare risultati
+SAC_mappa_7x7,1.5-3 m,10,1,10,proposte,"Punti valutazione, fuori da ghiaccio e scale; casistiche geometriche del documento",Coordinate da scegliere; una missione puo coprire piu casistiche
+SAC_mappa_7x7,3-6 m,10,1,10,proposte,"Punti valutazione, fuori da ghiaccio e scale; casistiche geometriche del documento",Coordinate da scegliere; una missione puo coprire piu casistiche
+SAC_mappa_7x7,6-12 m,10,1,10,proposte,"Punti valutazione, fuori da ghiaccio e scale; casistiche geometriche del documento",Coordinate da scegliere; una missione puo coprire piu casistiche
+grigio_verde_sim,1.5-3 m,10,1,10,proposte,Start sul grigio; includere anche goal sul verde,Coordinate da scegliere; una missione puo coprire piu casistiche
+grigio_verde_sim,3-6 m,10,1,10,proposte,Start sul grigio; includere anche goal sul verde,Coordinate da scegliere; una missione puo coprire piu casistiche
+grigio_verde_sim,6-12 m,10,1,10,proposte,Start sul grigio; includere anche goal sul verde,Coordinate da scegliere; una missione puo coprire piu casistiche
+grigio_nero_sim,1.5-3 m,10,1,10,proposte,Start e goal sempre sul grigio,Coordinate da scegliere; una missione puo coprire piu casistiche
+grigio_nero_sim,3-6 m,10,1,10,proposte,Start e goal sempre sul grigio,Coordinate da scegliere; una missione puo coprire piu casistiche
+grigio_nero_sim,6-12 m,10,1,10,proposte,Start e goal sempre sul grigio,Coordinate da scegliere; una missione puo coprire piu casistiche
+grigio_verde_reale,solo_grigio_breve,1,2,2,proposte,Coordinate da definire nello spazio del laboratorio,Due ripetizioni con le stesse posizioni; eventuale terza ripetizione se disponibile tempo
+grigio_verde_reale,solo_grigio_lungo,1,2,2,proposte,Coordinate da definire nello spazio del laboratorio,Due ripetizioni con le stesse posizioni; eventuale terza ripetizione se disponibile tempo
+grigio_verde_reale,una_zona_verde,1,2,2,proposte,Coordinate da definire nello spazio del laboratorio,Due ripetizioni con le stesse posizioni; eventuale terza ripetizione se disponibile tempo
+grigio_verde_reale,piu_zone_verdi,1,2,2,proposte,Coordinate da definire nello spazio del laboratorio,Due ripetizioni con le stesse posizioni; eventuale terza ripetizione se disponibile tempo
+grigio_verde_reale,goal_sul_verde,1,2,2,proposte,Coordinate da definire nello spazio del laboratorio,Due ripetizioni con le stesse posizioni; eventuale terza ripetizione se disponibile tempo
+grigio_nero_reale,solo_grigio,1,2,2,proposte,Coordinate da definire nello spazio del laboratorio,Due ripetizioni con le stesse posizioni; eventuale terza ripetizione se disponibile tempo
+grigio_nero_reale,nero_passaggio_destra,1,2,2,proposte,Coordinate da definire nello spazio del laboratorio,Due ripetizioni con le stesse posizioni; eventuale terza ripetizione se disponibile tempo
+grigio_nero_reale,nero_passaggio_sinistra,1,2,2,proposte,Coordinate da definire nello spazio del laboratorio,Due ripetizioni con le stesse posizioni; eventuale terza ripetizione se disponibile tempo
+grigio_nero_reale,piu_zone_nere,1,2,2,proposte,Coordinate da definire nello spazio del laboratorio,Due ripetizioni con le stesse posizioni; eventuale terza ripetizione se disponibile tempo
+grigio_nero_reale,scelte_successive,1,2,2,proposte,Coordinate da definire nello spazio del laboratorio,Due ripetizioni con le stesse posizioni; eventuale terza ripetizione se disponibile tempo
+riferimento_7x7_sim,andata_diretta_al_goal,2,1,2,aggiuntive_proposte,Stessi start e goal della policy,"Due missioni gia presenti fra le 30; esecuzioni del riferimento, non della policy"
+riferimento_verde_sim,andata_diretta_al_goal,3,1,3,aggiuntive_proposte,Stessi start e goal della policy,"Tre missioni gia presenti fra le 30; esecuzioni del riferimento, non della policy"
+riferimento_verde_reale,andata_diretta_al_goal,2,1,2,aggiuntive_proposte,Stessi start e goal della policy,"Due missioni gia presenti fra le cinque; esecuzioni del riferimento, non della policy"

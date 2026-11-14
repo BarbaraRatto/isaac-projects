@@ -1,0 +1,19 @@
+{
+  "source_run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_18m_try2/results_exp/distance_18m_all_20261113_235009_130946",
+  "source_episode": 13,
+  "source_episode_18m": 13,
+  "collection_episode": 12,
+  "selection_note": "meh meh",
+  "review_status": "tentative",
+  "source_config_sha256": "82d42a6607f3d865cc59612864fa07b53eea5178a553c9e11dd246ddd8d0d2e4",
+  "source_raw_sha256": {
+    "episodes.csv": "ec975c68fb47f85afc62ada0b96d6954a7b599b8456dd53b34dea1586c43da4a",
+    "trajectories.csv": "4f1b6087e0dc326f6b2e7da053a29267768903d655582bc7845d9fa4ec04d1f0",
+    "power_samples.csv": "90dd21ea0a811ea49f01d1b92f33434390151319febb8ea822c7e3b871e0aaab",
+    "fall_diagnostics.csv": "95cfcb9a36d3bd8527c751cc433bb809357c2b0615d8ce4657006c9398b4883a"
+  },
+  "archived_inputs": "sources/distance_18m_all_20261113_235009_130946_82d42a66/inputs",
+  "checkpoint_sha256": "1c12f5f18e1285463456423a2ae5e6e043f311d310b2ba04bf9575ed5609c02f",
+  "map_sha256": "c00ecd296f70f91af8665fa9dc927cd120ad988c8ae7b7e253ec49856c2e2836",
+  "selection": "Manually requested illustrative episode; original run retained separately"
+}

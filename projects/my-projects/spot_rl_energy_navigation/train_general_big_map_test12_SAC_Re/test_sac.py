@@ -142,8 +142,9 @@ def test_raw_replay_reuses_current_normalizer_without_reinserting_statistics():
     np.testing.assert_array_equal(replay.arrays['actor'][:8],a.numpy())
 
 
+@pytest.mark.parametrize('mixed', [False, True])
 @pytest.mark.parametrize('interrupt', [False, True])
-def test_training_orchestration_logs_checkpoints_and_matching_replay_without_simulator(tmp_path,monkeypatch,interrupt):
+def test_training_orchestration_logs_checkpoints_and_matching_replay_without_simulator(tmp_path,monkeypatch,interrupt,mixed):
     """Exercise the actual train.main loop with a fake app/env and real SAC updates."""
     import json
     import types
@@ -173,6 +174,7 @@ def test_training_orchestration_logs_checkpoints_and_matching_replay_without_sim
             assert len(conditions)==self.num_envs
             self.conditions=conditions
             self.curriculum=Curriculum()
+            self.sampler=SimpleNamespace()
             self.t=0
         def reset(self,**kwargs):
             self.t=0
@@ -211,8 +213,9 @@ def test_training_orchestration_logs_checkpoints_and_matching_replay_without_sim
     monkeypatch.setattr(train,'SAC_CFG',settings)
 
     def evaluate(env,policy,device,**kwargs):
-        return dict(stage=0,episodes=2,success_rate=0.,mean_success_energy_j=None,
-                    by_band={'0':{'success_rate':0.}}),[],(0.,float('-inf'))
+        stage=env.curriculum.level
+        return dict(stage=stage,episodes=2,success_rate=0.,mean_success_energy_j=None,
+                    by_band={str(stage):{'success_rate':0.}}),[],(0.,float('-inf'))
     monkeypatch.setattr(evaluation,'evaluate',evaluate)
     output=tmp_path/'run'
     monkeypatch.setattr(sys,'argv',['train.py','--pca',str(pca_path),'--timesteps','9','--run-dir',str(output),
@@ -237,12 +240,24 @@ def test_training_orchestration_logs_checkpoints_and_matching_replay_without_sim
     # A real resume restores the matching replay, then counts only new samples.
     resumed=tmp_path/'resumed'
     monkeypatch.setattr(sys,'argv',['train.py','--timesteps','12','--resume',str(output),
-                                   '--run-dir',str(resumed),'--eval-every','0','--num-envs','3','--gradient-steps','2','--headless'])
+                                   '--run-dir',str(resumed),'--eval-every','0','--num-envs','3','--gradient-steps','2','--headless']
+                        +(['--mission-distribution','uniform'] if mixed else []))
     train.main()
     assert json.loads((resumed/'summary.json').read_text())['transitions']==12
     restored=torch.load(resumed/'policy_final.pt',weights_only=False)
     replay.load(resumed/restored['training_state']['replay_snapshot']['file'])
     assert replay.total==12
+    expected_mode='uniform' if mixed else 'curriculum'
+    assert restored['training_state']['mission_distribution']==expected_mode
+    assert restored['training_state']['curriculum']['level']==(3 if mixed else 0)
+    # A later resume inherits the saved mission mode without the CLI flag.
+    inherited=tmp_path/'inherited'
+    monkeypatch.setattr(sys,'argv',['train.py','--timesteps','15','--resume',str(resumed),
+                                   '--run-dir',str(inherited),'--eval-every','0','--num-envs','3','--gradient-steps','2','--headless'])
+    train.main()
+    inherited_state=torch.load(inherited/'policy_final.pt',weights_only=False)
+    assert inherited_state['training_state']['mission_distribution']==expected_mode
+    assert inherited_state['learner']['transitions']==15
 
 
 def test_runtime_signature_overrides_and_playback_contract():

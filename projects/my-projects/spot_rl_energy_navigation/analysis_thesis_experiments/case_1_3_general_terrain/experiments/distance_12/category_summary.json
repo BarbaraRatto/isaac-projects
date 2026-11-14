@@ -1,0 +1,46 @@
+{
+  "total_saved": 0,
+  "total_confirmed": 0,
+  "total_tentative": 0,
+  "remaining_slots": 40,
+  "over_target_count": 0,
+  "needed_to_fill_categories": 40,
+  "categories": [
+    {
+      "category": "regular",
+      "saved": 0,
+      "confirmed": 0,
+      "tentative": 0,
+      "target": 10,
+      "remaining": 10,
+      "over_target": 0
+    },
+    {
+      "category": "ice",
+      "saved": 0,
+      "confirmed": 0,
+      "tentative": 0,
+      "target": 10,
+      "remaining": 10,
+      "over_target": 0
+    },
+    {
+      "category": "stairs",
+      "saved": 0,
+      "confirmed": 0,
+      "tentative": 0,
+      "target": 10,
+      "remaining": 10,
+      "over_target": 0
+    },
+    {
+      "category": "surface_choice",
+      "saved": 0,
+      "confirmed": 0,
+      "tentative": 0,
+      "target": 10,
+      "remaining": 10,
+      "over_target": 0
+    }
+  ]
+}

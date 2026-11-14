@@ -6,12 +6,10 @@ from pathlib import Path
 import sys
 
 import numpy as np
-from pxr import Usd, UsdGeom
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 from train_general_big_map_test13_SAC_Re.config import MISSION_CFG, TERRAIN_NAMES, experiment_signature
-from train_general_big_map_test13_SAC_Re.lab_geometry import materials, material_pair, flat_box
 
 
 def sha(path):
@@ -58,6 +56,9 @@ def main():
         return
     if target.exists():
         raise FileExistsError('Partial map output exists; inspect before rebuilding')
+    # Frozen-map reuse verifies hashes only; USD is needed only for generation.
+    from pxr import Usd, UsdGeom
+    from train_general_big_map_test13_SAC_Re.lab_geometry import materials, material_pair, flat_box
     data = materials()
     grid = layout()
     stage = Usd.Stage.CreateNew(str(target))

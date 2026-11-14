@@ -1,161 +1,844 @@
 \chapter{Metodologia}
 \label{chap:methodology}
 
-% Descrivere il sistema finale seguendo il percorso di dati e decisioni.
-% Usare sorgenti e configurazioni delle run selezionate, senza raccontare
-% la successione dei tentativi preliminari o anticipare i risultati.
+% Riferimenti di implementazione per la stesura:
+% scenario esteso: train_general_big_map_test7_SAC, indicato dall'autrice;
+% scenario speculare: multi_terrain_test13, confermato dall'autrice;
+% modelli per prove reali: train_general_big_map_test12_SAC_Re e
+% train_general_big_map_test13_SAC_Re, training online in corso all'11/11/2026.
+% I dettagli delle run saranno verificati quando saranno disponibili.
+% Nel manoscritto descrivere il metodo, senza nomi o cronologia delle versioni.
+
+Il capitolo descrive il sistema sviluppato per apprendere la navigazione di Spot considerando il costo del movimento. Dopo aver definito il problema, presenta la piattaforma, il calcolo energetico e la costruzione delle osservazioni. Descrive quindi il compito di apprendimento, le reti e la procedura di addestramento, fino all'esecuzione della policy.
 
 \section{Formulazione del problema}
 \label{sec:metodo-problema}
 
 \subsection{Obiettivo di navigazione e costo energetico}
-% Notazione, goal e compromesso fra successo, energia e durata;
-% non attribuire al metodo garanzie di ottimalita.
+
+Il robot deve raggiungere una posizione obiettivo, detta goal, scegliendo il tragitto e la velocità di movimento. La missione si svolge su un terreno che può presentare superfici e geometrie differenti. Il percorso più corto può richiedere più lavoro di una deviazione: la policy deve quindi imparare a usare le informazioni disponibili per raggiungere la destinazione con un costo contenuto.
+
+La Figura~\ref{fig:metodo-problema-navigazione} illustra il problema con due percorsi possibili e una zona osservabile limitata. Lo schema serve a spiegare il compito; non rappresenta un risultato sperimentale.
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.16\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: problema di navigazione energetica}\par\medskip
+        Vista dall'alto con Spot, partenza, goal e due percorsi\newline
+        di lunghezza diversa su superfici con costi differenti.\par\smallskip
+        Evidenziare il campo visivo e lasciare una parte\newline
+        del tragitto fuori dalla regione osservata.
+    \end{minipage}}
+    \caption[Schema del problema di navigazione energetica]{Illustrazione del compito: scegliere il movimento verso un goal noto usando informazioni locali sul terreno. Una deviazione può risultare conveniente se evita una superficie costosa. I percorsi sono esempi concettuali.}
+    \label{fig:metodo-problema-navigazione}
+\end{figure}
+
+Indicando con $\mathbf p_t=(x_t,y_t)$ la posizione della base sul piano orizzontale e con $\mathbf p_g$ il goal, la distanza residua è
+\begin{equation}
+    d_t=\left\|\mathbf p_g-\mathbf p_t\right\|_2.
+    \label{eq:metodo-distanza-goal}
+\end{equation}
+L'obiettivo è considerato raggiunto quando il robot entra nella regione di tolleranza attorno al goal, purché non siano presenti condizioni di fallimento. La distanza è misurata sul piano anche quando il terreno presenta dislivelli.
+
+Il costo del movimento è il lavoro meccanico assoluto ai giunti, definito nell'equazione~\eqref{eq:sota-energia-meccanica}. Durante la simulazione viene calcolato dalle coppie e dalle velocità articolari e accumulato nel tempo. Questa misura descrive l'attività meccanica e va distinta dall'energia elettrica prelevata dalla batteria.
+
+L'apprendimento considera il costo insieme al completamento della missione e al tempo disponibile. Ridurre il movimento fino a restare fermi non soddisfa il compito. La ricompensa combina perciò progresso, costo energetico, tempo ed esito dell'episodio e, dove previsto, un termine legato all'orientamento. I singoli termini sono definiti nella Sezione~\ref{sec:metodo-compito-rl}. La policy viene ottimizzata rispetto a questa ricompensa, senza una garanzia di trovare il tragitto di minima energia.
 
 \subsection{Informazione disponibile e osservabilit\`a parziale}
-% Informazione locale e storia delle osservazioni; distinguere stato
-% fisico completo e osservazione fornita alla policy.
+
+Il goal è assegnato al sistema come posizione e viene espresso rispetto al robot per costruire l'osservazione della policy. Non deve quindi essere riconosciuto nell'immagine. La sua posizione può essere nota anche quando la destinazione si trova fuori dal campo visivo; le proprietà del terreno lungo il tragitto devono invece essere ricavate dalle osservazioni disponibili.
+
+La camera RGB-D fornisce immagini a colori e profondità. Da questi dati vengono estratti descrittori visivi e geometrici, conservati in una memoria spaziale. A ogni decisione viene letta una finestra locale attorno al robot, che può includere anche regioni osservate in precedenza e non più inquadrate. La memoria viene azzerata all'inizio di una nuova missione.
+
+La policy riceve inoltre informazioni sul movimento del corpo, sulla sua inclinazione e sulla potenza meccanica filtrata, insieme al goal, all'azione precedente e al tempo residuo. Le misure articolari servono al calcolo energetico e al controllore locomotorio; non vengono tutte fornite direttamente alla rete di navigazione. Nessuna classe di materiale viene assegnata alle celle come ingresso dell'actor.
+
+Queste informazioni descrivono solo una parte dello stato dell'ambiente. La memoria conserva ciò che è stato osservato, ma non rivela le superfici ancora inesplorate. Le decisioni sono quindi basate sulla percezione locale e sull'esperienza appresa durante il training. In esecuzione i pesi della policy restano fissi: aggiornare la mappa o ricevere un nuovo segnale di potenza cambia gli ingressi, senza costituire un aggiornamento online della rete.
 
 \subsection{Assunzioni operative e vincoli}
-% Formalizzare le assunzioni del capitolo 1, i limiti dei comandi
-% e la dipendenza dal controllore locomotorio adottato.
 
-\section{Piattaforma robotica e ambiente di simulazione}
+Il sistema usa una struttura gerarchica. La policy di navigazione sceglie una velocità longitudinale e una velocità angolare; un controllore locomotorio preaddestrato le trasforma in movimenti articolari. La velocità laterale comandata è nulla e l'avanzamento è limitato a velocità non negative. La rete di navigazione non sceglie direttamente coppie, appoggi o andature. Il costo ottenuto dipende quindi anche dal controllore sottostante, mantenuto fisso durante l'addestramento della navigazione.
+
+Si considera un ambiente statico e la posa fornita dal simulatore viene utilizzata per registrare le osservazioni nella memoria. Non viene introdotta una stima odometrica con deriva. Il modello assume inoltre la disponibilità dei segnali necessari a calcolare il lavoro articolare. Il passaggio alla piattaforma reale richiede di definire le sorgenti effettive di queste informazioni.
+
+Infine, la missione ha una durata massima e termina anche in presenza delle condizioni operative di fallimento. Un costo basso deve dunque essere interpretato insieme all'esito: un episodio interrotto prima del goal non equivale a una missione completata con un risparmio energetico.
+
+\section{Piattaforma e architettura del sistema}
 \label{sec:metodo-piattaforma}
-
-\subsection{Spot e controllore di locomozione}
-% Robot e controllore preaddestrato che esegue i comandi di navigazione.
-
-\subsection{Sensori e segnali disponibili}
-% Camera, RGB-D, stato del corpo e segnali articolari realmente utilizzati.
-% Distinguere segnali per il calcolo energetico e ingressi della policy.
-
-\subsection{Simulazione mediante Isaac Sim e Isaac Lab}
-% Framework, versione software e modello del robot impiegati.
-
-\subsection{Modellazione dei terreni e delle interazioni fisiche}
-% Geometria, materiali, contatti e proprieta fisiche. Disposizione delle
-% mappe e condizioni specifiche di valutazione appartengono al capitolo 4.
-
-\section{Architettura complessiva del sistema}
 \label{sec:metodo-architettura}
 
-\subsection{Flusso delle informazioni e moduli principali}
-% Schema: RGB-D, feature, memoria/mappa, osservazione della policy,
-% comandi di velocita, controllore locomotorio e feedback del robot.
+Il sistema collega la percezione del terreno al controllo del movimento attraverso due livelli. La policy di navigazione sceglie le velocità da comandare; il controllore locomotorio gestisce i giunti per eseguirle. Questa sezione presenta i componenti e il loro collegamento. Il calcolo energetico, la costruzione della mappa e le reti saranno approfonditi nelle sezioni successive.
 
-\subsection{Collegamento fra policy di navigazione e controllore locomotorio}
-% Separazione dei livelli di controllo; componenti addestrati e congelati.
+\subsection{Spot e controllore di locomozione}
+
+La piattaforma simulata è un modello di Spot con quattro zampe e dodici giunti attuati, tre per zampa. Il sistema riutilizza il modello USD e la policy locomotoria preaddestrata presenti nel progetto IsaacRobotics\footnote{Repository del progetto: \url{https://github.com/mschweig/IsaacRobotics}.}. La descrizione USD contiene la struttura articolata e le proprietà fisiche del robot. Il controllore viene caricato con pesi già definiti e mantenuto fisso durante l'apprendimento della navigazione.
+
+Il comando ricevuto dal controllore comprende velocità longitudinale, laterale e angolare. Nel compito adottato, la policy può modificare la velocità longitudinale e quella angolare, mentre il comando laterale è posto a zero. Il controllore usa anche lo stato del corpo, le posizioni e le velocità dei giunti e la propria azione precedente. Può quindi regolare il movimento delle zampe mentre esegue il comando del livello superiore.
+
+L'uscita locomotoria contiene dodici valori, trasformati in posizioni articolari di riferimento secondo
+\begin{equation}
+    \mathbf q^{\mathrm{ref}}=\mathbf q^{\mathrm{nom}}
+                  +s_{\mathrm{loc}}\mathbf a^{\mathrm{loc}},
+    \qquad s_{\mathrm{loc}}=0{,}2\,\mathrm{rad}.
+    \label{eq:metodo-riferimenti-locomotori}
+\end{equation}
+Il vettore $\mathbf q^{\mathrm{nom}}$ è la postura nominale e $\mathbf a^{\mathrm{loc}}$ è l'uscita del controllore. Gli attuatori simulati inseguono queste posizioni con rigidezza pari a $60\,\mathrm{N\,m/rad}$ e smorzamento pari a $1{,}5\,\mathrm{N\,m\,s/rad}$. Nel modello, i limiti di coppia sono $45\,\mathrm{N\,m}$ per i giunti dell'anca e $115\,\mathrm{N\,m}$ per quelli del ginocchio. Si tratta dei parametri impostati nella simulazione.
+
+\subsection{Sensori e segnali disponibili}
+
+La percezione esterna utilizza una camera virtuale solidale al corpo, collocata nella parte anteriore del robot. La configurazione ottica è ricavata dalla camera destra del modello ZED X. Si acquisiscono un'immagine RGB e una mappa di profondità, entrambe con risoluzione $640\times360$ pixel. La profondità è fornita dal simulatore lungo l'asse ottico della camera: non viene calcolata confrontando due immagini stereo. Questa distinzione è utile per precisare quali dati alimentano la pipeline.
+
+Rispetto al riferimento della base, la camera è traslata di $0{,}42\,\mathrm{m}$ in avanti e di $0{,}07\,\mathrm{m}$ verso l'alto, con un'inclinazione di $15^\circ$ verso il terreno. La posa viene aggiornata usando posizione e orientamento del corpo, così che la vista segua anche le sue oscillazioni. La Figura~\ref{fig:metodo-spot-camera} mostrerà il montaggio virtuale e il campo osservato. La trasformazione dei pixel in punti nello spazio sarà descritta nella sezione sulla rappresentazione percettiva.
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.16\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: Spot e camera in simulazione}\par\medskip
+        Vista laterale del modello con posizione della camera,\newline
+        inclinazione e assi del riferimento della base.\par\smallskip
+        Affiancare un esempio delle immagini RGB e depth\newline
+        ottenute nella stessa posa.
+    \end{minipage}}
+    \caption[Configurazione della camera sul robot simulato]{Posa della camera virtuale rispetto alla base di Spot e osservazioni RGB-D corrispondenti. Lo schema descrive la configurazione adottata in simulazione.}
+    \label{fig:metodo-spot-camera}
+\end{figure}
+
+Le informazioni sul robot vengono lette dallo stato simulato: velocità lineare e angolare del corpo, orientamento, posizioni e velocità articolari. La direzione della gravità espressa nel riferimento del corpo permette di descriverne l'inclinazione. Le coppie articolari, ricavate dalle forze proiettate del solver fisico, vengono combinate con le velocità per il calcolo della potenza.
+
+I sensori di contatto delle zampe forniscono inoltre dati usati dai critic durante l'addestramento, insieme a proprietà dei materiali accessibili nel simulatore. Dove previsto dal criterio di caduta, un sensore sul tronco rileva inoltre i contatti con il terreno. Questi segnali hanno ruoli diversi dagli ingressi dell'actor: le informazioni privilegiate non vengono inserite nella sua mappa percettiva.
+
+\subsection{Ambiente di simulazione e modellazione dei terreni}
+
+L'ambiente è realizzato con Isaac Sim 5.1.0 e Isaac Lab 2.3.0. Isaac Sim gestisce la scena, la fisica dei corpi e dei contatti tramite PhysX e la generazione delle immagini. Isaac Lab fornisce le strutture per organizzare robot, sensori e interazione con l'agente RL~\citep{Mittal2025IsaacLab}. Il codice del compito specifica direttamente la sequenza di simulazione, il calcolo della ricompensa e le condizioni di fine episodio.
+
+Per raccogliere esperienze in parallelo vengono create copie separate del robot e della mappa. Ogni istanza possiede la propria missione e la propria memoria. Le collisioni fra istanze sono filtrate, così che l'interazione di interesse avvenga fra ciascun robot e il suo ambiente. Il numero di istanze è un parametro dell'addestramento e verrà riportato insieme alla relativa configurazione.
+
+Le superfici comprendono asfalto, terreno scivoloso, rampa, ghiaia fine, rocce, ostacoli e scale. Le differenze sono introdotte attraverso forma della mesh, attrito statico, attrito dinamico e aspetto visivo. Nel modello adottato le superfici sono rigide e statiche: ghiaia e rocce sono descritte da geometrie irregolari, senza simulare granuli mobili o deformazione del suolo. L'aspetto suggerisce il tipo di superficie, mentre il contatto dipende dalla geometria e dai materiali fisici assegnati.
+
+La Tabella~\ref{tab:metodo-terreni} raccoglierà le proprietà dei sette terreni. I coefficienti assegnati alle superfici devono essere distinti da quelli effettivi al contatto, che dipendono anche dal materiale dei piedi e dalla regola di combinazione. La disposizione delle superfici nelle mappe sarà presentata con gli scenari sperimentali.
+
+\begin{table}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.15\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: proprietà dei terreni simulati}\par\medskip
+        Una riga per ciascuno dei sette terreni.\par\smallskip
+        Colonne: nome, geometria, attrito statico, attrito\newline
+        dinamico e restituzione. Riportare i valori delle\newline
+        mesh e dei materiali presenti negli asset utilizzati.
+    \end{minipage}}
+    \caption[Proprietà geometriche e fisiche dei terreni]{Caratteristiche delle superfici simulate. I parametri descrivono i materiali assegnati al terreno; l'attrito effettivo dipende anche dal materiale del piede.}
+    \label{tab:metodo-terreni}
+\end{table}
+
+\subsection{Flusso delle informazioni e moduli principali}
+
+La Figura~\ref{fig:metodo-architettura} riassume il ciclo di navigazione. L'immagine RGB viene elaborata da DINOv2, usato come estrattore di feature preaddestrato~\citep{Oquab2023DINOv2}. Una PCA ne riduce la dimensione. La profondità permette di associare le feature a posizioni nello spazio e di ricavare descrittori geometrici del terreno. Queste informazioni vengono registrate nella memoria usando la posa del robot.
+
+La lettura della memoria produce una gridmap locale con feature, geometria e indicatori di validità ed età. Questa mappa, insieme allo stato del robot e al goal, forma l'osservazione della policy. La rete sceglie due azioni, convertite nei comandi di velocità per il controllore locomotorio. Il movimento modifica la posa, le immagini e i segnali energetici disponibili alla decisione successiva. Il sistema può quindi verificare attraverso il feedback del corpo le conseguenze delle proprie scelte.
+
+Durante l'addestramento, le transizioni raccolte vengono usate per aggiornare actor e critic. DINOv2, la trasformazione PCA già calibrata e il controllore locomotorio rimangono fissi. La memoria viene invece aggiornata con le nuove osservazioni, senza modificare i pesi di questi componenti. In inferenza vengono eseguiti i moduli percettivi, la memoria, l'actor e il controllore; i critic non sono necessari per produrre i comandi.
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.20\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: architettura complessiva}\par\medskip
+        RGB $\rightarrow$ DINOv2 $\rightarrow$ PCA; depth e posa\newline
+        $\rightarrow$ proiezione e geometria $\rightarrow$ memoria spaziale.\par\smallskip
+        Mappa, stato e goal $\rightarrow$ actor $\rightarrow$ velocità\newline
+        $\rightarrow$ locomozione $\rightarrow$ movimento e feedback.\par\smallskip
+        Separare il ramo di training con reward e critic\newline
+        e distinguere i componenti addestrati da quelli fissi.
+    \end{minipage}}
+    \caption[Architettura del sistema di navigazione]{Collegamento fra percezione, memoria, decisione e locomozione. Il feedback energetico raggiunge la policy attraverso l'osservazione e contribuisce alla ricompensa durante l'addestramento.}
+    \label{fig:metodo-architettura}
+\end{figure}
 
 \subsection{Frequenze operative e sincronizzazione}
-% Frequenze di fisica, locomozione, percezione e navigazione;
-% allineamento temporale di immagini, posa, azioni e misure energetiche.
 
-\section{Stima del costo energetico}
+I moduli lavorano a frequenze diverse. La fisica avanza con un passo di $0{,}005\,\mathrm{s}$, pari a $200\,\mathrm{Hz}$. Il controllore locomotorio calcola nuovi riferimenti ogni dieci passi fisici, quindi a $20\,\mathrm{Hz}$. La policy di navigazione sceglie una nuova azione ogni quaranta passi, cioè ogni $0{,}2\,\mathrm{s}$, a $5\,\mathrm{Hz}$. In un intervallo di navigazione si eseguono dunque quattro aggiornamenti locomotori e quaranta passi fisici. Fra due aggiornamenti del controllore, i riferimenti articolari restano mantenuti.
+
+La potenza viene campionata ai passi della fisica e integrata sull'intero intervallo di navigazione. Questo consente di includere il lavoro svolto fra due decisioni della policy. Al termine dell'intervallo vengono calcolati ricompensa e condizioni di fine episodio. Le metriche della missione conclusa sono raccolte prima dell'eventuale reset.
+
+Per costruire l'osservazione successiva, la posa della camera viene sincronizzata con quella attuale del robot e vengono acquisite insieme RGB e profondità. Seguono l'estrazione delle feature e l'aggiornamento della mappa. La pipeline percettiva viene quindi richiamata al ritmo delle decisioni di navigazione, usando immagini e posa riferite allo stesso stato simulato.
+
+Le frequenze indicate riguardano il tempo simulato. Il tempo necessario a elaborare le immagini e ad avanzare la simulazione dipende invece dalle risorse di calcolo. Il valore di $5\,\mathrm{Hz}$ definisce l'intervallo fra le decisioni nel compito, senza costituire una misura della latenza sul robot reale.
+
+\section{Calcolo del costo energetico}
 \label{sec:metodo-energia}
 
+Il costo del movimento viene ricavato dai segnali articolari durante l'esecuzione della missione. La stessa misura alimenta tre componenti del sistema: il feedback fornito alla policy, la penalità energetica nella ricompensa e il lavoro totale registrato per l'episodio. Questa sezione descrive il calcolo e chiarisce le differenze fra questi utilizzi.
+
 \subsection{Potenza meccanica articolare}
-% Somma dei valori assoluti dei prodotti fra coppia e velocita articolare;
-% indicare la sorgente dei segnali nel simulatore.
+
+Per ciascuno dei dodici giunti, la potenza meccanica è il prodotto fra coppia e velocità angolare. Nel codice, la velocità viene letta dallo stato articolare aggiornato dopo il passo fisico. La coppia è ricavata dalle forze articolari del solver PhysX proiettate lungo il grado di libertà del giunto\footnote{La lettura usa il metodo \texttt{get\_dof\_projected\_joint\_forces}, descritto nella \href{https://docs.omniverse.nvidia.com/kit/docs/omni_physics/107.3/extensions/runtime/source/omni.physics.tensors/docs/api/python.html\#omni.physics.tensors.impl.api.ArticulationView.get_dof_projected_joint_forces}{documentazione dell'API Physics Tensors di NVIDIA}.}. Per i giunti rotativi considerati, si utilizza quindi la componente di coppia attorno all'asse di movimento. Nel seguito, $\tau_j$ indica questo segnale del simulatore, distinto dai riferimenti di posizione inviati dal controllore.
+
+La potenza complessiva utilizzata dal metodo è
+\begin{equation}
+    P_{\mathrm{abs}}(t)=\sum_{j=1}^{12}
+                    \left|\tau_j(t)\dot q_j(t)\right|.
+    \label{eq:metodo-potenza-assoluta}
+\end{equation}
+Le coppie sono espresse in $\mathrm{N\,m}$, le velocità in $\mathrm{rad/s}$ e la potenza risultante in watt. Il valore assoluto viene applicato a ogni prodotto prima della somma. In questo modo, un giunto che fornisce lavoro e uno che assorbe energia meccanica contribuiscono entrambi al costo, senza compensarsi.
+
+La misura descrive l'attività meccanica dei giunti secondo il modello simulato. Non assegna un consumo fisso al terreno: il valore dipende dal movimento effettivo, comprese correzioni della postura, svolte e difficoltà di avanzamento.
 
 \subsection{Integrazione temporale del lavoro meccanico}
-% Metodo di integrazione e intervalli inclusi nella misura.
 
-\subsection{Segnale energetico fornito alla policy e limiti della misura}
-% Potenza filtrata nell'osservazione, costo nella reward ed energia cumulata;
-% distinguere lavoro meccanico assoluto, lavoro netto e consumo elettrico.
+La potenza viene letta ai passi della fisica, separati dall'intervallo $h=0{,}005\,\mathrm{s}$. Ogni azione di navigazione copre $M=40$ passi, per una durata $\Delta t=Mh=0{,}2\,\mathrm{s}$. Per calcolare il lavoro si usa il metodo dei trapezi: su ciascun passo fisico si moltiplica la media delle potenze ai due estremi per la durata del passo.
+
+Indicando con $P_{k,m}$ il campione di potenza all'istante fisico $m$ dell'intervallo di navigazione $k$, il lavoro dell'intervallo è
+\begin{equation}
+    \Delta E_k=\sum_{m=0}^{M-1}
+                 \frac{P_{k,m}+P_{k,m+1}}{2}\,h.
+    \label{eq:metodo-integrazione-trapezi}
+\end{equation}
+Il calcolo parte dalla lettura precedente al primo passo e comprende tutti i quaranta intervalli fisici. Si evita così di stimare il costo usando soltanto il valore misurato alla fine dell'azione, che potrebbe non rappresentare le variazioni avvenute durante il movimento.
+
+Il lavoro dell'intero episodio, espresso in joule, si ottiene sommando i contributi:
+\begin{equation}
+    E_{\mathrm{episodio}}=\sum_{k=0}^{N-1}\Delta E_k,
+    \label{eq:metodo-energia-episodio}
+\end{equation}
+dove $N$ è il numero di intervalli eseguiti fino alla conclusione della missione. L'ultimo intervallo viene integrato e registrato prima del reset, anche quando l'episodio termina con un fallimento.
+
+Il conteggio comprende i movimenti eseguiti durante l'episodio. Quando è prevista una fase iniziale di allineamento al goal, il suo lavoro rientra nel totale ed è anche registrato separatamente. Questo permette di distinguere il costo dell'allineamento da quello della navigazione controllata dalla policy. Il bilancio dell'episodio comprende quindi anche questa fase, mentre l'aggiornamento dell'actor usa le sole transizioni controllate dalla policy. La preparazione della postura iniziale, svolta prima delle missioni, è invece esterna al conteggio. A ogni reset vengono azzerati gli accumulatori dell'ambiente interessato.
+
+\subsection{Utilizzo del segnale energetico e limiti della misura}
+
+La policy riceve un solo scalare energetico, ottenuto dalla potenza media dell'ultimo intervallo, $\overline P_k=\Delta E_k/\Delta t$. Per ridurre le variazioni rapide associate al ciclo degli appoggi, questa media viene filtrata:
+\begin{equation}
+    \widetilde P_k=\beta\widetilde P_{k-1}
+                         +(1-\beta)\overline P_k,
+    \qquad \beta=e^{-\Delta t/T_f},\quad T_f=1\,\mathrm{s}.
+    \label{eq:metodo-potenza-filtrata}
+\end{equation}
+Il nuovo valore combina quindi la misura recente con quella filtrata al passo precedente. Il filtro viene aggiornato a ogni intervallo di navigazione e inizializzato a zero al reset. Il segnale descrive lo sforzo recente del robot; non è una previsione diretta del costo del terreno ancora da attraversare.
+
+La penalità energetica usa invece il lavoro non filtrato dell'intervallo:
+\begin{equation}
+    r_k^{E}=-w_E\frac{\Delta E_k}{E_{\mathrm{ref}}},
+    \qquad E_{\mathrm{ref}}=100\,\mathrm{J},\quad w_E=1.
+    \label{eq:metodo-penalita-energetica}
+\end{equation}
+La divisione per $E_{\mathrm{ref}}$ rende il costo adimensionale. Con i parametri adottati, ogni joule produce una penalità di $0{,}01$ punti di ricompensa. Questo contributo viene combinato con i termini di navigazione, descritti nella sezione dedicata alla funzione di ricompensa.
+
+Il filtro riguarda dunque soltanto l'osservazione della policy: né la penalità né il lavoro totale vengono calcolati integrando la potenza filtrata. La Figura~\ref{fig:metodo-segnali-energetici} riassume i tre percorsi del segnale.
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.18\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: utilizzi della misura energetica}\par\medskip
+        Coppie e velocità $\rightarrow$ potenza a 200 Hz\newline
+        $\rightarrow$ integrazione del lavoro ogni 0,2 s.\par\smallskip
+        Mostrare tre rami: somma nel totale dell'episodio;\newline
+        divisione per 100 J nella reward; divisione per\newline
+        l'intervallo e filtro a 1 s nell'osservazione della policy.
+    \end{minipage}}
+    \caption[Calcolo e impiego del segnale energetico]{Dalla misura articolare al feedback e al costo. Il lavoro dell'intervallo alimenta sia il conteggio cumulato sia la penalità; la potenza media filtrata è utilizzata nell'osservazione della policy.}
+    \label{fig:metodo-segnali-energetici}
+\end{figure}
+
+La misura conserva i limiti discussi nel capitolo precedente: conta anche il lavoro meccanico negativo attraverso il valore assoluto e non rappresenta il consumo della batteria. Per esempio, un giunto fermo può sostenere una coppia con potenza meccanica nulla, mentre il motore reale può comunque assorbire corrente. Rendimento degli attuatori, perdite elettriche e consumi di sensori e calcolo non sono inclusi nel prodotto coppia--velocità. Il confronto con misure reali richiede quindi di precisare quali segnali vengono acquisiti e quale grandezza energetica rappresentano.
 
 \section{Rappresentazione percettiva e memoria dell'ambiente}
 \label{sec:metodo-percezione}
 
+La rappresentazione percettiva deve collegare l'aspetto del terreno alla sua posizione rispetto al robot. Un'immagine contiene informazioni visive, ma non fornisce da sola una descrizione spaziale pronta per la navigazione. Il sistema combina quindi RGB e profondità, estrae descrittori e conserva le osservazioni in una memoria. Da questa memoria viene costruita la finestra locale fornita alla policy.
+
+La procedura usa due descrizioni complementari: le feature visive rappresentano l'aspetto delle regioni osservate, mentre i descrittori geometrici ne riassumono forma e irregolarità. La memoria permette di mantenere disponibili queste informazioni anche quando una regione non è più inquadrata. Non contiene costi assegnati ai materiali: il collegamento con il movimento conveniente viene appreso dalla policy.
+
 \subsection{Acquisizione e preparazione dei dati RGB-D}
-% Preparazione delle immagini, calibrazione geometrica e corrispondenza
-% fra immagini, profondita e posa della camera.
 
-\subsection{Estrazione delle feature visive mediante DINOv2}
-% Modello, patch e feature; backbone congelato, senza classificazione
-% esplicita dei materiali.
+A ogni aggiornamento della navigazione vengono acquisiti RGB, profondità e posa della camera, come descritto nella sezione precedente. Le due immagini hanno dimensione $640\times360$ pixel e appartengono alla stessa vista. L'RGB viene usato per estrarre le feature; la profondità serve sia a collocarle nello spazio sia a ricostruire la geometria del terreno.
 
-\subsection{Riduzione dimensionale mediante PCA}
-% Trasformazione adottata e dimensione delle feature ridotte.
+Per l'elaborazione visiva si mantengono i tre canali nell'ordine RGB. L'immagine viene ridimensionata a $518\times518$ pixel mediante interpolazione bilineare. Il ridimensionamento interessa l'intera vista, senza ritaglio centrale, e modifica il rapporto d'aspetto originale. Il processore associato al modello porta i valori dei canali nell'intervallo $[0,1]$ e applica la normalizzazione prevista dai pesi preaddestrati. Le medie dei canali sono $(0{,}485,0{,}456,0{,}406)$ e le deviazioni standard $(0{,}229,0{,}224,0{,}225)$.
+
+La profondità resta invece alla risoluzione originale. Perciò le posizioni delle patch dell'immagine ridimensionata devono essere riportate sul piano dell'immagine di partenza prima di leggere la profondità. Si usano le coordinate relative delle patch, così da mantenere la corrispondenza fra descrittore e punto osservato. La proiezione geometrica usa gli intrinseci della camera a risoluzione originale, non quelli di un'immagine quadrata ipotetica.
+
+Vengono accettate solo profondità finite e comprese strettamente fra $0{,}2\,\mathrm{m}$ e $15\,\mathrm{m}$. Si eliminano inoltre i punti che distano meno o uguale a $0{,}08\,\mathrm{m}$ dalla posizione di uno dei corpi del robot. Questo filtro geometrico riduce l'inserimento nella mappa di parti delle zampe o del corpo visibili nell'immagine. È un'esclusione approssimata basata sulla posa dei corpi, non una segmentazione semantica del terreno.
+
+Il campionamento della profondità segue due percorsi. Per le feature si legge un punto vicino al centro di ciascuna patch. Per la geometria si usa una griglia più densa, con un campione ogni quattro pixel lungo entrambe le direzioni. Quest'ultima contiene fino a $160\times90$ punti prima dei filtri. I due insiemi restano separati perché servono a calcolare informazioni differenti.
+
+\subsection{Feature visive mediante DINOv2 e riduzione mediante PCA}
+
+L'estrattore adottato è DINOv2-small, mantenuto congelato durante l'apprendimento della navigazione~\citep{Oquab2023DINOv2}. La rete viene usata per descrivere l'immagine, senza addestrarla a riconoscere i nomi dei terreni. L'uscita utilizzata comprende i descrittori delle patch; il token globale dell'immagine viene escluso.
+
+Con un ingresso di $518\times518$ pixel e patch di lato 14 pixel si ottiene una griglia di $37\times37$ descrittori. Ogni descrittore contiene 384 componenti: una singola immagine produce quindi 1369 vettori visivi. Questi vettori possono riassumere caratteristiche dell'aspetto e del contesto della regione, ma non hanno un significato energetico assegnato in partenza.
+
+Per contenere la dimensione della rappresentazione, ogni vettore viene proiettato su 32 componenti mediante PCA~\citep{Jolliffe2016PCA}. Indicando con $\mathbf z\in\mathbb R^{384}$ la feature originale, la trasformazione è
+\begin{equation}
+    \mathbf f=W_{\mathrm{PCA}}
+                    (\mathbf z-\boldsymbol\mu_{\mathrm{PCA}}),
+    \qquad \mathbf f\in\mathbb R^{32},
+    \label{eq:metodo-feature-pca}
+\end{equation}
+dove $\boldsymbol\mu_{\mathrm{PCA}}$ è la media dei dati di calibrazione e $W_{\mathrm{PCA}}$ contiene le prime 32 direzioni principali. La trasformazione centra i dati e li proietta, senza applicare whitening, cioè senza riscalare ciascuna componente per uniformarne la varianza.
+
+La PCA viene calibrata prima dell'addestramento RL e caricata insieme agli altri componenti necessari alla percezione. Media e matrice di proiezione restano fisse durante il training e l'inferenza. In questo modo una stessa feature viene trasformata nello stesso spazio numerico durante raccolta delle esperienze ed esecuzione della policy. La preparazione dei dati di calibrazione sarà descritta nella sezione sull'addestramento.
+
+La compressione viene applicata prima dell'inserimento nella memoria, che conserva quindi vettori di 32 componenti. Questa scelta riduce lo spazio richiesto per memorizzare le osservazioni e la dimensione della mappa letta dalla rete. La conservazione della varianza è però un criterio statistico: l'utilità delle feature per le decisioni energetiche deve essere valutata attraverso gli esperimenti.
+
+Non viene prodotta un'etichetta come asfalto o ghiaia da fornire all'actor. Le identità dei terreni possono essere note nella preparazione e nell'analisi dei dati, ma il descrittore visivo rimane un vettore continuo. La Figura~\ref{fig:metodo-patch-proiezione} illustrerà come questo vettore viene associato alla profondità e poi a una posizione sul terreno.
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.19\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: dalla patch al punto osservato}\par\medskip
+        Mostrare RGB originale, ridimensionamento a 518$\times$518\newline
+        e griglia 37$\times$37 delle patch di DINOv2.\par\smallskip
+        Evidenziare una patch, il pixel corrispondente nella depth\newline
+        originale e il punto ottenuto dalla proiezione.\par\smallskip
+        Indicare il passaggio della feature da 384 a 32 componenti.
+    \end{minipage}}
+    \caption[Associazione fra patch visiva e punto nello spazio]{Dalla descrizione visiva alla posizione osservata. Il descrittore della patch viene ridotto mediante PCA e associato al punto ricavato dalla profondità vicino al centro della patch.}
+    \label{fig:metodo-patch-proiezione}
+\end{figure}
 
 \subsection{Proiezione spaziale e descrittori geometrici}
-% Riferimenti, proiezione dei dati e calcolo dei descrittori geometrici
-% effettivamente usati, inclusi altezza, pendenza e rugosita.
+
+La proiezione usa un modello di camera pinhole. Siano $(u,v)$ le coordinate del pixel campionato e $z$ la sua profondità lungo l'asse ottico. Con focali $f_x,f_y$ e punto principale $(c_x,c_y)$, espressi in pixel, si calcola
+\begin{equation}
+    \mathbf p^C=
+    \begin{bmatrix}
+        (u-c_x)z/f_x\\
+        (v-c_y)z/f_y\\
+        z
+    \end{bmatrix},
+    \qquad
+    \mathbf p^W=R_{WC}\mathbf p^C+\mathbf t_{WC}.
+    \label{eq:metodo-proiezione-rgbd}
+\end{equation}
+Il riferimento ottico $C$ ha asse $Z$ in avanti, $X$ verso destra e $Y$ verso il basso. La rotazione $R_{WC}$ e la traslazione $\mathbf t_{WC}$ portano il punto nel riferimento del mondo $W$. La posa completa della camera comprende anche le oscillazioni del corpo.
+
+Per una patch di colonna $c$ e riga $r$, numerate da 0 a 36, il punto di campionamento nell'immagine originale è vicino a
+\[
+    u=\frac{(c+1/2)640}{37},\qquad
+    v=\frac{(r+1/2)360}{37}.
+\]
+Le coordinate vengono arrotondate al pixel più vicino e sono le stesse impiegate per leggere la profondità e per la proiezione. Se il campione non è valido, si scartano insieme il punto e la feature corrispondente. L'associazione a un solo punto è un'approssimazione, soprattutto quando una patch comprende un bordo o una discontinuità di profondità.
+
+La finestra letta dalla policy usa invece un riferimento locale $L$, centrato sulla base e allineato con la direzione orizzontale del robot. Indicando con $\mathbf b_t^W$ la posizione tridimensionale della base e con $\psi_t$ il suo yaw,
+\begin{equation}
+    \mathbf p^L=R_z(-\psi_t)
+                       (\mathbf p^W-\mathbf b_t^W).
+    \label{eq:metodo-riferimento-mappa}
+\end{equation}
+L'asse $X$ locale punta in avanti, $Y$ a sinistra e $Z$ verso l'alto. La trasformazione usa lo yaw e mantiene l'asse verticale del mondo, senza inclinare la griglia con rollio e beccheggio del corpo. Le quote sono espresse rispetto all'altezza attuale della base.
+
+Per ogni cella si ricavano quattro descrittori: altezza media relativa, pendenza longitudinale, pendenza laterale e rugosità. La geometria viene stimata dai campioni di profondità rappresentati nella cella. Il piano locale ai minimi quadrati ha forma
+\begin{equation}
+    z\simeq\bar z+a(x-\bar x)+b(y-\bar y),
+    \qquad \theta_x=\arctan(a),\quad \theta_y=\arctan(b),
+    \label{eq:metodo-piano-terreno}
+\end{equation}
+dove $(\bar x,\bar y,\bar z)$ è il centro medio dei punti. L'altezza fornita alla policy è $\bar z$; le due pendenze sono gli angoli $\theta_x$ e $\theta_y$, espressi in radianti. Su un terreno piano sotto il robot, l'altezza relativa è generalmente negativa, mentre le pendenze sono prossime a zero.
+
+La rugosità misura quanto i punti si discostano dal piano. È calcolata come radice della media dei quadrati delle distanze ortogonali:
+\begin{equation}
+    \rho=\sqrt{\frac{1}{n}\sum_{i=1}^{n}d_{\perp,i}^{\,2}},
+    \qquad
+    d_{\perp,i}=\frac{z_i-\bar z-a(x_i-\bar x)-b(y_i-\bar y)}
+                         {\sqrt{1+a^2+b^2}}.
+    \label{eq:metodo-rugosita}
+\end{equation}
+Il risultato è espresso in metri. Una rampa regolare può avere pendenza elevata e rugosità bassa; una superficie irregolare può invece mostrare deviazioni dal piano anche se la pendenza media è ridotta. I descrittori mantengono quindi separate queste due caratteristiche.
+
+La stima geometrica è valida solo se sono rappresentati almeno dieci punti e se la loro distribuzione sul piano $XY$ offre un supporto sufficiente in entrambe le direzioni. Il controllo richiede che il minimo autovalore della covarianza $XY$ sia almeno $10^{-4}\,\mathrm{m}^2$. Questo evita di stimare un piano da campioni quasi allineati. Quando il controllo fallisce, la cella viene segnalata come priva di geometria valida.
 
 \subsection{Costruzione della gridmap locale}
-% Estensione, risoluzione, ordinamento e contenuto delle celle;
-% distinguere regioni osservate e regioni prive di dati.
+
+La policy legge una griglia quadrata di $9\times9$ celle, con passo di $0{,}5\,\mathrm{m}$. Su ciascun asse, i centri delle celle vanno da $-2$ a $+2\,\mathrm{m}$. I bordi esterni si trovano quindi a $\pm2{,}25\,\mathrm{m}$: la finestra copre $4{,}5\times4{,}5\,\mathrm{m}$. Il robot occupa il centro della griglia. La finestra comprende anche regioni laterali e posteriori, che possono essere state osservate in precedenza.
+
+Ogni cella $c$ contiene un vettore di quaranta valori:
+\begin{equation}
+    \mathbf m_c=
+    [\,\mathbf f_c,\ h_c,\ \theta_{x,c},\ \theta_{y,c},\ \rho_c,
+        \ v_c^V,\ v_c^G,\ \eta_c^V,\ \eta_c^G\,]
+        \in\mathbb R^{40}.
+    \label{eq:metodo-vettore-cella}
+\end{equation}
+I primi 32 valori sono le feature PCA medie; seguono quattro valori geometrici. I due indicatori $v_c^V$ e $v_c^G$ segnalano separatamente la validità visiva e geometrica. Gli ultimi due valori, $\eta_c^V$ e $\eta_c^G$, descrivono l'età delle rispettive informazioni.
+
+La validità visiva richiede la presenza di almeno una feature proiettata rappresentata nella cella. La validità geometrica usa invece i controlli sul numero e sulla distribuzione dei punti appena descritti. Una cella può quindi avere una descrizione visiva valida e una geometria insufficiente, oppure il contrario. Usare due indicatori evita di considerare automaticamente entrambe le modalità disponibili.
+
+La Tabella~\ref{tab:metodo-contenuto-cella} riepilogherà componenti, dimensioni e unità. I valori non disponibili vengono posti a zero e accompagnati dall'indicatore di validità nullo. In questo modo, per esempio, una pendenza zero misurata su una superficie piana può essere distinta da una pendenza zero dovuta all'assenza di dati. Anche l'età di una modalità non valida è nulla e va interpretata insieme alla maschera.
+
+\begin{table}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.18\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: contenuto di una cella della gridmap}\par\medskip
+        Righe: feature PCA (32), altezza (1), pendenze (2),\newline
+        rugosità (1), validità (2) ed età delle modalità (2).\par\smallskip
+        Colonne: significato, dimensione, unità,\newline
+        criterio di validità e trattamento dei dati mancanti.\par\smallskip
+        Totale: 40 valori per cella, 81 celle.
+    \end{minipage}}
+    \caption[Contenuto della cella percettiva]{Organizzazione dei descrittori forniti alla policy. Le maschere distinguono misure valide e dati mancanti, mentre le età indicano quanto sono recenti le osservazioni.}
+    \label{tab:metodo-contenuto-cella}
+\end{table}
+
+Le celle vengono ordinate facendo variare prima l'indice lungo $Y$ per ogni posizione lungo $X$. Con indici da 0 a 8, l'indice lineare è $c=9i_x+i_y$ e la cella centrale è la numero 40. Le 81 celle producono quindi 3240 valori. L'ordinamento resta identico durante training e inferenza, perché ogni posizione del vettore deve riferirsi alla stessa regione relativa al robot.
+
+La griglia è una descrizione delle osservazioni disponibili. Non è una mappa di costi già calcolati e non viene completata con informazioni sulla disposizione dei materiali note al simulatore. La rete deve usare i descrittori, insieme al feedback del robot, per apprendere quali azioni siano convenienti.
 
 \subsection{Memoria delle osservazioni, validit\`a ed et\`a dei dati}
-% Aggiornamento, interrogazione, trasformazioni spaziali, validita, eta
-% e reset. Non attribuire alla memoria una mappa esplicita di consumi
-% aggiornata online se il sistema non la implementa.
 
-\section{Definizione del compito di reinforcement learning}
+La gridmap locale viene ricostruita a partire da una memoria spaziale conservata durante l'episodio. Questa memoria usa celle più fini, di lato $0{,}10\,\mathrm{m}$ sul piano orizzontale. È una struttura sparsa: vengono creati soltanto gli elementi per i quali sono stati ricevuti campioni. L'origine è ancorata alla posizione della base alla prima osservazione, mentre gli assi restano paralleli a quelli del mondo. La memoria non ruota a ogni movimento del robot.
+
+Per ciascuna cella fine, o bin, si conservano separatamente dati visivi e geometrici. La parte visiva contiene la media delle feature ridotte, il centro medio dei punti associati, il numero di campioni e il tempo dell'osservazione. La parte geometrica conserva numero, media e covarianza dei punti di profondità, oltre al tempo. Queste statistiche permettono di ricostruire piano e rugosità senza conservare ogni singolo punto.
+
+Le nuove osservazioni vengono raggruppate per bin. Quando una modalità viene osservata nuovamente, le sue statistiche nel bin sostituiscono quelle precedenti. Non si sommano indefinitamente i campioni delle rivisite. Se invece non arrivano dati per una modalità, la sua osservazione precedente viene mantenuta. Per esempio, un aggiornamento della geometria non elimina automaticamente una feature visiva già disponibile.
+
+Alla lettura, i centri dei bin vengono trasformati nel riferimento locale attuale e assegnati alle celle da $0{,}5\,\mathrm{m}$. Le feature vengono aggregate pesandole con il numero di campioni rappresentati. Anche media e covarianza geometriche vengono combinate con i rispettivi pesi, tenendo conto sia delle differenze fra i centri sia della dispersione interna a ciascun bin. Quest'ultima è necessaria per non perdere la rugosità riducendo ogni gruppo a una singola quota.
+
+Le covarianze vengono ruotate con lo yaw e le altezze riferite alla base attuale. L'assegnazione spaziale resta approssimata: se un bin attraversa il bordo fra due celle locali, viene attribuito interamente alla cella che contiene il suo centro medio. Il procedimento evita però di ruotare e interpolare ripetutamente una griglia già aggregata. La Figura~\ref{fig:metodo-memoria-finestra} distinguerà la memoria fissa dalla finestra mobile.
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.20\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: memoria spaziale e finestra locale}\par\medskip
+        Mostrare due pose successive del robot sulla stessa\newline
+        memoria di bin da 10 cm, fissa nel riferimento dell'episodio.\par\smallskip
+        Sovrapporre per ogni posa la finestra 9$\times$9 da 50 cm.\newline
+        Evidenziare dati appena osservati, dati fuori vista\newline
+        ancora disponibili e celle senza osservazioni.\par\smallskip
+        Indicare la trasformazione e l'aggregazione alla lettura.
+    \end{minipage}}
+    \caption[Memoria persistente e lettura locale]{La memoria conserva le regioni osservate durante l'episodio. La finestra letta dalla policy viene ricostruita nella posa attuale del robot e può recuperare informazioni non più presenti nel campo visivo.}
+    \label{fig:metodo-memoria-finestra}
+\end{figure}
+
+L'età di ciascun bin viene calcolata dal tempo trascorso dall'ultima osservazione della modalità considerata. Prima dell'aggregazione è normalizzata secondo
+\begin{equation}
+    \eta_b(t)=\operatorname{clip}
+            \left(\frac{t-t_b}{T_{\mathrm{age}}},0,1\right),
+    \label{eq:metodo-eta-memoria}
+\end{equation}
+\nopagebreak[3]
+dove $t_b$ è il tempo dell'ultimo aggiornamento e $T_{\mathrm{age}}$ è una scala temporale fissata dalla configurazione. Nella finestra locale si usa la media delle età dei bin, pesata con i numeri di campioni, separatamente per visione e geometria. La scala è di 40 s nello scenario speculare e di 90 s negli altri ambienti di addestramento considerati.
+
+L'età segnala quanto l'informazione sia recente, ma non introduce una scadenza automatica: i dati restano disponibili fino al reset. Una vista priva di punti validi non cancella le regioni già osservate. Allo stesso modo, i bin esterni alla finestra locale rimangono nella memoria e possono essere letti se il robot torna vicino. La memoria può inoltre registrare punti visibili che si trovano oltre la finestra attualmente fornita all'actor.
+
+Ogni ambiente parallelo possiede una memoria indipendente. Alla fine di un episodio viene eliminata soltanto quella dell'ambiente resettato, insieme alla sua origine. Un nuovo episodio inizia quindi senza osservazioni precedenti. Durante la missione la registrazione usa la posa simulata; la sua sensibilità a errori di localizzazione non è verificata dal solo funzionamento con questa posa.
+
+\section[Definizione del compito di reinforcement learning]{Definizione del compito di\\reinforcement learning}
 \label{sec:metodo-compito-rl}
 
+Il compito RL definisce che cosa la policy osserva, quali azioni può scegliere e come vengono valutate le conseguenze. Ogni episodio corrisponde a una missione verso un goal assegnato. Le decisioni sono prese ogni $0{,}2\,\mathrm{s}$ e continuano fino al successo o a una condizione di fallimento. La struttura degli ingressi e dei comandi è comune agli scenari considerati; alcuni pesi della ricompensa e alcune regole di gestione dell'episodio dipendono dallo scenario.
+
 \subsection{Spazio delle osservazioni}
-% Tabella degli ingressi: significato, provenienza, dimensioni e unita.
-% Collegare stato del robot, goal e rappresentazione locale.
+
+L'osservazione dell'actor comprende un vettore compatto di quindici valori e la mappa descritta nella Sezione~\ref{sec:metodo-percezione}. Indicando il primo con $\mathbf s_k$ e la mappa con $\mathcal M_k$, al passo di navigazione $k$ si ha
+\begin{equation}
+    \mathbf o_k=
+       [\,\mathbf s_k;\operatorname{vec}(\mathcal M_k)\,]
+       \in\mathbb R^{3255},
+    \qquad \mathbf s_k\in\mathbb R^{15}.
+    \label{eq:metodo-osservazione-actor}
+\end{equation}
+L'operatore $\operatorname{vec}$ indica la concatenazione delle 81 celle nell'ordine già definito. La mappa contribuisce con $81\times40=3240$ valori. Le quantità qui descritte sono quelle disponibili prima della normalizzazione degli ingressi, trattata nella sezione sulle reti.
+
+I primi due valori di $\mathbf s_k$ sono le coordinate del goal rispetto al robot sul piano orizzontale, nel riferimento allineato con lo yaw. Essi indicano sia direzione sia distanza della destinazione. Seguono le tre componenti della velocità lineare e le tre della velocità angolare del corpo, espresse nel riferimento solidale alla base. Altri tre valori descrivono la direzione unitaria della gravità nello stesso riferimento e forniscono quindi informazioni sull'inclinazione.
+
+Il vettore contiene poi le due componenti dell'azione applicata nel passo precedente e la potenza filtrata disponibile al momento dell'osservazione. L'azione precedente permette di contestualizzare il movimento corrente; la potenza descrive la risposta meccanica recente. Questi segnali sono affiancati dalla frazione di tempo residuo:
+\begin{equation}
+    \xi_k=\operatorname{clip}
+          \left(1-\frac{n_k}{N_{\mathrm{lim}}},0,1\right),
+    \label{eq:metodo-tempo-residuo}
+\end{equation}
+dove $n_k$ è il numero di intervalli trascorsi e $N_{\mathrm{lim}}$ il numero massimo ammesso per la missione. Il conteggio include l'allineamento iniziale quando presente. Il tempo residuo distingue quindi situazioni con lo stesso goal relativo ma con una diversa scadenza.
+
+La Tabella~\ref{tab:metodo-osservazioni} riepilogherà questi ingressi. La policy non riceve posizioni globali, classi di terreno o una traiettoria da seguire. I critic dispongono anche di informazioni privilegiate di contatto, descritte nella sezione sulle reti; tali informazioni sono separate dall'osservazione usata dall'actor per scegliere le azioni.
+
+\begin{table}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.18\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: osservazione della policy}\par\medskip
+        Righe: goal XY (2), velocità lineare (3), angolare (3),\newline
+        gravità proiettata (3), azione precedente (2),\newline
+        potenza filtrata (1), tempo residuo (1), mappa (3240).\par\smallskip
+        Colonne: significato, dimensione, riferimento, unità\newline
+        e provenienza. Totale: 3255 valori prima dello scaling.
+    \end{minipage}}
+    \caption[Componenti dell'osservazione dell'actor]{Informazioni utilizzate dalla policy di navigazione. Il riferimento e le unità delle misure sono distinti dalle trasformazioni di normalizzazione applicate prima dell'elaborazione nelle reti.}
+    \label{tab:metodo-osservazioni}
+\end{table}
 
 \subsection{Spazio delle azioni e conversione in comandi}
-% Azioni apprese e trasformazione nei comandi di velocita.
+
+L'azione ha due componenti continue, $\mathbf a_k=(a_{v,k},a_{\omega,k})\in[-1,1]^2$. La prima controlla l'avanzamento e la seconda la rotazione sul piano. Prima della conversione, i valori vengono limitati all'intervallo ammesso. Il comando inviato al controllore locomotorio è
+\begin{equation}
+    v_{x,k}^{\mathrm{cmd}}=\frac{a_{v,k}+1}{2}\,v_{\max},
+    \qquad v_{y,k}^{\mathrm{cmd}}=0,
+    \qquad \omega_{z,k}^{\mathrm{cmd}}=a_{\omega,k}\,\omega_{\max},
+    \label{eq:metodo-conversione-azioni}
+\end{equation}
+con $v_{\max}=1{,}6\,\mathrm{m/s}$ e $\omega_{\max}=1{,}5\,\mathrm{rad/s}$. Il comando longitudinale varia quindi fra zero e $1{,}6\,\mathrm{m/s}$, mentre quello angolare può assumere entrambi i segni. La policy può arrestare l'avanzamento e ruotare sul posto, ma non comandare una velocità longitudinale negativa.
+
+La trasformazione longitudinale è traslata: $a_{v,k}=-1$ corrisponde all'arresto, mentre $a_{v,k}=0$ richiede $0{,}8\,\mathrm{m/s}$. L'azione $(0,0)$ non è dunque un comando di arresto. Questa corrispondenza resta uguale durante addestramento ed esecuzione.
+
+Il comando rimane valido per l'intervallo di navigazione, mentre il livello locomotorio aggiorna i riferimenti articolari alla propria frequenza. La velocità comandata può differire da quella effettiva a causa dei contatti e della risposta del controllore. La policy osserva la velocità misurata e il costo prodotto dal movimento, così da ricevere le conseguenze dell'azione eseguita.
 
 \subsection{Funzione di ricompensa}
-% Definire i termini di progresso, energia, tempo, successo e fallimento
-% e gli eventuali altri termini realmente presenti nella versione finale.
+
+La ricompensa combina avvicinamento al goal, lavoro meccanico, durata ed esito. Per un intervallo controllato dalla policy si scrive
+\begin{equation}
+    r_k=w_p(d_k-d_{k+1})-c_t
+        -w_E\frac{\Delta E_k}{E_{\mathrm{ref}}}
+        +r_k^{\psi}+R_s I_k^s-R_f I_k^f.
+    \label{eq:metodo-ricompensa-completa}
+\end{equation}
+Le distanze $d_k$ e $d_{k+1}$ sono quelle definite nell'equazione~\eqref{eq:metodo-distanza-goal}, prima e dopo l'azione. Gli indicatori $I_k^s$ e $I_k^f$ valgono uno rispettivamente in caso di successo e fallimento al termine dell'intervallo, e zero altrimenti. I due esiti sono mutuamente esclusivi.
+
+Il progresso $d_k-d_{k+1}$ premia l'avvicinamento e penalizza l'allontanamento. Fornisce un segnale anche prima del completamento della missione, senza assegnare un percorso da imitare. Una deviazione utile può inizialmente ridurre questo contributo: la policy deve bilanciarlo con energia e conseguenze future. La massimizzazione della ricompensa non equivale quindi a minimizzare la distanza a ogni singolo passo.
+
+La penalità temporale è $c_t=0{,}02$ per intervallo. Alla frequenza adottata corrisponde a $0{,}1$ punti di ricompensa per secondo simulato. Il termine energetico usa il lavoro non filtrato, con $E_{\mathrm{ref}}=100\,\mathrm{J}$ e $w_E=1$, come descritto nella Sezione~\ref{sec:metodo-energia}. Il bonus di successo incentiva il completamento, mentre la penalità di fallimento riguarda anche il raggiungimento della scadenza senza arrivare al goal.
+
+Nello scenario speculare si adottano $w_p=3$, $R_s=150$ e $R_f=300$, con $r_k^{\psi}=0$. Nello scenario esteso e negli ambienti di addestramento destinati alle prove reali si usano $w_p=30$, $R_s=1000$ e $R_f=1000$. In questi ultimi è presente anche una penalità di orientamento. La Tabella~\ref{tab:metodo-ricompensa} raccoglierà termini e coefficienti per scenario. I valori definiscono il compromesso adottato, senza implicare che le ricompense numeriche di scenari diversi siano direttamente confrontabili.
+
+La penalità di orientamento riguarda soltanto errori ampi rispetto alla direzione corrente del goal. Indicando con $e_{\psi,k+1}\in[-\pi,\pi]$ l'errore angolare dopo il movimento,
+\begin{equation}
+    r_k^{\psi}=-c_{\psi}\Delta t\,
+        \operatorname{clip}\left(
+           \frac{|e_{\psi,k+1}|-\varepsilon_0}{\pi-\varepsilon_0},0,1
+        \right),
+    \quad \varepsilon_0=\frac{11\pi}{18},\quad c_{\psi}=2\,\mathrm{s}^{-1}.
+    \label{eq:metodo-penalita-orientamento}
+\end{equation}
+Il contributo è nullo fino a $110^\circ$ e cresce in modulo linearmente fino a $180^\circ$, dove vale $-2$ punti al secondo, cioè $-0{,}4$ per intervallo. Questa scelta lascia una zona senza penalità per le deviazioni moderate. Il termine non impone un limite alla rotazione e non viene applicato durante l'allineamento iniziale gestito dal modulo dedicato.
+
+\begin{table}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.18\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: termini della ricompensa}\par\medskip
+        Righe: progresso, tempo, energia, orientamento,\newline
+        successo e fallimento.\par\smallskip
+        Colonne: formula, significato, unità del segnale\newline
+        e coefficienti per scenario speculare, scenario esteso\newline
+        e ambienti di addestramento per le prove reali.
+    \end{minipage}}
+    \caption[Termini e coefficienti della ricompensa]{Componenti della ricompensa e parametri adottati nei diversi scenari. Il costo dipende dal lavoro articolare misurato, senza una penalità assegnata direttamente all'identità o al colore del terreno.}
+    \label{tab:metodo-ricompensa}
+\end{table}
+
+La ricompensa non contiene un costo fisso per attraversare una classe di terreno né un premio per scegliere un determinato ramo. L'identità delle superfici può essere usata per costruire le missioni o analizzare i risultati, ma la preferenza energetica deve derivare dal costo del movimento. Il ritorno di addestramento comprende tutti i termini e lo sconto temporale; la verifica del risparmio richiede quindi anche la misura del lavoro nelle missioni completate.
 
 \subsection{Inizializzazione e condizioni di terminazione degli episodi}
-% Reset, eventuale allineamento iniziale, successo, timeout, caduta
-% e altre condizioni operative adottate.
 
-\section{Architettura delle reti e fusione delle informazioni}
+All'inizio di una missione vengono impostati posizione, orientamento e goal, ripristinando la postura articolare preparata nella fase iniziale della simulazione. Si azzerano tempo trascorso, lavoro accumulato, potenza filtrata, azione precedente e memoria percettiva dell'ambiente interessato. Le prime osservazioni vengono poi acquisite nella posa ripristinata. Il reset di un robot non deve modificare lo stato degli altri episodi in corso.
+
+Nello scenario speculare, partenza e goal sono quelli assegnati alla mappa. La posizione iniziale riceve una perturbazione uniforme fino a $0{,}05\,\mathrm{m}$ per asse e lo yaw viene impostato nella direzione nominale del goal. Nello scenario esteso e negli ambienti destinati alle prove reali, le missioni sono invece campionate da insiemi di punti candidati. La selezione di partenza e arrivo e il curriculum saranno descritti nella sezione sull'addestramento.
+
+In questi ultimi ambienti, prima di cedere il controllo alla policy viene eseguito un allineamento al goal. Il modulo imposta velocità longitudinale nulla e una velocità angolare proporzionale all'errore, con guadagno $1{,}5\,\mathrm{s}^{-1}$ e saturazione a $\pm0{,}8\,\mathrm{rad/s}$. L'allineamento termina quando l'errore è al massimo $10^\circ$ per tre controlli consecutivi; se non riesce entro 12 s, l'episodio fallisce. La fase è eseguita dal modulo dedicato, mentre le transizioni usate per aggiornare la policy sono quelle effettivamente controllate dall'actor. Il tempo e il lavoro dell'allineamento rimangono inclusi nel bilancio della missione.
+
+Il successo richiede una distanza planare dal goal non superiore a $0{,}55\,\mathrm{m}$, in assenza di caduta o uscita dai confini ammessi. Non è richiesto un orientamento finale specifico. Se una condizione di sicurezza fallisce nello stesso intervallo in cui viene raggiunta la regione del goal, l'esito viene classificato come fallimento.
+
+La durata massima nello scenario speculare è 40 s, equivalenti a 200 intervalli di navigazione. Negli altri ambienti il tempo nominale dipende dalla distanza euclidea iniziale $d_0$:
+\begin{equation}
+    T_{\mathrm{nom}}=\operatorname{clip}
+       \left(15\,\mathrm{s}+(4\,\mathrm{s/m})d_0,
+                       30\,\mathrm{s},90\,\mathrm{s}\right).
+    \label{eq:metodo-scadenza-missione}
+\end{equation}
+Il tempo viene convertito in un numero intero di intervalli, arrotondando per eccesso. Questo numero è $N_{\mathrm{lim}}$ nell'equazione~\eqref{eq:metodo-tempo-residuo}. La scadenza comprende anche l'allineamento iniziale, anziché assegnargli un budget aggiuntivo.
+
+I criteri di caduta dipendono dallo scenario. Nella mappa speculare si termina quando l'altezza della base rispetto alla superficie sottostante scende sotto $0{,}25\,\mathrm{m}$, l'inclinazione supera $60^\circ$ oppure manca una quota di terreno valida mentre il robot è entro i confini. La quota è ricavata mediante un'interrogazione geometrica del simulatore, distinta dalla mappa percettiva fornita all'actor.
+
+Nello scenario esteso e negli ambienti destinati alle prove reali, la caduta viene invece confermata se l'inclinazione raggiunge almeno $90^\circ$ per un secondo continuo, oppure se l'intensità complessiva dei contatti fra tronco e terreno supera 1 N per un secondo continuo. I controlli avvengono ai passi della fisica. Un evento confermato rimane segnalato fino al reset, anche se termina prima della successiva decisione di navigazione. In questi ambienti l'altezza della base è conservata per la diagnostica e non provoca da sola la terminazione.
+
+L'uscita dai confini, la caduta e il superamento dei limiti temporali producono un esito terminale di fallimento. La scadenza è parte del compito: durante l'aggiornamento del valore non viene quindi aggiunto un ritorno futuro oltre tale limite. Anche l'osservazione acquisita dopo il reset appartiene a una nuova missione e non deve essere interpretata come continuazione di quella conclusa.
+
+La Figura~\ref{fig:metodo-ciclo-episodio} rappresenterà il ciclo operativo. Prima di ripristinare l'ambiente vengono registrati esito e metriche dell'episodio, conservando il lavoro svolto fino all'ultimo intervallo. Per gli ambienti con allineamento restano disponibili anche i conteggi separati delle due fasi.
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.18\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: ciclo di una missione}\par\medskip
+        Reset e assegnazione del goal $\rightarrow$ eventuale\newline
+        allineamento $\rightarrow$ decisioni della policy.\par\smallskip
+        Per ogni intervallo mostrare movimento, misure\newline
+        e verifica delle condizioni di successo o fallimento.\par\smallskip
+        Alla conclusione: registrazione delle metriche e reset.
+    \end{minipage}}
+    \caption[Ciclo degli episodi di navigazione]{Gestione di una missione dal reset alla conclusione. L'allineamento è presente negli ambienti che lo prevedono; le condizioni terminali vengono controllate anche durante questa fase.}
+    \label{fig:metodo-ciclo-episodio}
+\end{figure}
+
+\section[Architettura delle reti e fusione delle informazioni]{Architettura delle reti\\e fusione delle informazioni}
 \label{sec:metodo-reti}
 
-\subsection{Organizzazione e normalizzazione degli ingressi}
-% Ordine delle variabili, trattamento dei dati mancanti e scaling.
+Le reti trasformano l'osservazione della Sezione~\ref{sec:metodo-compito-rl} in una decisione di movimento. L'actor sceglie l'azione, mentre i critic forniscono stime del ritorno utili durante l'addestramento. Lo scenario speculare usa PPO; lo scenario esteso e gli ambienti di addestramento destinati alle prove reali usano SAC. Le differenze fra le architetture riguardano la fusione degli ingressi, la distribuzione delle azioni e la struttura dei critic.
 
-\subsection{Rete della policy e fusione delle modalit\`a}
-% Rami di elaborazione, MLP, attivazioni e distribuzione delle azioni
-% secondo le architetture finali adottate.
+\subsection{Organizzazione e normalizzazione degli ingressi}
+
+Le componenti dell'osservazione hanno scale differenti: la potenza è espressa in watt, le velocità nelle rispettive unità e le feature visive nelle coordinate della PCA. Prima di entrare nelle reti, una parte dei valori viene quindi centrata e riscalata. Per ogni componente interessata si mantengono una media $m$ e una varianza $v$, stimate progressivamente dai dati di addestramento. La trasformazione è
+\begin{equation}
+    \widehat x=\operatorname{clip}
+       \left(\frac{x-m}{\sqrt{v+10^{-6}}},-10,10\right).
+    \label{eq:metodo-normalizzazione-reti}
+\end{equation}
+Il termine al denominatore evita divisioni per zero; la limitazione finale contiene l'ampiezza dei valori trasformati. Le statistiche non sono pesi appresi tramite la funzione di perdita, ma quantità aggiornate dai campioni osservati.
+
+Le tre velocità lineari, le tre velocità angolari e la potenza filtrata sono normalizzate in questo modo in tutti gli scenari. Per il goal si adottano due trattamenti: nello scenario speculare le due coordinate partecipano alla stessa procedura di stima di media e varianza, ciascuna con le proprie statistiche; negli scenari SAC vengono invece divise per una lunghezza fissa di $10\,\mathrm{m}$. In questo secondo caso il riferimento del goal resta quindi costante durante l'apprendimento. La gravità proiettata, le azioni precedenti e la frazione di tempo residuo conservano i valori già limitati dalla loro definizione.
+
+Nella mappa si stimano statistiche separate per ciascuna delle 32 componenti visive e delle quattro componenti geometriche. Per uno stesso canale vengono raccolti insieme i campioni delle diverse celle: non si mantiene una media diversa per ciascuna posizione della finestra. Una misura contribuisce alle statistiche soltanto quando è valida per la modalità corrispondente. In questo modo le celle non osservate non vengono scambiate per misure fisiche nulle.
+
+Dopo la normalizzazione, le feature visive sono moltiplicate per la maschera di validità visiva e quelle geometriche per la maschera geometrica. È necessario applicare la maschera anche in questa fase: la centratura potrebbe altrimenti trasformare uno zero usato come riempimento in un valore non nullo. Le due maschere vengono conservate esplicitamente; le età sono limitate a $[0,1]$ e moltiplicate per le rispettive maschere. La rete può così distinguere una misura valida da un'informazione assente.
+
+Le statistiche vengono salvate insieme alla policy e restano fisse durante la valutazione e l'esecuzione. Nel caso PPO rimangono invariate anche fra la raccolta di un gruppo di transizioni e il relativo aggiornamento delle reti, per poi essere aggiornate con quei dati. Nel caso SAC, i dati nel replay buffer sono conservati prima della normalizzazione e trasformati con le statistiche correnti quando vengono usati. La procedura di addestramento definirà questi passaggi; in entrambi i casi la valutazione non modifica le statistiche.
+
+\subsection{Rete della policy e fusione delle modalità}
+
+L'actor è una rete a strati completamente connessi, senza componenti ricorrenti. La memoria dell'ambiente risiede nel modulo percettivo descritto nella Sezione~\ref{sec:metodo-percezione}: a ogni decisione la rete riceve una nuova lettura di quella memoria. I suoi pesi restano fissi durante una missione. DINOv2 e la PCA preparano le feature a monte della rete di navigazione e non vengono aggiornati dalla sua funzione di perdita.
+
+Nello scenario speculare, i quindici valori compatti e i 3240 valori della mappa vengono concatenati prima del primo strato. L'actor elabora quindi tutti i 3255 ingressi con quattro strati nascosti di 512, 256, 128 e 64 neuroni. L'ultimo strato ha due uscite, corrispondenti alle medie di una distribuzione gaussiana nello spazio delle azioni prima della trasformazione finale. Le informazioni sul goal, sul movimento, sulla potenza e sul terreno possono interagire fin dal primo strato.
+
+Negli scenari SAC si usano invece due rami. Il primo riceve i quindici valori compatti e li elabora con strati da 64 e 32 neuroni. Il secondo riceve la mappa appiattita e usa strati da 1024, 512, 256 e 128 neuroni. I due risultati vengono concatenati in un vettore di $32+128=160$ componenti, seguito da due strati da 128 e 64 neuroni. L'uscita contiene quattro valori: due medie e due logaritmi delle deviazioni standard. La mappa dispone quindi di una prima elaborazione dedicata, prima di essere unita allo stato.
+
+Tutti gli strati nascosti usano l'attivazione ELU, che introduce una trasformazione non lineare fra due strati; gli strati di uscita sono lineari. Anche nel ramo della mappa si impiegano strati completamente connessi: le celle mantengono un ordine fisso nell'ingresso, ma non sono elaborate da convoluzioni. La fusione non richiede un'etichetta del terreno. La rete riceve i descrittori continui e i segnali del robot; l'associazione utile alla scelta del movimento viene appresa attraverso la ricompensa.
+
+In entrambi i casi, indicando con $\widehat{\mathbf o}_k$ l'osservazione normalizzata, durante l'esplorazione si campiona una variabile gaussiana a due componenti e si applica la tangente iperbolica:
+\begin{equation}
+    \mathbf u_k\sim\mathcal N\!\left(
+       \boldsymbol\mu_\theta(\widehat{\mathbf o}_k),
+       \operatorname{diag}(\boldsymbol\sigma_\theta^2)\right),
+    \qquad \mathbf a_k=\tanh(\mathbf u_k).
+    \label{eq:metodo-distribuzione-azioni}
+\end{equation}
+La funzione $\tanh$ agisce separatamente sulle due componenti e limita l'azione all'intervallo ammesso. Segue la conversione nelle velocità fisiche dell'equazione~\eqref{eq:metodo-conversione-azioni}. Il calcolo delle probabilità durante l'addestramento tiene conto anche di questa trasformazione.
+
+La deviazione standard è gestita diversamente nelle due architetture. In PPO si apprendono due parametri globali, indipendenti dall'osservazione; i loro logaritmi sono inizializzati a $-0{,}5$ e limitati a $[-5,2]$. In SAC i due logaritmi sono prodotti dalla rete per ogni osservazione e limitati a $[-20,2]$: l'ampiezza dell'esplorazione può quindi dipendere dalla situazione. Nell'equazione~\eqref{eq:metodo-distribuzione-azioni}, $\boldsymbol\sigma_\theta$ dipende perciò anche da $\widehat{\mathbf o}_k$ soltanto nel secondo caso.
+
+Per l'esecuzione deterministica si usa $\mathbf a_k=\tanh(\boldsymbol\mu_\theta(\widehat{\mathbf o}_k))$, senza campionare. La Figura~\ref{fig:metodo-reti-fusione} illustrerà le due architetture e il confine fra i componenti percettivi congelati e la rete addestrata. Il modello esportato include l'actor e la trasformazione dei suoi ingressi; la costruzione dell'osservazione a partire dai sensori e dalla memoria rimane affidata alla pipeline descritta nelle sezioni precedenti.
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.23\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: architetture e fusione degli ingressi}\par\medskip
+        Pannello A, scenario speculare: stato e mappa\newline
+        concatenati $\rightarrow$ MLP $\rightarrow$ due medie.\par\smallskip
+        Pannello B, scenari SAC: rami separati per stato\newline
+        e mappa $\rightarrow$ concatenazione $\rightarrow$ MLP\newline
+        $\rightarrow$ medie e deviazioni standard.\par\smallskip
+        Indicare dimensioni, normalizzazione e $\tanh$ finale;\newline
+        mostrare DINOv2, PCA e memoria a monte dell'actor.
+    \end{minipage}}
+    \caption[Architetture della policy di navigazione]{Elaborazione degli ingressi nelle due architetture adottate. L'estrazione visiva e la memoria precedono l'actor; la fusione combina la rappresentazione del terreno con goal e segnali del robot.}
+    \label{fig:metodo-reti-fusione}
+\end{figure}
 
 \subsection{Critic e informazioni privilegiate}
-% Reti/teste di valore e ingressi aggiuntivi del training, distinguendoli
-% da quelli dell'actor impiegato durante l'esecuzione.
+
+L'addestramento usa un'impostazione asimmetrica: i critic ricevono alcuni dati del simulatore che non vengono forniti all'actor, secondo il principio discusso nel Capitolo~\ref{chap:state-of-the-art}~\citep{Pinto2018Asymmetric}. Questi dati aiutano a valutare le conseguenze del movimento durante l'apprendimento, mentre l'azione resta calcolata soltanto dagli ingressi previsti per la policy.
+
+Il vettore privilegiato $\mathbf p_k\in\mathbb R^{24}$ contiene otto coefficienti di attrito, statico e dinamico per ciascun piede, quattro indicatori di contatto, quattro intensità delle forze di contatto e otto componenti di velocità tangenziale, due per piede nel riferimento allineato allo yaw. I coefficienti sono ricavati dai materiali fisici effettivamente coinvolti nei contatti; in presenza di più superfici vengono pesati in base all'intensità delle forze. Le velocità tangenziali descrivono il movimento dei punti di contatto rispetto al terreno. Si tratta di informazioni fisiche di contatto, non di etichette visive delle superfici.
+
+I venti valori continui privilegiati sono normalizzati con statistiche proprie, aggiornate soltanto per i piedi in contatto; dopo la trasformazione sono azzerati per quelli senza contatto. I quattro indicatori binari restano espliciti. L'osservazione privilegiata prima della normalizzazione è
+\begin{equation}
+    \mathbf o_k^{\mathrm{crit}}=[\,\mathbf o_k;\mathbf p_k\,]
+       \in\mathbb R^{3279}.
+    \label{eq:metodo-osservazione-critic}
+\end{equation}
+La parte condivisa con l'actor subisce la medesima trasformazione degli ingressi, ma i pesi delle reti dell'actor e dei critic sono separati.
+
+Nel caso PPO il critic è una MLP con 3279 ingressi, strati nascosti da 512, 256, 128 e 64 neuroni e due uscite. La prima stima il ritorno della componente di navigazione, che comprende tutti i termini della ricompensa tranne l'energia. La seconda stima il ritorno del costo energetico positivo $\Delta E_k/E_{\mathrm{ref}}$. Dai due valori si calcolano vantaggi separati, poi combinati per aggiornare l'actor:
+\begin{equation}
+    A_k=A_k^{\mathrm{nav}}-w_E A_k^{\mathrm{energia}}.
+    \label{eq:metodo-vantaggio-combinato}
+\end{equation}
+Il vantaggio risultante viene successivamente normalizzato sul gruppo di dati usato per l'aggiornamento. Le due uscite permettono di stimare separatamente i contributi, mantenendo il compromesso definito dalla ricompensa complessiva.
+
+Nel caso SAC si usano due critic indipendenti, $Q_1$ e $Q_2$. Entrambi stimano il ritorno complessivo regolarizzato dall'entropia: non sono divisi in un critic per il goal e uno per l'energia. Ciascuno riceve l'osservazione privilegiata e l'azione corrente da valutare. Quest'ultima è distinta dall'azione precedente, già presente fra i quindici valori compatti.
+
+Ogni critic SAC riprende la struttura a due rami dell'actor. Nel ramo dello stato vengono concatenati i quindici valori compatti, i ventiquattro privilegiati e le due componenti dell'azione corrente: l'ingresso ha quindi 41 valori e attraversa strati da 64 e 32 neuroni. Il ramo della mappa conserva i 3240 ingressi e gli strati da 1024, 512, 256 e 128 neuroni. Dopo la concatenazione si usano strati da 128 e 64 neuroni e un'uscita scalare. I due critic hanno ciascuno i propri pesi, anche nei rami iniziali. Durante l'addestramento sono mantenute anche due copie obiettivo, aggiornate gradualmente per costruire i valori di riferimento dell'apprendimento.
+
+La Tabella~\ref{tab:metodo-reti} riepilogherà ingressi, strati e uscite. Le informazioni privilegiate intervengono nella stima del ritorno e nel segnale di addestramento, senza diventare ingressi richiesti per scegliere un'azione. Durante l'esecuzione della policy esportata è sufficiente l'actor con la propria normalizzazione; i critic e i segnali privilegiati non partecipano alla decisione.
+
+\begin{table}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.20\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: dimensioni delle reti}\par\medskip
+        Righe: actor PPO, critic PPO, actor SAC,\newline
+        ciascun critic SAC.\par\smallskip
+        Colonne: ingressi, strati del ramo stato, strati\newline
+        del ramo mappa, strati di fusione e uscite.\par\smallskip
+        Distinguere le due stime di valore PPO dai due\newline
+        critic SAC e indicare i dati usati solo nel training.
+    \end{minipage}}
+    \caption[Dimensioni delle reti di navigazione]{Riepilogo delle architetture dell'actor e dei critic per scenario. Le dimensioni si riferiscono alle reti di navigazione, distinte dal controllore locomotorio congelato.}
+    \label{tab:metodo-reti}
+\end{table}
 
 \section{Procedura di addestramento}
 \label{sec:metodo-addestramento}
 
-\subsection{Calibrazione dei componenti e preparazione dell'addestramento}
-% Dati e procedura di calibrazione di PCA e normalizzazioni, componenti
-% congelati e separazione fra dati di calibrazione e valutazione.
+L'addestramento alterna l'esecuzione di missioni simulate e l'aggiornamento delle reti. Più copie di Spot raccolgono esperienze in parallelo, condividendo la policy ma mantenendo separati stato, goal e memoria percettiva. Prima di questa fase si preparano gli ambienti e la rappresentazione visiva. Durante l'apprendimento si svolgono inoltre valutazioni periodiche, utilizzate per seguire i progressi, far avanzare il curriculum e conservare i modelli.
 
-\subsection{Aggiornamento delle reti mediante PPO e SAC}
-% Impiego concreto e particolarita implementative; rinviare ai principi
-% del capitolo 2 senza ripeterne la trattazione.
+\subsection[Calibrazione dei componenti e preparazione dell'addestramento]{Calibrazione dei componenti\\e preparazione dell'addestramento}
+
+Il controllore locomotorio e DINOv2 sono caricati da modelli preaddestrati e restano congelati. Anche la PCA viene preparata prima dell'apprendimento della navigazione, così che le feature mantengano lo stesso significato durante la raccolta e il riutilizzo delle esperienze. Le statistiche di normalizzazione degli ingressi seguono invece gli aggiornamenti descritti nella Sezione~\ref{sec:metodo-reti}. La calibrazione della PCA e la stima di tali statistiche sono quindi due operazioni distinte.
+
+Per lo scenario speculare si utilizza una PCA già calibrata su 40000 descrittori, con 10000 campioni per ciascuna di quattro superfici: asfalto, superficie scivolosa, ghiaia fine e rocce. L'artefatto viene caricato all'avvio e mantenuto fisso. Il suo insieme di calibrazione è distinto dalle transizioni raccolte da PPO; non si assume che coincida con quello impiegato negli altri scenari.
+
+Per la mappa estesa si acquisiscono viste RGB-D statiche dalle posizioni ammesse per l'addestramento. Il piano di raccolta prevede 96 viste per materiale per la calibrazione e 24 per un controllo su viste separate. I due gruppi usano sottoinsiemi disgiunti di posizioni della base ed escludono i punti riservati alla valutazione delle missioni. La superficie scivolosa viene osservata da posizioni vicine sugli altri terreni, senza modificare le regole di partenza del robot.
+
+Le patch vengono associate alle superfici usando la profondità e la disposizione nota della scena. Si scartano quelle troppo vicine ai bordi delle celle, dove il descrittore potrebbe contenere più materiali. Dai campioni raccolti si costruisce un insieme bilanciato, con 10000 descrittori per ciascuno dei sette materiali, e si calcolano le 32 componenti principali. Il bilanciamento riduce l'effetto della diversa frequenza con cui le superfici compaiono nelle immagini.
+
+Le viste separate permettono di controllare quanta variabilità dei descrittori viene conservata dalla proiezione. Questo controllo riguarda la rappresentazione visiva nella stessa mappa. Le identità dei materiali servono a organizzare la raccolta e il bilanciamento, ma la PCA viene calcolata sui descrittori senza un obiettivo di classificazione. I relativi codici non diventano ingressi dell'actor.
+
+Negli ambienti preparati per le prove reali si segue la stessa procedura di acquisizione e separazione delle viste, adattata alle due superfici presenti in ciascuna scena. Prima di avviare il training si controlla la compatibilità fra PCA, modello visivo e preparazione delle immagini. Durante le missioni la trasformazione viene soltanto applicata: non si ricalcola la PCA usando le esperienze della policy.
+
+\subsection{Aggiornamento delle reti}
+
+Nello scenario speculare l'aggiornamento segue PPO~\citep{Schulman2017PPO}. Si raccolgono fino a 128 decisioni consecutive per ciascuno dei 32 ambienti, ottenendo gruppi di 4096 transizioni. Ogni transizione contiene l'osservazione, l'azione campionata, la sua probabilità, le due stime del critic, i contributi della ricompensa e l'indicazione di fine episodio. Se una missione termina durante la raccolta, l'ambiente riparte con una nuova missione senza interrompere gli altri robot.
+
+Al termine della raccolta si calcolano i vantaggi per navigazione ed energia e si combinano come nell'equazione~\eqref{eq:metodo-vantaggio-combinato}. Per le sequenze ancora aperte si usa anche il valore stimato nell'osservazione successiva. Per quelle terminate, comprese le missioni scadute, il ritorno futuro viene interrotto. I dati vengono mescolati e suddivisi in gruppi più piccoli per aggiornare actor e critic. Una volta concluso l'aggiornamento, vengono sostituiti da nuove esperienze.
+
+Il numero massimo di passaggi sugli stessi dati è limitato. Si controlla inoltre la divergenza fra la distribuzione delle azioni precedente e quella aggiornata: quando la stima della divergenza KL supera la soglia adottata, l'ottimizzazione su quel gruppo viene fermata. Questo controllo affianca il clipping di PPO e limita cambiamenti troppo ampi in un singolo aggiornamento.
+
+Negli scenari SAC le esperienze vengono invece conservate nel replay buffer e possono essere utilizzate più volte~\citep{Haarnoja2018SAC}. Prima degli aggiornamenti si raccolgono almeno 4096 transizioni con azioni uniformi in $[-1,1]^2$. Poi le azioni sono campionate dall'actor. Per ogni passo parallelo che produce nuove transizioni valide si estraggono campioni dal buffer e si aggiornano i due critic, l'actor e il coefficiente che regola il contributo dell'entropia. Le reti obiettivo vengono avvicinate gradualmente ai critic correnti.
+
+Il replay contiene soltanto gli intervalli in cui il comando è stato scelto dalla policy, oppure dall'esplorazione casuale iniziale. Le rotazioni di allineamento sono gestite dal modulo dedicato e non vengono attribuite all'actor. Come precisato nella Sezione~\ref{sec:metodo-compito-rl}, il loro tempo e lavoro rimangono però nel bilancio della missione. Per una transizione terminale, l'osservazione del nuovo episodio non viene usata come prosecuzione nel calcolo del ritorno.
+
+Una transizione corrisponde quindi all'esperienza di un solo robot in un intervallo di navigazione. Un passo parallelo può produrne molte e, negli scenari con allineamento, un numero variabile. Questa distinzione è necessaria per interpretare sia il budget di training sia il numero di aggiornamenti per passo: aumentare gli ambienti non aumenta automaticamente il numero di ottimizzazioni svolte.
 
 \subsection{Generazione delle missioni e curriculum}
-% Campionamento di start/goal, fasi e criteri di avanzamento.
-% Distinguere gli strumenti di generazione delle missioni dagli input
-% effettivamente forniti all'actor.
 
-\subsection{Configurazioni di addestramento adottate}
-% Configurazioni finali degli scenari: iperparametri, parallelismo, budget
-% e criteri di selezione. Non ricostruire la cronologia delle prove e non
-% implicare un confronto controllato PPO/SAC se non viene svolto.
+Nello scenario speculare si usano contemporaneamente le due mappe con i rami di asfalto e rocce scambiati. I 32 ambienti sono divisi in parti uguali fra le due disposizioni. Partenza e goal nominali restano quelli della mappa, con la piccola perturbazione iniziale già descritta. Non è prevista una progressione di difficoltà: l'actor incontra entrambe le disposizioni fin dall'inizio. In questo modo una preferenza fissa per destra o sinistra non corrisponde sempre alla stessa superficie.
 
-\section{Esecuzione della policy e integrazione sul robot}
+Nello scenario esteso, partenza e goal sono invece campionati da un archivio di punti candidati preparato sulla geometria della mappa. Ogni punto è interno alla propria cella con un margine di $0{,}65\,\mathrm{m}$. La zona di appoggio viene controllata su un quadrato di semilato $0{,}55\,\mathrm{m}$: le quote devono essere valide e la loro escursione non deve superare $0{,}16\,\mathrm{m}$. Questi controlli riducono le inizializzazioni su bordi o dislivelli locali troppo marcati; non verificano l'esistenza di un percorso fino al goal.
+
+I candidati vengono suddivisi per cella in un insieme di addestramento e uno di valutazione, riservando a quest'ultimo circa un quinto dei punti. Durante il campionamento si sceglie prima uno dei materiali ammessi per la partenza e poi un punto su quel materiale. Fra gli arrivi ammissibili si selezionano quelli alla distanza richiesta. La distanza usata è quella euclidea sul piano, non la lunghezza di un percorso già pianificato.
+
+Proporre subito missioni lunghe su superfici diverse può rendere difficile ottenere i primi successi. Il curriculum parte quindi da un compito più semplice: avanzare verso un goal vicino su una superficie regolare. Aumenta poi la varietà delle posizioni e la distanza. Lo scopo è fornire esperienze utili prima di richiedere decisioni su intervalli più lunghi; il curriculum non modifica la ricompensa per indicare quale strada scegliere.
+
+Per la mappa estesa sono previste cinque fasi:
+\begin{enumerate}
+    \item \textbf{Missioni di 1,5--3 m nella stessa cella di asfalto.} Partenza e arrivo sono vicini e sulla stessa superficie, per introdurre il raggiungimento del goal.
+    \item \textbf{Missioni di 3--6 m su un insieme iniziale di terreni.} Si ammettono celle diverse, escludendo scale e ostacoli dai punti di partenza e arrivo.
+    \item \textbf{Missioni di 3--6 m con punti più vari.} La distanza resta uguale, ma si amplia l'insieme dei terreni ammessi per gli estremi della missione.
+    \item \textbf{Missioni di 6--12 m.} Si conserva l'insieme ampliato e si aumenta la distanza.
+    \item \textbf{Missioni di 12--20 m.} Si propone la fascia di distanza maggiore mantenendo le stesse regole generali sui punti.
+\end{enumerate}
+
+In tutte le fasi la superficie scivolosa è esclusa sia dalle partenze sia dagli arrivi; le scale sono escluse dagli arrivi. Queste esclusioni restano attive anche quando viene ampliato l'insieme dei terreni. Riguardano soltanto gli estremi della missione: una superficie esclusa come partenza o goal può comunque trovarsi lungo il tragitto. Non vengono forniti punti intermedi, corridoi obbligatori o un filtro globale di raggiungibilità.
+
+L'orientamento iniziale è campionato sull'intero giro; il successivo allineamento fisico orienta il robot verso il goal. Il curriculum controlla quindi difficoltà e distribuzione delle missioni, mentre l'allineamento prepara l'inizio della navigazione. La scadenza continua a dipendere dalla distanza iniziale attraverso l'equazione~\eqref{eq:metodo-scadenza-missione}.
+
+L'avanzamento avviene soltanto dopo due valutazioni consecutive con almeno l'80\% di successi nella fase corrente. Una valutazione sotto soglia azzera il conteggio consecutivo; non provoca una retrocessione di fase. Dalla seconda fase, ogni nuova missione ha inoltre una probabilità del 25\% di essere estratta da una delle fasi precedenti, scelte con uguale probabilità. Il restante 75\% appartiene alla fase corrente. La riproposizione delle missioni più semplici mantiene nel training esperienze già affrontate mentre aumenta la difficoltà.
+
+Negli ambienti preparati per le prove reali si adotta una progressione a quattro fasi, con distanze di 1,5--3, 3--6, 6--10 e 10--14 m. Nell'ambiente con resistenza al moto, la prima fase usa punti sulla superficie grigia; dalle successive si ammettono anche quelli sulla superficie verde. Nell'ambiente con superficie scivolosa, gli estremi restano sulla superficie grigia in tutte le fasi e la regione scivolosa può essere incontrata durante il tragitto. In questi ambienti la prima fase non impone che i due punti siano nella stessa cella. Restano il criterio dell'80\% in due valutazioni e la riproposizione delle fasi precedenti al 25\%.
+
+La Figura~\ref{fig:metodo-curriculum} illustrerà la progressione. Le fasi descritte sono quelle previste dalla procedura; le fasi effettivamente raggiunte e il loro andamento saranno documentati con i risultati nel Capitolo~\ref{chap:experiments}. La durata del training, da sola, non indica il completamento del curriculum.
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.23\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: progressione del curriculum}\par\medskip
+        Pannello A: cinque fasi della mappa estesa,\newline
+        con distanze e regole per partenza e goal.\par\smallskip
+        Pannello B: quattro fasi degli ambienti preparati\newline
+        per le prove reali e differenze fra le superfici.\par\smallskip
+        Frecce di avanzamento: due valutazioni con successo\newline
+        almeno all'80\%. Mostrare il 25\% di missioni\newline
+        riproposte dalle fasi precedenti e lasciare libero il percorso.
+    \end{minipage}}
+    \caption[Curriculum delle missioni di navigazione]{Aumento progressivo della difficoltà attraverso la selezione dei punti di partenza e arrivo. Le regole di generazione delle missioni sono distinte dalle decisioni di percorso della policy.}
+    \label{fig:metodo-curriculum}
+\end{figure}
+
+\subsection{Iperparametri e selezione del checkpoint}
+
+Le configurazioni di riferimento usano Adam con tasso di apprendimento $3\times10^{-4}$, fattore di sconto $\gamma=0{,}999$ e gruppi di 256 transizioni per ciascun aggiornamento su un campione di dati. Per lo scenario speculare e quello esteso sono previsti 32 ambienti paralleli. I budget di riferimento sono rispettivamente 100000 e 200000 transizioni individuali. Il conteggio riguarda le esperienze usate per il training e non comprende gli episodi di valutazione.
+
+Per PPO si usano al massimo dieci epoche sui dati raccolti, parametro GAE $\lambda=0{,}95$, clipping pari a $0{,}2$ e soglia KL $0{,}02$. Il contributo dell'entropia ha peso $0{,}005$; ciascuna delle due perdite del critic ha peso $0{,}5$. La norma del gradiente è limitata a $0{,}5$. L'ultima raccolta può essere più corta delle 4096 transizioni ordinarie per rispettare il budget totale.
+
+Per SAC il replay contiene al massimo 100000 transizioni e l'aggiornamento delle reti obiettivo usa $\tau=0{,}005$. Il coefficiente di entropia parte da uno e viene appreso con valore obiettivo dell'entropia pari a $-2$. Nello scenario esteso si esegue un aggiornamento per ogni passo parallelo che produce campioni validi, dopo la raccolta iniziale. Negli ambienti predisposti per le prove reali la configurazione prevede invece 128 ambienti, sedici aggiornamenti per passo parallelo utile e un budget di 1500000 transizioni. Questi ultimi valori descrivono l'addestramento previsto; i dati delle esecuzioni effettive verranno riportati insieme ai risultati.
+
+La Tabella~\ref{tab:metodo-training} raccoglierà gli iperparametri per scenario. A ogni esecuzione vengono conservati configurazione, argomenti di avvio, semi casuali, componenti percettivi e copia dei sorgenti. Ciò permette di associare il modello ai parametri effettivamente utilizzati, anche quando il budget o il parallelismo sono specificati all'avvio.
+
+\begin{table}[tbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.21\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: parametri di addestramento}\par\medskip
+        Colonne: scenario speculare, scenario esteso\newline
+        e ambienti destinati alle prove reali.\par\smallskip
+        Righe: algoritmo, ambienti, budget, tasso di apprendimento,\newline
+        sconto, campioni per aggiornamento, rollout o replay,\newline
+        aggiornamenti per passo e parametri specifici PPO/SAC.\par\smallskip
+        Separare i budget dalle transizioni effettivamente raccolte.
+    \end{minipage}}
+    \caption[Iperparametri di addestramento]{Configurazioni di riferimento delle procedure PPO e SAC. I budget sono espressi in transizioni individuali; il numero di aggiornamenti per passo parallelo è distinto dal numero di robot che raccolgono dati.}
+    \label{tab:metodo-training}
+\end{table}
+
+La valutazione periodica usa azioni deterministiche e statistiche di normalizzazione fisse. I suoi dati non entrano nei gruppi di PPO o nel replay di SAC. Nello scenario speculare viene svolta ogni 100000 transizioni, sulle due disposizioni di training. Nello scenario esteso viene svolta ogni 10000 transizioni, su missioni della fase corrente estratte dai punti riservati alla valutazione. Negli ambienti destinati alle prove reali l'intervallo previsto è di 10000 transizioni nelle prime due fasi e 30000 nelle ultime due. Si registra un episodio per ambiente, con semi fissati per rendere ripetibili le missioni.
+
+Il criterio di selezione privilegia prima il tasso di successo e, a parità di questo, il lavoro medio delle sole missioni completate. In presenza di curriculum si conservano modelli migliori per ciascuna fase; per il modello migliore complessivo ha precedenza la fase di valutazione più avanzata, seguita da successo e lavoro. Il confronto tiene così conto del cambiamento di difficoltà. Le valutazioni usate per scegliere il modello appartengono alla procedura di sviluppo; il protocollo sperimentale finale sarà definito nel capitolo dei risultati.
+
+Un checkpoint conserva reti, statistiche di normalizzazione, PCA e stato necessario a riprendere l'ottimizzazione. Nel caso SAC la ripresa richiede anche il replay corrispondente; lo stato del curriculum e i contatori sono salvati insieme al modello. Alla ripresa gli ambienti vengono reinizializzati con nuove missioni, mantenendo lo stato di apprendimento salvato. L'actor esportato per l'esecuzione è un artefatto distinto. Il modello finale, l'ultimo salvato e quello selezionato dalle valutazioni possono quindi corrispondere a momenti diversi del training: la scelta impiegata in ciascun esperimento verrà indicata nel Capitolo~\ref{chap:experiments}.
+
+\section[Esecuzione della policy e integrazione sul robot]{Esecuzione della policy\\e integrazione sul robot}
 \label{sec:metodo-esecuzione}
 
-\subsection{Pipeline di inferenza}
-% Caricamento della policy e componenti necessari all'esecuzione.
+Terminato l'addestramento, la policy viene usata per scegliere i comandi senza aggiornare i propri pesi. Restano attivi l'acquisizione delle osservazioni, la memoria percettiva e il feedback del movimento. Questa sezione descrive l'esecuzione implementata in simulazione e l'interfaccia prevista per la piattaforma reale, la cui integrazione è ancora da definire.
 
-\subsection{Gestione delle osservazioni e dei comandi durante l'esecuzione}
-% Acquisizione dei segnali, aggiornamento della mappa, scaling e invio
-% dei comandi, in coerenza con la pipeline di addestramento.
+\subsection{Pipeline di inferenza e gestione dei comandi}
+
+L'esecuzione parte dal caricamento di un modello salvato. Le procedure di riproduzione in simulazione ricostruiscono le reti dal checkpoint, ripristinano le statistiche di normalizzazione e caricano la PCA associata. Viene controllata anche la compatibilità con DINOv2, la preparazione delle immagini e gli asset dello scenario. In questo modo le osservazioni vengono espresse nelle stesse coordinate usate durante l'apprendimento.
+
+Per un'esecuzione separata dal programma di training è disponibile l'esportazione dell'actor in formato TorchScript. Il modello esportato riceve i 3255 valori dell'osservazione prima della normalizzazione e restituisce le due componenti dell'azione normalizzata. La normalizzazione è inclusa nel modello: applicarla nuovamente all'esterno modificherebbe gli ingressi. DINOv2, PCA e costruzione della mappa restano invece nella pipeline percettiva esterna, come descritto nella Sezione~\ref{sec:metodo-reti}.
+
+L'esportazione svolta alla fine del training usa lo stato corrente dell'actor. L'artefatto esportato va quindi associato al checkpoint da cui proviene, distinguendolo dai modelli selezionati attraverso le valutazioni. La scelta utilizzata nelle prove sarà riportata nel Capitolo~\ref{chap:experiments}.
+
+All'inizio di una missione si assegnano il goal e il limite temporale e si inizializzano memoria, potenza filtrata e azione precedente. A ogni decisione si acquisiscono RGB-D e stato del robot, si aggiornano le osservazioni memorizzate e si legge la finestra locale nella posa corrente. La mappa viene poi concatenata ai quindici valori compatti nell'ordine fissato dalla definizione dell'osservazione. L'assenza di nuove misure in una regione non elimina quelle ancora presenti nella memoria; validità ed età accompagnano la lettura.
+
+L'actor opera in modo deterministico, applicando la tangente iperbolica alla media della gaussiana latente, senza campionare azioni di esplorazione. I critic e le informazioni privilegiate non sono necessari per calcolare questa uscita. Anche la ricompensa serve all'apprendimento e alla valutazione, mentre la decisione richiede soltanto gli ingressi dell'actor. La potenza filtrata continua quindi a essere aggiornata e osservata, pur in assenza di aggiornamenti dei pesi.
+
+Le due componenti ottenute vengono convertite in velocità longitudinale e angolare secondo l'equazione~\eqref{eq:metodo-conversione-azioni}, con velocità laterale nulla. Il comando viene mantenuto per l'intervallo di navigazione e passato al controllore locomotorio. Nella simulazione quest'ultimo continua ad aggiornare i riferimenti articolari alla propria frequenza, mentre il movimento produce le misure utilizzate alla decisione successiva.
+
+Negli ambienti che prevedono l'allineamento iniziale, il modulo dedicato sostituisce temporaneamente l'azione dell'actor con la rotazione verso il goal. Al termine di questa fase il controllo passa alla policy. L'azione precedente contenuta nell'osservazione è quella effettivamente applicata, compresa l'eventuale sostituzione durante l'allineamento. Questo mantiene coerenti il comando ricordato dalla rete e il movimento che ha prodotto il feedback.
+
+La gestione della missione rimane esterna all'actor. In simulazione si controllano le condizioni di successo e fallimento definite nella Sezione~\ref{sec:metodo-compito-rl}; alla conclusione si registrano le metriche prima di reinizializzare l'ambiente. Il reset elimina anche la memoria del relativo episodio. La policy non decide autonomamente quando assegnare un nuovo goal o ripristinare lo stato del robot.
+
+Il ciclo di navigazione mantiene l'intervallo di $0{,}2\,\mathrm{s}$ simulati, con le frequenze dei livelli inferiori già definite nella Sezione~\ref{sec:metodo-piattaforma}. L'acquisizione avviene dopo l'aggiornamento della posa della camera, così da associare immagini e proiezione allo stesso stato. Questo ordinamento descrive il ciclo simulato; la frequenza effettivamente ottenuta su un computer reale dipenderà anche dai tempi di acquisizione, elaborazione e comunicazione.
 
 \subsection{Integrazione con la piattaforma reale}
-% Da completare quando l'implementazione reale sara definita.
-% Descrivere il sistema effettivamente utilizzato; i risultati sono nel
-% capitolo 4. Non presentare il trasferimento come gia validato.
+
+L'integrazione sul robot reale è ancora da definire. Gli ambienti con resistenza al moto e con superficie scivolosa preparano i modelli in simulazione; sensori, computer e interfaccia di controllo della piattaforma reale saranno specificati nella Tabella~\ref{tab:metodo-integrazione-reale}.
+
+L'interfaccia dovrà fornire immagini RGB-D calibrate, posa e segnali di stato per costruire l'osservazione della Sezione~\ref{sec:metodo-compito-rl}, mantenendo coerenti riferimenti e istanti di acquisizione. Per l'ingresso energetico si dovranno documentare le sorgenti delle coppie e delle velocità articolari e il calcolo della potenza filtrata, distinguendo il lavoro meccanico dal consumo della batteria. Andranno inoltre specificati il controllore che riceve le velocità e la gestione della missione.
+
+Il segnaposto verrà completato una volta definita la pipeline, verificando anche la frequenza effettiva e la corrispondenza degli ingressi con quelli del training. Gli esperimenti e i risultati sul robot reale saranno trattati nel Capitolo~\ref{chap:experiments}.
+
+\begin{table}[htbp]
+    \centering
+    \fbox{\begin{minipage}[c][0.27\textheight][c]{0.88\linewidth}
+        \centering
+        \textbf{Segnaposto: integrazione sulla piattaforma reale}\par\medskip
+        Da completare quando la pipeline sarà definita.\par\smallskip
+        Righe: camera RGB-D e calibrazione; computer;\newline
+        sorgenti di posa, velocità e orientamento;\newline
+        coppie e velocità articolari; controllore e interfaccia\newline
+        dei comandi; gestione della missione.\par\smallskip
+        Colonne: componente adottato, dati o comandi,\newline
+        riferimenti, unità, frequenza e sincronizzazione.\par\smallskip
+        Indicare anche la frequenza di inferenza misurata.
+    \end{minipage}}
+    \caption[Componenti dell'integrazione sul robot reale]{Specifiche della pipeline di esecuzione sulla piattaforma reale, da definire e verificare. I componenti dovranno fornire le osservazioni richieste dalla policy e trasferirne i comandi al livello di controllo del robot.}
+    \label{tab:metodo-integrazione-reale}
+\end{table}

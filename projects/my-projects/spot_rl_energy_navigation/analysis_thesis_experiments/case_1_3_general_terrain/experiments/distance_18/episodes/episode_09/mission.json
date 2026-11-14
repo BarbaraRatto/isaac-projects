@@ -1,0 +1,77 @@
+{
+  "episode": 9,
+  "distance_group_m": 18,
+  "category": "multiple_choices",
+  "category_name": "Several surfaces and successive choices",
+  "mission": {
+    "start_id": 62,
+    "goal_id": 63,
+    "start": [
+      24.309635549292416,
+      14.894024348408925,
+      0.0,
+      0.03400000184774399,
+      5,
+      5,
+      4
+    ],
+    "goal": [
+      6.497097009263921,
+      17.485060967216057,
+      0.0056451500232703065,
+      0.0147469611044001,
+      3,
+      6,
+      1
+    ],
+    "yaw": -1.7771452050354895,
+    "band": 4,
+    "distance_m": 18.0,
+    "deadline_steps": 435
+  },
+  "direct_cells": [
+    {
+      "row": 5,
+      "col": 4,
+      "terrain": "t6_obstacles",
+      "length_m": 3.3444665819748
+    },
+    {
+      "row": 5,
+      "col": 3,
+      "terrain": "t2_slippery",
+      "length_m": 6.063144776209266
+    },
+    {
+      "row": 5,
+      "col": 2,
+      "terrain": "t5_large_rocks",
+      "length_m": 1.7491440187229126
+    },
+    {
+      "row": 6,
+      "col": 2,
+      "terrain": "t1_asphalt",
+      "length_m": 4.314000757486355
+    },
+    {
+      "row": 6,
+      "col": 1,
+      "terrain": "t4_fine_gravel",
+      "length_m": 2.5292438656066674
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t6_obstacles": 3.3444665819748,
+    "t2_slippery": 6.063144776209266,
+    "t5_large_rocks": 1.7491440187229126,
+    "t1_asphalt": 4.314000757486355,
+    "t4_fine_gravel": 2.5292438656066674
+  },
+  "alternative_geometry": null,
+  "draw_attempt": 58,
+  "review_status": "confirmed",
+  "source_episode": 32,
+  "source_episode_18m": 32,
+  "source_run": "distance_18m_20261113_230511_402428_60687222"
+}

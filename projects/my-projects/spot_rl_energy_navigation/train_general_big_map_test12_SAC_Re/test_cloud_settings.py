@@ -55,3 +55,23 @@ def test_monitor_before_first_adaptive_evaluation(tmp_path):
     result=subprocess.run([sys.executable,str(HERE/'status.py'),'--run-dir',str(tmp_path)],capture_output=True,text=True)
     assert result.returncode==0,result.stderr
     assert '10,000' in result.stdout and 'livello 0' in result.stdout
+
+
+def test_uniform_sampling_is_per_episode_and_ignores_curriculum_level():
+    from train_general_big_map_test12_SAC_Re.missions import MissionSampler, Curriculum, configure_training_distribution
+    import numpy as np
+    sampler=object.__new__(MissionSampler)
+    sampler.sample=lambda band:band
+    curriculum=Curriculum(level=1,streak=1)
+    configure_training_distribution(sampler,curriculum,'uniform')
+    assert curriculum.level==3 and curriculum.streak==0
+    previous=np.random.get_state()
+    try:
+        np.random.seed(71)
+        samples=[sampler.training(0) for _ in range(20000)]
+        frequencies=np.bincount(samples,minlength=4)/len(samples)
+        np.testing.assert_allclose(frequencies,[.25]*4,atol=.01)
+    finally:
+        np.random.set_state(previous)
+    with pytest.raises(ValueError):
+        configure_training_distribution(sampler,curriculum,'invalid')

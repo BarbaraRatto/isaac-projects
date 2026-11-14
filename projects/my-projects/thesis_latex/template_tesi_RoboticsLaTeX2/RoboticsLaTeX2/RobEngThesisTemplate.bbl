@@ -1,11 +1,104 @@
-\begin{thebibliography}{8}
+\begin{thebibliography}{43}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
-\bibitem[{Fu {\em et~al.\/}(2022)Fu, Kumar, Malik \& Pathak}]{Fu2022Gaits}
-{\sc Fu, Z., Kumar, A., Malik, J. \& Pathak, D.} (2022). {Minimizing Energy
-  Consumption Leads to the Emergence of Gaits in Legged Robots}. In {\em
-  Conference on Robot Learning\/}, vol. 164 of {\em Proceedings of Machine
-  Learning Research\/}, 928--937, PMLR.
+\bibitem[{{\AE}gidius {\em et~al.\/}(2025){\AE}gidius, Hadjivelichkov, Jiao,
+  Embley-Riches \& Kanoulas}]{Aegidius2025STEPP}
+{\sc {\AE}gidius, S., Hadjivelichkov, D., Jiao, J., Embley-Riches, J. \&
+  Kanoulas, D.} (2025). {Watch Your STEPP: Semantic Traversability Estimation
+  Using Pose Projected Features}. In {\em 2025 IEEE International Conference on
+  Robotics and Automation (ICRA)\/}, 2376--2382.
+
+\bibitem[{Anderson {\em et~al.\/}(2018)Anderson, Chang, Chaplot, Dosovitskiy,
+  Gupta, Koltun, Kosecka, Malik, Mottaghi, Savva \&
+  Zamir}]{Anderson2018Evaluation}
+{\sc Anderson, P., Chang, A., Chaplot, D.S., Dosovitskiy, A., Gupta, S.,
+  Koltun, V., Kosecka, J., Malik, J., Mottaghi, R., Savva, M. \& Zamir, A.R.}
+  (2018). {On Evaluation of Embodied Navigation Agents}. arXiv preprint.
+
+\bibitem[{Belter {\em et~al.\/}(2016)Belter, {\L}ab{\k{e}}cki \&
+  Skrzypczy{\'{n}}ski}]{Belter2016Adaptive}
+{\sc Belter, D., {\L}ab{\k{e}}cki, P. \& Skrzypczy{\'{n}}ski, P.} (2016).
+  {Adaptive Motion Planning for Autonomous Rough Terrain Traversal with a
+  Walking Robot}. {\em Journal of Field Robotics\/}, {\bf 33}, 337--370.
+
+\bibitem[{Caron {\em et~al.\/}(2021)Caron, Touvron, Misra, Jegou, Mairal,
+  Bojanowski \& Joulin}]{Caron2021DINO}
+{\sc Caron, M., Touvron, H., Misra, I., Jegou, H., Mairal, J., Bojanowski, P.
+  \& Joulin, A.} (2021). {Emerging Properties in Self-Supervised Vision
+  Transformers}. In {\em 2021 IEEE/CVF International Conference on Computer
+  Vision (ICCV)\/}, 9630--9640.
+
+\bibitem[{Chen {\em et~al.\/}(2024)Chen, Frey, Zhou, Miki, Martius \&
+  Hutter}]{Chen2024Physical}
+{\sc Chen, J., Frey, J., Zhou, R., Miki, T., Martius, G. \& Hutter, M.} (2024).
+  {Identifying Terrain Physical Parameters From Vision - Towards
+  Physical-Parameter-Aware Locomotion and Navigation}. {\em IEEE Robotics and
+  Automation Letters\/}, {\bf 9}, 9279--9286.
+
+\bibitem[{Dosovitskiy {\em et~al.\/}(2021)Dosovitskiy, Beyer, Kolesnikov,
+  Weissenborn, Zhai, Unterthiner, Dehghani, Minderer, Heigold, Gelly, Uszkoreit
+  \& Houlsby}]{Dosovitskiy2021ViT}
+{\sc Dosovitskiy, A., Beyer, L., Kolesnikov, A., Weissenborn, D., Zhai, X.,
+  Unterthiner, T., Dehghani, M., Minderer, M., Heigold, G., Gelly, S.,
+  Uszkoreit, J. \& Houlsby, N.} (2021). {An Image is Worth 16x16 Words:
+  Transformers for Image Recognition at Scale}. In {\em International
+  Conference on Learning Representations (ICLR)\/}.
+
+\bibitem[{Elnoor {\em et~al.\/}(2024{\natexlab{a}})Elnoor, Sathyamoorthy,
+  Weerakoon \& Manocha}]{Elnoor2024ProNav}
+{\sc Elnoor, M., Sathyamoorthy, A.J., Weerakoon, K. \& Manocha, D.}
+  (2024{\natexlab{a}}). {ProNav: Proprioceptive Traversability Estimation for
+  Legged Robot Navigation in Outdoor Environments}. {\em IEEE Robotics and
+  Automation Letters\/}, {\bf 9}, 7190--7197.
+
+\bibitem[{Elnoor {\em et~al.\/}(2024{\natexlab{b}})Elnoor, Weerakoon,
+  Sathyamoorthy, Guan, Rajagopal \& Manocha}]{Elnoor2024AMCO}
+{\sc Elnoor, M., Weerakoon, K., Sathyamoorthy, A.J., Guan, T., Rajagopal, V. \&
+  Manocha, D.} (2024{\natexlab{b}}). {AMCO: Adaptive Multimodal Coupling of
+  Vision and Proprioception for Quadruped Robot Navigation in Outdoor
+  Environments}. In {\em 2024 IEEE/RSJ International Conference on Intelligent
+  Robots and Systems (IROS)\/}, 7687--7694.
+
+\bibitem[{Erni {\em et~al.\/}(2023)Erni, Frey, Miki, Mattamala \&
+  Hutter}]{Erni2023MEM}
+{\sc Erni, G., Frey, J., Miki, T., Mattamala, M. \& Hutter, M.} (2023). {MEM:
+  Multi-Modal Elevation Mapping for Robotics and Learning}. In {\em 2023
+  IEEE/RSJ International Conference on Intelligent Robots and Systems
+  (IROS)\/}, 11011--11018.
+
+\bibitem[{Faigl \& Pr{\'{a}}gr(2019)}]{Faigl2019Unsupervised}
+{\sc Faigl, J. \& Pr{\'{a}}gr, M.} (2019). {On Unsupervised Learning of
+  Traversal Cost and Terrain Types Identification Using Self-organizing Maps}.
+  In {\em Artificial Neural Networks and Machine Learning -- ICANN 2019:
+  Theoretical Neural Computation\/}, 654--668, Springer International
+  Publishing.
+
+\bibitem[{Fankhauser {\em et~al.\/}(2018)Fankhauser, Bloesch \&
+  Hutter}]{Fankhauser2018Mapping}
+{\sc Fankhauser, P., Bloesch, M. \& Hutter, M.} (2018). {Probabilistic Terrain
+  Mapping for Mobile Robots With Uncertain Localization}. {\em IEEE Robotics
+  and Automation Letters\/}, {\bf 3}, 3019--3026.
+
+\bibitem[{Frey {\em et~al.\/}(2022)Frey, Hoeller, Khattak \&
+  Hutter}]{Frey2022PolicyGuided}
+{\sc Frey, J., Hoeller, D., Khattak, S. \& Hutter, M.} (2022). {Locomotion
+  Policy Guided Traversability Learning using Volumetric Representations of
+  Complex Environments}. In {\em 2022 IEEE/RSJ International Conference on
+  Intelligent Robots and Systems (IROS)\/}, 5722--5729.
+
+\bibitem[{Fu {\em et~al.\/}(2022{\natexlab{a}})Fu, Kumar, Agarwal, Qi, Malik \&
+  Pathak}]{Fu2022Coupling}
+{\sc Fu, Z., Kumar, A., Agarwal, A., Qi, H., Malik, J. \& Pathak, D.}
+  (2022{\natexlab{a}}). {Coupling Vision and Proprioception for Navigation of
+  Legged Robots}. In {\em 2022 IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition (CVPR)\/}, 17252--17262.
+
+\bibitem[{Fu {\em et~al.\/}(2022{\natexlab{b}})Fu, Kumar, Malik \&
+  Pathak}]{Fu2022Gaits}
+{\sc Fu, Z., Kumar, A., Malik, J. \& Pathak, D.} (2022{\natexlab{b}}).
+  {Minimizing Energy Consumption Leads to the Emergence of Gaits in Legged
+  Robots}. In {\em Conference on Robot Learning\/}, vol. 164 of {\em
+  Proceedings of Machine Learning Research\/}, 928--937, PMLR.
 
 \bibitem[{Gan {\em et~al.\/}(2022)Gan, Grizzle, Eustice \&
   Ghaffari}]{Gan2022Energy}
@@ -13,6 +106,62 @@
   {Energy-Based Legged Robots Terrain Traversability Modeling via Deep Inverse
   Reinforcement Learning}. {\em IEEE Robotics and Automation Letters\/}, {\bf
   7}, 8807--8814.
+
+\bibitem[{Haarnoja {\em et~al.\/}(2018{\natexlab{a}})Haarnoja, Zhou, Abbeel \&
+  Levine}]{Haarnoja2018SAC}
+{\sc Haarnoja, T., Zhou, A., Abbeel, P. \& Levine, S.} (2018{\natexlab{a}}).
+  {Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning
+  with a Stochastic Actor}. In {\em International Conference on Machine
+  Learning\/}, vol.~80 of {\em Proceedings of Machine Learning Research\/},
+  1861--1870, PMLR.
+
+\bibitem[{Haarnoja {\em et~al.\/}(2018{\natexlab{b}})Haarnoja, Zhou,
+  Hartikainen, Tucker, Ha, Tan, Kumar, Zhu, Gupta, Abbeel \&
+  Levine}]{Haarnoja2018Applications}
+{\sc Haarnoja, T., Zhou, A., Hartikainen, K., Tucker, G., Ha, S., Tan, J.,
+  Kumar, V., Zhu, H., Gupta, A., Abbeel, P. \& Levine, S.}
+  (2018{\natexlab{b}}). {Soft Actor-Critic Algorithms and Applications}. arXiv
+  preprint.
+
+\bibitem[{Jolliffe \& Cadima(2016)}]{Jolliffe2016PCA}
+{\sc Jolliffe, I.T. \& Cadima, J.} (2016). {Principal component analysis: a
+  review and recent developments}. {\em Philosophical Transactions of the Royal
+  Society A: Mathematical, Physical and Engineering Sciences\/}, {\bf 374},
+  20150202.
+
+\bibitem[{Kaelbling {\em et~al.\/}(1998)Kaelbling, Littman \&
+  Cassandra}]{Kaelbling1998POMDP}
+{\sc Kaelbling, L.P., Littman, M.L. \& Cassandra, A.R.} (1998). {Planning and
+  Acting in Partially Observable Stochastic Domains}. {\em Artificial
+  Intelligence\/}, {\bf 101}, 99--134.
+
+\bibitem[{Karnan {\em et~al.\/}(2023)Karnan, Yang, Farkash, Warnell, Biswas \&
+  Stone}]{Karnan2023STERLING}
+{\sc Karnan, H., Yang, E., Farkash, D., Warnell, G., Biswas, J. \& Stone, P.}
+  (2023). {STERLING: Self-Supervised Terrain Representation Learning from
+  Unconstrained Robot Experience}. In {\em Conference on Robot Learning\/},
+  vol. 229 of {\em Proceedings of Machine Learning Research\/}, 2393--2413,
+  PMLR.
+
+\bibitem[{Kumar {\em et~al.\/}(2021)Kumar, Fu, Pathak \& Malik}]{Kumar2021RMA}
+{\sc Kumar, A., Fu, Z., Pathak, D. \& Malik, J.} (2021). {RMA: Rapid Motor
+  Adaptation for Legged Robots}. In {\em Robotics: Science and Systems XVII\/}.
+
+\bibitem[{Liang {\em et~al.\/}(2025)Liang, Sun, Zhu, Zhang, Xiong, Wang, Li,
+  Sreenath \& Tomizuka}]{Liang2025AdaptiveEnergy}
+{\sc Liang, B., Sun, L., Zhu, X., Zhang, B., Xiong, Z., Wang, Y., Li, C.,
+  Sreenath, K. \& Tomizuka, M.} (2025). {Adaptive Energy Regularization for
+  Autonomous Gait Transition and Energy-Efficient Quadruped Locomotion}. In
+  {\em 2025 IEEE International Conference on Robotics and Automation (ICRA)\/},
+  5350--5356.
+
+\bibitem[{Makoviychuk {\em et~al.\/}(2021)Makoviychuk, Wawrzyniak, Guo, Lu,
+  Storey, Macklin, Hoeller, Rudin, Allshire, Handa \&
+  State}]{Makoviychuk2021IsaacGym}
+{\sc Makoviychuk, V., Wawrzyniak, L., Guo, Y., Lu, M., Storey, K., Macklin, M.,
+  Hoeller, D., Rudin, N., Allshire, A., Handa, A. \& State, G.} (2021). {Isaac
+  Gym: High Performance GPU-Based Physics Simulation For Robot Learning}. arXiv
+  preprint.
 
 \bibitem[{Mattamala {\em et~al.\/}(2025)Mattamala, Frey, Libera, Chebrolu,
   Martius, Cadena, Hutter \& Fallon}]{Mattamala2025Wild}
@@ -27,6 +176,52 @@
   (2022). {Learning robust perceptive locomotion for quadrupedal robots in the
   wild}. {\em Science Robotics\/}, {\bf 7}, eabk2822.
 
+\bibitem[{Mittal {\em et~al.\/}(2025)Mittal, Roth, Tigue, Richard, Zhang, Du,
+  Serrano-Mu{\~{n}}oz, Yao, Zurbr{\"{u}}gg, Rudin, Wawrzyniak, Rakhsha,
+  Denzler, Heiden, Borovicka, Ahmed, Akinola, Anwar, Carlson, Feng, Garg,
+  Gasoto, Gulich, Guo, Gussert, Hansen, Kulkarni, Li, Liu, Makoviychuk,
+  Malczyk, Mazhar, Moghani, Murali, Noseworthy, Poddubny, Ratliff, Rehberg,
+  Schwarke, Singh, Smith, Tang, Thaker, Trepte, Van~Wyk, Yu, Millane, Ramasamy,
+  Steiner, Subramanian, Volk, Chen, Jawale, Kuruttukulam, Lin, Mandlekar,
+  Patzwaldt, Welsh, Zhao, Anes, Lafleche, Mo{\"{e}}nne-Loccoz, Park, Stepinski,
+  Van~Gelder, Amevor, Carius, Chang, Chen, Ciechomski, Daviet, Mohajerani, von
+  Muralt, Reutskyy, Sauter, Schirm, Shi, Terdiman, Vilella, Widmer, Yeoman,
+  Chen, Grizan, Li, Li, Smith, Wiltz, Alexis, Chang, Chu, Fan, Farshidian,
+  Handa, Huang, Hutter, Narang, Pouya, Sheng, Zhu, Macklin, Moravanszky, Reist,
+  Guo, Hoeller \& State}]{Mittal2025IsaacLab}
+{\sc Mittal, M., Roth, P., Tigue, J., Richard, A., Zhang, O., Du, P.,
+  Serrano-Mu{\~{n}}oz, A., Yao, X., Zurbr{\"{u}}gg, R., Rudin, N., Wawrzyniak,
+  L., Rakhsha, M., Denzler, A., Heiden, E., Borovicka, A., Ahmed, O., Akinola,
+  I., Anwar, A., Carlson, M.T., Feng, J.Y., Garg, A., Gasoto, R., Gulich, L.,
+  Guo, Y., Gussert, M., Hansen, A., Kulkarni, M., Li, C., Liu, W., Makoviychuk,
+  V., Malczyk, G., Mazhar, H., Moghani, M., Murali, A., Noseworthy, M.,
+  Poddubny, A., Ratliff, N., Rehberg, W., Schwarke, C., Singh, R., Smith, J.L.,
+  Tang, B., Thaker, R., Trepte, M., Van~Wyk, K., Yu, F., Millane, A., Ramasamy,
+  V., Steiner, R., Subramanian, S., Volk, C., Chen, C., Jawale, N.,
+  Kuruttukulam, A.V., Lin, M.A., Mandlekar, A., Patzwaldt, K., Welsh, J., Zhao,
+  H., Anes, F., Lafleche, J.F., Mo{\"{e}}nne-Loccoz, N., Park, S., Stepinski,
+  R., Van~Gelder, D., Amevor, C., Carius, J., Chang, J., Chen, A.H.,
+  Ciechomski, P.d.H., Daviet, G., Mohajerani, M., von Muralt, J., Reutskyy, V.,
+  Sauter, M., Schirm, S., Shi, E.L., Terdiman, P., Vilella, K., Widmer, T.,
+  Yeoman, G., Chen, T., Grizan, S., Li, C., Li, L., Smith, C., Wiltz, R.,
+  Alexis, K., Chang, Y., Chu, D., Fan, L.J., Farshidian, F., Handa, A., Huang,
+  S., Hutter, M., Narang, Y., Pouya, S., Sheng, S., Zhu, Y., Macklin, M.,
+  Moravanszky, A., Reist, P., Guo, Y., Hoeller, D. \& State, G.} (2025). {Isaac
+  Lab: A GPU-Accelerated Simulation Framework for Multi-Modal Robot Learning}.
+  arXiv preprint.
+
+\bibitem[{Muhamad {\em et~al.\/}(2024)Muhamad, Kim \&
+  Park}]{Muhamad2024MultipleCosts}
+{\sc Muhamad, F., Kim, J.S. \& Park, J.H.} (2024). {Robust Traversability
+  Prediction Using Multiple Costs for Quadruped Robot in Random Terrains}. {\em
+  IEEE Access\/}, {\bf 12}, 32507--32517.
+
+\bibitem[{Ng {\em et~al.\/}(1999)Ng, Harada \& Russell}]{Ng1999Shaping}
+{\sc Ng, A.Y., Harada, D. \& Russell, S.} (1999). {Policy Invariance Under
+  Reward Transformations: Theory and Application to Reward Shaping}. In {\em
+  Proceedings of the Sixteenth International Conference on Machine Learning
+  (ICML)\/}, 278--287, Morgan Kaufmann.
+
 \bibitem[{Oquab {\em et~al.\/}(2023)Oquab, Darcet, Moutakanni, Vo, Szafraniec,
   Khalidov, Fernandez, Haziza, Massa, El-Nouby, Howes, Huang, Xu, Sharma, Li,
   Galuba, Rabbat, Assran, Ballas, Synnaeve, Misra, Jegou, Mairal, Labatut,
@@ -38,12 +233,74 @@
   Joulin, A. \& Bojanowski, P.} (2023). {DINOv2: Learning Robust Visual
   Features without Supervision}. arXiv preprint.
 
-\bibitem[{Rudin {\em et~al.\/}(2022)Rudin, Hoeller, Bjelonic \&
+\bibitem[{Pinto {\em et~al.\/}(2018)Pinto, Andrychowicz, Welinder, Zaremba \&
+  Abbeel}]{Pinto2018Asymmetric}
+{\sc Pinto, L., Andrychowicz, M., Welinder, P., Zaremba, W. \& Abbeel, P.}
+  (2018). {Asymmetric Actor Critic for Image-Based Robot Learning}. In {\em
+  Robotics: Science and Systems XIV\/}.
+
+\bibitem[{Pragr {\em et~al.\/}(2019)Pragr, Cizek, Bayer \&
+  Faigl}]{Pragr2019Online}
+{\sc Pragr, M., Cizek, P., Bayer, J. \& Faigl, J.} (2019). {Online Incremental
+  Learning of the Terrain Traversal Cost in Autonomous Exploration}. In {\em
+  Robotics: Science and Systems XV\/}.
+
+\bibitem[{Ren {\em et~al.\/}(2025)Ren, Liu, Dai, Long \& Wang}]{Ren2025TOPNav}
+{\sc Ren, J., Liu, Y., Dai, Y., Long, J. \& Wang, G.} (2025). {TOP-Nav: Legged
+  Navigation Integrating Terrain, Obstacle and Proprioception Estimation}. In
+  {\em Conference on Robot Learning\/}, vol. 270 of {\em Proceedings of Machine
+  Learning Research\/}, 3454--3473, PMLR.
+
+\bibitem[{Roth {\em et~al.\/}(2025)Roth, Frey, Cadena \&
+  Hutter}]{Roth2025Forward}
+{\sc Roth, P., Frey, J., Cadena, C. \& Hutter, M.} (2025). {Learned Perceptive
+  Forward Dynamics Model for Safe and Platform-aware Robotic Navigation}. In
+  {\em Robotics: Science and Systems XXI\/}.
+
+\bibitem[{Rudin {\em et~al.\/}(2022{\natexlab{a}})Rudin, Hoeller, Bjelonic \&
   Hutter}]{Rudin2022Advanced}
-{\sc Rudin, N., Hoeller, D., Bjelonic, M. \& Hutter, M.} (2022). {Advanced
-  Skills by Learning Locomotion and Local Navigation End-to-End}. In {\em 2022
-  IEEE/RSJ International Conference on Intelligent Robots and Systems
+{\sc Rudin, N., Hoeller, D., Bjelonic, M. \& Hutter, M.} (2022{\natexlab{a}}).
+  {Advanced Skills by Learning Locomotion and Local Navigation End-to-End}. In
+  {\em 2022 IEEE/RSJ International Conference on Intelligent Robots and Systems
   (IROS)\/}, 2497--2503.
+
+\bibitem[{Rudin {\em et~al.\/}(2022{\natexlab{b}})Rudin, Hoeller, Reist \&
+  Hutter}]{Rudin2022Massively}
+{\sc Rudin, N., Hoeller, D., Reist, P. \& Hutter, M.} (2022{\natexlab{b}}).
+  {Learning to Walk in Minutes Using Massively Parallel Deep Reinforcement
+  Learning}. In {\em Conference on Robot Learning\/}, vol. 164 of {\em
+  Proceedings of Machine Learning Research\/}, 91--100, PMLR.
+
+\bibitem[{Sanchez-Delgado {\em et~al.\/}(2025)Sanchez-Delgado, Soares, Barasuol
+  \& Semini}]{SanchezDelgado2025Mapping}
+{\sc Sanchez-Delgado, A., Soares, J.C.V., Barasuol, V. \& Semini, C.} (2025).
+  {Towards Proprioceptive Terrain Mapping with Quadruped Robots for Exploration
+  in Planetary Permanently Shadowed Regions}. In {\em 2025 International
+  Conference on Space Robotics (iSpaRo)\/}, 189--196, preprint available as
+  arXiv:2510.18986.
+
+\bibitem[{Schulman {\em et~al.\/}(2016)Schulman, Moritz, Levine, Jordan \&
+  Abbeel}]{Schulman2016GAE}
+{\sc Schulman, J., Moritz, P., Levine, S., Jordan, M. \& Abbeel, P.} (2016).
+  {High-Dimensional Continuous Control Using Generalized Advantage Estimation}.
+  In {\em International Conference on Learning Representations (ICLR)\/}.
+
+\bibitem[{Schulman {\em et~al.\/}(2017)Schulman, Wolski, Dhariwal, Radford \&
+  Klimov}]{Schulman2017PPO}
+{\sc Schulman, J., Wolski, F., Dhariwal, P., Radford, A. \& Klimov, O.} (2017).
+  {Proximal Policy Optimization Algorithms}. arXiv preprint.
+
+\bibitem[{Sevastopoulos \& Konstantopoulos(2022)}]{Sevastopoulos2022Survey}
+{\sc Sevastopoulos, C. \& Konstantopoulos, S.} (2022). {A Survey of
+  Traversability Estimation for Mobile Robots}. {\em IEEE Access\/}, {\bf 10},
+  96331--96347.
+
+\bibitem[{Tobin {\em et~al.\/}(2017)Tobin, Fong, Ray, Schneider, Zaremba \&
+  Abbeel}]{Tobin2017Randomization}
+{\sc Tobin, J., Fong, R., Ray, A., Schneider, J., Zaremba, W. \& Abbeel, P.}
+  (2017). {Domain Randomization for Transferring Deep Neural Networks from
+  Simulation to the Real World}. In {\em 2017 IEEE/RSJ International Conference
+  on Intelligent Robots and Systems (IROS)\/}, 23--30.
 
 \bibitem[{Wellhausen {\em et~al.\/}(2019)Wellhausen, Dosovitskiy, Ranftl,
   Walas, Cadena \& Hutter}]{Wellhausen2019Where}
@@ -51,6 +308,11 @@
   Hutter, M.} (2019). {Where Should I Walk? Predicting Terrain Properties From
   Images Via Self-Supervised Learning}. {\em IEEE Robotics and Automation
   Letters\/}, {\bf 4}, 1509--1516.
+
+\bibitem[{Yan {\em et~al.\/}(2024)Yan, Ji \& Chang}]{Yan2024Energy}
+{\sc Yan, Z., Ji, H. \& Chang, Q.} (2024). {Energy Consumption Minimization of
+  Quadruped Robot Based on Reinforcement Learning of DDPG Algorithm}. {\em
+  Actuators\/}, {\bf 13}, 18.
 
 \bibitem[{Zhang {\em et~al.\/}(2026)Zhang, Li, Zeng, Smith, Stachowicz, Shah,
   Yue, Song, Xia, Levine, Sreenath \& Liu}]{Zhang2026Traversability}

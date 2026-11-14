@@ -1,0 +1,73 @@
+{
+  "generator": "missions.py",
+  "generator_sha256": "ff84aed3a5763223655eb58975452a60b9494f5fd94c4b89e834178bc8acd3fc",
+  "mission_sha256": "75f4b1cd65db73f52f310afa9ac52a4c6a40a7423135e993f57f4984d0eacfd7",
+  "surface_checks_source": "train_general_big_map_test9_SAC/prepare_map.py",
+  "surface_checks_sha256": "162a4e323e9a5a91e1f0e3911b4a8736d248923b720f89c3946c62894e52f670",
+  "python_version": "3.11.13",
+  "numpy_version": "1.26.0",
+  "scipy_version": "1.15.3",
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test9_SAC/checkpoint_trained_online/policy_best.pt",
+  "checkpoint_sha256": "4e3cd4e378b1ff135deaa42071618ebeebb91e499b63e63c164a0f1bbda9a177",
+  "checkpoint_transitions": 600048,
+  "checkpoint_best_score": [
+    3,
+    0.609375,
+    -1840.863076234475
+  ],
+  "checkpoint_training_state": {
+    "curriculum": {
+      "level": 3,
+      "streak": 0
+    },
+    "best_by_stage": {
+      "0": [
+        0.9375,
+        -648.0756754557292
+      ],
+      "1": [
+        0.828125,
+        -1200.8184474729142
+      ],
+      "2": [
+        0.875,
+        -1165.4679352896553
+      ],
+      "3": [
+        0.609375,
+        -1840.863076234475
+      ]
+    },
+    "last_evaluated_stage": 3,
+    "counters": {
+      "episode_count": 11308,
+      "success_count": 8232,
+      "vector_steps": 6472,
+      "alignment_count": 228368,
+      "discarded_count": 0
+    },
+    "parent_checkpoint": null,
+    "replay_snapshot": null
+  },
+  "checkpoint_selection": "Highest evaluated curriculum stage, then success rate, then lower mean successful-mission work; fixed before this panel is run",
+  "distance_note": "Checkpoint stage 3 trained missions up to 12 m; 18 m is distance extrapolation",
+  "study_note": "New forty-mission panel on the unchanged held-out map; previous panels retained separately",
+  "different_policy_tensors_vs_previous_test7": 66,
+  "relocation": {
+    "previous_location": "case_1_3_general_terrain/distance_18m_1",
+    "previous_generator_sha256": "f0bac5608ec585ae04e472c869ec4b7dbd0071371948be2d08b96ed26370011d",
+    "previous_mission_sha256": "2dd8ec366f35715efd47d34d22e22b56e21f6cd3696f8bb3c0a35f9c560b0683",
+    "previous_metadata_sha256": "c49f53965b98321a24efcf5115dad8bed2652436dcbf5829894e1b46733673c3",
+    "note": "Only relative paths updated; all mission coordinates and policy choice unchanged"
+  },
+  "relocation_history": [
+    {
+      "action": "Group initial files and use the shared case-level maps directory",
+      "previous_generator_sha256": "52b073c3874979d4afadb660ecca1dfe76c8d5f4e75c328b5739f8b12a7f04be",
+      "previous_mission_sha256": "c48618041b058909918787f9d1ade6e9a9bd246dc8b8b1fae71a8c4c9f2bd26c",
+      "previous_metadata_sha256": "6c6b5fd8338f5f9c83a806b0c8a6bdd95db264a430458f531442708dc8a8ab07",
+      "mission_coordinates_and_case_data_unchanged": true,
+      "results_and_input_snapshots_unchanged": true
+    }
+  ]
+}

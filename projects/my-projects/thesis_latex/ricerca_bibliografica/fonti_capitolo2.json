@@ -1,0 +1,320 @@
+{
+  "capitolo": 2,
+  "data": "2026-11-09",
+  "revisione_linguistica": "2026-11-10",
+  "riferimenti": [
+    {
+      "chiave": "Aegidius2025STEPP",
+      "fonte": "https://doi.org/10.1109/icra55743.2025.11127781",
+      "doi": "10.1109/icra55743.2025.11127781",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Anderson2018Evaluation",
+      "fonte": "https://arxiv.org/abs/1807.06757",
+      "doi": "10.48550/arXiv.1807.06757",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Belter2016Adaptive",
+      "fonte": "https://doi.org/10.1002/rob.21610",
+      "doi": "10.1002/rob.21610",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Caron2021DINO",
+      "fonte": "https://doi.org/10.1109/iccv48922.2021.00951",
+      "doi": "10.1109/iccv48922.2021.00951",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Chen2024Physical",
+      "fonte": "https://doi.org/10.1109/lra.2024.3455788",
+      "doi": "10.1109/lra.2024.3455788",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Dosovitskiy2021ViT",
+      "fonte": "https://arxiv.org/abs/2010.11929",
+      "doi": "10.48550/arXiv.2010.11929",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Elnoor2024AMCO",
+      "fonte": "https://doi.org/10.1109/iros58592.2024.10801962",
+      "doi": "10.1109/iros58592.2024.10801962",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Elnoor2024ProNav",
+      "fonte": "https://doi.org/10.1109/lra.2024.3418270",
+      "doi": "10.1109/lra.2024.3418270",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Erni2023MEM",
+      "fonte": "https://doi.org/10.1109/iros55552.2023.10342108",
+      "doi": "10.1109/iros55552.2023.10342108",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Faigl2019Unsupervised",
+      "fonte": "https://doi.org/10.1007/978-3-030-30487-4_50",
+      "doi": "10.1007/978-3-030-30487-4_50",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Fankhauser2018Mapping",
+      "fonte": "https://doi.org/10.1109/lra.2018.2849506",
+      "doi": "10.1109/lra.2018.2849506",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Frey2022PolicyGuided",
+      "fonte": "https://doi.org/10.1109/iros47612.2022.9982190",
+      "doi": "10.1109/iros47612.2022.9982190",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Fu2022Coupling",
+      "fonte": "https://doi.org/10.1109/cvpr52688.2022.01676",
+      "doi": "10.1109/cvpr52688.2022.01676",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Fu2022Gaits",
+      "fonte": "https://proceedings.mlr.press/v164/fu22a.html",
+      "doi": null,
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Gan2022Energy",
+      "fonte": "https://doi.org/10.1109/lra.2022.3188100",
+      "doi": "10.1109/lra.2022.3188100",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Haarnoja2018Applications",
+      "fonte": "https://arxiv.org/abs/1812.05905",
+      "doi": "10.48550/arXiv.1812.05905",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": true
+    },
+    {
+      "chiave": "Haarnoja2018SAC",
+      "fonte": "https://proceedings.mlr.press/v80/haarnoja18b.html",
+      "doi": null,
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Jolliffe2016PCA",
+      "fonte": "https://doi.org/10.1098/rsta.2015.0202",
+      "doi": "10.1098/rsta.2015.0202",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Kaelbling1998POMDP",
+      "fonte": "https://www.cassandra.org/arc/papers/aij98.pdf",
+      "doi": "10.1016/S0004-3702(98)00023-X",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": true
+    },
+    {
+      "chiave": "Karnan2023STERLING",
+      "fonte": "https://proceedings.mlr.press/v229/karnan23a.html",
+      "doi": null,
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Kumar2021RMA",
+      "fonte": "https://doi.org/10.15607/rss.2021.xvii.011",
+      "doi": "10.15607/rss.2021.xvii.011",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Liang2025AdaptiveEnergy",
+      "fonte": "https://doi.org/10.1109/icra55743.2025.11128812",
+      "doi": "10.1109/icra55743.2025.11128812",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Makoviychuk2021IsaacGym",
+      "fonte": "https://arxiv.org/abs/2108.10470",
+      "doi": "10.48550/arXiv.2108.10470",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Mattamala2025Wild",
+      "fonte": "https://doi.org/10.1007/s10514-025-10202-x",
+      "doi": "10.1007/s10514-025-10202-x",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Miki2022Perceptive",
+      "fonte": "https://doi.org/10.1126/scirobotics.abk2822",
+      "doi": "10.1126/scirobotics.abk2822",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Mittal2025IsaacLab",
+      "fonte": "https://arxiv.org/abs/2511.04831",
+      "doi": "10.48550/arXiv.2511.04831",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Muhamad2024MultipleCosts",
+      "fonte": "https://doi.org/10.1109/access.2024.3371579",
+      "doi": "10.1109/access.2024.3371579",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Ng1999Shaping",
+      "fonte": "https://people.eecs.berkeley.edu/~russell/papers/icml99-shaping.pdf",
+      "doi": null,
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Oquab2023DINOv2",
+      "fonte": "https://arxiv.org/abs/2304.07193",
+      "doi": "10.48550/arXiv.2304.07193",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Pinto2018Asymmetric",
+      "fonte": "https://doi.org/10.15607/rss.2018.xiv.008",
+      "doi": "10.15607/rss.2018.xiv.008",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Pragr2019Online",
+      "fonte": "https://doi.org/10.15607/rss.2019.xv.040",
+      "doi": "10.15607/rss.2019.xv.040",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Ren2025TOPNav",
+      "fonte": "https://proceedings.mlr.press/v270/ren25a.html",
+      "doi": null,
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Roth2025Forward",
+      "fonte": "https://doi.org/10.15607/rss.2025.xxi.001",
+      "doi": "10.15607/rss.2025.xxi.001",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Rudin2022Advanced",
+      "fonte": "https://doi.org/10.1109/iros47612.2022.9981198",
+      "doi": "10.1109/iros47612.2022.9981198",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Rudin2022Massively",
+      "fonte": "https://proceedings.mlr.press/v164/rudin22a.html",
+      "doi": null,
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "SanchezDelgado2025Mapping",
+      "fonte": "https://doi.org/10.1109/isparo66239.2025.11436327",
+      "doi": "10.1109/isparo66239.2025.11436327",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Schulman2016GAE",
+      "fonte": "https://arxiv.org/abs/1506.02438",
+      "doi": "10.48550/arXiv.1506.02438",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Schulman2017PPO",
+      "fonte": "https://arxiv.org/abs/1707.06347",
+      "doi": "10.48550/arXiv.1707.06347",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Sevastopoulos2022Survey",
+      "fonte": "https://doi.org/10.1109/access.2022.3202545",
+      "doi": "10.1109/access.2022.3202545",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Tobin2017Randomization",
+      "fonte": "https://arxiv.org/abs/1703.06907",
+      "doi": "10.1109/IROS.2017.8202133",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": true
+    },
+    {
+      "chiave": "Wellhausen2019Where",
+      "fonte": "https://doi.org/10.1109/lra.2019.2895390",
+      "doi": "10.1109/lra.2019.2895390",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Yan2024Energy",
+      "fonte": "https://doi.org/10.3390/act13010018",
+      "doi": "10.3390/act13010018",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    },
+    {
+      "chiave": "Zhang2026Traversability",
+      "fonte": "https://doi.org/10.1109/tro.2025.3645885",
+      "doi": "10.1109/tro.2025.3645885",
+      "verifica_stesura": "2026-11-09",
+      "integrazione": false
+    }
+  ],
+  "verifiche": {
+    "pagine_capitolo": 16,
+    "pagina_iniziale": 9,
+    "pagina_finale": 24,
+    "sezioni": 6,
+    "sottosezioni": 14,
+    "riferimenti_distinti": 43,
+    "placeholder_figure": 2,
+    "placeholder_tabelle": 1,
+    "riferimenti_irrisolti": false,
+    "errori_bibtex": false
+  }
+}

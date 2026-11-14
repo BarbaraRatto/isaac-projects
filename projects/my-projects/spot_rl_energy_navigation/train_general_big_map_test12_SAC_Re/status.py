@@ -54,6 +54,9 @@ def main():
     config = json.loads((run/'config.json').read_text())
     settings=config['arguments']
     bands=config['signature']['missions']['stage_names']
+    distribution=settings.get('mission_distribution','curriculum')
+    if distribution=='uniform':
+        print('Missioni: miscela fissa 25% per fascia 0–3; curriculum disattivato; valutazione fase 3.')
     print(f'Backend: SAC={settings.get("agent_device")} | map={settings.get("map_backend")} | '
           f'RGB={settings.get("rgb_backend")} | replay={settings.get("replay_device")}')
     target = int(config['arguments']['timesteps'])
@@ -120,9 +123,12 @@ def main():
     print(f"Azioni sature: {100*float(last['action_saturation']):.2f}% | passi-robot di allineamento: {last['alignment_transitions']}")
     if 'curriculum_level' in last:
         level = int(last['curriculum_level'])
-        print(f'Curriculum ultimo blocco: livello {level} ({bands[level]})')
+        if distribution=='uniform':
+            print(f'Fase benchmark di valutazione: {level} ({bands[level]})')
+        else:
+            print(f'Curriculum ultimo blocco: livello {level} ({bands[level]})')
     curriculum = run/'curriculum.json'
-    if curriculum.is_file():
+    if curriculum.is_file() and distribution!='uniform':
         state = json.loads(curriculum.read_text())
         print(f'Livello dopo ultima valutazione: {state["level"]}; valutazioni consecutive sufficienti: {state["streak"]}/2')
     evaluations = rows(run/'evaluations.csv')

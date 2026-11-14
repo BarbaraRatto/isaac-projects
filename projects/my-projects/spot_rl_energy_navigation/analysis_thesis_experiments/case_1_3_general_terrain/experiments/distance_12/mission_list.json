@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "name": "Selected illustrative twelve-metre episodes",
+  "selection_method": "Manual outcome-based selection across separate complete evaluation runs",
+  "interpretation": "Illustrative collection; not an unbiased random test sample or a success-rate estimate",
+  "target_count": 40,
+  "category_targets": {
+    "regular": 10,
+    "ice": 10,
+    "stairs": 10,
+    "surface_choice": 10
+  },
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test7_SAC/checkpoints_importati/policy_best_stage_3.pt",
+  "checkpoint_sha256": "1c12f5f18e1285463456423a2ae5e6e043f311d310b2ba04bf9575ed5609c02f",
+  "map_sha256": "c00ecd296f70f91af8665fa9dc927cd120ad988c8ae7b7e253ec49856c2e2836",
+  "slots": [
+    {
+      "episode": 1,
+      "status": "pending"
+    },
+    {
+      "episode": 2,
+      "status": "pending"
+    },
+    {
+      "episode": 3,
+      "status": "pending"
+    },
+    {
+      "episode": 4,
+      "status": "pending"
+    },
+    {
+      "episode": 5,
+      "status": "pending"
+    },
+    {
+      "episode": 6,
+      "status": "pending"
+    },
+    {
+      "episode": 7,
+      "status": "pending"
+    },
+    {
+      "episode": 8,
+      "status": "pending"
+    },
+    {
+      "episode": 9,
+      "status": "pending"
+    },
+    {
+      "episode": 10,
+      "status": "pending"
+    },
+    {
+      "episode": 11,
+      "status": "pending"
+    },
+    {
+      "episode": 12,
+      "status": "pending"
+    },
+    {
+      "episode": 13,
+      "status": "pending"
+    },
+    {
+      "episode": 14,
+      "status": "pending"
+    },
+    {
+      "episode": 15,
+      "status": "pending"
+    },
+    {
+      "episode": 16,
+      "status": "pending"
+    },
+    {
+      "episode": 17,
+      "status": "pending"
+    },
+    {
+      "episode": 18,
+      "status": "pending"
+    },
+    {
+      "episode": 19,
+      "status": "pending"
+    },
+    {
+      "episode": 20,
+      "status": "pending"
+    },
+    {
+      "episode": 21,
+      "status": "pending"
+    },
+    {
+      "episode": 22,
+      "status": "pending"
+    },
+    {
+      "episode": 23,
+      "status": "pending"
+    },
+    {
+      "episode": 24,
+      "status": "pending"
+    },
+    {
+      "episode": 25,
+      "status": "pending"
+    },
+    {
+      "episode": 26,
+      "status": "pending"
+    },
+    {
+      "episode": 27,
+      "status": "pending"
+    },
+    {
+      "episode": 28,
+      "status": "pending"
+    },
+    {
+      "episode": 29,
+      "status": "pending"
+    },
+    {
+      "episode": 30,
+      "status": "pending"
+    },
+    {
+      "episode": 31,
+      "status": "pending"
+    },
+    {
+      "episode": 32,
+      "status": "pending"
+    },
+    {
+      "episode": 33,
+      "status": "pending"
+    },
+    {
+      "episode": 34,
+      "status": "pending"
+    },
+    {
+      "episode": 35,
+      "status": "pending"
+    },
+    {
+      "episode": 36,
+      "status": "pending"
+    },
+    {
+      "episode": 37,
+      "status": "pending"
+    },
+    {
+      "episode": 38,
+      "status": "pending"
+    },
+    {
+      "episode": 39,
+      "status": "pending"
+    },
+    {
+      "episode": 40,
+      "status": "pending"
+    }
+  ]
+}

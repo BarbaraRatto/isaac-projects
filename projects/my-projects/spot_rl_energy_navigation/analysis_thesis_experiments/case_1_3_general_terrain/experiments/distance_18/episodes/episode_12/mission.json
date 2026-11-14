@@ -1,0 +1,77 @@
+{
+  "episode": 12,
+  "distance_group_m": 18,
+  "category": "regular",
+  "category_name": "Simple route on traversable terrain",
+  "mission": {
+    "start_id": 24,
+    "goal_id": 25,
+    "start": [
+      15.890068885448974,
+      2.188462188436708,
+      0.005447245388058597,
+      0.014919667585903202,
+      3,
+      1,
+      3
+    ],
+    "goal": [
+      32.33258003866885,
+      9.512656818308312,
+      0.0,
+      0.04899999871850014,
+      5,
+      3,
+      5
+    ],
+    "yaw": 0.7936652843960008,
+    "band": 4,
+    "distance_m": 18.0,
+    "deadline_steps": 435
+  },
+  "direct_cells": [
+    {
+      "row": 1,
+      "col": 3,
+      "terrain": "t4_fine_gravel",
+      "length_m": 5.593960630758436
+    },
+    {
+      "row": 1,
+      "col": 4,
+      "terrain": "t5_large_rocks",
+      "length_m": 0.08689340313670812
+    },
+    {
+      "row": 2,
+      "col": 4,
+      "terrain": "t5_large_rocks",
+      "length_m": 6.481446371341764
+    },
+    {
+      "row": 2,
+      "col": 5,
+      "terrain": "t6_obstacles",
+      "length_m": 0.8913779088544396
+    },
+    {
+      "row": 3,
+      "col": 5,
+      "terrain": "t6_obstacles",
+      "length_m": 4.946321685908653
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t4_fine_gravel": 5.593960630758436,
+    "t5_large_rocks": 6.5683397744784715,
+    "t6_obstacles": 5.837699594763093
+  },
+  "alternative_geometry": null,
+  "minimum_saved_endpoint_rms_m": 4.947028036134289,
+  "pool_index": 162,
+  "selection_note": "meh meh",
+  "review_status": "tentative",
+  "source_episode": 13,
+  "source_episode_18m": 13,
+  "source_run": "distance_18m_all_20261113_235009_130946_82d42a66"
+}

@@ -1,0 +1,105 @@
+{
+  "episode": 31,
+  "distance_group_m": 18,
+  "category": "multiple_choices",
+  "category_name": "Several surfaces and successive choices",
+  "mission": {
+    "start_id": 396,
+    "goal_id": 397,
+    "start": [
+      2.1137998572241843,
+      17.153379738096458,
+      0.0,
+      0.0,
+      0,
+      6,
+      0
+    ],
+    "goal": [
+      9.699825906204065,
+      0.8300158450688109,
+      0.023110628682426616,
+      0.04986787957807864,
+      4,
+      0,
+      2
+    ],
+    "yaw": 2.7244037921891273,
+    "band": 4,
+    "distance_m": 18.0,
+    "deadline_steps": 435
+  },
+  "direct_cells": [
+    {
+      "row": 6,
+      "col": 0,
+      "terrain": "t1_asphalt",
+      "length_m": 0.7204909087862558
+    },
+    {
+      "row": 5,
+      "col": 0,
+      "terrain": "t3_ramp",
+      "length_m": 1.3822704667971761
+    },
+    {
+      "row": 5,
+      "col": 1,
+      "terrain": "t2_slippery",
+      "length_m": 1.925871185492125
+    },
+    {
+      "row": 4,
+      "col": 1,
+      "terrain": "t3_ramp",
+      "length_m": 3.308141652289301
+    },
+    {
+      "row": 3,
+      "col": 1,
+      "terrain": "t1_asphalt",
+      "length_m": 3.308141652289301
+    },
+    {
+      "row": 2,
+      "col": 1,
+      "terrain": "t6_obstacles",
+      "length_m": 3.308141652289301
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "terrain": "t4_fine_gravel",
+      "length_m": 2.386406882740068
+    },
+    {
+      "row": 1,
+      "col": 2,
+      "terrain": "t7_stairs",
+      "length_m": 0.9217347695492328
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "terrain": "t5_large_rocks",
+      "length_m": 0.7388008297672388
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t1_asphalt": 4.028632561075557,
+    "t3_ramp": 4.690412119086477,
+    "t2_slippery": 1.925871185492125,
+    "t6_obstacles": 3.308141652289301,
+    "t4_fine_gravel": 2.386406882740068,
+    "t7_stairs": 0.9217347695492328,
+    "t5_large_rocks": 0.7388008297672388
+  },
+  "alternative_geometry": null,
+  "minimum_saved_endpoint_rms_m": 5.111355522261867,
+  "pool_index": 4209,
+  "selection_note": "",
+  "review_status": "confirmed",
+  "source_episode": 199,
+  "source_episode_18m": 199,
+  "source_run": "distance_18m_all_20261113_235009_130946_82d42a66"
+}
