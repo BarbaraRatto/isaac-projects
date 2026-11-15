@@ -17,11 +17,11 @@ class CollectionTests(unittest.TestCase):
         self.selected=[s for s in self.document['slots'] if s['status']=='selected']
 
     def test_numbering_and_categories(self):
-        self.assertEqual([s['episode'] for s in self.document['slots']],list(range(1,41)))
+        self.assertEqual([s['episode'] for s in self.document['slots']],list(range(1,len(self.document['slots'])+1)))
         self.assertEqual([s['source_episode'] for s in self.selected[:3]],[64,56,55])
         self.assertEqual([s['source_episode_18m'] for s in self.selected[:3]],[24,16,15])
         self.assertTrue(all(s['case']['distance_group_m']==18 for s in self.selected))
-        self.assertEqual(len(rows(HERE/'mission_list.csv')),40)
+        self.assertEqual(len(rows(HERE/'mission_list.csv')),len(self.document['slots']))
         self.assertEqual(len(rows(HERE/'episodes.csv')),len(self.selected))
 
     def test_archived_measurements_match_originals(self):
@@ -50,7 +50,7 @@ class CollectionTests(unittest.TestCase):
         summary=json.loads((HERE/'category_summary.json').read_text())
         self.assertEqual(summary['total_saved'],len(self.selected))
         self.assertEqual(summary['total_tentative'],sum(s.get('review_status')=='tentative' for s in self.selected))
-        self.assertEqual(summary['remaining_slots'],40-len(self.selected))
+        self.assertEqual(summary['remaining_slots'],sum(s['status']=='pending' for s in self.document['slots']))
         self.assertEqual(summary['total_confirmed']+summary['total_tentative'],len(self.selected))
         for row in summary['categories']:
             selected=[s for s in self.selected if s['case']['category']==row['category']]

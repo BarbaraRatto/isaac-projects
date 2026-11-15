@@ -1,0 +1,77 @@
+{
+  "episode": 36,
+  "distance_group_m": 18,
+  "category": "ice",
+  "category_name": "Ice on the direct segment, without stairs",
+  "mission": {
+    "start_id": 206,
+    "goal_id": 207,
+    "start": [
+      29.74142439450321,
+      15.840390519376648,
+      0.0,
+      0.07000000029802322,
+      5,
+      5,
+      5
+    ],
+    "goal": [
+      12.333141283266105,
+      11.263090101115136,
+      0.005018369006862861,
+      0.01499211288288095,
+      3,
+      4,
+      2
+    ],
+    "yaw": 0.858708795763258,
+    "band": 4,
+    "distance_m": 18.0,
+    "deadline_steps": 435
+  },
+  "direct_cells": [
+    {
+      "row": 5,
+      "col": 5,
+      "terrain": "t6_obstacles",
+      "length_m": 2.834606881433643
+    },
+    {
+      "row": 5,
+      "col": 4,
+      "terrain": "t6_obstacles",
+      "length_m": 6.203943221160372
+    },
+    {
+      "row": 5,
+      "col": 3,
+      "terrain": "t2_slippery",
+      "length_m": 0.16491602357731017
+    },
+    {
+      "row": 4,
+      "col": 3,
+      "terrain": "t2_slippery",
+      "length_m": 6.03902719758306
+    },
+    {
+      "row": 4,
+      "col": 2,
+      "terrain": "t4_fine_gravel",
+      "length_m": 2.7575066762456157
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t6_obstacles": 9.038550102594014,
+    "t2_slippery": 6.203943221160371,
+    "t4_fine_gravel": 2.7575066762456157
+  },
+  "alternative_geometry": null,
+  "minimum_saved_endpoint_rms_m": 3.4771700245531822,
+  "pool_index": 8929,
+  "selection_note": "User note: caduto. Recorded termination is fallen.",
+  "review_status": "confirmed",
+  "source_episode": 104,
+  "source_episode_18m": 104,
+  "source_run": "distance_18m_all_20261115_141516_387767_25e5e29e"
+}

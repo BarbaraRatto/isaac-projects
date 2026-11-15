@@ -111,10 +111,10 @@ def rebuild(document):
     csv_write(HERE/'category_counts.csv',summary)
     write(HERE/'category_summary.json',dict(total_saved=len(selected),
         total_confirmed=sum(s['confirmed'] for s in summary),total_tentative=sum(s['tentative'] for s in summary),
-        remaining_slots=40-len(selected),over_target_count=sum(s['over_target'] for s in summary),
+        remaining_slots=sum(s['status']=='pending' for s in document['slots']),over_target_count=sum(s['over_target'] for s in summary),
         needed_to_fill_categories=sum(s['remaining'] for s in summary),categories=summary))
     write(HERE/'selected_missions.json',dict(name=document['name'],selection_method=document['selection_method'],
-        map_sha256=document['map_sha256'],target_count=40,cases=cases))
+        map_sha256=document['map_sha256'],target_count=document['target_count'],cases=cases))
     for name in RAW_FILES:
         data=[]
         for slot in selected:

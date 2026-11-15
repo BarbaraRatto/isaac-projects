@@ -1,5 +1,5 @@
 category,saved,confirmed,tentative,target,remaining,over_target
-regular,10,4,6,10,0,0
-ice,8,8,0,10,2,0
-stairs,3,2,1,10,7,0
-multiple_choices,11,7,4,10,0,1
+regular,13,7,6,10,0,3
+ice,9,9,0,10,1,0
+stairs,6,5,1,10,4,0
+multiple_choices,20,16,4,10,0,10

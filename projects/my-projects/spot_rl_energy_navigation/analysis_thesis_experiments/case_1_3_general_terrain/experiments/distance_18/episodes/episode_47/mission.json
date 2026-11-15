@@ -1,0 +1,78 @@
+{
+  "episode": 47,
+  "distance_group_m": 18,
+  "category": "multiple_choices",
+  "category_name": "Several surfaces and successive choices",
+  "mission": {
+    "start_id": 784,
+    "goal_id": 785,
+    "start": [
+      3.7412162712934625,
+      6.69869760749482,
+      0.0,
+      0.023000000044703484,
+      5,
+      2,
+      1
+    ],
+    "goal": [
+      20.085142027729685,
+      -0.8429262805083972,
+      0.0,
+      0.0,
+      0,
+      0,
+      3
+    ],
+    "yaw": -1.7394183882925658,
+    "band": 4,
+    "distance_m": 18.0,
+    "deadline_steps": 435
+  },
+  "direct_cells": [
+    {
+      "row": 2,
+      "col": 1,
+      "terrain": "t6_obstacles",
+      "length_m": 5.247750023421729
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "terrain": "t4_fine_gravel",
+      "length_m": 0.5438883214503047
+    },
+    {
+      "row": 1,
+      "col": 2,
+      "terrain": "t7_stairs",
+      "length_m": 6.607959532456253
+    },
+    {
+      "row": 1,
+      "col": 3,
+      "terrain": "t4_fine_gravel",
+      "length_m": 0.008413755784706378
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "terrain": "t1_asphalt",
+      "length_m": 5.591988366887007
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t6_obstacles": 5.247750023421729,
+    "t4_fine_gravel": 0.5523020772350111,
+    "t7_stairs": 6.607959532456253,
+    "t1_asphalt": 5.591988366887007
+  },
+  "alternative_geometry": null,
+  "minimum_saved_endpoint_rms_m": 3.560041847086264,
+  "pool_index": 2004,
+  "selection_note": "",
+  "review_status": "confirmed",
+  "source_episode": 393,
+  "source_episode_18m": 393,
+  "source_run": "distance_18m_all_20261115_141516_387767_25e5e29e"
+}

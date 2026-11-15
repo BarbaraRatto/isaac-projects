@@ -1,0 +1,44 @@
+{
+  "generator": "missions.py",
+  "generator_sha256": "1832a71539fdc4b746f3c1c6e167712733b5bbb72c9e5d83d0a1224b2a2b5360",
+  "mission_sha256": "7ce9bbc754de95b9e2333f149e2e5fd89a662b4bee5e89664325ee356685e111",
+  "retained_reference_sha256": "8614603627553947f7f7632fc499cdda6866bc0f56479a55395bed5a378d50e9",
+  "python_version": "3.11.13",
+  "numpy_version": "1.26.0",
+  "scipy_version": "1.15.3",
+  "surface_checks_sha256": "0bd093f60da21475171f8b5229598336294a49d2db65c0e5da1e624a72f8c557",
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test7_SAC/checkpoints_importati/policy_best_stage_3.pt",
+  "checkpoint_sha256": "1c12f5f18e1285463456423a2ae5e6e043f311d310b2ba04bf9575ed5609c02f",
+  "checkpoint_transitions": 650065,
+  "checkpoint_training_state": {
+    "curriculum": {
+      "level": 3,
+      "streak": 0
+    },
+    "best_by_stage": {
+      "0": [
+        0.859375,
+        -821.1460526899858
+      ],
+      "1": [
+        0.84375,
+        -1096.222082067419
+      ],
+      "2": [
+        0.8984375,
+        -1054.1044566278872
+      ],
+      "3": [
+        0.625,
+        -1975.246452331543
+      ]
+    },
+    "last_evaluated_stage": 3,
+    "replay_snapshot": null
+  },
+  "selection_note": "Prospective conditioned random candidates balanced for cell diversity, excluding all 32 selected saved routes geometrically; all outcomes retained",
+  "distance_note": "Stage 3 checkpoint; eighteen metres exceeds its training distance band",
+  "created_date": "2026-11-15",
+  "parent_implementation": "distance_18m_try2",
+  "reference_count": 32
+}

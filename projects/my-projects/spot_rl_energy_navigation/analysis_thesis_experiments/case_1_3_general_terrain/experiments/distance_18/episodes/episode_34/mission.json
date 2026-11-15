@@ -1,0 +1,71 @@
+{
+  "episode": 34,
+  "distance_group_m": 18,
+  "category": "regular",
+  "category_name": "Simple route on traversable terrain",
+  "mission": {
+    "start_id": 12,
+    "goal_id": 13,
+    "start": [
+      3.7397260806588166,
+      0.002314968074051238,
+      0.0,
+      0.0,
+      0,
+      0,
+      1
+    ],
+    "goal": [
+      21.72363136535279,
+      -0.7587045528030958,
+      0.0,
+      0.027000000700354576,
+      5,
+      0,
+      4
+    ],
+    "yaw": -1.997166675767711,
+    "band": 4,
+    "distance_m": 18.0,
+    "deadline_steps": 435
+  },
+  "direct_cells": [
+    {
+      "row": 0,
+      "col": 1,
+      "terrain": "t1_asphalt",
+      "length_m": 5.264981607122188
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "terrain": "t5_large_rocks",
+      "length_m": 6.005369706429579
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "terrain": "t1_asphalt",
+      "length_m": 6.00536970642958
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "terrain": "t6_obstacles",
+      "length_m": 0.7242789800186533
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t1_asphalt": 11.270351313551767,
+    "t5_large_rocks": 6.005369706429579,
+    "t6_obstacles": 0.7242789800186533
+  },
+  "alternative_geometry": null,
+  "minimum_saved_endpoint_rms_m": 3.2707173595624948,
+  "pool_index": 30645,
+  "selection_note": "User note: caduto. Recorded termination is out_of_bounds, not fallen.",
+  "review_status": "confirmed",
+  "source_episode": 7,
+  "source_episode_18m": 7,
+  "source_run": "distance_18m_all_20261115_141516_387767_25e5e29e"
+}

@@ -1,0 +1,93 @@
+{
+  "episode": 45,
+  "distance_group_m": 18,
+  "category": "multiple_choices",
+  "category_name": "Several surfaces and successive choices",
+  "mission": {
+    "start_id": 774,
+    "goal_id": 775,
+    "start": [
+      16.260756007689107,
+      0.2395535678682944,
+      0.0,
+      0.0,
+      0,
+      0,
+      3
+    ],
+    "goal": [
+      29.33259275587025,
+      12.614006445830249,
+      0.011399045432754874,
+      0.164000004529953,
+      2,
+      4,
+      5
+    ],
+    "yaw": -2.911039581625521,
+    "band": 4,
+    "distance_m": 17.999999999999996,
+    "deadline_steps": 435
+  },
+  "direct_cells": [
+    {
+      "row": 0,
+      "col": 3,
+      "terrain": "t1_asphalt",
+      "length_m": 1.833457689169961
+    },
+    {
+      "row": 1,
+      "col": 3,
+      "terrain": "t4_fine_gravel",
+      "length_m": 4.363829296741699
+    },
+    {
+      "row": 2,
+      "col": 3,
+      "terrain": "t2_slippery",
+      "length_m": 0.32868128503281013
+    },
+    {
+      "row": 2,
+      "col": 4,
+      "terrain": "t5_large_rocks",
+      "length_m": 4.035148011708888
+    },
+    {
+      "row": 3,
+      "col": 4,
+      "terrain": "t7_stairs",
+      "length_m": 4.226889074626929
+    },
+    {
+      "row": 3,
+      "col": 5,
+      "terrain": "t6_obstacles",
+      "length_m": 0.13694022211477042
+    },
+    {
+      "row": 4,
+      "col": 5,
+      "terrain": "t3_ramp",
+      "length_m": 3.0750544206049435
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t1_asphalt": 1.833457689169961,
+    "t4_fine_gravel": 4.363829296741699,
+    "t2_slippery": 0.32868128503281013,
+    "t5_large_rocks": 4.035148011708888,
+    "t7_stairs": 4.226889074626929,
+    "t6_obstacles": 0.13694022211477042,
+    "t3_ramp": 3.0750544206049435
+  },
+  "alternative_geometry": null,
+  "minimum_saved_endpoint_rms_m": 3.3581205281380484,
+  "pool_index": 13358,
+  "selection_note": "",
+  "review_status": "confirmed",
+  "source_episode": 388,
+  "source_episode_18m": 388,
+  "source_run": "distance_18m_all_20261115_141516_387767_25e5e29e"
+}

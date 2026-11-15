@@ -48,13 +48,24 @@ def main():
             axis.scatter(float(data[-1]['x_m']),float(data[-1]['y_m']),marker='x',s=40,color=color,zorder=6)
         axis.set(xlim=(-3,39),ylim=(-1.5,19.5),aspect='equal',xlabel='X [m]',ylabel='Y [m]')
         axis.set_xticks(range(0,40,6));axis.set_yticks(range(0,20,3));axis.tick_params(labelsize=14)
-        axis.legend(loc='upper left',bbox_to_anchor=(1.01,1),frameon=False,fontsize=12)
+        axis.legend(loc='upper left',bbox_to_anchor=(1.01,1),frameon=False,fontsize=12,ncol=2 if len(items)>24 else 1)
     figure,axis=plt.subplots(figsize=(15,8.5),constrained_layout=True)
     draw(axis,slots)
-    axis.set_title(f'Selected illustrative episodes · {len(slots)}/40 collected',fontsize=20)
+    axis.set_title(f'Selected illustrative episodes · {len(slots)} archived',fontsize=20)
     for ext in ('png','pdf'):
         figure.savefig(HERE/f'selected_routes.{ext}',dpi=170)
     plt.close(figure)
+    for category in document['category_targets']:
+        items=[slot for slot in slots if slot['case']['category']==category]
+        if not items:
+            continue
+        figure,axis=plt.subplots(figsize=(15,8.5),constrained_layout=True)
+        draw(axis,items)
+        title=category.replace('_',' ').title()
+        axis.set_title(f'Selected routes · {title} · {len(items)} episodes',fontsize=20)
+        for ext in ('png','pdf'):
+            figure.savefig(HERE/f'selected_routes_{category}.{ext}',dpi=170)
+        plt.close(figure)
     with PdfPages(HERE/'selected_routes_per_episode.pdf') as pdf:
         for slot in slots:
             figure,axis=plt.subplots(figsize=(15,8.5),constrained_layout=True)

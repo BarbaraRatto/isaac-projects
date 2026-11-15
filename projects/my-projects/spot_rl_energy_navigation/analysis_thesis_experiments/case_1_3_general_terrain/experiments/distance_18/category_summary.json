@@ -1,46 +1,46 @@
 {
-  "total_saved": 32,
-  "total_confirmed": 21,
+  "total_saved": 48,
+  "total_confirmed": 37,
   "total_tentative": 11,
-  "remaining_slots": 8,
-  "over_target_count": 1,
-  "needed_to_fill_categories": 9,
+  "remaining_slots": 0,
+  "over_target_count": 13,
+  "needed_to_fill_categories": 5,
   "categories": [
     {
       "category": "regular",
-      "saved": 10,
-      "confirmed": 4,
+      "saved": 13,
+      "confirmed": 7,
       "tentative": 6,
       "target": 10,
       "remaining": 0,
-      "over_target": 0
+      "over_target": 3
     },
     {
       "category": "ice",
-      "saved": 8,
-      "confirmed": 8,
+      "saved": 9,
+      "confirmed": 9,
       "tentative": 0,
       "target": 10,
-      "remaining": 2,
+      "remaining": 1,
       "over_target": 0
     },
     {
       "category": "stairs",
-      "saved": 3,
-      "confirmed": 2,
+      "saved": 6,
+      "confirmed": 5,
       "tentative": 1,
       "target": 10,
-      "remaining": 7,
+      "remaining": 4,
       "over_target": 0
     },
     {
       "category": "multiple_choices",
-      "saved": 11,
-      "confirmed": 7,
+      "saved": 20,
+      "confirmed": 16,
       "tentative": 4,
       "target": 10,
       "remaining": 0,
-      "over_target": 1
+      "over_target": 10
     }
   ]
 }

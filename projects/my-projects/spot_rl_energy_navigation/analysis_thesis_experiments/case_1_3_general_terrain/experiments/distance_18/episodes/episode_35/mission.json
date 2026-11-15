@@ -1,0 +1,77 @@
+{
+  "episode": 35,
+  "distance_group_m": 18,
+  "category": "regular",
+  "category_name": "Simple route on traversable terrain",
+  "mission": {
+    "start_id": 32,
+    "goal_id": 33,
+    "start": [
+      21.71709901573141,
+      18.72397061434952,
+      0.0,
+      0.1063128245599944,
+      2,
+      6,
+      4
+    ],
+    "goal": [
+      38.0497079255115,
+      11.15786949156693,
+      0.021121137554279842,
+      0.04805839872908473,
+      4,
+      4,
+      6
+    ],
+    "yaw": 1.1704882193912134,
+    "band": 4,
+    "distance_m": 17.999999999999996,
+    "deadline_steps": 435
+  },
+  "direct_cells": [
+    {
+      "row": 6,
+      "col": 4,
+      "terrain": "t3_ramp",
+      "length_m": 5.290898232611637
+    },
+    {
+      "row": 5,
+      "col": 4,
+      "terrain": "t6_obstacles",
+      "length_m": 0.531332510934342
+    },
+    {
+      "row": 5,
+      "col": 5,
+      "terrain": "t6_obstacles",
+      "length_m": 6.605764802951463
+    },
+    {
+      "row": 4,
+      "col": 5,
+      "terrain": "t3_ramp",
+      "length_m": 0.006773377359016839
+    },
+    {
+      "row": 4,
+      "col": 6,
+      "terrain": "t5_large_rocks",
+      "length_m": 5.5652310761435375
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t3_ramp": 5.297671609970654,
+    "t6_obstacles": 7.137097313885805,
+    "t5_large_rocks": 5.5652310761435375
+  },
+  "alternative_geometry": null,
+  "minimum_saved_endpoint_rms_m": 6.775445086502711,
+  "pool_index": 39886,
+  "selection_note": "User note: storto. Goal reached with a curved trajectory; a direct route might consume less energy (not yet measured).",
+  "review_status": "confirmed",
+  "source_episode": 17,
+  "source_episode_18m": 17,
+  "source_run": "distance_18m_all_20261115_141516_387767_25e5e29e"
+}

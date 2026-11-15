@@ -29,3 +29,7 @@ Use `--tentative` when adding an episode that is still under review. Such cases 
 `review_episode.py N --remove --reason TEXT` removes a case from the active collection while retaining its files under `excluded/` and recording its selection history. The vacated slot becomes available; other IDs are not renumbered. `review_episode.py N --review confirmed` confirms a tentative selection. The category summaries are rebuilt after either action.
 
 Original user notes are stored as `selection_note` in the registry and coordinate CSV. Notes "meh", "meh meh" and "mm" are tentative selection reviews; "fail" records the user note independently of the actual simulator outcome. The try2 Ep 54 failure is retained with its recorded `fallen` outcome. All eleven multiple-choice cases were explicitly retained for later selection; `category_counts.csv` reports the excess over the target separately.
+
+## Try3 additions — 2026-11-15
+
+Sixteen distinct episodes were added as E33–E48, bringing the illustrative pool to 48. The original final-panel target remains 40 (10 per category); extra candidates are retained for later review. E318 appears twice in the request and is archived once in its actual category, multiple_choices. Try3 E7 has recorded outcome out_of_bounds despite the user shorthand caduto; E104 is fallen. E10 and E17 retain the curved-path note, without asserting an unmeasured energy saving. E234 is marked as similar to E203; both are retained. Existing tentative statuses remain unchanged.
