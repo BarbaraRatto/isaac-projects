@@ -11,6 +11,14 @@
 \setlength{\parskip}{4pt}
 \setlist[itemize]{nosep,leftmargin=1.4em,topsep=3pt}
 \newcommand{\completare}[1]{\textit{[Da completare: #1]}}
+\setcounter{secnumdepth}{4}
+\makeatletter
+\newcommand{\subsubsubsection}{%
+  \@startsection{paragraph}{4}{\z@}%
+  {2.5ex \@plus 1ex \@minus .2ex}%
+  {1ex \@plus .2ex}%
+  {\normalfont\normalsize\bfseries}}
+\makeatother
 \begin{document}
 \begin{center}
 {\Large\bfseries Piano degli esperimenti: simulazione e prove sul robot reale}
@@ -45,7 +53,7 @@ L'obiettivo è mostrare la scelta fra due alternative, raggiungendo il goal senz
 
 \subsection{Primo esempio con SAC e sette terreni}
 
-Da questo esperimento in poi, e per tutti quelli successivi, come algoritmo ho usato SAC, che include un incentivo all'esplorazione.
+Da questo esperimento in poi, e per tutti quelli successivi, come algoritmo ho usato SAC, che include un incentivo all'esplorazione (FARE un riferimento a una sezione in cui si spiega perchè).
 Considero sette terreni con geometrie, attriti e texture scelti per rappresentare superfici reali.
 
 Prima della valutazione più ampia mostro un breve esempio con partenza e goal assegnati, riportando i tragitti di 19 esecuzioni.
@@ -55,36 +63,39 @@ Qui mostro il confronto energetico di vari percorsi possibili.
 (mi riferisco a quell'esempio che ti avevo mostrato allenato con start e goal fissi, da cui avevo ricavato i due grafici che erano molto interessanti.)
 
 
-\subsection{Valutazione sulla mappa 7 x 7}
+\subsection{Esperimenti sulla big map 7 x 7}
 
 La scena principale è una mappa di 49 celle, ciascuna di 6~m per 3~m, con sette tipi di terreno distribuiti casualmente e presenti in sette celle ciascuno.
-La policy è stata allenata con SAC usando punti di partenza e arrivo casuali. La mappa è rimasta fissa durante l'addestramento, per limitarne il carico computazionale, e viene mantenuta uguale anche negli esperimenti: a variare sono i punti di partenza e i goal.
+
+La policy è stata allenata con SAC usando punti di partenza e arrivo casuali.
+
+La mappa è rimasta fissa durante l'addestramento, per limitarne il carico computazionale. Per gli esperimenti utilizzo invece una mappa diversa, ottenuta cambiando la disposizione dei terreni ma mantenendo le stesse dimensioni e lo stesso numero di celle per ciascun terreno. Questa scelta permette di verificare se la policy riesce ad adattarsi a una disposizione mai incontrata durante l'addestramento, scegliendo il percorso in base a ciò che osserva, anziché limitarsi a ripetere percorsi memorizzati sulla mappa di training. La nuova mappa rimane fissa durante le prove, mentre cambiano i punti di partenza e i goal.
 
 L'obiettivo è osservare il comportamento di Spot quando gli vengono assegnati goal su terreni diversi e a distanze diverse dalla partenza. Verifico se li raggiunge entro il tempo previsto, registrando eventuali timeout o cadute. Osservo inoltre se le scelte di percorso tengono conto del costo del movimento.
 
 
-\textbf{Prevedo 30 missioni diverse, con un'esecuzione per missione:}
+\textbf{Prevedo 80 missioni diverse, con un'esecuzione per missione:}
 \begin{itemize}
-\item 10 con start e goal vicini, a circa 3--6 m;
-\item 10 a distanza intermedia, circa 6--12 m;
-\item 10 a distanza maggiore, circa 12--18 m.
+\item 40 missioni \textit{brevi}, con start e goal distanti 12 m;
+\item 40 missioni \textit{lunghe}, con start e goal distanti 18 m.
 \end{itemize}
 
-(qui non sono sicurissima di fare 10 10 e 10, e forse ha più senso farne di più nei percorsi lunghi. devo valutare.)
-
-Scelgo \textbf{casualmente} tutte le coppie all'interno di queste fasce, includendo:
+Le 40 missioni di entrambi i gruppi sono suddivise in 4 categorie nel seguente modo:
 \begin{itemize}
-\item tragitto semplice su terreno regolare;
-\item ghiaccio sul percorso diretto, con spazio per aggirarlo;
-\item scale sul percorso diretto, con un passaggio alternativo;
-\item scelta fra due percorsi su superfici con costi diversi;
-\item più cambi di terreno o più scelte successive.
+\item 10 missioni su \textbf{terreno regolare}: il segmento che unisce start e goal è tutto calpestabile (no ghiaccio né scale lungo il percorso);
+\item 10 missioni su un tragitto con \textbf{ghiaccio} sul percorso diretto goal-start;
+\item 10 missioni su un tragitto con \textbf{scale}  sul percorso diretto goal-start;
+\item 10 missioni su un tragitto che può comprendere \textbf{qualsiasi terreno}, con più scelte successive da compiere.
 \end{itemize}
+
+All'interno delle 4 categorie, le 10 missioni sono state scelte \textbf{randomicamente}.
+
+Ciascuna di queste missioni verrà poi rieseguita senza l'utilizzo della policy creata, ovvero facendo andare spot dritto da start a goal, per un totale di 160 esecuzioni.
 
 Per queste prove scelgo start e goal fuori da ghiaccio e scale, lasciando però che tali terreni possano trovarsi lungo il tragitto.
 Le casistiche possono sovrapporsi: una missione può includere una deviazione e più cambi di superficie.
 
-Mostro una panoramica delle 30 traiettorie, confrontandole con il percorso rettilineo e confrontandone i costi.
+Mostro una panoramica delle 80 traiettorie, confrontandole con il percorso rettilineo e confrontandone i costi.
 Faccio quindi un riepilogo di energia consumata (magari mostrando il guadagno rispetto al non utilizzo della policy), tempo impiegato, fallimenti e eventuali cadute.
 
 \section{Esperimenti sul robot reale}
@@ -155,12 +166,13 @@ Per ogni esecuzione salvo:
 \item scena, modello utilizzato, posizione dello start e del goal;
 \item distanza in linea retta fra start e goal;
 \item traiettoria e distanza effettivamente percorsa;
+\item velocità media lungo il percorso, espressa in m/s;
 \item lavoro meccanico assoluto ai giunti dell'intera missione;
 \item tempo fino al raggiungimento del goal o all'interruzione;
 \item esito: successo, caduta, timeout, uscita dall'area o arresto dell'operatore;
 \end{itemize}
 
-Il tempo e il costo energetico includono l'eventuale allineamento iniziale, che fanno parte dell'esecuzione.
+Il tempo e il costo energetico includono l'eventuale allineamento iniziale, che fanno parte dell'esecuzione. La velocità media è calcolata dividendo la distanza effettivamente percorsa per il tempo totale dell'episodio: comprende quindi anche l'allineamento e le eventuali soste, e non coincide con la sola velocità comandata al robot.
 
 
 \clearpage
@@ -190,7 +202,7 @@ Le coordinate sono state estratte una sola volta e poi mantenute fisse per tutta
 \small
 \setlength{\tabcolsep}{9pt}
 \renewcommand{\arraystretch}{1.15}
-\begin{tabular}{ccrrrr}
+\begin{tabular}{cccccc}
 \toprule
 Mappa & Episodio & Start $x$ [m] & Start $y$ [m] & Goal $x$ [m] & Goal $y$ [m] \\
 \midrule
@@ -228,7 +240,7 @@ La figura~\ref{fig:traiettorie-caso-1-1} mostra le cinque traiettorie registrate
 \label{fig:traiettorie-caso-1-1}
 \end{figure}
 
-Le tabelle~\ref{tab:exp1-1-map-a} e~\ref{tab:exp1-1-map-b} riportano distanza effettivamente percorsa, lavoro meccanico assoluto ai giunti, tempo ed esito. Il tempo è quello simulato e il costo energetico comprende l'intera missione, dalla partenza alla sua conclusione. Le coordinate sono ripetute nelle due tabelle per rendere ogni risultato leggibile anche separatamente.
+Le tabelle~\ref{tab:exp1-1-map-a} e~\ref{tab:exp1-1-map-b} riportano distanza effettivamente percorsa, lavoro meccanico assoluto ai giunti, tempo, velocità media ed esito. Il tempo è quello simulato e il costo energetico comprende l'intera missione, dalla partenza alla sua conclusione. Le coordinate sono ripetute nelle due tabelle per rendere ogni risultato leggibile anche separatamente.
 
 \input{tabelle/tabels_exp1_1.tex}
 
@@ -288,13 +300,225 @@ Le figure seguenti sono conversioni in PDF di questi SVG, mantenuti per ora con 
 \label{fig:medium-routes-successes-provvisorio}
 \end{figure}
 
-\subsection{Caso 1.3: missioni sulla mappa grande --- DA FARE}
+\subsection{Caso 1.3: missioni sulla big map}
 \label{sec:risultati-caso-1-3}
 
-\subsubsection{ANCORA DA FARE --- DISTANZA GEODETICA DA VALUTARE}
+Per questi esperimenti ho utilizzato la policy allenata con SAC nel caso \path{train_general_big_map_test7_SAC}. Come descritto nella sezione 1.3, le prove sono state svolte su una mappa diversa da quella di addestramento, mantenendo le stesse dimensioni e gli stessi sette terreni, presenti ciascuno nello stesso numero di celle, ma disposti diversamente. La policy viene quindi valutata su una nuova disposizione dei terreni, senza eseguire un ulteriore addestramento sulla mappa di test.
 
-Più avanti valuteremo se calcolare anche la distanza geodetica fra start e goal, intesa come la lunghezza del percorso più corto nelle zone considerate percorribili. Per questa stima occorrerà definire le zone da escludere, come ghiaccio e scale, e un margine dai loro bordi che tenga conto dell'ingombro di Spot. Il calcolo non è stato ancora eseguito.
+Ho diviso le missioni in due gruppi: quelle su \textbf{brevi distanze}, con start e goal distanti 12~m in linea retta, e quelle su \textbf{lunghe distanze}, con una separazione di 18~m. Questa scelta permette di osservare il comportamento della policy su percorsi di diversa estensione. Nelle missioni brevi è più semplice esaminare una singola deviazione o una scelta fra due superfici; nelle missioni lunghe possono invece presentarsi più cambi di terreno e più decisioni successive. Il numero effettivo di scelte dipende comunque dalla posizione degli estremi e dai terreni incontrati, non soltanto dalla distanza.
 
-Questa distanza potrebbe aiutare a descrivere quanto una missione richiede di deviare rispetto al segmento diretto. Non misura il consumo energetico e non sostituisce le prove del riferimento rettilineo. Per ora le due distanze previste di 6 e 18~m rimangono distanze in linea retta fra start e goal.
+Un altro aspetto riguarda le informazioni disponibili durante il movimento. Su un tragitto più lungo, una parte del percorso può non essere visibile dalla posizione iniziale: Spot deve quindi aggiornare le proprie scelte mentre avanza e osserva nuove zone della mappa. Il confronto fra le due distanze permette di esaminare sia le decisioni prese davanti a una singola alternativa, sia il loro susseguirsi durante una missione più lunga, mantenendo l'obiettivo di raggiungere il goal e contenere il consumo energetico.
+
+Per ciascuna distanza ho considerato le quattro categorie descritte nel protocollo: terreno regolare, presenza di ghiaccio, presenza di scale e scelta fra percorsi su superfici diverse. La sola estrazione casuale di missioni su tutta la mappa avrebbe potuto lasciare poco rappresentate alcune situazioni interessanti. La generazione dei punti è stata quindi guidata da vincoli sulla distanza e sui terreni lungo il segmento fra start e goal, così da ottenere anche casi che richiedono deviazioni o offrono alternative al percorso diretto.
+
+I punti di partenza e i goal sono stati generati casualmente all'interno di questi vincoli. Fra le esecuzioni ottenute ho poi selezionato, per la presentazione dei risultati, \textbf{40 missioni per ciascuna distanza}, raggruppandole in dieci casi per categoria. La selezione comprende sia missioni concluse con il raggiungimento del goal sia casi di fallimento, che permettono di discutere i limiti del comportamento osservato. Nelle due parti seguenti presento separatamente le missioni a 12~m e quelle a 18~m.
+
+\subsubsection{Esperimenti eseguiti su brevi distanze (12 m)}
+\label{sec:risultati-big-map-12m}
+
+\subsubsubsection{Tabelle dei risultati}
+
+Le tabelle seguenti riportano le 40 missioni eseguite a 12~m, suddivise in quattro categorie:
+\begin{itemize}
+\item categoria 1, terreno regolare;
+\item categoria 2, ghiaccio;
+\item categoria 3, scale;
+\item categoria 4, scelta fra percorsi su superfici diverse.
+\end{itemize}
+
+Ogni missione è stata eseguita una volta con la policy. Gli episodi sono numerati da 1 a 40, con dieci episodi consecutivi per categoria; questa numerazione è usata anche nei grafici.
+
+Per ciascuna esecuzione riporto le coordinate di start e goal, la distanza effettivamente percorsa, il lavoro meccanico assoluto ai giunti, il tempo, la velocità media e l'esito. Le coppie di coordinate sono espresse nella forma $(x;y)$, nel sistema di riferimento della mappa. Il tempo e l'energia comprendono l'allineamento iniziale del robot. Il goal è considerato raggiunto quando la distanza residua è al massimo di 0,55~m; il limite di tempo per le missioni a 12~m è di 63~s.
+
+L'esito è indicato come \textit{Successo} oppure \textit{Fallimento}, specificandone tra parentesi la causa: caduta, uscita dalla mappa (\textit{out of bounds}) o timeout. \textbf{In caso di fallimento, distanza percorsa, energia, tempo e velocità media sono sostituiti da un trattino}, perché non descrivono il completamento della missione e non sarebbero direttamente confrontabili con quelli di un successo. Queste misure restano comunque conservate nei dati originali. Nella selezione qui presentata i quattro fallimenti sono tutti dovuti a cadute.
+
+\input{tabelle/big_map_12m_risultati.tex}
+
+\subsubsubsection{Analisi statistica dei risultati}
+
+La tabella~\ref{tab:big-map-12m-statistiche} riassume i risultati per categoria.
+La percentuale di successo è calcolata sulle dieci missioni della categoria, mentre le medie di distanza, energia e tempo comprendono soltanto le esecuzioni concluse con successo.
+I calcoli utilizzano i valori registrati prima dell'arrotondamento mostrato nelle tabelle.
+
+\input{tabelle/big_map_12m_statistiche.tex}
+
+In questa selezione, la categoria 1 comprende otto successi, le categorie 2 e 3 nove successi ciascuna e la categoria 4 dieci successi. Le distanze medie dei percorsi completati sono comprese fra 12,30 e 12,45~m, mentre l'energia media varia da circa 2434 a 2502~J. I tempi medi sono compresi fra 11,15 e 11,56~s. Questi valori descrivono le missioni di ciascun gruppo, che attraversano terreni diversi: la sola differenza fra le medie delle categorie non permette di stabilire quale percorso sia energeticamente più conveniente.
+
+La distanza assegnata di 12~m è quella fra start e goal.
+La distanza effettivamente percorsa dipende invece dalla traiettoria e dal punto in cui viene riconosciuto il successo: poiché non è necessario arrivare esattamente al centro del goal, può anche risultare leggermente inferiore alla distanza assegnata.
+
+\subsubsubsection{Confronto con le missioni senza la policy di navigazione}
+
+
+Le stesse 40 missioni sono state ripetute senza la policy di navigazione appresa, mantenendo il controllore locomotorio, la mappa, gli start, i goal, gli orientamenti iniziali e gli stessi criteri di conclusione. Dopo la rotazione iniziale verso il goal, il robot segue il segmento start--goal con correzioni di direzione che compensano le deviazioni, senza scegliere il percorso in base ai terreni. Il comando di velocità in avanti è costante per ciascuna missione ed è pari alla distanza percorsa divisa per il tempo totale del corrispondente episodio con policy. La velocità effettiva può essere diversa da quella comandata. Tempo ed energia comprendono l'allineamento iniziale in entrambi i metodi.
+
+Le quattro tabelle seguenti riportano i risultati del riferimento rettilineo. L'energia è il lavoro meccanico assoluto ai giunti; la velocità media è la distanza effettivamente percorsa divisa per il tempo totale. In caso di fallimento, distanza, energia, tempo e velocità media sono sostituiti da un trattino. I dati fino all'interruzione restano conservati nei file originali.
+
+\input{tabelle/big_map_12m_rettilineo.tex}
+
+La tabella~\ref{tab:big-map-12m-confronto-statistiche} affianca i due metodi. Per ciascuno, il successo è calcolato sulle dieci missioni della categoria e le medie comprendono soltanto i suoi successi. Gli insiemi di missioni riuscite possono quindi essere diversi: queste medie descrivono i risultati dei due metodi, ma non costituiscono da sole un confronto energetico a parità di missione.
+
+\input{tabelle/big_map_12m_confronto_statistiche.tex}
+
+La variazione del successo è espressa in \textbf{punti percentuali}, sottraendo la percentuale del riferimento rettilineo da quella della policy. Il risparmio energetico e l'allungamento del percorso sono invece calcolati \textbf{soltanto sulle stesse missioni riuscite con entrambi i metodi}, il cui numero è indicato con $N$. Il risparmio è la riduzione percentuale dell'energia media con la policy rispetto al riferimento; un valore negativo indica un consumo maggiore con la policy. L'allungamento è l'aumento percentuale della distanza media rispetto al riferimento. Quando non ci sono successi comuni, queste due variazioni sono indicate con un trattino.
+
+\input{tabelle/big_map_12m_confronto_variazioni.tex}
+
+Il riferimento rettilineo completa 21 missioni su 40 (52,5\%), contro le 36 su 40 della policy (90\%). I fallimenti del riferimento comprendono 11 cadute e 8 timeout. Sulle 20 missioni completate da entrambi i metodi, la policy consuma mediamente il 16,1\% in più, percorre il 3,3\% di strada in più e impiega il 13,3\% di tempo in meno. In questa selezione il vantaggio principale riguarda quindi il raggiungimento del goal, mentre non emerge un risparmio energetico complessivo rispetto al riferimento riuscito.
+
+Il confronto comprende sia la scelta della traiettoria sia il diverso andamento della velocità: assegnare al riferimento un comando pari alla velocità media della policy non riproduce la sua velocità istante per istante. I risultati descrivono le missioni selezionate e non una stima del comportamento su tutte le possibili missioni casuali.
+
+\subsubsubsection{Traiettorie di alcune missioni}
+
+Per esaminare più da vicino il comportamento del robot ho scelto alcune missioni fra quelle riportate nelle tabelle. Gli esempi sono stati selezionati dopo aver osservato le esecuzioni, per mostrare scelte di percorso differenti e anche alcuni fallimenti. La figura~\ref{fig:big-map-12m-show-routes} contiene otto episodi, due per ciascuna categoria.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{figure/big_map_12m_show_routes_8_episodes.pdf}
+\caption{Traiettorie di otto missioni selezionate a 12~m, due per categoria. Verde: categoria 1; blu: categoria 2; arancione: categoria 3; fucsia: categoria 4. I cerchi indicano gli start, le stelle i goal e le croci le posizioni terminali dei fallimenti. Le etichette E1--E40 seguono la numerazione delle tabelle; i numeri precedenti sono ancora riportati tra parentesi nella legenda.}
+\label{fig:big-map-12m-show-routes}
+\end{figure}
+
+Le celle citate di seguito sono indicate come (riga, colonna), secondo gli indici riportati sulla mappa. La descrizione riguarda la traiettoria osservata: il vantaggio energetico delle singole deviazioni sarà verificato con il confronto rettilineo.
+
+\textbf{Categoria 1: terreno regolare.}
+
+\textbf{Episodio 1.} Il robot parte sull'asfalto nella cella $(3,1)$ e deve raggiungere un goal sulle rocce nella cella $(3,3)$, attraversando la rampa intermedia. Non ci sono ghiaccio o scale sul segmento diretto. La traiettoria presenta però una curva verso il lato inferiore delle celle, prima di risalire verso il goal. Spot completa la missione percorrendo 12,79~m. Il caso mostra che la policy può scegliere una traiettoria curva anche quando non deve aggirare una zona scivolosa o delle scale; resta da verificare se questa curva offra un vantaggio rispetto a un movimento più diretto.
+
+\textbf{Episodio 2.} La partenza è nella zona con ostacoli della cella $(3,5)$ e il goal sulla rampa in $(1,6)$. Spot si muove in diagonale, passa attraverso la ghiaia e raggiunge il goal senza una grande deviazione. Il percorso misura 12,01~m. Rispetto all'episodio 1, la traiettoria rimane più vicina alla direzione complessiva del goal, pur attraversando superfici con caratteristiche diverse.
+
+\textbf{Categoria 2: ghiaccio.}
+
+\textbf{Episodio 11.} Il segmento diretto dalla rampa in $(5,0)$ alle rocce in $(5,2)$ attraversa il ghiaccio in $(5,1)$. Spot devia verso il basso, percorre la fascia di ghiaia e rampa sottostante alla cella scivolosa, quindi risale verso il goal. La missione termina con successo. La traiettoria mostra un aggiramento della zona che interrompe il collegamento diretto fra partenza e arrivo.
+
+\textbf{Episodio 13.} Il robot parte dalla cella con ostacoli $(0,4)$ e deve raggiungere la rampa in $(1,6)$. Il collegamento diretto attraversa il ghiaccio in $(1,5)$. La traiettoria resta inizialmente nella fascia inferiore della mappa, sfrutta l'asfalto in $(0,5)$ e poi risale verso il goal. La missione riesce, ma il passaggio vicino all'angolo della cella con scale $(0,6)$ è molto stretto. Il successo non deve quindi essere interpretato come prova che la traiettoria mantenga sempre un ampio margine dai terreni critici.
+
+\textbf{Categoria 3: scale.}
+
+\textbf{Episodio 22.} La partenza è sull'asfalto in $(0,1)$ e il goal nella zona con ostacoli in $(2,0)$. Spot evita la cella con scale in $(1,0)$, passando prima sulla ghiaia alla sua destra. Riesce poi a entrare nella cella del goal, ma perde stabilità sugli ostacoli e cade prima che sia soddisfatto il criterio di arrivo. La distanza residua è di circa 0,82~m, superiore alla soglia di 0,55~m. Il fallimento avviene quindi dopo l'aggiramento delle scale e mette in evidenza la difficoltà del tratto finale della missione.
+
+\textbf{Episodio 23.} Fra la partenza in $(0,4)$ e il goal sulla rampa in $(4,5)$ si trovano le scale in $(3,4)$. Spot si sposta progressivamente verso destra, attraversa le rocce della colonna 4 e si porta nella zona con ostacoli della colonna 5, quindi risale fino alla rampa. La missione termina con successo. La traiettoria evita l'interno della cella con scale, ma richiede comunque di muoversi su superfici irregolari: l'alternativa al percorso diretto non coincide necessariamente con una strada interamente asfaltata.
+
+\textbf{Categoria 4: scelta fra percorsi su superfici diverse.}
+
+\textbf{Episodio 31.} Il robot parte dalle rocce in $(0,2)$ e deve arrivare sull'asfalto in $(3,1)$. Durante la salita si sposta verso sinistra, passa sulla ghiaia e attraversa la zona con ostacoli prima di raggiungere l'asfalto. La curva interessa anche il margine della cella con scale $(1,2)$, senza impedire il successo. Il caso mostra una sequenza di passaggi fra superfici diverse, ma non permette da solo di concludere che la strada scelta abbia il costo minimo.
+
+\textbf{Episodio 32.} Start e goal si trovano rispettivamente sugli ostacoli in $(2,0)$ e sulla ghiaia in $(2,2)$. Il segmento diretto attraversa la cella con ostacoli $(2,1)$. Spot curva verso il basso e percorre per un tratto la ghiaia della cella $(1,1)$, poi risale verso il goal. La deviazione non elimina ogni passaggio sugli ostacoli, ma sostituisce parte del tratto diretto con un percorso sulla ghiaia. L'episodio si conclude con successo; il confronto rettilineo dovrà chiarire se questa scelta comporti un risparmio energetico.
+
+\subsubsubsection{Descrizione dei fallimenti}
+
+\textbf{Questa parte potrà essere mantenuta come approfondimento separato.} Nelle 40 missioni presentate si verificano quattro cadute: episodi 3 e 9 della categoria 1, episodio 12 della categoria 2 ed episodio 22 della categoria 3. Non ci sono timeout o uscite dalla mappa in questa selezione. In tutti e quattro i casi, il registro della simulazione segnala una perdita di stabilità associata all'inclinazione del robot.
+
+Gli episodi 3 e 9 mostrano che l'assenza di ghiaccio e scale sul segmento diretto non garantisce il successo: il percorso realmente seguito può avvicinarsi a zone critiche che non erano necessarie per collegare start e goal. Nell'episodio 3 il robot entra nella cella scivolosa $(3,6)$ prima della caduta; nell'episodio 9 passa sul ghiaccio in $(1,5)$ poco prima dell'interruzione vicino alla rampa adiacente. Questi casi evidenziano l'importanza di considerare il margine dai terreni vicini, oltre ai materiali che si trovano sulla direzione del goal.
+
+Nell'episodio 22, mostrato nella figura, le scale vengono aggirate, ma il robot cade sul terreno con ostacoli vicino al goal. Occorre quindi distinguere una scelta di percorso che porta vicino a una superficie critica da una difficoltà di stabilità durante l'attraversamento di un altro terreno. Traiettoria e dati registrati permettono di descrivere dove e quando si verifica la caduta; per attribuirne con certezza la causa al terreno o ai comandi della policy servirebbe un esame più dettagliato dell'esecuzione.
+
+
+\subsubsection{Esperimenti eseguiti su lunghe distanze (18 m)}
+\label{sec:risultati-big-map-18m}
+
+\subsubsubsection{Tabelle dei risultati}
+
+Le tabelle seguenti riportano le 40 missioni selezionate con start e goal distanti 18~m in linea retta. Come per i percorsi brevi, considero quattro categorie:
+\begin{itemize}
+\item categoria 1, terreno regolare;
+\item categoria 2, ghiaccio;
+\item categoria 3, scale;
+\item categoria 4, più superfici e scelte successive di percorso.
+\end{itemize}
+
+Ogni missione è stata eseguita una volta con la policy. La numerazione riparte da 1 per questo gruppo: episodi 1--10 nella categoria 1, 11--20 nella categoria 2, 21--30 nella categoria 3 e 31--40 nella categoria 4. La stessa numerazione compare nei grafici e nei commenti seguenti.
+
+Riporto le coordinate $(x;y)$ di start e goal, la distanza effettivamente percorsa, il lavoro meccanico assoluto ai giunti, il tempo, la velocità media e l'esito. Energia e tempo comprendono l'allineamento iniziale del robot. La soglia di arrivo è di 0,55~m dal goal e il limite di tempo per le missioni a 18~m è di 87~s.
+
+Anche in queste tabelle, \textbf{in caso di fallimento, distanza, energia, tempo e velocità media sono sostituiti da un trattino}. La causa dell'interruzione è indicata tra parentesi nell'esito, mentre tutte le misure restano conservate nei dati originali. Nei casi selezionati si verificano due cadute e un'uscita dall'area ammessa; non ci sono timeout.
+
+\input{tabelle/big_map_18m_risultati.tex}
+
+\subsubsubsection{Analisi statistica dei risultati}
+
+La tabella~\ref{tab:big-map-18m-statistiche} riassume i risultati delle missioni selezionate. La percentuale di successo è calcolata sulle dieci esecuzioni della categoria. Le medie di distanza, energia e tempo comprendono invece soltanto i successi e sono ottenute dai dati non arrotondati, con lo stesso criterio utilizzato per i 12~m.
+
+\input{tabelle/big_map_18m_statistiche.tex}
+
+La categoria 1 comprende nove successi, la categoria 2 otto successi e le categorie 3 e 4 dieci successi ciascuna. Nei percorsi completati, la distanza media varia da 18,81 a 19,57~m e l'energia media da circa 3774 a 3971~J. I tempi medi sono compresi fra 15,26 e 16,10~s. In questa selezione, la categoria 2 presenta la distanza e l'energia medie maggiori; la categoria 3 ha invece il tempo medio più alto.
+
+Le differenze fra le categorie dipendono anche dai terreni e dalle missioni scelte, quindi non descrivono da sole un vantaggio della policy rispetto ad altri metodi. Inoltre, come per i 12~m, il successo non richiede di arrivare esattamente al centro del goal: la distanza percorsa comprende le deviazioni ma termina al raggiungimento della soglia prevista.
+
+\subsubsubsection{Confronto con le missioni senza la policy di navigazione}
+
+Le stesse 40 missioni sono state ripetute senza la policy di navigazione appresa, mantenendo il controllore locomotorio, la mappa, gli start, i goal, gli orientamenti iniziali e gli stessi criteri di conclusione. Dopo la rotazione iniziale verso il goal, il robot segue il segmento start--goal con correzioni di direzione che compensano le deviazioni, senza scegliere il percorso in base ai terreni. Il comando di velocità in avanti è costante per ciascuna missione ed è pari alla distanza percorsa divisa per il tempo totale del corrispondente episodio con policy. La velocità effettiva può essere diversa da quella comandata. Tempo ed energia comprendono l'allineamento iniziale in entrambi i metodi.
+
+Le quattro tabelle seguenti riportano i risultati del riferimento rettilineo. L'energia è il lavoro meccanico assoluto ai giunti; la velocità media è la distanza effettivamente percorsa divisa per il tempo totale. In caso di fallimento, distanza, energia, tempo e velocità media sono sostituiti da un trattino. I dati fino all'interruzione restano conservati nei file originali.
+
+\input{tabelle/big_map_18m_rettilineo.tex}
+
+La tabella~\ref{tab:big-map-18m-confronto-statistiche} affianca i due metodi. Per ciascuno, il successo è calcolato sulle dieci missioni della categoria e le medie comprendono soltanto i suoi successi. Gli insiemi di missioni riuscite possono quindi essere diversi: queste medie descrivono i risultati dei due metodi, ma non costituiscono da sole un confronto energetico a parità di missione.
+
+\input{tabelle/big_map_18m_confronto_statistiche.tex}
+
+La variazione del successo è espressa in \textbf{punti percentuali}, sottraendo la percentuale del riferimento rettilineo da quella della policy. Il risparmio energetico e l'allungamento del percorso sono invece calcolati \textbf{soltanto sulle stesse missioni riuscite con entrambi i metodi}, il cui numero è indicato con $N$. Il risparmio è la riduzione percentuale dell'energia media con la policy rispetto al riferimento; un valore negativo indica un consumo maggiore con la policy. L'allungamento è l'aumento percentuale della distanza media rispetto al riferimento. Quando non ci sono successi comuni, queste due variazioni sono indicate con un trattino.
+
+\input{tabelle/big_map_18m_confronto_variazioni.tex}
+
+Il riferimento rettilineo completa 14 missioni su 40 (35\%), contro le 37 su 40 della policy (92,5\%). I fallimenti del riferimento comprendono 21 cadute e 5 timeout. Sulle 13 missioni completate da entrambi i metodi, la policy consuma mediamente il 24,7\% in più, percorre il 5,8\% di strada in più e impiega il 7,4\% di tempo in meno. Il vantaggio sul successo è particolarmente evidente nelle categorie con terreni critici, ma non corrisponde a un risparmio energetico medio nei casi completati da entrambi.
+
+Il confronto comprende sia la scelta della traiettoria sia il diverso andamento della velocità: assegnare al riferimento un comando pari alla velocità media della policy non riproduce la sua velocità istante per istante. I risultati descrivono le missioni selezionate e non una stima del comportamento su tutte le possibili missioni casuali.
+
+\subsubsubsection{Traiettorie di alcune missioni}
+
+La figura~\ref{fig:big-map-18m-show-routes} mostra otto episodi scelti fra quelli riportati nelle tabelle, due per categoria. La selezione è stata fatta dopo aver osservato le esecuzioni, per discutere alcuni comportamenti della policy e un caso di caduta. Le descrizioni fanno riferimento alle celle indicate come (riga, colonna), con gli stessi indici della mappa.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{figure/big_map_18m_show_routes.pdf}
+\caption{Traiettorie di otto missioni selezionate a 18~m. Verde: categoria 1; blu: categoria 2; arancione: categoria 3; fucsia: categoria 4. I cerchi indicano gli start, le stelle i goal e la croce la posizione terminale della caduta. Gli episodi seguono la numerazione delle tabelle; i precedenti indici della raccolta sono ancora riportati tra parentesi nella legenda.}
+\label{fig:big-map-18m-show-routes}
+\end{figure}
+
+\textbf{Categoria 1: terreno regolare.}
+
+\textbf{Episodio 2.} La partenza è sugli ostacoli nella cella $(5,4)$ e il goal sulla rampa in $(1,6)$. Il segmento diretto non attraversa ghiaccio o scale, ma la traiettoria seguita dal robot curva verso il basso e passa vicino al bordo destro delle scale in $(4,4)$, con alcune posizioni registrate all'interno della loro fascia laterale. Spot prosegue poi fra rampa e ostacoli e raggiunge il goal, percorrendo 18,87~m. Il caso evidenzia che la classificazione come terreno regolare riguarda il segmento fra gli estremi, mentre la strada realmente scelta può avvicinarsi ad altre superfici.
+
+\textbf{Episodio 5.} Spot parte dalla ghiaia in $(2,2)$ e deve raggiungere la ghiaia in $(4,0)$. La traiettoria risale verso la rampa in $(3,2)$, attraversa una parte dell'asfalto in $(3,1)$ e poi la rampa in $(4,1)$, prima di arrivare al goal. La missione riesce con un percorso di 18,89~m. La strada è curva anche senza ghiaccio o scale sul collegamento diretto; il confronto rettilineo servirà a verificare se questa scelta sia conveniente sul piano energetico.
+
+\textbf{Categoria 2: ghiaccio.}
+
+\textbf{Episodio 12.} Il robot parte dalle rocce nella cella $(4,6)$ e deve raggiungere gli ostacoli in $(0,4)$. Il segmento diretto attraversa il ghiaccio in $(3,6)$. Spot si sposta inizialmente verso sinistra, passa nella colonna 5 e poi scende verso la colonna 4, aggirando la cella scivolosa. Il percorso attraversa rampa, ostacoli e rocce e termina con successo. L'esempio mostra che una deviazione per evitare il ghiaccio può richiedere diversi passaggi fra superfici irregolari, senza seguire un unico tipo di terreno.
+
+\textbf{Episodio 19.} La partenza è nella zona con ostacoli $(5,5)$ e il goal sulla ghiaia in $(4,2)$, con ghiaccio lungo il collegamento diretto. Spot tenta un aggiramento dal lato superiore della mappa: passa vicino all'angolo delle scale in $(6,5)$, percorre la rampa e le rocce della riga 6 e poi scende verso il goal. In questa fase entra però sul bordo del ghiaccio in $(5,3)$ e perde stabilità. L'episodio termina per caduta, a circa 5,26~m dal goal. La deviazione iniziale è quindi presente, ma non viene mantenuto un margine sufficiente durante il successivo cambio di direzione.
+
+\textbf{Categoria 3: scale.}
+
+\textbf{Episodio 23.} Il robot parte dalla rampa in $(6,4)$ e deve raggiungere la rampa in $(1,6)$. In questa missione il segmento diretto sfiora soltanto un angolo delle scale in $(4,4)$: non richiede quindi l'aggiramento di un'intera cella. La traiettoria si porta verso la colonna 5 e prosegue fra ostacoli e rampa, prima di raggiungere il goal. La missione riesce percorrendo 18,48~m, ma anche il passaggio finale è stretto e interessa il bordo del ghiaccio in $(1,5)$. Il caso va quindi letto come un esempio di movimento vicino ai margini dei terreni, non come prova di una completa separazione dalle superfici critiche.
+
+\textbf{Episodio 28.} La partenza è sulle rocce in $(3,3)$ e il goal sulle rocce in $(4,6)$. Fra i due punti si trova la cella con scale $(3,4)$, che interrompe il percorso diretto. Spot curva verso il basso e passa lungo la fascia inferiore della cella, quindi attraversa gli ostacoli e risale verso il goal. La missione si conclude con successo, con un percorso di 19,03~m. Le posizioni registrate restano però molto vicine al bordo delle scale e in parte ricadono nella fascia inferiore della loro cella; anche il tratto finale costeggia il ghiaccio in $(3,6)$. L'esempio mostra una deviazione rispetto al centro della zona con scale, ma non un aggiramento con un ampio margine di sicurezza.
+
+\textbf{Categoria 4: più superfici e scelte successive.}
+
+\textbf{Episodio 32.} Spot parte dalla rampa in $(6,4)$ e deve arrivare sull'asfalto in $(3,1)$. Il segmento diretto attraversa il ghiaccio in $(5,3)$. Il robot si muove inizialmente verso sinistra nella fascia superiore della mappa, percorre le rocce e scende soltanto dopo aver superato la zona scivolosa. Prosegue poi sulla ghiaia e sulla rampa, fino a raggiungere l'asfalto del goal. Il percorso misura 19,68~m. La traiettoria comprende più cambi di direzione e di superficie, con una prima scelta del lato da cui aggirare il ghiaccio e un successivo avvicinamento al goal.
+
+\textbf{Episodio 40.} La partenza è sull'asfalto in $(0,1)$ e il goal sulle rocce in $(2,4)$. Il segmento diretto attraversa sia le scale in $(1,2)$ sia il ghiaccio in $(2,3)$. Spot resta inizialmente nella fascia inferiore della mappa, passa sulle rocce in $(0,2)$ e poi risale attraverso la ghiaia in $(1,3)$, fino al goal. Il percorso si conclude con successo e misura 18,50~m. La traiettoria evita le parti centrali dei terreni critici, ma passa vicino ai loro angoli, con brevi posizioni registrate sul bordo delle scale e del ghiaccio. La scelta riguarda quindi una sequenza di passaggi fra superfici diverse; il suo eventuale vantaggio energetico dovrà essere misurato con il riferimento rettilineo.
+
+\subsubsubsection{Descrizione dei fallimenti}
+
+\textbf{Questa parte potrà essere mantenuta come approfondimento separato.} Le missioni selezionate a 18~m comprendono tre fallimenti: l'episodio 9 della categoria 1 termina per \textit{out of bounds}, mentre gli episodi 14 e 19 della categoria 2 terminano per caduta. Non ci sono timeout, né fallimenti nelle categorie 3 e 4 di questa selezione.
+
+Nell'episodio 9, start e goal sono vicini al lato inferiore della mappa. Il robot curva verso il bordo, invece di mantenere la direzione verso il goal, e supera il limite ammesso per il movimento. L'interruzione avviene quando la posizione del robot raggiunge il margine di sicurezza vicino al confine della scena, senza una caduta registrata. Questo caso mostra un limite nella gestione dello spazio disponibile: la scelta del percorso deve tenere conto anche dei bordi della mappa, non soltanto dei terreni.
+
+Nell'episodio 14, il robot tenta di aggirare dal basso il ghiaccio in $(1,5)$, passando sulla fascia di asfalto e ostacoli della riga 0. Risale però verso il goal prima di aver superato completamente la cella scivolosa, vi entra e cade a circa 1,07~m dall'arrivo. Nell'episodio 19, già illustrato nella figura, il ghiaccio viene invece aggirato inizialmente dall'alto, ma la successiva discesa porta il robot troppo vicino al suo bordo. Entrambe le cadute sono associate, nei registri della simulazione, a una perdita di stabilità rilevata attraverso l'inclinazione del robot.
+
+I due casi mostrano che evitare inizialmente la direzione del ghiaccio non basta se la deviazione si chiude troppo presto o si avvicina nuovamente alla superficie critica. Questo limite va distinto dall'uscita dall'area osservata nell'episodio 9. Le traiettorie permettono di individuare dove avviene l'interruzione; per stabilire con certezza il contributo del terreno, dei comandi e della dinamica del robot serve un'analisi più dettagliata dei dati e dell'esecuzione.
+
+
+\clearpage
+\section{Tabelle straight line con velocità comandata media}
+
+\input{tabelle/straight_line_command_mean_12m.tex}
+
+\clearpage
+\section{Tabelle straight line con velocità comandata media (18 m)}
+
+\input{tabelle/straight_line_command_mean_18m.tex}
 
 \end{document}

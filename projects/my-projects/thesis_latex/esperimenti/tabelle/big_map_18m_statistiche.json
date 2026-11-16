@@ -1,0 +1,48 @@
+{
+  "selection": "spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/thesis experiments_18m/selected_missions.json",
+  "selection_sha256": "fca88852367c572b33ec4d85daaaf64e7ab9fc842632bcebdd75e8fbd5b42e75",
+  "note": "Descriptive statistics of the selected cases; all raw outcomes and failed-run measurements remain archived.",
+  "metrics_note": "Absolute mechanical joint work; timing and work include alignment. Means computed from unrounded successful-run data.",
+  "statistics": [
+    {
+      "category": 1,
+      "category_name": "regular",
+      "missions": 10,
+      "successes": 9,
+      "success_percent": 90.0,
+      "mean_path_m": 19.004420386420357,
+      "mean_energy_j": 3776.5570475260415,
+      "mean_time_s": 15.711111111111112
+    },
+    {
+      "category": 2,
+      "category_name": "ice",
+      "missions": 10,
+      "successes": 8,
+      "success_percent": 80.0,
+      "mean_path_m": 19.57068705558777,
+      "mean_energy_j": 3971.1044921875,
+      "mean_time_s": 15.850000000000001
+    },
+    {
+      "category": 3,
+      "category_name": "stairs",
+      "missions": 10,
+      "successes": 10,
+      "success_percent": 100.0,
+      "mean_path_m": 19.30421600341797,
+      "mean_energy_j": 3876.57587890625,
+      "mean_time_s": 16.1
+    },
+    {
+      "category": 4,
+      "category_name": "multiple_choices",
+      "missions": 10,
+      "successes": 10,
+      "success_percent": 100.0,
+      "mean_path_m": 18.813642501831055,
+      "mean_energy_j": 3773.8552978515627,
+      "mean_time_s": 15.26
+    }
+  ]
+}

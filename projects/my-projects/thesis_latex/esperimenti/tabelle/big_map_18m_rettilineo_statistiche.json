@@ -1,0 +1,147 @@
+{
+  "run": "spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/straight_line_baseline/results_exp/distance_18m_all_20261116_202444_543554",
+  "episodes_sha256": "02b1b49e7161ab92fceb4180d51333f18e72cb49ebfce49bfff4cc0abbb4eedd",
+  "missions_sha256": "8d6ca916e57e6eaef8b05871e5082087ce516f4fd401c8cf837bc7c838899913",
+  "statistics": [
+    {
+      "category": 1,
+      "category_name": "regular",
+      "Policy": {
+        "successes": 9,
+        "success_percent": 90.0,
+        "path_m": 19.004420386420357,
+        "energy_j": 3776.5570475260415,
+        "time_s": 15.711111111111112
+      },
+      "Rettilineo": {
+        "successes": 10,
+        "success_percent": 100.0,
+        "path_m": 18.00102367401123,
+        "energy_j": 3034.5953125,
+        "time_s": 17.68
+      },
+      "paired_means": {
+        "policy": {
+          "path_m": 19.004420386420357,
+          "energy_j": 3776.5570475260415,
+          "time_s": 15.711111111111112
+        },
+        "straight_line": {
+          "path_m": 18.002328660753037,
+          "energy_j": 3028.3791232638887,
+          "time_s": 17.022222222222222
+        }
+      },
+      "paired_episodes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+      ],
+      "success_change_pp": -10.0,
+      "energy_saving_percent": -24.705556794876827,
+      "path_extension_percent": 5.566456121046071
+    },
+    {
+      "category": 2,
+      "category_name": "ice",
+      "Policy": {
+        "successes": 8,
+        "success_percent": 80.0,
+        "path_m": 19.57068705558777,
+        "energy_j": 3971.1044921875,
+        "time_s": 15.850000000000001
+      },
+      "Rettilineo": {
+        "successes": 0,
+        "success_percent": 0.0,
+        "path_m": null,
+        "energy_j": null,
+        "time_s": null
+      },
+      "paired_episodes": [],
+      "success_change_pp": 80.0,
+      "energy_saving_percent": null,
+      "path_extension_percent": null
+    },
+    {
+      "category": 3,
+      "category_name": "stairs",
+      "Policy": {
+        "successes": 10,
+        "success_percent": 100.0,
+        "path_m": 19.30421600341797,
+        "energy_j": 3876.57587890625,
+        "time_s": 16.1
+      },
+      "Rettilineo": {
+        "successes": 2,
+        "success_percent": 20.0,
+        "path_m": 18.32591152191162,
+        "energy_j": 3176.698974609375,
+        "time_s": 18.1
+      },
+      "paired_means": {
+        "policy": {
+          "path_m": 19.745487213134766,
+          "energy_j": 4038.649658203125,
+          "time_s": 16.400000000000002
+        },
+        "straight_line": {
+          "path_m": 18.32591152191162,
+          "energy_j": 3176.698974609375,
+          "time_s": 18.1
+        }
+      },
+      "paired_episodes": [
+        24,
+        29
+      ],
+      "success_change_pp": 80.0,
+      "energy_saving_percent": -27.13353359833979,
+      "path_extension_percent": 7.746276028484633
+    },
+    {
+      "category": 4,
+      "category_name": "multiple_choices",
+      "Policy": {
+        "successes": 10,
+        "success_percent": 100.0,
+        "path_m": 18.813642501831055,
+        "energy_j": 3773.8552978515627,
+        "time_s": 15.26
+      },
+      "Rettilineo": {
+        "successes": 2,
+        "success_percent": 20.0,
+        "path_m": 17.833767890930176,
+        "energy_j": 3065.226318359375,
+        "time_s": 14.700000000000001
+      },
+      "paired_means": {
+        "policy": {
+          "path_m": 18.69140911102295,
+          "energy_j": 3737.6883544921875,
+          "time_s": 14.200000000000001
+        },
+        "straight_line": {
+          "path_m": 17.833767890930176,
+          "energy_j": 3065.226318359375,
+          "time_s": 14.700000000000001
+        }
+      },
+      "paired_episodes": [
+        33,
+        36
+      ],
+      "success_change_pp": 80.0,
+      "energy_saving_percent": -21.938413881711007,
+      "path_extension_percent": 4.809085916885514
+    }
+  ]
+}

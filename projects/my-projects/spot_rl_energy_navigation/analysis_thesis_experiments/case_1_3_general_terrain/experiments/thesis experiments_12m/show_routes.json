@@ -39,15 +39,6 @@
       "thesis_episode": 13
     },
     {
-      "collection_episode": 52,
-      "source_episode": 270,
-      "category": "ice",
-      "reason": "fallen",
-      "color": "#176BA5",
-      "episode_directory": "episodes/episode_52",
-      "thesis_episode": 12
-    },
-    {
       "collection_episode": 72,
       "source_episode": 567,
       "category": "stairs",
@@ -55,15 +46,6 @@
       "color": "#E48312",
       "episode_directory": "episodes/episode_72",
       "thesis_episode": 23
-    },
-    {
-      "collection_episode": 60,
-      "source_episode": 453,
-      "category": "stairs",
-      "reason": "goal",
-      "color": "#E48312",
-      "episode_directory": "episodes/episode_60",
-      "thesis_episode": 21
     },
     {
       "collection_episode": 74,

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.11.2)  12 NOV 2026 21:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.11.2)  17 NOV 2026 00:36
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -274,7 +274,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 )
 \Hy@SectionHShift=\skip51
 )
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 14.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 22.
  (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
@@ -284,38 +284,38 @@ File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 ) (./risultati_degli_esperimenti.aux)
 \openout1 = `risultati_degli_esperimenti.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Info: Redefining \it@ocap on input line 14.
-LaTeX Info: Redefining \it@ccap on input line 14.
-LaTeX Info: Redefining \microtypecontext on input line 14.
-Package microtype Info: Applying patch `item' on input line 14.
-Package microtype Info: Applying patch `toc' on input line 14.
-Package microtype Info: Applying patch `eqnum' on input line 14.
-Package microtype Info: Applying patch `footnote' on input line 14.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Info: Redefining \it@ocap on input line 22.
+LaTeX Info: Redefining \it@ccap on input line 22.
+LaTeX Info: Redefining \microtypecontext on input line 22.
+Package microtype Info: Applying patch `item' on input line 22.
+Package microtype Info: Applying patch `toc' on input line 22.
+Package microtype Info: Applying patch `eqnum' on input line 22.
+Package microtype Info: Applying patch `footnote' on input line 22.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 14.
+LaTeX Info: Redefining \showhyphens on input line 22.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -375,7 +375,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring OFF on input line 14.
+Package hyperref Info: Link coloring OFF on input line 22.
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -385,20 +385,20 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count294
 )
-LaTeX Info: Redefining \ref on input line 14.
-LaTeX Info: Redefining \pageref on input line 14.
-LaTeX Info: Redefining \nameref on input line 14.
+LaTeX Info: Redefining \ref on input line 22.
+LaTeX Info: Redefining \pageref on input line 22.
+LaTeX Info: Redefining \nameref on input line 22.
  (./risultati_degli_esperimenti.out) (./risultati_degli_esperimenti.out)
 \@outlinefile=\write3
 \openout3 = `risultati_degli_esperimenti.out'.
 
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 40.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 48.
  (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 175.
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 187.
  (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
@@ -406,45 +406,45 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 177.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 189.
  (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 177.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 189.
  (/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 177.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 189.
  (/usr/share/texmf/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 177.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 189.
  (/usr/share/texmf/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 177.
+(Font)              <10.95> on input line 189.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 177.
+(Font)              <8> on input line 189.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 177.
+(Font)              <6> on input line 189.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 193.
+(Font)              <10> on input line 205.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 193.
+(Font)              <7> on input line 205.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 193.
-<figure/map_a_routes.pdf, id=79, 650.43pt x 722.7pt>
+(Font)              <5> on input line 205.
+<figure/map_a_routes.pdf, id=108, 650.43pt x 722.7pt>
 File: figure/map_a_routes.pdf Graphic file (type pdf)
 <use figure/map_a_routes.pdf>
-Package pdftex.def Info: figure/map_a_routes.pdf  used on input line 221.
+Package pdftex.def Info: figure/map_a_routes.pdf  used on input line 233.
 (pdftex.def)             Requested size: 237.01411pt x 263.34772pt.
-<figure/map_b_routes.pdf, id=80, 650.43pt x 722.7pt>
+<figure/map_b_routes.pdf, id=109, 650.43pt x 722.7pt>
 File: figure/map_b_routes.pdf Graphic file (type pdf)
 <use figure/map_b_routes.pdf>
-Package pdftex.def Info: figure/map_b_routes.pdf  used on input line 225.
+Package pdftex.def Info: figure/map_b_routes.pdf  used on input line 237.
 (pdftex.def)             Requested size: 237.01411pt x 263.34772pt.
- [4
+ [5
 
 ] (./tabelle/tabels_exp1_1.tex
 LaTeX Font Info:    Calculating math sizes for size <9.5> on input line 12.
@@ -455,24 +455,53 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <4.75> on input line 12.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 33.
- [5 <./figure/map_a_routes.pdf> <./figure/map_b_routes.pdf>]) [6] (./risultati_degli_esperimenti.aux)
+(Font)              <9> on input line 34.
+ [6 <./figure/map_a_routes.pdf> <./figure/map_b_routes.pdf>]) [7]
+<figure/medium_eval_20261007_114130_routes_outcomes.pdf, id=168, 923.45pt x 461.725pt>
+File: figure/medium_eval_20261007_114130_routes_outcomes.pdf Graphic file (type pdf)
+<use figure/medium_eval_20261007_114130_routes_outcomes.pdf>
+Package pdftex.def Info: figure/medium_eval_20261007_114130_routes_outcomes.pdf  used on input line 291.
+(pdftex.def)             Requested size: 483.69687pt x 241.84563pt.
+<figure/medium_eval_20261007_114130_routes_successes.pdf, id=169, 923.45pt x 461.725pt>
+File: figure/medium_eval_20261007_114130_routes_successes.pdf Graphic file (type pdf)
+<use figure/medium_eval_20261007_114130_routes_successes.pdf>
+Package pdftex.def Info: figure/medium_eval_20261007_114130_routes_successes.pdf  used on input line 298.
+(pdftex.def)             Requested size: 483.69687pt x 241.84563pt.
+ [8
+
+ <./figure/medium_eval_20261007_114130_routes_outcomes.pdf>] [9 <./figure/medium_eval_20261007_114130_routes_successes.pdf>] (./tabelle/big_map_12m_risultati.tex [10]) (./tabelle/big_map_12m_statistiche.tex) [11] (./tabelle/big_map_12m_rettilineo.tex [12]) (./tabelle/big_map_12m_confronto_statistiche.tex) [13] (./tabelle/big_map_12m_confronto_variazioni.tex)
+<figure/big_map_12m_show_routes_8_episodes.pdf, id=647, 1300.86pt x 650.43pt>
+File: figure/big_map_12m_show_routes_8_episodes.pdf Graphic file (type pdf)
+<use figure/big_map_12m_show_routes_8_episodes.pdf>
+Package pdftex.def Info: figure/big_map_12m_show_routes_8_episodes.pdf  used on input line 377.
+(pdftex.def)             Requested size: 483.69687pt x 241.8463pt.
+ [14] [15 <./figure/big_map_12m_show_routes_8_episodes.pdf>] [16] (./tabelle/big_map_18m_risultati.tex [17]) (./tabelle/big_map_18m_statistiche.tex) [18] (./tabelle/big_map_18m_rettilineo.tex [19]) (./tabelle/big_map_18m_confronto_statistiche.tex) [20] (./tabelle/big_map_18m_confronto_variazioni.tex)
+<figure/big_map_18m_show_routes.pdf, id=712, 1300.86pt x 650.43pt>
+File: figure/big_map_18m_show_routes.pdf Graphic file (type pdf)
+<use figure/big_map_18m_show_routes.pdf>
+Package pdftex.def Info: figure/big_map_18m_show_routes.pdf  used on input line 474.
+(pdftex.def)             Requested size: 483.69687pt x 241.8463pt.
+ [21] [22 <./figure/big_map_18m_show_routes.pdf>] [23] (./tabelle/straight_line_command_mean_12m.tex) [24
+
+] [25] (./tabelle/straight_line_command_mean_18m.tex) [26
+
+] [27] (./risultati_degli_esperimenti.aux)
 Package rerunfilecheck Info: File `risultati_degli_esperimenti.out' has not changed.
-(rerunfilecheck)             Checksum: CBDBA7B6765E7BF1BD8ED68F6F53DA16;3252.
+(rerunfilecheck)             Checksum: 473972D2BEE4EF674C4E58FF1D3141AA;5208.
  ) 
 Here is how much of TeX's memory you used:
- 12791 strings out of 480163
- 207785 string characters out of 5894093
- 556201 words of memory out of 5000000
- 30386 multiletter control sequences out of 15000+600000
- 540432 words of font info for 147 fonts, out of 8000000 for 9000
+ 13085 strings out of 480163
+ 214640 string characters out of 5894093
+ 591350 words of memory out of 5000000
+ 30484 multiletter control sequences out of 15000+600000
+ 548796 words of font info for 191 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 60i,14n,63p,1113b,444s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi9.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb>
-Output written on risultati_degli_esperimenti.pdf (6 pages, 238493 bytes).
+ 60i,14n,63p,1113b,463s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi9.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy9.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb>
+Output written on risultati_degli_esperimenti.pdf (27 pages, 519158 bytes).
 PDF statistics:
- 195 PDF objects out of 1000 (max. 8388607)
- 150 compressed objects within 2 object streams
- 25 named destinations out of 1000 (max. 500000)
- 41595 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 851 PDF objects out of 1000 (max. 8388607)
+ 618 compressed objects within 7 object streams
+ 96 named destinations out of 1000 (max. 500000)
+ 44223 words of extra memory for PDF output out of 51595 (max. 10000000)
 

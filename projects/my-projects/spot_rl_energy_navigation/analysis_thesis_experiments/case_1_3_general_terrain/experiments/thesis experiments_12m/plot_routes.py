@@ -16,7 +16,7 @@ sys.path.insert(0,str(SOURCE))
 from plot_selected import STYLES, TITLES, COLORS, read_rows
 
 
-def main():
+def main(show_only=False):
     document=json.loads((HERE/'selected_missions_v2.json').read_text())
     source=(HERE/document['source_collection']).resolve()
     terrain=CASE/'maps/real_terrains_v2_eval_01.usd'
@@ -84,21 +84,22 @@ def main():
             figure.savefig(HERE/f'{stem}.{extension}',dpi=170)
         plt.close(figure)
 
-    for index,category in enumerate(document['category_order'],1):
-        subset=[s for s in slots if s['case']['category']==category]
-        figure,axis=plt.subplots(figsize=(17,9),constrained_layout=True)
-        draw(axis,subset)
-        axis.set_title(f'Experiments · 12 m · {TITLES[category]} · 10 episodes',fontsize=21,pad=18)
-        stem=f'exp_12m_cat{index}_{category}'
-        save(figure,stem)
-        print(stem)
-    figure,axes=plt.subplots(2,2,figsize=(32,19),constrained_layout=True)
-    for axis,category in zip(axes.flat,document['category_order']):
-        draw(axis,[s for s in slots if s['case']['category']==category])
-        axis.set_title(f'{TITLES[category]} · 10 episodes',fontsize=21)
-    figure.suptitle('Experiments · 12 m · 40 episodes\nLabels: thesis episode IDs; legend parentheses: original try1 IDs',fontsize=24)
-    save(figure,'exp_all_together')
-    print('exp_all_together')
+    if not show_only:
+        for index,category in enumerate(document['category_order'],1):
+            subset=[s for s in slots if s['case']['category']==category]
+            figure,axis=plt.subplots(figsize=(17,9),constrained_layout=True)
+            draw(axis,subset)
+            axis.set_title(f'Experiments · 12 m · {TITLES[category]} · 10 episodes',fontsize=21,pad=18)
+            stem=f'exp_12m_cat{index}_{category}'
+            save(figure,stem)
+            print(stem)
+        figure,axes=plt.subplots(2,2,figsize=(32,19),constrained_layout=True)
+        for axis,category in zip(axes.flat,document['category_order']):
+            draw(axis,[s for s in slots if s['case']['category']==category])
+            axis.set_title(f'{TITLES[category]} · 10 episodes',fontsize=21)
+        figure.suptitle('Experiments · 12 m · 40 episodes\nLabels: thesis episode IDs; legend parentheses: original try1 IDs',fontsize=24)
+        save(figure,'exp_all_together')
+        print('exp_all_together')
 
     show_document=json.loads((HERE/'show_routes.json').read_text())
     show_lookup={s['episode']:s for s in slots}
@@ -121,4 +122,7 @@ def main():
 
 
 if __name__=='__main__':
-    main()
+    import argparse
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--show-only',action='store_true')
+    main(show_only=parser.parse_args().show_only)
