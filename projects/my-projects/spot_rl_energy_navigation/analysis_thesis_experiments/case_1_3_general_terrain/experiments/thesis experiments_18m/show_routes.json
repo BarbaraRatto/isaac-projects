@@ -1,0 +1,73 @@
+{
+  "label_note": "Thesis episode IDs E1\u2013E40 on the map; previous collection IDs in the legend. Original run/episode preserved as provenance.",
+  "optional_not_shown": {
+    "collection_episode": 34,
+    "reason": "Optional additional Regular example; retained in the forty-case selection but omitted from the eight-case display."
+  },
+  "episodes": [
+    {
+      "collection_episode": 6,
+      "thesis_episode": 2,
+      "category": "regular",
+      "source_episode": 5,
+      "source_run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_18m_try2/results_exp/distance_18m_all_20261113_235009_130946",
+      "color": "#16885C"
+    },
+    {
+      "collection_episode": 13,
+      "thesis_episode": 5,
+      "category": "regular",
+      "source_episode": 20,
+      "source_run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_18m_try2/results_exp/distance_18m_all_20261113_235009_130946",
+      "color": "#16885C"
+    },
+    {
+      "collection_episode": 3,
+      "thesis_episode": 12,
+      "category": "ice",
+      "source_episode": 55,
+      "source_run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distances_6m_18m_initial/results_exp/distance_18m_20261113_164333_391822",
+      "color": "#176BA5"
+    },
+    {
+      "collection_episode": 36,
+      "thesis_episode": 19,
+      "category": "ice",
+      "source_episode": 104,
+      "source_run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_18m_try3/results_exp/distance_18m_all_20261115_141516_387767",
+      "color": "#176BA5"
+    },
+    {
+      "collection_episode": 37,
+      "thesis_episode": 28,
+      "category": "stairs",
+      "source_episode": 203,
+      "source_run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_18m_try3/results_exp/distance_18m_all_20261115_141516_387767",
+      "color": "#E48312"
+    },
+    {
+      "collection_episode": 10,
+      "thesis_episode": 23,
+      "category": "stairs",
+      "source_episode": 35,
+      "source_run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_18m_try1/results_exp/distance_18m_20261113_230511_402428",
+      "color": "#E48312"
+    },
+    {
+      "collection_episode": 26,
+      "thesis_episode": 32,
+      "category": "multiple_choices",
+      "source_episode": 172,
+      "source_run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_18m_try2/results_exp/distance_18m_all_20261113_235009_130946",
+      "color": "#C62F8A"
+    },
+    {
+      "collection_episode": 48,
+      "thesis_episode": 40,
+      "category": "multiple_choices",
+      "source_episode": 397,
+      "source_run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_18m_try3/results_exp/distance_18m_all_20261115_141516_387767",
+      "color": "#C62F8A"
+    }
+  ]
+}

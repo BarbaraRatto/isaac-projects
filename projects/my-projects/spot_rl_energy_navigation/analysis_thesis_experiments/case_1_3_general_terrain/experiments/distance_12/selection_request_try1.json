@@ -1,0 +1,652 @@
+{
+  "source_run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_12m_try1/results_exp/distance_12m_all_20261114_013639_528982",
+  "date": "2026-11-16",
+  "preferred_meaning": "User highlighted in bold: candidate for a later choice of two illustrated episodes per category.",
+  "curved_path_note": "Curved paths may be less economical than direct paths; this is an untested hypothesis, not an energy-baseline result.",
+  "items": [
+    {
+      "source_episode": 3,
+      "category": "regular",
+      "preferred_for_plot": true,
+      "selection_note": "stortino: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 6,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "storto: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 7,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "storto: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 8,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "storto: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 9,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "storto: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 11,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "storto: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 12,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "storto: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 16,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "storto: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 21,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "storto: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 22,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "storto: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 23,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "storto: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 31,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "storto: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 35,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "storto: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 41,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "storto: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 42,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "meh",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 45,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "stortino: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 50,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "rampina",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 55,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "meh",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 56,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "rampa",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 59,
+      "category": "regular",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 80,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 83,
+      "category": "regular",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 84,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 101,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 110,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 145,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 64,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "fall",
+      "recorded_reason": "fallen"
+    },
+    {
+      "source_episode": 102,
+      "category": "regular",
+      "preferred_for_plot": false,
+      "selection_note": "fall",
+      "recorded_reason": "fallen"
+    },
+    {
+      "source_episode": 204,
+      "category": "ice",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 210,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 217,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 231,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 237,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 244,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 246,
+      "category": "ice",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 259,
+      "category": "ice",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 272,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 273,
+      "category": "ice",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 280,
+      "category": "ice",
+      "preferred_for_plot": true,
+      "selection_note": "ondulato",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 302,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 305,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 312,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 317,
+      "category": "ice",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 333,
+      "category": "ice",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 342,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 359,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 361,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 376,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 386,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 389,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 250,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "fall",
+      "recorded_reason": "fallen"
+    },
+    {
+      "source_episode": 270,
+      "category": "ice",
+      "preferred_for_plot": false,
+      "selection_note": "fall",
+      "recorded_reason": "fallen"
+    },
+    {
+      "source_episode": 409,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 411,
+      "category": "stairs",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 415,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 429,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 430,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 439,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 446,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 453,
+      "category": "stairs",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 456,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 462,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 463,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 467,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 479,
+      "category": "stairs",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 509,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 517,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 523,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 524,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 535,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 547,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 567,
+      "category": "stairs",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 597,
+      "category": "stairs",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 424,
+      "category": "stairs",
+      "preferred_for_plot": false,
+      "selection_note": "fall",
+      "recorded_reason": "fallen"
+    },
+    {
+      "source_episode": 601,
+      "category": "surface_choice",
+      "preferred_for_plot": false,
+      "selection_note": "rampa",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 603,
+      "category": "surface_choice",
+      "preferred_for_plot": false,
+      "selection_note": "ostacoli",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 612,
+      "category": "surface_choice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 615,
+      "category": "surface_choice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 616,
+      "category": "surface_choice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 624,
+      "category": "surface_choice",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 628,
+      "category": "surface_choice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 633,
+      "category": "surface_choice",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 639,
+      "category": "surface_choice",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 647,
+      "category": "surface_choice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 648,
+      "category": "surface_choice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 653,
+      "category": "surface_choice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 656,
+      "category": "surface_choice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 661,
+      "category": "surface_choice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 662,
+      "category": "surface_choice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 688,
+      "category": "surface_choice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 694,
+      "category": "surface_choice",
+      "preferred_for_plot": false,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    },
+    {
+      "source_episode": 707,
+      "category": "surface_choice",
+      "preferred_for_plot": true,
+      "selection_note": "",
+      "recorded_reason": "goal"
+    }
+  ]
+}

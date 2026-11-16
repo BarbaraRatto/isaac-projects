@@ -1,0 +1,24 @@
+{
+  "original_copy_history": {
+    "show_routes.pdf": {
+      "source": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_12/show_preferred_routes.pdf",
+      "sha256": "14593c602282be381424a80aa3812966efbc9aab687e5f9e666309081d4a3ce0"
+    },
+    "show_routes.png": {
+      "source": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_12/show_preferred_routes.png",
+      "sha256": "d2af7614cdec8bd5b55c41c625dfd0b3226458f05544a78aa4636ebd49133c40"
+    },
+    "show_routes.json": {
+      "source": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_12/show_preferred_routes.json",
+      "sha256": "91f8b5729ba8a1a5593dfb7b0f66bbc5af6848e37d22c6b1ab66f920850863bb"
+    }
+  },
+  "current_note": "Regenerated with thesis IDs E1\u2013E40; original source collection remains unchanged.",
+  "generator": "plot_routes.py",
+  "selection": "selected_missions_v2.json",
+  "outputs": {
+    "show_routes.pdf": "904a3f86b6e867c6d3a1429bc07d9b0114abf7fe3848ffd9206b40244755e6cc",
+    "show_routes.png": "fe3ef11ac11bc844f92beb7b0f25ac0a646bdf580a3c2917e4045568f41455a5",
+    "show_routes.json": "bb8c75b045efba3b43513725beba9c604f3281768daf44cf0fc0dc7dc10dbd89"
+  }
+}

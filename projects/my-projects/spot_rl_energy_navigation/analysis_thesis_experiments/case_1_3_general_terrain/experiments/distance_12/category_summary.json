@@ -1,46 +1,51 @@
 {
-  "total_saved": 0,
-  "total_confirmed": 0,
+  "total_saved": 92,
+  "total_preferred_for_plot": 19,
+  "total_confirmed": 92,
   "total_tentative": 0,
-  "remaining_slots": 40,
-  "over_target_count": 0,
-  "needed_to_fill_categories": 40,
+  "remaining_slots": 0,
+  "over_target_count": 52,
+  "needed_to_fill_categories": 0,
   "categories": [
     {
       "category": "regular",
-      "saved": 0,
-      "confirmed": 0,
+      "saved": 28,
+      "confirmed": 28,
       "tentative": 0,
+      "preferred_for_plot": 3,
       "target": 10,
-      "remaining": 10,
-      "over_target": 0
+      "remaining": 0,
+      "over_target": 18
     },
     {
       "category": "ice",
-      "saved": 0,
-      "confirmed": 0,
+      "saved": 24,
+      "confirmed": 24,
       "tentative": 0,
+      "preferred_for_plot": 7,
       "target": 10,
-      "remaining": 10,
-      "over_target": 0
+      "remaining": 0,
+      "over_target": 14
     },
     {
       "category": "stairs",
-      "saved": 0,
-      "confirmed": 0,
+      "saved": 22,
+      "confirmed": 22,
       "tentative": 0,
+      "preferred_for_plot": 5,
       "target": 10,
-      "remaining": 10,
-      "over_target": 0
+      "remaining": 0,
+      "over_target": 12
     },
     {
       "category": "surface_choice",
-      "saved": 0,
-      "confirmed": 0,
+      "saved": 18,
+      "confirmed": 18,
       "tentative": 0,
+      "preferred_for_plot": 4,
       "target": 10,
-      "remaining": 10,
-      "over_target": 0
+      "remaining": 0,
+      "over_target": 8
     }
   ]
 }

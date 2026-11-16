@@ -1,0 +1,84 @@
+{
+  "episode": 76,
+  "distance_group_m": 12,
+  "category": "surface_choice",
+  "category_name": "Alternative routes on different surfaces",
+  "mission": {
+    "start_id": 1204,
+    "goal_id": 1205,
+    "start": [
+      27.77534793957596,
+      12.269795547582714,
+      0.0,
+      0.1255552189194933,
+      2,
+      4,
+      5
+    ],
+    "goal": [
+      37.92858324330705,
+      18.6660298199549,
+      0.0010000000474974513,
+      0.15173720981352828,
+      2,
+      6,
+      6
+    ],
+    "yaw": 0.3280505007902046,
+    "band": 3,
+    "distance_m": 12.0,
+    "deadline_steps": 315
+  },
+  "direct_cells": [
+    {
+      "row": 4,
+      "col": 5,
+      "terrain": "t3_ramp",
+      "length_m": 2.307991358723709
+    },
+    {
+      "row": 5,
+      "col": 5,
+      "terrain": "t6_obstacles",
+      "length_m": 3.8669689223651322
+    },
+    {
+      "row": 5,
+      "col": 6,
+      "terrain": "t1_asphalt",
+      "length_m": 1.7613427477526975
+    },
+    {
+      "row": 6,
+      "col": 6,
+      "terrain": "t3_ramp",
+      "length_m": 4.063696971158462
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t3_ramp": 6.371688329882171,
+    "t6_obstacles": 3.8669689223651322,
+    "t1_asphalt": 1.7613427477526975
+  },
+  "alternative_geometry": {
+    "waypoint_xy_m": [
+      36.0,
+      15.0
+    ],
+    "length_m": 12.808330616800557,
+    "terrain_lengths_m": {
+      "t3_ramp": 6.352269714050063,
+      "t6_obstacles": 1.600190311337305,
+      "t1_asphalt": 4.85587059141319
+    },
+    "rough_length_reduction_m": 2.266778611027827
+  },
+  "minimum_saved_endpoint_rms_m": null,
+  "pool_index": 15626,
+  "preferred_for_plot": false,
+  "selection_note": "ostacoli",
+  "review_status": "confirmed",
+  "source_episode": 603,
+  "source_episode_12m": 603,
+  "source_run": "distance_12m_all_20261114_013639_528982_7d49caff"
+}

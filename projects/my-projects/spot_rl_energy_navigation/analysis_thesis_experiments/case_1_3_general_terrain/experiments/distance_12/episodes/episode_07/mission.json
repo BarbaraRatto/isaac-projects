@@ -1,0 +1,65 @@
+{
+  "episode": 7,
+  "distance_group_m": 12,
+  "category": "regular",
+  "category_name": "Simple route on traversable terrain",
+  "mission": {
+    "start_id": 22,
+    "goal_id": 23,
+    "start": [
+      18.100342792924643,
+      0.36121476934221486,
+      0.0,
+      0.0,
+      0,
+      0,
+      3
+    ],
+    "goal": [
+      30.049850248340547,
+      -0.7384540776111471,
+      0.0,
+      0.0,
+      0,
+      0,
+      5
+    ],
+    "yaw": 1.0817491168080515,
+    "band": 3,
+    "distance_m": 12.000000000000002,
+    "deadline_steps": 315
+  },
+  "direct_cells": [
+    {
+      "row": 0,
+      "col": 3,
+      "terrain": "t1_asphalt",
+      "length_m": 2.9119096845396473
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "terrain": "t6_obstacles",
+      "length_m": 6.0253529502061
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "terrain": "t1_asphalt",
+      "length_m": 3.062737365254254
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t1_asphalt": 5.9746470497939015,
+    "t6_obstacles": 6.0253529502061
+  },
+  "alternative_geometry": null,
+  "minimum_saved_endpoint_rms_m": null,
+  "pool_index": 9430,
+  "preferred_for_plot": false,
+  "selection_note": "storto: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+  "review_status": "confirmed",
+  "source_episode": 12,
+  "source_episode_12m": 12,
+  "source_run": "distance_12m_all_20261114_013639_528982_7d49caff"
+}

@@ -1,0 +1,84 @@
+{
+  "episode": 28,
+  "distance_group_m": 12,
+  "category": "regular",
+  "category_name": "Simple route on traversable terrain",
+  "mission": {
+    "start_id": 202,
+    "goal_id": 203,
+    "start": [
+      24.60875263665571,
+      3.5644597775642035,
+      0.02287016996690861,
+      0.04936699965286682,
+      4,
+      1,
+      4
+    ],
+    "goal": [
+      33.85034149414838,
+      11.219068545428652,
+      0.021834529925956622,
+      0.048745253531008774,
+      4,
+      4,
+      6
+    ],
+    "yaw": 1.757277284097289,
+    "band": 3,
+    "distance_m": 12.0,
+    "deadline_steps": 315
+  },
+  "direct_cells": [
+    {
+      "row": 1,
+      "col": 4,
+      "terrain": "t5_large_rocks",
+      "length_m": 1.46663049800279
+    },
+    {
+      "row": 2,
+      "col": 4,
+      "terrain": "t5_large_rocks",
+      "length_m": 1.6383516433382934
+    },
+    {
+      "row": 2,
+      "col": 5,
+      "terrain": "t6_obstacles",
+      "length_m": 3.0646973421480816
+    },
+    {
+      "row": 3,
+      "col": 5,
+      "terrain": "t6_obstacles",
+      "length_m": 4.703048985486374
+    },
+    {
+      "row": 4,
+      "col": 5,
+      "terrain": "t3_ramp",
+      "length_m": 0.023121791501310884
+    },
+    {
+      "row": 4,
+      "col": 6,
+      "terrain": "t5_large_rocks",
+      "length_m": 1.1041497395231499
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t5_large_rocks": 4.209131880864233,
+    "t6_obstacles": 7.767746327634455,
+    "t3_ramp": 0.023121791501310884
+  },
+  "alternative_geometry": null,
+  "minimum_saved_endpoint_rms_m": null,
+  "pool_index": 4462,
+  "preferred_for_plot": false,
+  "selection_note": "fall",
+  "review_status": "confirmed",
+  "source_episode": 102,
+  "source_episode_12m": 102,
+  "source_run": "distance_12m_all_20261114_013639_528982_7d49caff"
+}

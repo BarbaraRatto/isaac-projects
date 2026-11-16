@@ -1,0 +1,96 @@
+{
+  "source_run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_12m_try1/results_exp/distance_12m_all_20261114_013639_528982",
+  "label_note": "Thesis episode IDs E1\u2013E40 on the map; original try1 IDs in the legend. Collection IDs preserved as provenance.",
+  "episodes": [
+    {
+      "collection_episode": 22,
+      "source_episode": 83,
+      "category": "regular",
+      "reason": "goal",
+      "color": "#16885C",
+      "episode_directory": "episodes/episode_22",
+      "thesis_episode": 1
+    },
+    {
+      "collection_episode": 20,
+      "source_episode": 59,
+      "category": "regular",
+      "reason": "goal",
+      "color": "#16885C",
+      "episode_directory": "episodes/episode_20",
+      "thesis_episode": 2
+    },
+    {
+      "collection_episode": 43,
+      "source_episode": 317,
+      "category": "ice",
+      "reason": "goal",
+      "color": "#176BA5",
+      "episode_directory": "episodes/episode_43",
+      "thesis_episode": 11
+    },
+    {
+      "collection_episode": 29,
+      "source_episode": 204,
+      "category": "ice",
+      "reason": "goal",
+      "color": "#176BA5",
+      "episode_directory": "episodes/episode_29",
+      "thesis_episode": 13
+    },
+    {
+      "collection_episode": 52,
+      "source_episode": 270,
+      "category": "ice",
+      "reason": "fallen",
+      "color": "#176BA5",
+      "episode_directory": "episodes/episode_52",
+      "thesis_episode": 12
+    },
+    {
+      "collection_episode": 72,
+      "source_episode": 567,
+      "category": "stairs",
+      "reason": "goal",
+      "color": "#E48312",
+      "episode_directory": "episodes/episode_72",
+      "thesis_episode": 23
+    },
+    {
+      "collection_episode": 60,
+      "source_episode": 453,
+      "category": "stairs",
+      "reason": "goal",
+      "color": "#E48312",
+      "episode_directory": "episodes/episode_60",
+      "thesis_episode": 21
+    },
+    {
+      "collection_episode": 74,
+      "source_episode": 424,
+      "category": "stairs",
+      "reason": "fallen",
+      "color": "#E48312",
+      "episode_directory": "episodes/episode_74",
+      "thesis_episode": 22
+    },
+    {
+      "collection_episode": 82,
+      "source_episode": 633,
+      "category": "surface_choice",
+      "reason": "goal",
+      "color": "#C62F8A",
+      "episode_directory": "episodes/episode_82",
+      "thesis_episode": 32
+    },
+    {
+      "collection_episode": 80,
+      "source_episode": 624,
+      "category": "surface_choice",
+      "reason": "goal",
+      "color": "#C62F8A",
+      "episode_directory": "episodes/episode_80",
+      "thesis_episode": 31
+    }
+  ]
+}

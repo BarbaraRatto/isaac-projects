@@ -1,0 +1,92 @@
+{
+  "episode": 81,
+  "distance_group_m": 12,
+  "category": "surface_choice",
+  "category_name": "Alternative routes on different surfaces",
+  "mission": {
+    "start_id": 1254,
+    "goal_id": 1255,
+    "start": [
+      3.7714415045349394,
+      -0.2723111610687382,
+      0.0,
+      0.0,
+      0,
+      0,
+      1
+    ],
+    "goal": [
+      10.30271378600466,
+      9.794589175445243,
+      0.0,
+      0.15758300034699282,
+      2,
+      3,
+      2
+    ],
+    "yaw": -2.1051940378233125,
+    "band": 3,
+    "distance_m": 12.0,
+    "deadline_steps": 315
+  },
+  "direct_cells": [
+    {
+      "row": 0,
+      "col": 1,
+      "terrain": "t1_asphalt",
+      "length_m": 2.112639762180218
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "terrain": "t4_fine_gravel",
+      "length_m": 3.576075931677125
+    },
+    {
+      "row": 2,
+      "col": 1,
+      "terrain": "t6_obstacles",
+      "length_m": 3.576075931677125
+    },
+    {
+      "row": 3,
+      "col": 1,
+      "terrain": "t1_asphalt",
+      "length_m": 0.3417136986413376
+    },
+    {
+      "row": 3,
+      "col": 2,
+      "terrain": "t3_ramp",
+      "length_m": 2.393494675824194
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t1_asphalt": 2.454353460821556,
+    "t4_fine_gravel": 3.576075931677125,
+    "t6_obstacles": 3.576075931677125,
+    "t3_ramp": 2.393494675824194
+  },
+  "alternative_geometry": {
+    "waypoint_xy_m": [
+      6.0,
+      0.0
+    ],
+    "length_m": 12.943139487535369,
+    "terrain_lengths_m": {
+      "t1_asphalt": 3.8834883314036714,
+      "t4_fine_gravel": 4.009463523804748,
+      "t6_obstacles": 2.543954106294133,
+      "t3_ramp": 2.5062335260328172
+    },
+    "rough_length_reduction_m": 1.0321218253829922
+  },
+  "minimum_saved_endpoint_rms_m": null,
+  "pool_index": 13824,
+  "preferred_for_plot": false,
+  "selection_note": "",
+  "review_status": "confirmed",
+  "source_episode": 628,
+  "source_episode_12m": 628,
+  "source_run": "distance_12m_all_20261114_013639_528982_7d49caff"
+}

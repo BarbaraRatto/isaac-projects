@@ -1,0 +1,85 @@
+{
+  "episode": 75,
+  "distance_group_m": 12,
+  "category": "surface_choice",
+  "category_name": "Alternative routes on different surfaces",
+  "mission": {
+    "start_id": 1200,
+    "goal_id": 1201,
+    "start": [
+      13.87819451125726,
+      9.743254572575907,
+      0.0,
+      0.14619232182500003,
+      2,
+      3,
+      2
+    ],
+    "goal": [
+      3.6651561287602856,
+      3.4429492627005516,
+      0.005389594326244795,
+      0.013831044431177475,
+      3,
+      1,
+      1
+    ],
+    "yaw": 1.6189164226878319,
+    "band": 3,
+    "distance_m": 12.0,
+    "deadline_steps": 315
+  },
+  "direct_cells": [
+    {
+      "row": 3,
+      "col": 2,
+      "terrain": "t3_ramp",
+      "length_m": 4.2726587914266405
+    },
+    {
+      "row": 2,
+      "col": 2,
+      "terrain": "t4_fine_gravel",
+      "length_m": 1.4590668657891062
+    },
+    {
+      "row": 2,
+      "col": 1,
+      "terrain": "t6_obstacles",
+      "length_m": 4.2549419368592565
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "terrain": "t4_fine_gravel",
+      "length_m": 2.013332405924997
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t3_ramp": 4.2726587914266405,
+    "t4_fine_gravel": 3.472399271714103,
+    "t6_obstacles": 4.2549419368592565
+  },
+  "alternative_geometry": {
+    "waypoint_xy_m": [
+      6.0,
+      9.0
+    ],
+    "length_m": 13.940806159262468,
+    "terrain_lengths_m": {
+      "t3_ramp": 4.899855971611586,
+      "t1_asphalt": 4.640343287954355,
+      "t6_obstacles": 3.254043775621424,
+      "t4_fine_gravel": 1.1465631240751029
+    },
+    "rough_length_reduction_m": 1.0008981612378323
+  },
+  "minimum_saved_endpoint_rms_m": null,
+  "pool_index": 15020,
+  "preferred_for_plot": false,
+  "selection_note": "rampa",
+  "review_status": "confirmed",
+  "source_episode": 601,
+  "source_episode_12m": 601,
+  "source_run": "distance_12m_all_20261114_013639_528982_7d49caff"
+}

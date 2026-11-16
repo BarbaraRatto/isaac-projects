@@ -1,0 +1,41 @@
+{
+  "generator": "missions.py",
+  "generator_sha256": "61b37d0193e2897f136d7cae42f28bf26632d468b27fcceb34daa55c41a895c1",
+  "mission_sha256": "29b01751b81d670bd5bc5e9dcaac2fb4b79b6eb0056c810b6ba4787457573533",
+  "retained_reference_sha256": "a90890b7cbe88174aa413e039eeef5c814d6317916bd63ca277932af694c8349",
+  "python_version": "3.11.13",
+  "numpy_version": "1.26.0",
+  "scipy_version": "1.15.3",
+  "surface_checks_sha256": "0bd093f60da21475171f8b5229598336294a49d2db65c0e5da1e624a72f8c557",
+  "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/train_general_big_map_test7_SAC/checkpoints_importati/policy_best_stage_3.pt",
+  "checkpoint_sha256": "1c12f5f18e1285463456423a2ae5e6e043f311d310b2ba04bf9575ed5609c02f",
+  "checkpoint_transitions": 650065,
+  "checkpoint_training_state": {
+    "curriculum": {
+      "level": 3,
+      "streak": 0
+    },
+    "best_by_stage": {
+      "0": [
+        0.859375,
+        -821.1460526899858
+      ],
+      "1": [
+        0.84375,
+        -1096.222082067419
+      ],
+      "2": [
+        0.8984375,
+        -1054.1044566278872
+      ],
+      "3": [
+        0.625,
+        -1975.246452331543
+      ]
+    },
+    "last_evaluated_stage": 3,
+    "replay_snapshot": null
+  },
+  "selection_note": "800 prospective twelve-metre missions, 200 per category, balanced for cell diversity; no cases selected after observing outcomes",
+  "distance_note": "Twelve metres is inside the stage3 training distance range"
+}

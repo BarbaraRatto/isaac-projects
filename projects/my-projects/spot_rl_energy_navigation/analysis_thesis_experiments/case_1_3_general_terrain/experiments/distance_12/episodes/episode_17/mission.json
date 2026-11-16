@@ -1,0 +1,65 @@
+{
+  "episode": 17,
+  "distance_group_m": 12,
+  "category": "regular",
+  "category_name": "Simple route on traversable terrain",
+  "mission": {
+    "start_id": 98,
+    "goal_id": 99,
+    "start": [
+      1.7964976251357738,
+      12.687624232808487,
+      0.005563479225717936,
+      0.014649724524793253,
+      3,
+      4,
+      0
+    ],
+    "goal": [
+      13.782150538704176,
+      12.101003200565959,
+      0.005465849505126339,
+      0.014999999664723873,
+      3,
+      4,
+      2
+    ],
+    "yaw": -1.9370582460006889,
+    "band": 3,
+    "distance_m": 12.0,
+    "deadline_steps": 315
+  },
+  "direct_cells": [
+    {
+      "row": 4,
+      "col": 0,
+      "terrain": "t4_fine_gravel",
+      "length_m": 1.204942993303399
+    },
+    {
+      "row": 4,
+      "col": 1,
+      "terrain": "t3_ramp",
+      "length_m": 6.007182130102579
+    },
+    {
+      "row": 4,
+      "col": 2,
+      "terrain": "t4_fine_gravel",
+      "length_m": 4.787874876594023
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t4_fine_gravel": 5.992817869897422,
+    "t3_ramp": 6.007182130102579
+  },
+  "alternative_geometry": null,
+  "minimum_saved_endpoint_rms_m": null,
+  "pool_index": 9329,
+  "preferred_for_plot": false,
+  "selection_note": "rampina",
+  "review_status": "confirmed",
+  "source_episode": 50,
+  "source_episode_12m": 50,
+  "source_run": "distance_12m_all_20261114_013639_528982_7d49caff"
+}

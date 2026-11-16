@@ -1,0 +1,72 @@
+{
+  "episode": 12,
+  "distance_group_m": 12,
+  "category": "regular",
+  "category_name": "Simple route on traversable terrain",
+  "mission": {
+    "start_id": 60,
+    "goal_id": 61,
+    "start": [
+      16.38254998105208,
+      -0.7259457746263144,
+      0.0,
+      0.0,
+      0,
+      0,
+      3
+    ],
+    "goal": [
+      26.32741944047873,
+      5.9896756735319325,
+      0.021715116311764312,
+      0.04788787690478592,
+      4,
+      2,
+      4
+    ],
+    "yaw": -0.8143084589073153,
+    "band": 3,
+    "distance_m": 12.0,
+    "deadline_steps": 315
+  },
+  "direct_cells": [
+    {
+      "row": 0,
+      "col": 3,
+      "terrain": "t1_asphalt",
+      "length_m": 3.9774947861067034
+    },
+    {
+      "row": 1,
+      "col": 3,
+      "terrain": "t4_fine_gravel",
+      "length_m": 1.594162082134335
+    },
+    {
+      "row": 1,
+      "col": 4,
+      "terrain": "t5_large_rocks",
+      "length_m": 3.7664736055536543
+    },
+    {
+      "row": 2,
+      "col": 4,
+      "terrain": "t5_large_rocks",
+      "length_m": 2.6618695262053076
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t1_asphalt": 3.9774947861067034,
+    "t4_fine_gravel": 1.594162082134335,
+    "t5_large_rocks": 6.428343131758962
+  },
+  "alternative_geometry": null,
+  "minimum_saved_endpoint_rms_m": null,
+  "pool_index": 3727,
+  "preferred_for_plot": false,
+  "selection_note": "storto: user observes a curved trajectory despite reaching the goal; a direct route might consume less energy, but that comparison has not been measured.",
+  "review_status": "confirmed",
+  "source_episode": 31,
+  "source_episode_12m": 31,
+  "source_run": "distance_12m_all_20261114_013639_528982_7d49caff"
+}

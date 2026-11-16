@@ -1,0 +1,92 @@
+{
+  "episode": 80,
+  "distance_group_m": 12,
+  "category": "surface_choice",
+  "category_name": "Alternative routes on different surfaces",
+  "mission": {
+    "start_id": 1246,
+    "goal_id": 1247,
+    "start": [
+      9.752104118973383,
+      -0.7402918502805939,
+      0.020109450669475108,
+      0.04944479166120678,
+      4,
+      0,
+      2
+    ],
+    "goal": [
+      3.860335850228365,
+      9.71375361869501,
+      0.0,
+      0.0,
+      0,
+      3,
+      1
+    ],
+    "yaw": -0.393096532806426,
+    "band": 3,
+    "distance_m": 12.000000000000002,
+    "deadline_steps": 315
+  },
+  "direct_cells": [
+    {
+      "row": 0,
+      "col": 2,
+      "terrain": "t5_large_rocks",
+      "length_m": 1.5318405300422704
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "terrain": "t1_asphalt",
+      "length_m": 1.0397478835674754
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "terrain": "t4_fine_gravel",
+      "length_m": 3.443642952083664
+    },
+    {
+      "row": 2,
+      "col": 1,
+      "terrain": "t6_obstacles",
+      "length_m": 3.4436429520836636
+    },
+    {
+      "row": 3,
+      "col": 1,
+      "terrain": "t1_asphalt",
+      "length_m": 2.5411256822229262
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t5_large_rocks": 1.5318405300422704,
+    "t1_asphalt": 3.5808735657904016,
+    "t4_fine_gravel": 3.443642952083664,
+    "t6_obstacles": 3.4436429520836636
+  },
+  "alternative_geometry": {
+    "waypoint_xy_m": [
+      6.0,
+      0.0
+    ],
+    "length_m": 13.771052976095971,
+    "terrain_lengths_m": {
+      "t5_large_rocks": 0.7666031188324745,
+      "t1_asphalt": 6.860615145954359,
+      "t4_fine_gravel": 3.0719173556545685,
+      "t6_obstacles": 3.0719173556545694
+    },
+    "rough_length_reduction_m": 1.1369630076388906
+  },
+  "minimum_saved_endpoint_rms_m": null,
+  "pool_index": 13898,
+  "preferred_for_plot": true,
+  "selection_note": "",
+  "review_status": "confirmed",
+  "source_episode": 624,
+  "source_episode_12m": 624,
+  "source_run": "distance_12m_all_20261114_013639_528982_7d49caff"
+}

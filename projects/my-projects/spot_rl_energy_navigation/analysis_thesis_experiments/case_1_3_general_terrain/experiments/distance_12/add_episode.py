@@ -85,7 +85,7 @@ def initialize():
 
 
 def rebuild(document):
-    fields=['episode','status','review_status','selection_note','category','start_x_m','start_y_m','goal_x_m','goal_y_m',
+    fields=['episode','status','review_status','preferred_for_plot','selection_note','category','start_x_m','start_y_m','goal_x_m','goal_y_m',
             'direct_distance_m','source_run','source_episode','source_episode_12m','reason','energy_j','path_m','time_s']
     table=[]; cases=[]
     selected=[s for s in document['slots'] if s['status']=='selected']
@@ -94,7 +94,7 @@ def rebuild(document):
         row.update(episode=slot['episode'],status=slot['status'])
         if slot['status']=='selected':
             case=slot['case']; m=case['mission']; r=slot['result']
-            row.update(selection_note=slot.get('selection_note',''),review_status=slot.get('review_status','confirmed'),category=case['category'],start_x_m=m['start'][0],start_y_m=m['start'][1],
+            row.update(preferred_for_plot=slot.get('preferred_for_plot',False),selection_note=slot.get('selection_note',''),review_status=slot.get('review_status','confirmed'),category=case['category'],start_x_m=m['start'][0],start_y_m=m['start'][1],
                 goal_x_m=m['goal'][0],goal_y_m=m['goal'][1],direct_distance_m=m['distance_m'],
                 source_run=slot['source_run'],source_episode=slot['source_episode'],
                 source_episode_12m=slot['source_episode_12m'],reason=r['reason'],energy_j=r['energy_j'],
@@ -107,14 +107,22 @@ def rebuild(document):
         subset=[s for s in selected if s['case']['category']==category]
         tentative=sum(s.get('review_status','confirmed')=='tentative' for s in subset)
         summary.append(dict(category=category,saved=len(subset),confirmed=len(subset)-tentative,
-                            tentative=tentative,target=target,remaining=max(0,target-len(subset)),over_target=max(0,len(subset)-target)))
+                            tentative=tentative,preferred_for_plot=sum(s.get('preferred_for_plot',False) for s in subset),target=target,remaining=max(0,target-len(subset)),over_target=max(0,len(subset)-target)))
     csv_write(HERE/'category_counts.csv',summary)
     write(HERE/'category_summary.json',dict(total_saved=len(selected),
+        total_preferred_for_plot=sum(s.get('preferred_for_plot',False) for s in selected),
         total_confirmed=sum(s['confirmed'] for s in summary),total_tentative=sum(s['tentative'] for s in summary),
-        remaining_slots=40-len(selected),over_target_count=sum(s['over_target'] for s in summary),
+        remaining_slots=sum(s['status']=='pending' for s in document['slots']),over_target_count=sum(s['over_target'] for s in summary),
         needed_to_fill_categories=sum(s['remaining'] for s in summary),categories=summary))
     write(HERE/'selected_missions.json',dict(name=document['name'],selection_method=document['selection_method'],
-        map_sha256=document['map_sha256'],target_count=40,cases=cases))
+        map_sha256=document['map_sha256'],target_count=document['target_count'],cases=cases))
+    preferred=[s for s in selected if s.get('preferred_for_plot',False)]
+    folder=HERE/'preferred'
+    folder.mkdir(exist_ok=True)
+    write(folder/'mission_list.json',dict(name='Highlighted candidates for route figures',
+        note='User preference for illustration; final choice of two per category remains open. Raw data remain in the main episode folders.',
+        slots=preferred))
+    csv_write(folder/'mission_list.csv',[r for r in table if r['preferred_for_plot']],fields)
     for name in RAW_FILES:
         data=[]
         for slot in selected:
@@ -123,7 +131,7 @@ def rebuild(document):
             csv_write(HERE/name,data)
 
 
-def add_episode(source,source_episode,slot_number=None,tentative=False,note='',allow_category_overflow=False):
+def add_episode(source,source_episode,slot_number=None,tentative=False,note='',allow_category_overflow=False,preferred_for_plot=False,rebuild_outputs=True):
     source=Path(source).resolve()
     if not (source/'complete.json').is_file():
         raise ValueError('Archive only completed runs with logging checks')
@@ -136,7 +144,7 @@ def add_episode(source,source_episode,slot_number=None,tentative=False,note='',a
     subset=read(source/'inputs'/config['mission_file'])
     source_case=next(c for c in subset['cases'] if c['episode']==source_episode)
     if source_case['distance_group_m']!=12:
-        raise ValueError('Select an twelve-metre episode')
+        raise ValueError('Select a twelve-metre episode')
     category=source_case['category']
     if not allow_category_overflow and sum(s.get('case',{}).get('category')==category for s in document['slots'])>=document['category_targets'][category]:
         raise ValueError('Category quota already full')
@@ -174,21 +182,22 @@ def add_episode(source,source_episode,slot_number=None,tentative=False,note='',a
         converted=[dict(r,episode=new_id,source_episode=source_episode,source_episode_12m=local_id,source_run=source_key) for r in data]
         csv_write(target/name,converted)
     case=copy.deepcopy(source_case)
-    case.update(selection_note=note,review_status='tentative' if tentative else 'confirmed',episode=new_id,source_episode=source_episode,source_episode_12m=local_id,source_run=source_key)
+    case.update(preferred_for_plot=preferred_for_plot,selection_note=note,review_status='tentative' if tentative else 'confirmed',episode=new_id,source_episode=source_episode,source_episode_12m=local_id,source_run=source_key)
     result=dict(source_result,episode=new_id,source_episode=source_episode,source_episode_12m=local_id,source_run=source_key)
     write(target/'mission.json',case)
     write(target/'source_result.json',source_result)
     provenance=dict(source_run=str(source),source_episode=source_episode,source_episode_12m=local_id,
-        collection_episode=new_id,selection_note=note,review_status='tentative' if tentative else 'confirmed',source_config_sha256=sha(source/'evaluation_config.json'),
+        collection_episode=new_id,preferred_for_plot=preferred_for_plot,selection_note=note,review_status='tentative' if tentative else 'confirmed',source_config_sha256=sha(source/'evaluation_config.json'),
         source_raw_sha256={name:sha(source/name) for name in RAW_FILES},
         archived_inputs=str((Path('sources')/source_key/'inputs')),
         checkpoint_sha256=config['checkpoint_sha256'],map_sha256=config['map_sha256'],
         selection='Manually requested illustrative episode; original run retained separately')
     write(target/'provenance.json',provenance)
-    selected_slot.update(status='selected',selection_note=note,review_status='tentative' if tentative else 'confirmed',source_run=str(source),source_episode=source_episode,
+    selected_slot.update(status='selected',preferred_for_plot=preferred_for_plot,selection_note=note,review_status='tentative' if tentative else 'confirmed',source_run=str(source),source_episode=source_episode,
         source_episode_12m=local_id,episode_directory=str(relative),case=case,result=result)
     write(REGISTRY,document)
-    rebuild(document)
+    if rebuild_outputs:
+        rebuild(document)
     print(f'E{new_id} <- source Ep {source_episode} (12 m index {local_id}), {category}',flush=True)
 
 
@@ -199,7 +208,8 @@ if __name__=='__main__':
     parser.add_argument('--slot',type=int)
     parser.add_argument('--note',default='')
     parser.add_argument('--allow-category-overflow',action='store_true')
+    parser.add_argument('--preferred-for-plot',action='store_true',help='Mark a highlighted candidate for illustration')
     parser.add_argument('--tentative',action='store_true',help='Archive provisionally, pending confirmation')
     args=parser.parse_args()
     initialize()
-    add_episode(args.source_run,args.source_episode,args.slot,args.tentative,args.note,args.allow_category_overflow)
+    add_episode(args.source_run,args.source_episode,args.slot,args.tentative,args.note,args.allow_category_overflow,args.preferred_for_plot)

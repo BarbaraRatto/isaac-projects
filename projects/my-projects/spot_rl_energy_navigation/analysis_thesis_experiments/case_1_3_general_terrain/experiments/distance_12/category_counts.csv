@@ -1,5 +1,5 @@
-category,saved,confirmed,tentative,target,remaining,over_target
-regular,0,0,0,10,10,0
-ice,0,0,0,10,10,0
-stairs,0,0,0,10,10,0
-surface_choice,0,0,0,10,10,0
+category,saved,confirmed,tentative,preferred_for_plot,target,remaining,over_target
+regular,28,28,0,3,10,0,18
+ice,24,24,0,7,10,0,14
+stairs,22,22,0,5,10,0,12
+surface_choice,18,18,0,4,10,0,8

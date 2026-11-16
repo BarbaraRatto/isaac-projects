@@ -1,0 +1,100 @@
+{
+  "episode": 79,
+  "distance_group_m": 12,
+  "category": "surface_choice",
+  "category_name": "Alternative routes on different surfaces",
+  "mission": {
+    "start_id": 1230,
+    "goal_id": 1231,
+    "start": [
+      6.531322537459078,
+      3.717451763545836,
+      0.005462663800616552,
+      0.014735376177584287,
+      3,
+      1,
+      1
+    ],
+    "goal": [
+      12.42892468691787,
+      14.168207185365784,
+      0.02199999988079071,
+      0.0480806495023018,
+      4,
+      5,
+      2
+    ],
+    "yaw": -0.8300913646167811,
+    "band": 3,
+    "distance_m": 12.0,
+    "deadline_steps": 315
+  },
+  "direct_cells": [
+    {
+      "row": 1,
+      "col": 1,
+      "terrain": "t4_fine_gravel",
+      "length_m": 0.8985550286483162
+    },
+    {
+      "row": 2,
+      "col": 1,
+      "terrain": "t6_obstacles",
+      "length_m": 3.4447270600971325
+    },
+    {
+      "row": 3,
+      "col": 1,
+      "terrain": "t1_asphalt",
+      "length_m": 0.679798275061322
+    },
+    {
+      "row": 3,
+      "col": 2,
+      "terrain": "t3_ramp",
+      "length_m": 2.7649287850358113
+    },
+    {
+      "row": 4,
+      "col": 2,
+      "terrain": "t4_fine_gravel",
+      "length_m": 3.444727060097134
+    },
+    {
+      "row": 5,
+      "col": 2,
+      "terrain": "t5_large_rocks",
+      "length_m": 0.7672637910602856
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t4_fine_gravel": 4.34328208874545,
+    "t6_obstacles": 3.4447270600971325,
+    "t1_asphalt": 0.679798275061322,
+    "t3_ramp": 2.7649287850358113,
+    "t5_large_rocks": 0.7672637910602856
+  },
+  "alternative_geometry": {
+    "waypoint_xy_m": [
+      6.0,
+      0.0
+    ],
+    "length_m": 19.313802007766583,
+    "terrain_lengths_m": {
+      "t4_fine_gravel": 9.804510234575854,
+      "t1_asphalt": 3.1624426503391145,
+      "t6_obstacles": 2.318670721492171,
+      "t3_ramp": 3.2943982150978997,
+      "t5_large_rocks": 0.7337801862615434
+    },
+    "rough_length_reduction_m": 1.1595399434037041
+  },
+  "minimum_saved_endpoint_rms_m": null,
+  "pool_index": 14043,
+  "preferred_for_plot": false,
+  "selection_note": "",
+  "review_status": "confirmed",
+  "source_episode": 616,
+  "source_episode_12m": 616,
+  "source_run": "distance_12m_all_20261114_013639_528982_7d49caff"
+}

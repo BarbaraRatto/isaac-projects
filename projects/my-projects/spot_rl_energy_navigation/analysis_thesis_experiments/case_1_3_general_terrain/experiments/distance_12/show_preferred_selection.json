@@ -1,0 +1,24 @@
+{
+  "source_run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_12m_try1/results_exp/distance_12m_all_20261114_013639_528982",
+  "date": "2026-11-16",
+  "note": "User selected routes for display; source IDs remain fixed and current collection IDs are resolved at plotting time. Final numbering remains open.",
+  "category_colors": {
+    "regular": "#16885C",
+    "ice": "#176BA5",
+    "stairs": "#E48312",
+    "surface_choice": "#C62F8A"
+  },
+  "source_episodes": [
+    83,
+    59,
+    317,
+    204,
+    270,
+    567,
+    453,
+    633,
+    624,
+    424
+  ],
+  "category_note": "Source Ep 424 is a stairs failure, included in the display selection."
+}

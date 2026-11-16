@@ -1,0 +1,85 @@
+{
+  "episode": 54,
+  "distance_group_m": 12,
+  "category": "stairs",
+  "category_name": "Stairs on the direct segment, without ice",
+  "mission": {
+    "start_id": 820,
+    "goal_id": 821,
+    "start": [
+      23.374247637641233,
+      0.7863644582976788,
+      0.0,
+      0.0,
+      5,
+      0,
+      4
+    ],
+    "goal": [
+      27.915516388109438,
+      11.893878947868284,
+      0.006275813090150761,
+      0.1481637426047512,
+      2,
+      4,
+      5
+    ],
+    "yaw": -1.8565034794429967,
+    "band": 3,
+    "distance_m": 12.0,
+    "deadline_steps": 315
+  },
+  "direct_cells": [
+    {
+      "row": 0,
+      "col": 4,
+      "terrain": "t6_obstacles",
+      "length_m": 0.7709759468212865
+    },
+    {
+      "row": 1,
+      "col": 4,
+      "terrain": "t5_large_rocks",
+      "length_m": 3.2410491144352935
+    },
+    {
+      "row": 2,
+      "col": 4,
+      "terrain": "t5_large_rocks",
+      "length_m": 3.2410491144352935
+    },
+    {
+      "row": 3,
+      "col": 4,
+      "terrain": "t7_stairs",
+      "length_m": 2.3277347874022882
+    },
+    {
+      "row": 3,
+      "col": 5,
+      "terrain": "t6_obstacles",
+      "length_m": 0.9133143270330053
+    },
+    {
+      "row": 4,
+      "col": 5,
+      "terrain": "t3_ramp",
+      "length_m": 1.5058767098728332
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t6_obstacles": 1.6842902738542918,
+    "t5_large_rocks": 6.482098228870587,
+    "t7_stairs": 2.3277347874022882,
+    "t3_ramp": 1.5058767098728332
+  },
+  "alternative_geometry": null,
+  "minimum_saved_endpoint_rms_m": null,
+  "pool_index": 12799,
+  "preferred_for_plot": true,
+  "selection_note": "",
+  "review_status": "confirmed",
+  "source_episode": 411,
+  "source_episode_12m": 411,
+  "source_run": "distance_12m_all_20261114_013639_528982_7d49caff"
+}

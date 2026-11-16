@@ -1,0 +1,92 @@
+{
+  "episode": 83,
+  "distance_group_m": 12,
+  "category": "surface_choice",
+  "category_name": "Alternative routes on different surfaces",
+  "mission": {
+    "start_id": 1276,
+    "goal_id": 1277,
+    "start": [
+      3.7027563533668593,
+      -0.798552688697809,
+      0.0,
+      0.0,
+      0,
+      0,
+      1
+    ],
+    "goal": [
+      10.226167489619211,
+      9.27344349614156,
+      0.017000000923871994,
+      0.164000004529953,
+      2,
+      3,
+      2
+    ],
+    "yaw": 2.9379916567894817,
+    "band": 3,
+    "distance_m": 12.0,
+    "deadline_steps": 315
+  },
+  "direct_cells": [
+    {
+      "row": 0,
+      "col": 1,
+      "terrain": "t1_asphalt",
+      "length_m": 2.738546734746763
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "terrain": "t4_fine_gravel",
+      "length_m": 3.5742666438047435
+    },
+    {
+      "row": 2,
+      "col": 1,
+      "terrain": "t6_obstacles",
+      "length_m": 3.4316167105378006
+    },
+    {
+      "row": 2,
+      "col": 2,
+      "terrain": "t4_fine_gravel",
+      "length_m": 0.1426499332669442
+    },
+    {
+      "row": 3,
+      "col": 2,
+      "terrain": "t3_ramp",
+      "length_m": 2.1129199776437484
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t1_asphalt": 2.738546734746763,
+    "t4_fine_gravel": 3.7169165770716877,
+    "t6_obstacles": 3.4316167105378006,
+    "t3_ramp": 2.1129199776437484
+  },
+  "alternative_geometry": {
+    "waypoint_xy_m": [
+      6.0,
+      0.0
+    ],
+    "length_m": 12.62311786705643,
+    "terrain_lengths_m": {
+      "t1_asphalt": 4.080503202383348,
+      "t4_fine_gravel": 4.3047194172767025,
+      "t6_obstacles": 2.2889720417890067,
+      "t3_ramp": 1.9489232056073735
+    },
+    "rough_length_reduction_m": 1.142644668748794
+  },
+  "minimum_saved_endpoint_rms_m": null,
+  "pool_index": 13817,
+  "preferred_for_plot": true,
+  "selection_note": "",
+  "review_status": "confirmed",
+  "source_episode": 639,
+  "source_episode_12m": 639,
+  "source_run": "distance_12m_all_20261114_013639_528982_7d49caff"
+}

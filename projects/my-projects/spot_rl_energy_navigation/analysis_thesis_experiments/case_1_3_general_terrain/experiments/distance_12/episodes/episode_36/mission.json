@@ -1,0 +1,73 @@
+{
+  "episode": 36,
+  "distance_group_m": 12,
+  "category": "ice",
+  "category_name": "Ice on the direct segment, without stairs",
+  "mission": {
+    "start_id": 516,
+    "goal_id": 517,
+    "start": [
+      28.478709970386635,
+      -0.5601586494659708,
+      0.0,
+      0.0,
+      0,
+      0,
+      5
+    ],
+    "goal": [
+      38.005786235197455,
+      6.736060771883575,
+      0.005137296969398289,
+      0.01436646647459966,
+      3,
+      2,
+      6
+    ],
+    "yaw": 2.304053386734818,
+    "band": 3,
+    "distance_m": 12.0,
+    "deadline_steps": 315
+  },
+  "direct_cells": [
+    {
+      "row": 0,
+      "col": 5,
+      "terrain": "t1_asphalt",
+      "length_m": 3.3883169304438154
+    },
+    {
+      "row": 1,
+      "col": 5,
+      "terrain": "t2_slippery",
+      "length_m": 2.3065551213060216
+    },
+    {
+      "row": 1,
+      "col": 6,
+      "terrain": "t3_ramp",
+      "length_m": 2.62750701704744
+    },
+    {
+      "row": 2,
+      "col": 6,
+      "terrain": "t4_fine_gravel",
+      "length_m": 3.6776209312027213
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t1_asphalt": 3.3883169304438154,
+    "t2_slippery": 2.3065551213060216,
+    "t3_ramp": 2.62750701704744,
+    "t4_fine_gravel": 3.6776209312027213
+  },
+  "alternative_geometry": null,
+  "minimum_saved_endpoint_rms_m": null,
+  "pool_index": 11337,
+  "preferred_for_plot": true,
+  "selection_note": "",
+  "review_status": "confirmed",
+  "source_episode": 259,
+  "source_episode_12m": 259,
+  "source_run": "distance_12m_all_20261114_013639_528982_7d49caff"
+}

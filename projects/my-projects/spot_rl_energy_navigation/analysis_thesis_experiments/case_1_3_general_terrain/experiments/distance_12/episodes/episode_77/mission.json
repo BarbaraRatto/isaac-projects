@@ -1,0 +1,98 @@
+{
+  "episode": 77,
+  "distance_group_m": 12,
+  "category": "surface_choice",
+  "category_name": "Alternative routes on different surfaces",
+  "mission": {
+    "start_id": 1222,
+    "goal_id": 1223,
+    "start": [
+      5.106679451861776,
+      0.8480841981484379,
+      0.0,
+      0.0,
+      0,
+      0,
+      1
+    ],
+    "goal": [
+      11.17178000893361,
+      11.202530355843543,
+      0.006077844507884413,
+      0.01462651038999673,
+      3,
+      4,
+      2
+    ],
+    "yaw": -2.6203037808556453,
+    "band": 3,
+    "distance_m": 11.999999999999998,
+    "deadline_steps": 315
+  },
+  "direct_cells": [
+    {
+      "row": 0,
+      "col": 1,
+      "terrain": "t1_asphalt",
+      "length_m": 0.7555198513833538
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "terrain": "t4_fine_gravel",
+      "length_m": 3.4767673182834513
+    },
+    {
+      "row": 2,
+      "col": 1,
+      "terrain": "t6_obstacles",
+      "length_m": 3.4707749870164677
+    },
+    {
+      "row": 2,
+      "col": 2,
+      "terrain": "t4_fine_gravel",
+      "length_m": 0.00599233126698273
+    },
+    {
+      "row": 3,
+      "col": 2,
+      "terrain": "t3_ramp",
+      "length_m": 3.4767673182834526
+    },
+    {
+      "row": 4,
+      "col": 2,
+      "terrain": "t4_fine_gravel",
+      "length_m": 0.8141781937662901
+    }
+  ],
+  "direct_terrain_lengths_m": {
+    "t1_asphalt": 0.7555198513833538,
+    "t4_fine_gravel": 4.296937843316724,
+    "t6_obstacles": 3.4707749870164677,
+    "t3_ramp": 3.4767673182834526
+  },
+  "alternative_geometry": {
+    "waypoint_xy_m": [
+      6.0,
+      0.0
+    ],
+    "length_m": 13.570493831214222,
+    "terrain_lengths_m": {
+      "t1_asphalt": 2.883908292066036,
+      "t4_fine_gravel": 5.18138512115346,
+      "t6_obstacles": 2.200932825764425,
+      "t3_ramp": 3.304267592230303
+    },
+    "rough_length_reduction_m": 1.2698421612520425
+  },
+  "minimum_saved_endpoint_rms_m": null,
+  "pool_index": 13832,
+  "preferred_for_plot": false,
+  "selection_note": "",
+  "review_status": "confirmed",
+  "source_episode": 612,
+  "source_episode_12m": 612,
+  "source_run": "distance_12m_all_20261114_013639_528982_7d49caff"
+}
