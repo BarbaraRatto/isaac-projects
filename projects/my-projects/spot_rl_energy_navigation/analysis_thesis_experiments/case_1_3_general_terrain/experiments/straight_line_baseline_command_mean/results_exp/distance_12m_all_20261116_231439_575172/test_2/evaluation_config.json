@@ -1,0 +1,77 @@
+{
+  "method": "Start-goal line tracking with phase-specific mean policy commands; no learned navigation policy",
+  "requested_distance": 12,
+  "requested_category": "ice",
+  "selected_episodes": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "mission_file": "selected_missions.json",
+  "frozen_panel_sha256": "c3faf4da2eb2f6f6cd3fd742e3a8855902867c5cf096c80023bf7769954ff6da",
+  "map": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/maps/real_terrains_v2_eval_01.usd",
+  "map_sha256": "c00ecd296f70f91af8665fa9dc927cd120ad988c8ae7b7e253ec49856c2e2836",
+  "map_metadata_sha256": "9edb4ab06057f59cb84a6ea5bac5659b5fe6952d8e62f1dc1a9c8153c326adbd",
+  "source_selection": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/thesis experiments_12m/selected_missions_v2.json",
+  "source_selection_sha256": "486e18f5a44f8ab71b1443d99b0212c03ed81f77f7bbe9229138054a9c0396b3",
+  "policy_sources": [
+    {
+      "path": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_12m_try1/results_exp/distance_12m_all_20261114_013639_528982",
+      "config_sha256": "7d49caff7c4f9e3b4d3cd5090d905dc3f1ac4a6dfbe04fa38c2eea120d574f4f",
+      "episodes_sha256": "6ff8773b7da2748b4125a5cee74d4cd5c9b7fc2f22e1fce229f763dc5bb703ff",
+      "mission_file": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_12m_try1/results_exp/distance_12m_all_20261114_013639_528982/inputs/selected_missions.json",
+      "missions_sha256": "29b01751b81d670bd5bc5e9dcaac2fb4b79b6eb0056c810b6ba4787457573533",
+      "checkpoint_sha256": "1c12f5f18e1285463456423a2ae5e6e043f311d310b2ba04bf9575ed5609c02f",
+      "simulation_seed": 20000
+    }
+  ],
+  "controller": {
+    "lookahead_m": 1.0,
+    "heading_gain": 1.5,
+    "max_yaw_rad_s": 1.5,
+    "navigation_dt_s": 0.2,
+    "forward_speed": "Per-mission time-weighted mean commanded forward speed during original navigation",
+    "alignment_yaw": "Magnitude of signed mean yaw command during original alignment; direction follows heading error; zero within original tolerance"
+  },
+  "assets": {
+    "/home/students/work/barbara/isaac-projects/projects/my-projects/IsaacRobotics/assets/spot.usd": "79aa68380357daf3b8aea3bb93ebf71b4b7f4015dc97ecb53c286de232ef60dd",
+    "/home/students/work/barbara/isaac-projects/projects/my-projects/IsaacRobotics/policies/spot/models/spot_policy.pt": "d95d675e8b080d5c84a2a2779d165ff7ecd3e34d24b233c083242e615a3d589a",
+    "/home/isaac/isaac-sim/assets/Assets/Isaac/5.1/Isaac/Sensors/Stereolabs/ZED_X/ZED_X.usdc": "fb45044c5ca6127d42ad8c2528b29ac160b5511274a47ad251291d4aa9ac0b4a"
+  },
+  "command": [
+    "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/straight_line_baseline_command_mean/create_exp.py",
+    "--device",
+    "cuda:0",
+    "--distance",
+    "12",
+    "--category",
+    "ice",
+    "--headless",
+    "--output",
+    "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/straight_line_baseline_command_mean/results_exp/distance_12m_all_20261116_231439_575172/test_2"
+  ],
+  "device": "cuda:0",
+  "simulation_seed": 20000,
+  "energy": "Absolute joint mechanical work; physics-step trapezoidal integration",
+  "time": "Simulated time including initial alignment; excludes one-time standing calibration",
+  "perception": "Camera synchronization retained; navigation actor and DINO/PCA feature extraction disabled",
+  "calibration_point": [
+    10.03242026495743,
+    18.25320210448941,
+    0.0,
+    0.0,
+    0,
+    6,
+    2
+  ],
+  "goal_radius_m": 0.55,
+  "physics_dt_s": 0.005,
+  "navigation_dt_s": 0.2
+}

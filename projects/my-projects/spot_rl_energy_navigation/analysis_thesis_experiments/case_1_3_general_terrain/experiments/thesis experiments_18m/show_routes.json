@@ -1,5 +1,5 @@
 {
-  "label_note": "Thesis episode IDs E1\u2013E40 on the map; previous collection IDs in the legend. Original run/episode preserved as provenance.",
+  "label_note": "Thesis episode IDs and categories in the legend; original IDs retained only as provenance.",
   "optional_not_shown": {
     "collection_episode": 34,
     "reason": "Optional additional Regular example; retained in the forty-case selection but omitted from the eight-case display."
@@ -14,10 +14,10 @@
       "color": "#16885C"
     },
     {
-      "collection_episode": 13,
-      "thesis_episode": 5,
+      "collection_episode": 14,
+      "thesis_episode": 6,
       "category": "regular",
-      "source_episode": 20,
+      "source_episode": 29,
       "source_run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_18m_try2/results_exp/distance_18m_all_20261113_235009_130946",
       "color": "#16885C"
     },

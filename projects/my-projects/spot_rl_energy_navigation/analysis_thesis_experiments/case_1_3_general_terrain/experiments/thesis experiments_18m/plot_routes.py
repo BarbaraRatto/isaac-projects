@@ -18,7 +18,7 @@ from add_episode import rows as read_rows
 TITLES={'regular':'Regular','ice':'Ice','stairs':'Stairs','multiple_choices':'Multiple choices'}
 
 
-def main():
+def main(show_only=False):
     document=json.loads((HERE/'selected_missions.json').read_text())
     source=(HERE/document['source_collection']).resolve()
     terrain=CASE/'maps/real_terrains_v2_eval_01.usd'
@@ -69,14 +69,18 @@ def main():
             reason=slot['result']['reason']
             if reason!='goal':
                 axis.scatter(float(data[-1]['x_m']),float(data[-1]['y_m']),s=95,marker='x',color=color,lw=2.4,zorder=6)
-            label=(f'{TITLES[slot["thesis_category"]]} · ' if category_colors else '')+f'E{n} (old E{collection_id})'
-            if reason!='goal':
-                label+=f' [{reason}]'
-            handles.append(Line2D([],[],color=color,lw=2.6,label=label))
+            if category_colors:
+                label=f'E{n} · {TITLES[slot["thesis_category"]]}'
+            else:
+                label=f'E{n} (old E{collection_id})'
+                if reason!='goal':
+                    label+=f' [{reason}]'
+            handles.append(Line2D([],[],color=color,lw=3.6 if category_colors else 2.6,label=label))
         for marker,label in [('o','Start'),('*','Goal'),('x','Failure position')]:
             handles.append(Line2D([],[],color='#454B50',marker=marker,linestyle='none',markersize=10,label=label))
         axis.legend(handles=handles,loc='upper left',bbox_to_anchor=(1.02,1),frameon=False,
-                    title='Episode ID (previous collection ID)',title_fontsize=14,fontsize=12,labelspacing=1.0)
+                    title=None if category_colors else 'Episode ID (previous collection ID)',
+                    title_fontsize=14,fontsize=14 if category_colors else 12,labelspacing=1.0)
         axis.set(xlim=(-3,39),ylim=(-1.5,19.5),aspect='equal',xlabel='X [m]',ylabel='Y [m]')
         axis.set_xticks(range(0,40,6));axis.set_yticks(range(0,20,3));axis.tick_params(labelsize=14)
         axis.xaxis.label.set_size(16);axis.yaxis.label.set_size(16)
@@ -86,7 +90,7 @@ def main():
             figure.savefig(HERE/f'{stem}.{extension}',dpi=170)
         plt.close(figure)
 
-    for index,category in enumerate(document['category_order'],1):
+    for index,category in enumerate(document['category_order'] if not show_only else [],1):
         subset=[s for s in slots if s['thesis_category']==category]
         figure,axis=plt.subplots(figsize=(17,9),constrained_layout=True)
         draw(axis,subset)
@@ -94,13 +98,14 @@ def main():
         stem=f'exp_18m_cat{index}_{category}'
         save(figure,stem)
         print(stem)
-    figure,axes=plt.subplots(2,2,figsize=(32,19),constrained_layout=True)
-    for axis,category in zip(axes.flat,document['category_order']):
-        draw(axis,[s for s in slots if s['thesis_category']==category])
-        axis.set_title(f'{TITLES[category]} · 10 episodes',fontsize=21)
-    figure.suptitle('Experiments · 18 m · 40 episodes\nLabels: thesis episode IDs; legend parentheses: previous collection IDs',fontsize=24)
-    save(figure,'exp_all_together')
-    print('exp_all_together')
+    if not show_only:
+        figure,axes=plt.subplots(2,2,figsize=(32,19),constrained_layout=True)
+        for axis,category in zip(axes.flat,document['category_order']):
+            draw(axis,[s for s in slots if s['thesis_category']==category])
+            axis.set_title(f'{TITLES[category]} · 10 episodes',fontsize=21)
+        figure.suptitle('Experiments · 18 m · 40 episodes\nLabels: thesis episode IDs; legend parentheses: previous collection IDs',fontsize=24)
+        save(figure,'exp_all_together')
+        print('exp_all_together')
 
     show_document=json.loads((HERE/'show_routes.json').read_text())
     show_lookup={s['episode']:s for s in slots}
@@ -117,10 +122,13 @@ def main():
     draw(axis,show_slots,category_colors=True)
     axis.set_title(f'Show routes · 18 m · {len(show_slots)} episodes',fontsize=21,pad=18)
     save(figure,'show_routes')
-    show_document['label_note']='Thesis episode IDs E1–E40 on the map; previous collection IDs in the legend. Original run/episode preserved as provenance.'
+    show_document['label_note']='Thesis episode IDs and categories in the legend; original IDs retained only as provenance.'
     (HERE/'show_routes.json').write_text(json.dumps(show_document,indent=2)+'\n')
     print('show_routes')
 
 
 if __name__=='__main__':
-    main()
+    import argparse
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--show-only',action='store_true')
+    main(show_only=parser.parse_args().show_only)

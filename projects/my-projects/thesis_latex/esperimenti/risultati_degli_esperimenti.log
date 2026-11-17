@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.11.2)  17 NOV 2026 00:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.11.2)  17 NOV 2026 16:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -434,12 +434,12 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 205.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 205.
-<figure/map_a_routes.pdf, id=108, 650.43pt x 722.7pt>
+<figure/map_a_routes.pdf, id=100, 650.43pt x 722.7pt>
 File: figure/map_a_routes.pdf Graphic file (type pdf)
 <use figure/map_a_routes.pdf>
 Package pdftex.def Info: figure/map_a_routes.pdf  used on input line 233.
 (pdftex.def)             Requested size: 237.01411pt x 263.34772pt.
-<figure/map_b_routes.pdf, id=109, 650.43pt x 722.7pt>
+<figure/map_b_routes.pdf, id=101, 650.43pt x 722.7pt>
 File: figure/map_b_routes.pdf Graphic file (type pdf)
 <use figure/map_b_routes.pdf>
 Package pdftex.def Info: figure/map_b_routes.pdf  used on input line 237.
@@ -457,12 +457,12 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <9> on input line 34.
  [6 <./figure/map_a_routes.pdf> <./figure/map_b_routes.pdf>]) [7]
-<figure/medium_eval_20261007_114130_routes_outcomes.pdf, id=168, 923.45pt x 461.725pt>
+<figure/medium_eval_20261007_114130_routes_outcomes.pdf, id=159, 923.45pt x 461.725pt>
 File: figure/medium_eval_20261007_114130_routes_outcomes.pdf Graphic file (type pdf)
 <use figure/medium_eval_20261007_114130_routes_outcomes.pdf>
 Package pdftex.def Info: figure/medium_eval_20261007_114130_routes_outcomes.pdf  used on input line 291.
 (pdftex.def)             Requested size: 483.69687pt x 241.84563pt.
-<figure/medium_eval_20261007_114130_routes_successes.pdf, id=169, 923.45pt x 461.725pt>
+<figure/medium_eval_20261007_114130_routes_successes.pdf, id=160, 923.45pt x 461.725pt>
 File: figure/medium_eval_20261007_114130_routes_successes.pdf Graphic file (type pdf)
 <use figure/medium_eval_20261007_114130_routes_successes.pdf>
 Package pdftex.def Info: figure/medium_eval_20261007_114130_routes_successes.pdf  used on input line 298.
@@ -470,38 +470,34 @@ Package pdftex.def Info: figure/medium_eval_20261007_114130_routes_successes.pdf
  [8
 
  <./figure/medium_eval_20261007_114130_routes_outcomes.pdf>] [9 <./figure/medium_eval_20261007_114130_routes_successes.pdf>] (./tabelle/big_map_12m_risultati.tex [10]) (./tabelle/big_map_12m_statistiche.tex) [11] (./tabelle/big_map_12m_rettilineo.tex [12]) (./tabelle/big_map_12m_confronto_statistiche.tex) [13] (./tabelle/big_map_12m_confronto_variazioni.tex)
-<figure/big_map_12m_show_routes_8_episodes.pdf, id=647, 1300.86pt x 650.43pt>
+<figure/big_map_12m_show_routes_8_episodes.pdf, id=639, 1300.86pt x 650.43pt>
 File: figure/big_map_12m_show_routes_8_episodes.pdf Graphic file (type pdf)
 <use figure/big_map_12m_show_routes_8_episodes.pdf>
-Package pdftex.def Info: figure/big_map_12m_show_routes_8_episodes.pdf  used on input line 377.
+Package pdftex.def Info: figure/big_map_12m_show_routes_8_episodes.pdf  used on input line 381.
 (pdftex.def)             Requested size: 483.69687pt x 241.8463pt.
  [14] [15 <./figure/big_map_12m_show_routes_8_episodes.pdf>] [16] (./tabelle/big_map_18m_risultati.tex [17]) (./tabelle/big_map_18m_statistiche.tex) [18] (./tabelle/big_map_18m_rettilineo.tex [19]) (./tabelle/big_map_18m_confronto_statistiche.tex) [20] (./tabelle/big_map_18m_confronto_variazioni.tex)
-<figure/big_map_18m_show_routes.pdf, id=712, 1300.86pt x 650.43pt>
+<figure/big_map_18m_show_routes.pdf, id=704, 1300.86pt x 650.43pt>
 File: figure/big_map_18m_show_routes.pdf Graphic file (type pdf)
 <use figure/big_map_18m_show_routes.pdf>
-Package pdftex.def Info: figure/big_map_18m_show_routes.pdf  used on input line 474.
+Package pdftex.def Info: figure/big_map_18m_show_routes.pdf  used on input line 482.
 (pdftex.def)             Requested size: 483.69687pt x 241.8463pt.
- [21] [22 <./figure/big_map_18m_show_routes.pdf>] [23] (./tabelle/straight_line_command_mean_12m.tex) [24
-
-] [25] (./tabelle/straight_line_command_mean_18m.tex) [26
-
-] [27] (./risultati_degli_esperimenti.aux)
+ [21] [22 <./figure/big_map_18m_show_routes.pdf>] [23] (./risultati_degli_esperimenti.aux)
 Package rerunfilecheck Info: File `risultati_degli_esperimenti.out' has not changed.
-(rerunfilecheck)             Checksum: 473972D2BEE4EF674C4E58FF1D3141AA;5208.
+(rerunfilecheck)             Checksum: 2B69A40BDE9508346B9B2DBDB973D8C5;4531.
  ) 
 Here is how much of TeX's memory you used:
- 13085 strings out of 480163
- 214640 string characters out of 5894093
- 591350 words of memory out of 5000000
- 30484 multiletter control sequences out of 15000+600000
- 548796 words of font info for 191 fonts, out of 8000000 for 9000
+ 13049 strings out of 480163
+ 213734 string characters out of 5894093
+ 580557 words of memory out of 5000000
+ 30470 multiletter control sequences out of 15000+600000
+ 548713 words of font info for 190 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 60i,14n,63p,1113b,463s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,14n,63p,1305b,463s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi9.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy9.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb>
-Output written on risultati_degli_esperimenti.pdf (27 pages, 519158 bytes).
+Output written on risultati_degli_esperimenti.pdf (23 pages, 508529 bytes).
 PDF statistics:
- 851 PDF objects out of 1000 (max. 8388607)
- 618 compressed objects within 7 object streams
- 96 named destinations out of 1000 (max. 500000)
- 44223 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 815 PDF objects out of 1000 (max. 8388607)
+ 587 compressed objects within 6 object streams
+ 82 named destinations out of 1000 (max. 500000)
+ 44207 words of extra memory for PDF output out of 51595 (max. 10000000)
 

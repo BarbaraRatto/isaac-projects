@@ -725,14 +725,6 @@ INPUT ./figure/big_map_18m_show_routes.pdf
 INPUT figure/big_map_18m_show_routes.pdf
 INPUT ./figure/big_map_18m_show_routes.pdf
 INPUT ./figure/big_map_18m_show_routes.pdf
-INPUT ./tabelle/straight_line_command_mean_12m.tex
-INPUT tabelle/straight_line_command_mean_12m.tex
-INPUT ./tabelle/straight_line_command_mean_12m.tex
-INPUT tabelle/straight_line_command_mean_12m.tex
-INPUT ./tabelle/straight_line_command_mean_18m.tex
-INPUT tabelle/straight_line_command_mean_18m.tex
-INPUT ./tabelle/straight_line_command_mean_18m.tex
-INPUT tabelle/straight_line_command_mean_18m.tex
 INPUT risultati_degli_esperimenti.aux
 INPUT ./risultati_degli_esperimenti.out
 INPUT ./risultati_degli_esperimenti.out

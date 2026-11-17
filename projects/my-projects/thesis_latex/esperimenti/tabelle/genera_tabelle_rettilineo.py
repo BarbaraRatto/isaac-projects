@@ -1,4 +1,4 @@
-"""Build straight-line tables from completed runs and paired policy records."""
+"""Build comparisons from the user-confirmed remote straight-line results."""
 from pathlib import Path
 import csv
 import hashlib
@@ -8,34 +8,18 @@ from statistics import mean
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
-RUNS = {12: 'distance_12m_all_20261116_200032_934528',
-        18: 'distance_18m_all_20261116_202444_543554'}
-BASE = ROOT / 'spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/straight_line_baseline/results_exp'
 FIELDS = ('path_m', 'energy_j', 'time_s')
 
 
 def generate(distance, table, number, point, causes):
-    run = BASE / RUNS[distance]
-    complete = json.loads((run / 'complete.json').read_text())
-    if complete != dict(logging_checks='passed', completed_missions=40):
-        raise ValueError('Expected a complete, checked run')
-    panel = json.loads((run / 'inputs/selected_missions.json').read_text())
-    rows = list(csv.DictReader((run / 'episodes.csv').open()))
-    baseline = {int(row['episode']): row for row in rows}
-    if len(rows) != 40 or set(baseline) != set(range(1, 41)):
+    snapshot_path = HERE / f'big_map_{distance}m_rettilineo_confermato.json'
+    snapshot = json.loads(snapshot_path.read_text())
+    panel = snapshot['panel']
+    if panel['distance_m'] != distance:
+        raise ValueError('Confirmed panel distance differs')
+    baseline = {c['episode']: c['confirmed_straight_line_result'] for c in panel['cases']}
+    if set(baseline) != set(range(1, 41)):
         raise ValueError('Expected exactly E1 to E40')
-    for case in panel['cases']:
-        b = baseline[case['episode']]
-        for field, value in [('start_x', case['mission']['start'][0]),
-                             ('start_y', case['mission']['start'][1]),
-                             ('goal_x', case['mission']['goal'][0]),
-                             ('goal_y', case['mission']['goal'][1]),
-                             ('initial_yaw', case['mission']['yaw']),
-                             ('reference_speed_m_s', case['reference_speed_m_s'])]:
-            if not math.isclose(float(b[field]), value, abs_tol=1e-9):
-                raise ValueError(f'Mission mismatch: {case["episode"]}, {field}')
-        if b['category'] != case['category']:
-            raise ValueError('Category mismatch')
     prefix = f'big_map_{distance}m'
     comparison = [r'\begin{table}[H]', r'\centering',
         r'\caption{Statistiche per categoria con e senza la policy. Le medie di ciascun metodo comprendono soltanto i suoi successi; gli insiemi di missioni riuscite possono essere diversi.}',
@@ -56,14 +40,9 @@ def generate(distance, table, number, point, causes):
         entries = []
         for c in cases:
             b = baseline[c['episode']]
-            fixed = [str(c['episode']), point(c['mission']['start']), point(c['mission']['goal'])]
-            if b['reason'] == 'goal':
-                values = [number(b['path_m']), number(b['energy_j'], 1), number(b['time_s'], 1),
-                          number(float(b['path_m']) / float(b['time_s'])), 'Successo']
-            else:
-                values = ['---'] * 4 + ['Fallimento (' + causes[b['reason']] + ')']
-            entries.append(' & '.join(fixed + values) + r' \\')
-        tables.append(table(f'Missioni a {distance}~m, categoria {index}: risultati del riferimento rettilineo.',
+            # Preserve all user-confirmed cells, including the displayed mean speed.
+            entries.append(b['latex_row'])
+        tables.append(table(f'Missioni a {distance}~m, categoria {index}: riferimento rettilineo con velocità comandate medie per rotazione iniziale e avanzamento.',
                             f'tab:big-map-{distance}m-baseline-cat{index}', entries))
         group = dict(category=index, category_name=category)
         for method, records in [('Policy', [c['reference_policy_result'] for c in cases]),
@@ -98,8 +77,22 @@ def generate(distance, table, number, point, causes):
         content += [r'\bottomrule', r'\end{tabular}', r'\end{table}', '']
         (HERE / f'{prefix}_{suffix}.tex').write_text('\n'.join(content))
     (HERE / f'{prefix}_rettilineo.tex').write_text('\n'.join(tables))
-    provenance = dict(run=str(run.relative_to(ROOT)),
-        episodes_sha256=hashlib.sha256((run / 'episodes.csv').read_bytes()).hexdigest(),
-        missions_sha256=hashlib.sha256((run / 'inputs/selected_missions.json').read_bytes()).hexdigest(),
-        statistics=statistics)
+    all_cases = panel['cases']
+    common = [c for c in all_cases if c['reference_policy_result']['reason'] == 'goal'
+              and baseline[c['episode']]['reason'] == 'goal']
+    overall = dict(policy_successes=sum(c['reference_policy_result']['reason'] == 'goal' for c in all_cases),
+                   straight_successes=sum(baseline[c['episode']]['reason'] == 'goal' for c in all_cases),
+                   straight_failures={reason: sum(b['reason'] == reason for b in baseline.values())
+                                      for reason in ('fallen', 'timeout', 'out_of_bounds')},
+                   paired_episodes=[c['episode'] for c in common])
+    if common:
+        pm = {f: mean(float(c['reference_policy_result'][f]) for c in common) for f in FIELDS}
+        bm = {f: mean(float(baseline[c['episode']][f]) for c in common) for f in FIELDS}
+        overall.update(paired_means=dict(policy=pm, straight_line=bm),
+                       energy_saving_percent=100 * (1 - pm['energy_j'] / bm['energy_j']),
+                       path_extension_percent=100 * (pm['path_m'] / bm['path_m'] - 1),
+                       time_change_percent=100 * (pm['time_s'] / bm['time_s'] - 1))
+    provenance = dict(confirmed_snapshot=str(snapshot_path.relative_to(ROOT)),
+        confirmed_snapshot_sha256=hashlib.sha256(snapshot_path.read_bytes()).hexdigest(),
+        precision=snapshot['precision'], overall=overall, statistics=statistics)
     (HERE / f'{prefix}_rettilineo_statistiche.json').write_text(json.dumps(provenance, indent=2) + '\n')

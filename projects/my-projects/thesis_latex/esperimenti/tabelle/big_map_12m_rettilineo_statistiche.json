@@ -1,7 +1,52 @@
 {
-  "run": "spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/straight_line_baseline/results_exp/distance_12m_all_20261116_200032_934528",
-  "episodes_sha256": "001c5b7d71e3bed814c06e2edfdba835c30d2b9e20ee23135cedadc1a8276fa0",
-  "missions_sha256": "0b06968cdfd34021a8eb34ac788a9275c50d30999b9045d464027fbd2daca1b1",
+  "confirmed_snapshot": "thesis_latex/esperimenti/tabelle/big_map_12m_rettilineo_confermato.json",
+  "confirmed_snapshot_sha256": "4c0f58c5413a83429b4b5c34c14591802d68b958d7cc346279e50c219881b37f",
+  "precision": "Baseline metrics use displayed precision: path 0.01 m, energy 0.1 J, time 0.1 s. Policy metrics use validated full-precision archived values.",
+  "overall": {
+    "policy_successes": 36,
+    "straight_successes": 21,
+    "straight_failures": {
+      "fallen": 16,
+      "timeout": 3,
+      "out_of_bounds": 0
+    },
+    "paired_episodes": [
+      1,
+      2,
+      4,
+      5,
+      6,
+      7,
+      8,
+      10,
+      21,
+      28,
+      31,
+      32,
+      33,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40
+    ],
+    "paired_means": {
+      "policy": {
+        "path_m": 12.347427368164062,
+        "energy_j": 2458.5554970189146,
+        "time_s": 11.31578947368421
+      },
+      "straight_line": {
+        "path_m": 12.086842105263157,
+        "energy_j": 2517.4473684210525,
+        "time_s": 11.210526315789474
+      }
+    },
+    "energy_saving_percent": 2.33934866487695,
+    "path_extension_percent": 2.155941648211268,
+    "time_change_percent": 0.9389671361502261
+  },
   "statistics": [
     {
       "category": 1,
@@ -14,26 +59,27 @@
         "time_s": 11.15
       },
       "Rettilineo": {
-        "successes": 8,
-        "success_percent": 80.0,
-        "path_m": 11.887797117233276,
-        "energy_j": 1995.2681274414062,
-        "time_s": 12.775
+        "successes": 10,
+        "success_percent": 100.0,
+        "path_m": 12.009,
+        "energy_j": 2476.9700000000003,
+        "time_s": 10.88
       },
       "paired_means": {
         "policy": {
-          "path_m": 12.361048425946917,
-          "energy_j": 2438.2880510602677,
-          "time_s": 11.200000000000001
+          "path_m": 12.317405462265015,
+          "energy_j": 2433.6074829101562,
+          "time_s": 11.15
         },
         "straight_line": {
-          "path_m": 11.894522939409528,
-          "energy_j": 2012.5529087611608,
-          "time_s": 12.885714285714286
+          "path_m": 12.015,
+          "energy_j": 2498.4875,
+          "time_s": 11.025
         }
       },
       "paired_episodes": [
         1,
+        2,
         4,
         5,
         6,
@@ -41,9 +87,9 @@
         8,
         10
       ],
-      "success_change_pp": 0.0,
-      "energy_saving_percent": -21.15398509255444,
-      "path_extension_percent": 3.922187454796311
+      "success_change_pp": -20.0,
+      "energy_saving_percent": 2.596771730490699,
+      "path_extension_percent": 2.516899394631822
     },
     {
       "category": 2,
@@ -56,31 +102,16 @@
         "time_s": 11.488888888888889
       },
       "Rettilineo": {
-        "successes": 2,
-        "success_percent": 20.0,
-        "path_m": 11.951501369476318,
-        "energy_j": 2523.4251708984375,
-        "time_s": 12.200000000000001
+        "successes": 0,
+        "success_percent": 0.0,
+        "path_m": null,
+        "energy_j": null,
+        "time_s": null
       },
-      "paired_means": {
-        "policy": {
-          "path_m": 12.174761295318604,
-          "energy_j": 2335.2987060546875,
-          "time_s": 10.700000000000001
-        },
-        "straight_line": {
-          "path_m": 11.951501369476318,
-          "energy_j": 2523.4251708984375,
-          "time_s": 12.200000000000001
-        }
-      },
-      "paired_episodes": [
-        15,
-        16
-      ],
-      "success_change_pp": 70.0,
-      "energy_saving_percent": 7.455202833566476,
-      "path_extension_percent": 1.868049201019062
+      "paired_episodes": [],
+      "success_change_pp": 90.0,
+      "energy_saving_percent": null,
+      "path_extension_percent": null
     },
     {
       "category": 3,
@@ -95,29 +126,29 @@
       "Rettilineo": {
         "successes": 2,
         "success_percent": 20.0,
-        "path_m": 11.707730293273926,
-        "energy_j": 1998.1181030273438,
-        "time_s": 10.600000000000001
+        "path_m": 12.02,
+        "energy_j": 2542.7,
+        "time_s": 11.4
       },
       "paired_means": {
         "policy": {
-          "path_m": 11.979154586791992,
-          "energy_j": 2294.507568359375,
-          "time_s": 9.7
+          "path_m": 12.139429569244385,
+          "energy_j": 2478.388427734375,
+          "time_s": 11.5
         },
         "straight_line": {
-          "path_m": 11.707730293273926,
-          "energy_j": 1998.1181030273438,
-          "time_s": 10.600000000000001
+          "path_m": 12.02,
+          "energy_j": 2542.7,
+          "time_s": 11.4
         }
       },
       "paired_episodes": [
         21,
-        30
+        28
       ],
       "success_change_pp": 70.0,
-      "energy_saving_percent": -14.833430760823019,
-      "path_extension_percent": 2.318334012818868
+      "energy_saving_percent": 2.529263077265298,
+      "path_extension_percent": 0.9935904263260076
     },
     {
       "category": 4,
@@ -132,9 +163,9 @@
       "Rettilineo": {
         "successes": 9,
         "success_percent": 90.0,
-        "path_m": 12.006658554077148,
-        "energy_j": 2084.2183837890625,
-        "time_s": 13.377777777777778
+        "path_m": 12.165555555555557,
+        "energy_j": 2528.688888888889,
+        "time_s": 11.333333333333334
       },
       "paired_means": {
         "policy": {
@@ -143,9 +174,9 @@
           "time_s": 11.422222222222222
         },
         "straight_line": {
-          "path_m": 12.006658554077148,
-          "energy_j": 2084.2183837890625,
-          "time_s": 13.377777777777778
+          "path_m": 12.165555555555557,
+          "energy_j": 2528.688888888889,
+          "time_s": 11.333333333333334
         }
       },
       "paired_episodes": [
@@ -160,8 +191,8 @@
         40
       ],
       "success_change_pp": 10.0,
-      "energy_saving_percent": -18.813086521257993,
-      "path_extension_percent": 3.445393936155816
+      "energy_saving_percent": 2.070824034372787,
+      "path_extension_percent": 2.094270854423508
     }
   ]
 }

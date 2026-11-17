@@ -67,14 +67,18 @@ def main(show_only=False):
             reason=slot['result']['reason']
             if reason!='goal':
                 axis.scatter(float(data[-1]['x_m']),float(data[-1]['y_m']),s=95,marker='x',color=color,lw=2.4,zorder=6)
-            label=(f'{TITLES[slot["case"]["category"]]} · ' if category_colors else '')+f'E{n} (Ep {slot["source_episode"]})'
-            if reason!='goal':
-                label+=f' [{reason}]'
-            handles.append(Line2D([],[],color=color,lw=2.6,label=label))
+            if category_colors:
+                label=f'E{n} · {TITLES[slot["case"]["category"]]}'
+            else:
+                label=f'E{n} (Ep {slot["source_episode"]})'
+                if reason!='goal':
+                    label+=f' [{reason}]'
+            handles.append(Line2D([],[],color=color,lw=3.6 if category_colors else 2.6,label=label))
         for marker,label in [('o','Start'),('*','Goal'),('x','Failure position')]:
             handles.append(Line2D([],[],color='#454B50',marker=marker,linestyle='none',markersize=10,label=label))
         axis.legend(handles=handles,loc='upper left',bbox_to_anchor=(1.02,1),frameon=False,
-                    title='Episode ID (original try1 ID)',title_fontsize=14,fontsize=12,labelspacing=1.0)
+                    title=None if category_colors else 'Episode ID (original try1 ID)',
+                    title_fontsize=14,fontsize=14 if category_colors else 12,labelspacing=1.0)
         axis.set(xlim=(-3,39),ylim=(-1.5,19.5),aspect='equal',xlabel='X [m]',ylabel='Y [m]')
         axis.set_xticks(range(0,40,6));axis.set_yticks(range(0,20,3));axis.tick_params(labelsize=14)
         axis.xaxis.label.set_size(16);axis.yaxis.label.set_size(16)
@@ -116,7 +120,7 @@ def main(show_only=False):
     draw(axis,show_slots,category_colors=True)
     axis.set_title(f'Show routes · 12 m · {len(show_slots)} episodes',fontsize=21,pad=18)
     save(figure,'show_routes')
-    show_document['label_note']='Thesis episode IDs E1–E40 on the map; original try1 IDs in the legend. Collection IDs preserved as provenance.'
+    show_document['label_note']='Thesis episode IDs and categories in the legend; original IDs retained only as provenance.'
     (HERE/'show_routes.json').write_text(json.dumps(show_document,indent=2)+'\n')
     print('show_routes')
 

@@ -350,7 +350,7 @@ La distanza effettivamente percorsa dipende invece dalla traiettoria e dal punto
 \subsubsubsection{Confronto con le missioni senza la policy di navigazione}
 
 
-Le stesse 40 missioni sono state ripetute senza la policy di navigazione appresa, mantenendo il controllore locomotorio, la mappa, gli start, i goal, gli orientamenti iniziali e gli stessi criteri di conclusione. Dopo la rotazione iniziale verso il goal, il robot segue il segmento start--goal con correzioni di direzione che compensano le deviazioni, senza scegliere il percorso in base ai terreni. Il comando di velocità in avanti è costante per ciascuna missione ed è pari alla distanza percorsa divisa per il tempo totale del corrispondente episodio con policy. La velocità effettiva può essere diversa da quella comandata. Tempo ed energia comprendono l'allineamento iniziale in entrambi i metodi.
+Le stesse 40 missioni sono state ripetute senza la policy di navigazione appresa, mantenendo il controllore locomotorio, la mappa, gli start, i goal, gli orientamenti iniziali e gli stessi criteri di conclusione. Dopo la rotazione iniziale verso il goal, il robot segue il segmento start--goal con correzioni di direzione che compensano le deviazioni, senza scegliere il percorso in base ai terreni. Per ogni missione sono state calcolate due medie dei comandi registrati nel corrispondente episodio con policy, pesando ciascun comando per la sua durata. Durante l'avanzamento si usa la velocità lineare comandata media della sola fase di navigazione. Per la rotazione iniziale si usa invece il modulo della velocità angolare comandata media della fase di allineamento, mantenendo nullo l'avanzamento. Il verso della rotazione segue l'errore di orientamento e il robot si ferma quando rientra nella tolleranza prevista, prima di iniziare la navigazione. Questa scelta ha lo scopo di ottenere velocità effettive simili nei due metodi, pur senza garantirne l'uguaglianza su ogni terreno. Tempo ed energia comprendono l'allineamento iniziale in entrambi i metodi.
 
 Le quattro tabelle seguenti riportano i risultati del riferimento rettilineo. L'energia è il lavoro meccanico assoluto ai giunti; la velocità media è la distanza effettivamente percorsa divisa per il tempo totale. In caso di fallimento, distanza, energia, tempo e velocità media sono sostituiti da un trattino. I dati fino all'interruzione restano conservati nei file originali.
 
@@ -358,15 +358,19 @@ Le quattro tabelle seguenti riportano i risultati del riferimento rettilineo. L'
 
 La tabella~\ref{tab:big-map-12m-confronto-statistiche} affianca i due metodi. Per ciascuno, il successo è calcolato sulle dieci missioni della categoria e le medie comprendono soltanto i suoi successi. Gli insiemi di missioni riuscite possono quindi essere diversi: queste medie descrivono i risultati dei due metodi, ma non costituiscono da sole un confronto energetico a parità di missione.
 
+Le statistiche del riferimento rettilineo sono calcolate sui valori disponibili nelle nuove tabelle: distanza al centesimo di metro, energia al decimo di joule e tempo al decimo di secondo. Per la policy si usano i dati originali prima dell'arrotondamento.
+
 \input{tabelle/big_map_12m_confronto_statistiche.tex}
 
 La variazione del successo è espressa in \textbf{punti percentuali}, sottraendo la percentuale del riferimento rettilineo da quella della policy. Il risparmio energetico e l'allungamento del percorso sono invece calcolati \textbf{soltanto sulle stesse missioni riuscite con entrambi i metodi}, il cui numero è indicato con $N$. Il risparmio è la riduzione percentuale dell'energia media con la policy rispetto al riferimento; un valore negativo indica un consumo maggiore con la policy. L'allungamento è l'aumento percentuale della distanza media rispetto al riferimento. Quando non ci sono successi comuni, queste due variazioni sono indicate con un trattino.
 
 \input{tabelle/big_map_12m_confronto_variazioni.tex}
 
-Il riferimento rettilineo completa 21 missioni su 40 (52,5\%), contro le 36 su 40 della policy (90\%). I fallimenti del riferimento comprendono 11 cadute e 8 timeout. Sulle 20 missioni completate da entrambi i metodi, la policy consuma mediamente il 16,1\% in più, percorre il 3,3\% di strada in più e impiega il 13,3\% di tempo in meno. In questa selezione il vantaggio principale riguarda quindi il raggiungimento del goal, mentre non emerge un risparmio energetico complessivo rispetto al riferimento riuscito.
+Il riferimento rettilineo completa 21 missioni su 40 (52,5\%), contro le 36 su 40 della policy (90\%). I fallimenti del riferimento comprendono 16 cadute e 3 timeout. Nelle categorie 2 e 3 la policy raggiunge il goal in nove casi su dieci, mentre il rettilineo riesce rispettivamente in zero e due casi. Nella categoria 1, invece, il riferimento completa tutte le missioni e la policy ne completa otto.
 
-Il confronto comprende sia la scelta della traiettoria sia il diverso andamento della velocità: assegnare al riferimento un comando pari alla velocità media della policy non riproduce la sua velocità istante per istante. I risultati descrivono le missioni selezionate e non una stima del comportamento su tutte le possibili missioni casuali.
+Sulle 19 missioni riuscite con entrambi i metodi, la policy presenta un risparmio energetico medio del 2,3\%, percorre il 2,2\% di strada in più e impiega lo 0,9\% di tempo in più. Il risparmio energetico è circa del 2,6\% nella categoria 1 e del 2,1\% nella categoria 4; nella categoria 3 il risparmio è circa del 2,5\%, calcolato su due soli casi comuni. Nella categoria 2 il confronto energetico non è possibile perché il riferimento fallisce in tutte le missioni. Il vantaggio più evidente della policy riguarda quindi il successo sui percorsi con terreni critici; la riduzione energetica media osservata sui successi comuni rimane contenuta.
+
+Il confronto comprende sia la scelta della traiettoria sia il diverso andamento della velocità: le medie dei comandi rendono le condizioni più simili, ma non riproducono le variazioni istante per istante della policy. I risultati descrivono le missioni selezionate e non una stima del comportamento su tutte le possibili missioni casuali.
 
 \subsubsubsection{Traiettorie di alcune missioni}
 
@@ -375,15 +379,15 @@ Per esaminare più da vicino il comportamento del robot ho scelto alcune mission
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figure/big_map_12m_show_routes_8_episodes.pdf}
-\caption{Traiettorie di otto missioni selezionate a 12~m, due per categoria. Verde: categoria 1; blu: categoria 2; arancione: categoria 3; fucsia: categoria 4. I cerchi indicano gli start, le stelle i goal e le croci le posizioni terminali dei fallimenti. Le etichette E1--E40 seguono la numerazione delle tabelle; i numeri precedenti sono ancora riportati tra parentesi nella legenda.}
+\caption{Traiettorie di otto missioni selezionate a 12~m, due per categoria. Verde: categoria 1; blu: categoria 2; arancione: categoria 3; fucsia: categoria 4. I cerchi indicano gli start, le stelle i goal e le croci le posizioni terminali dei fallimenti. Le etichette E1--E40 seguono la numerazione delle tabelle; la legenda riporta il numero di ciascun episodio e la categoria.}
 \label{fig:big-map-12m-show-routes}
 \end{figure}
 
-Le celle citate di seguito sono indicate come (riga, colonna), secondo gli indici riportati sulla mappa. La descrizione riguarda la traiettoria osservata: il vantaggio energetico delle singole deviazioni sarà verificato con il confronto rettilineo.
+Le celle citate di seguito sono indicate come (riga, colonna), secondo gli indici riportati sulla mappa. La descrizione riguarda la traiettoria osservata; il suo costo energetico può essere confrontato con quello del riferimento rettilineo quando entrambi i metodi completano la missione.
 
 \textbf{Categoria 1: terreno regolare.}
 
-\textbf{Episodio 1.} Il robot parte sull'asfalto nella cella $(3,1)$ e deve raggiungere un goal sulle rocce nella cella $(3,3)$, attraversando la rampa intermedia. Non ci sono ghiaccio o scale sul segmento diretto. La traiettoria presenta però una curva verso il lato inferiore delle celle, prima di risalire verso il goal. Spot completa la missione percorrendo 12,79~m. Il caso mostra che la policy può scegliere una traiettoria curva anche quando non deve aggirare una zona scivolosa o delle scale; resta da verificare se questa curva offra un vantaggio rispetto a un movimento più diretto.
+\textbf{Episodio 1.} Il robot parte sull'asfalto nella cella $(3,1)$ e deve raggiungere un goal sulle rocce nella cella $(3,3)$, attraversando la rampa intermedia. Non ci sono ghiaccio o scale sul segmento diretto. La traiettoria presenta però una curva verso il lato inferiore delle celle, prima di risalire verso il goal. Spot completa la missione percorrendo 12,79~m. Il caso mostra che la policy può scegliere una traiettoria curva anche quando non deve aggirare una zona scivolosa o delle scale; nel confronto con il riferimento rettilineo riuscito, il lavoro meccanico è circa 2409~J contro 2534~J, con una riduzione di circa il 4,9\%.
 
 \textbf{Episodio 2.} La partenza è nella zona con ostacoli della cella $(3,5)$ e il goal sulla rampa in $(1,6)$. Spot si muove in diagonale, passa attraverso la ghiaia e raggiunge il goal senza una grande deviazione. Il percorso misura 12,01~m. Rispetto all'episodio 1, la traiettoria rimane più vicina alla direzione complessiva del goal, pur attraversando superfici con caratteristiche diverse.
 
@@ -403,7 +407,7 @@ Le celle citate di seguito sono indicate come (riga, colonna), secondo gli indic
 
 \textbf{Episodio 31.} Il robot parte dalle rocce in $(0,2)$ e deve arrivare sull'asfalto in $(3,1)$. Durante la salita si sposta verso sinistra, passa sulla ghiaia e attraversa la zona con ostacoli prima di raggiungere l'asfalto. La curva interessa anche il margine della cella con scale $(1,2)$, senza impedire il successo. Il caso mostra una sequenza di passaggi fra superfici diverse, ma non permette da solo di concludere che la strada scelta abbia il costo minimo.
 
-\textbf{Episodio 32.} Start e goal si trovano rispettivamente sugli ostacoli in $(2,0)$ e sulla ghiaia in $(2,2)$. Il segmento diretto attraversa la cella con ostacoli $(2,1)$. Spot curva verso il basso e percorre per un tratto la ghiaia della cella $(1,1)$, poi risale verso il goal. La deviazione non elimina ogni passaggio sugli ostacoli, ma sostituisce parte del tratto diretto con un percorso sulla ghiaia. L'episodio si conclude con successo; il confronto rettilineo dovrà chiarire se questa scelta comporti un risparmio energetico.
+\textbf{Episodio 32.} Start e goal si trovano rispettivamente sugli ostacoli in $(2,0)$ e sulla ghiaia in $(2,2)$. Il segmento diretto attraversa la cella con ostacoli $(2,1)$. Spot curva verso il basso e percorre per un tratto la ghiaia della cella $(1,1)$, poi risale verso il goal. La deviazione non elimina ogni passaggio sugli ostacoli, ma sostituisce parte del tratto diretto con un percorso sulla ghiaia. L'episodio si conclude con successo; il lavoro meccanico è circa 2177~J contro i 2274~J del riferimento rettilineo riuscito, con un risparmio di circa il 4,3\%.
 
 \subsubsubsection{Descrizione dei fallimenti}
 
@@ -447,7 +451,7 @@ Le differenze fra le categorie dipendono anche dai terreni e dalle missioni scel
 
 \subsubsubsection{Confronto con le missioni senza la policy di navigazione}
 
-Le stesse 40 missioni sono state ripetute senza la policy di navigazione appresa, mantenendo il controllore locomotorio, la mappa, gli start, i goal, gli orientamenti iniziali e gli stessi criteri di conclusione. Dopo la rotazione iniziale verso il goal, il robot segue il segmento start--goal con correzioni di direzione che compensano le deviazioni, senza scegliere il percorso in base ai terreni. Il comando di velocità in avanti è costante per ciascuna missione ed è pari alla distanza percorsa divisa per il tempo totale del corrispondente episodio con policy. La velocità effettiva può essere diversa da quella comandata. Tempo ed energia comprendono l'allineamento iniziale in entrambi i metodi.
+Le stesse 40 missioni sono state ripetute senza la policy di navigazione appresa, mantenendo il controllore locomotorio, la mappa, gli start, i goal, gli orientamenti iniziali e gli stessi criteri di conclusione. Dopo la rotazione iniziale verso il goal, il robot segue il segmento start--goal con correzioni di direzione che compensano le deviazioni, senza scegliere il percorso in base ai terreni. Per ogni missione sono state calcolate due medie dei comandi registrati nel corrispondente episodio con policy, pesando ciascun comando per la sua durata. Durante l'avanzamento si usa la velocità lineare comandata media della sola fase di navigazione. Per la rotazione iniziale si usa invece il modulo della velocità angolare comandata media della fase di allineamento, mantenendo nullo l'avanzamento. Il verso della rotazione segue l'errore di orientamento e il robot si ferma quando rientra nella tolleranza prevista, prima di iniziare la navigazione. Questa scelta ha lo scopo di ottenere velocità effettive simili nei due metodi, pur senza garantirne l'uguaglianza su ogni terreno. Tempo ed energia comprendono l'allineamento iniziale in entrambi i metodi.
 
 Le quattro tabelle seguenti riportano i risultati del riferimento rettilineo. L'energia è il lavoro meccanico assoluto ai giunti; la velocità media è la distanza effettivamente percorsa divisa per il tempo totale. In caso di fallimento, distanza, energia, tempo e velocità media sono sostituiti da un trattino. I dati fino all'interruzione restano conservati nei file originali.
 
@@ -455,15 +459,19 @@ Le quattro tabelle seguenti riportano i risultati del riferimento rettilineo. L'
 
 La tabella~\ref{tab:big-map-18m-confronto-statistiche} affianca i due metodi. Per ciascuno, il successo è calcolato sulle dieci missioni della categoria e le medie comprendono soltanto i suoi successi. Gli insiemi di missioni riuscite possono quindi essere diversi: queste medie descrivono i risultati dei due metodi, ma non costituiscono da sole un confronto energetico a parità di missione.
 
+Le statistiche del riferimento rettilineo sono calcolate sui valori disponibili nelle nuove tabelle: distanza al centesimo di metro, energia al decimo di joule e tempo al decimo di secondo. Per la policy si usano i dati originali prima dell'arrotondamento.
+
 \input{tabelle/big_map_18m_confronto_statistiche.tex}
 
 La variazione del successo è espressa in \textbf{punti percentuali}, sottraendo la percentuale del riferimento rettilineo da quella della policy. Il risparmio energetico e l'allungamento del percorso sono invece calcolati \textbf{soltanto sulle stesse missioni riuscite con entrambi i metodi}, il cui numero è indicato con $N$. Il risparmio è la riduzione percentuale dell'energia media con la policy rispetto al riferimento; un valore negativo indica un consumo maggiore con la policy. L'allungamento è l'aumento percentuale della distanza media rispetto al riferimento. Quando non ci sono successi comuni, queste due variazioni sono indicate con un trattino.
 
 \input{tabelle/big_map_18m_confronto_variazioni.tex}
 
-Il riferimento rettilineo completa 14 missioni su 40 (35\%), contro le 37 su 40 della policy (92,5\%). I fallimenti del riferimento comprendono 21 cadute e 5 timeout. Sulle 13 missioni completate da entrambi i metodi, la policy consuma mediamente il 24,7\% in più, percorre il 5,8\% di strada in più e impiega il 7,4\% di tempo in meno. Il vantaggio sul successo è particolarmente evidente nelle categorie con terreni critici, ma non corrisponde a un risparmio energetico medio nei casi completati da entrambi.
+Il riferimento rettilineo completa 12 missioni su 40 (30\%), contro le 37 su 40 della policy (92,5\%). I fallimenti del riferimento comprendono 22 cadute, 5 timeout e un'uscita dalla mappa. Il successo aumenta con la policy di 10 punti percentuali nella categoria 1 e di 80 punti nelle altre tre categorie. Anche in questo caso il riferimento non completa alcuna missione della categoria 2.
 
-Il confronto comprende sia la scelta della traiettoria sia il diverso andamento della velocità: assegnare al riferimento un comando pari alla velocità media della policy non riproduce la sua velocità istante per istante. I risultati descrivono le missioni selezionate e non una stima del comportamento su tutte le possibili missioni casuali.
+Sulle 11 missioni riuscite con entrambi i metodi, la policy presenta un risparmio energetico medio del 2,0\%, percorre il 3,3\% di strada in più e impiega il 4,7\% di tempo in più. Il risparmio energetico è circa dell'1,7\% nella categoria 1 e del 2,7\% nella categoria 3; nella categoria 4 il risparmio è circa del 2,4\%. Questi scostamenti sono piccoli e le categorie 3 e 4 comprendono soltanto due successi comuni ciascuna. Il risultato più netto è dunque l'aumento delle missioni completate, mentre il risparmio energetico medio sui casi confrontabili è modesto.
+
+Il confronto comprende sia la scelta della traiettoria sia il diverso andamento della velocità: le medie dei comandi rendono le condizioni più simili, ma non riproducono le variazioni istante per istante della policy. I risultati descrivono le missioni selezionate e non una stima del comportamento su tutte le possibili missioni casuali.
 
 \subsubsubsection{Traiettorie di alcune missioni}
 
@@ -472,7 +480,7 @@ La figura~\ref{fig:big-map-18m-show-routes} mostra otto episodi scelti fra quell
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figure/big_map_18m_show_routes.pdf}
-\caption{Traiettorie di otto missioni selezionate a 18~m. Verde: categoria 1; blu: categoria 2; arancione: categoria 3; fucsia: categoria 4. I cerchi indicano gli start, le stelle i goal e la croce la posizione terminale della caduta. Gli episodi seguono la numerazione delle tabelle; i precedenti indici della raccolta sono ancora riportati tra parentesi nella legenda.}
+\caption{Traiettorie di otto missioni selezionate a 18~m. Verde: categoria 1; blu: categoria 2; arancione: categoria 3; fucsia: categoria 4. I cerchi indicano gli start, le stelle i goal e la croce la posizione terminale della caduta. Gli episodi seguono la numerazione delle tabelle; la legenda riporta il numero di ciascun episodio e la categoria.}
 \label{fig:big-map-18m-show-routes}
 \end{figure}
 
@@ -480,7 +488,7 @@ La figura~\ref{fig:big-map-18m-show-routes} mostra otto episodi scelti fra quell
 
 \textbf{Episodio 2.} La partenza è sugli ostacoli nella cella $(5,4)$ e il goal sulla rampa in $(1,6)$. Il segmento diretto non attraversa ghiaccio o scale, ma la traiettoria seguita dal robot curva verso il basso e passa vicino al bordo destro delle scale in $(4,4)$, con alcune posizioni registrate all'interno della loro fascia laterale. Spot prosegue poi fra rampa e ostacoli e raggiunge il goal, percorrendo 18,87~m. Il caso evidenzia che la classificazione come terreno regolare riguarda il segmento fra gli estremi, mentre la strada realmente scelta può avvicinarsi ad altre superfici.
 
-\textbf{Episodio 5.} Spot parte dalla ghiaia in $(2,2)$ e deve raggiungere la ghiaia in $(4,0)$. La traiettoria risale verso la rampa in $(3,2)$, attraversa una parte dell'asfalto in $(3,1)$ e poi la rampa in $(4,1)$, prima di arrivare al goal. La missione riesce con un percorso di 18,89~m. La strada è curva anche senza ghiaccio o scale sul collegamento diretto; il confronto rettilineo servirà a verificare se questa scelta sia conveniente sul piano energetico.
+\textbf{Episodio 6.} Spot parte dalla ghiaia nella cella $(4,0)$ e deve raggiungere le rocce in $(3,3)$. La traiettoria si sposta verso il basso, attraversa la rampa in $(4,1)$ e passa sull'asfalto in $(3,1)$, prima di proseguire sulla rampa in $(3,2)$ e raggiungere il goal sulle rocce. La missione termina con successo, con un percorso di 19,62~m. Rispetto al segmento diretto, che attraversa anche la ghiaia in $(4,2)$, il robot segue un percorso più basso sulla mappa; il lavoro meccanico è circa 3897~J contro i 4032~J del riferimento rettilineo riuscito, con un risparmio energetico di circa il 3,3\%.
 
 \textbf{Categoria 2: ghiaccio.}
 
@@ -498,7 +506,7 @@ La figura~\ref{fig:big-map-18m-show-routes} mostra otto episodi scelti fra quell
 
 \textbf{Episodio 32.} Spot parte dalla rampa in $(6,4)$ e deve arrivare sull'asfalto in $(3,1)$. Il segmento diretto attraversa il ghiaccio in $(5,3)$. Il robot si muove inizialmente verso sinistra nella fascia superiore della mappa, percorre le rocce e scende soltanto dopo aver superato la zona scivolosa. Prosegue poi sulla ghiaia e sulla rampa, fino a raggiungere l'asfalto del goal. Il percorso misura 19,68~m. La traiettoria comprende più cambi di direzione e di superficie, con una prima scelta del lato da cui aggirare il ghiaccio e un successivo avvicinamento al goal.
 
-\textbf{Episodio 40.} La partenza è sull'asfalto in $(0,1)$ e il goal sulle rocce in $(2,4)$. Il segmento diretto attraversa sia le scale in $(1,2)$ sia il ghiaccio in $(2,3)$. Spot resta inizialmente nella fascia inferiore della mappa, passa sulle rocce in $(0,2)$ e poi risale attraverso la ghiaia in $(1,3)$, fino al goal. Il percorso si conclude con successo e misura 18,50~m. La traiettoria evita le parti centrali dei terreni critici, ma passa vicino ai loro angoli, con brevi posizioni registrate sul bordo delle scale e del ghiaccio. La scelta riguarda quindi una sequenza di passaggi fra superfici diverse; il suo eventuale vantaggio energetico dovrà essere misurato con il riferimento rettilineo.
+\textbf{Episodio 40.} La partenza è sull'asfalto in $(0,1)$ e il goal sulle rocce in $(2,4)$. Il segmento diretto attraversa sia le scale in $(1,2)$ sia il ghiaccio in $(2,3)$. Spot resta inizialmente nella fascia inferiore della mappa, passa sulle rocce in $(0,2)$ e poi risale attraverso la ghiaia in $(1,3)$, fino al goal. Il percorso si conclude con successo e misura 18,50~m. La traiettoria evita le parti centrali dei terreni critici, ma passa vicino ai loro angoli, con brevi posizioni registrate sul bordo delle scale e del ghiaccio. La scelta riguarda quindi una sequenza di passaggi fra superfici diverse; il riferimento rettilineo termina per caduta, quindi in questo caso il confronto riguarda il raggiungimento del goal e non un risparmio energetico fra due missioni complete.
 
 \subsubsubsection{Descrizione dei fallimenti}
 
@@ -509,16 +517,5 @@ Nell'episodio 9, start e goal sono vicini al lato inferiore della mappa. Il robo
 Nell'episodio 14, il robot tenta di aggirare dal basso il ghiaccio in $(1,5)$, passando sulla fascia di asfalto e ostacoli della riga 0. Risale però verso il goal prima di aver superato completamente la cella scivolosa, vi entra e cade a circa 1,07~m dall'arrivo. Nell'episodio 19, già illustrato nella figura, il ghiaccio viene invece aggirato inizialmente dall'alto, ma la successiva discesa porta il robot troppo vicino al suo bordo. Entrambe le cadute sono associate, nei registri della simulazione, a una perdita di stabilità rilevata attraverso l'inclinazione del robot.
 
 I due casi mostrano che evitare inizialmente la direzione del ghiaccio non basta se la deviazione si chiude troppo presto o si avvicina nuovamente alla superficie critica. Questo limite va distinto dall'uscita dall'area osservata nell'episodio 9. Le traiettorie permettono di individuare dove avviene l'interruzione; per stabilire con certezza il contributo del terreno, dei comandi e della dinamica del robot serve un'analisi più dettagliata dei dati e dell'esecuzione.
-
-
-\clearpage
-\section{Tabelle straight line con velocità comandata media}
-
-\input{tabelle/straight_line_command_mean_12m.tex}
-
-\clearpage
-\section{Tabelle straight line con velocità comandata media (18 m)}
-
-\input{tabelle/straight_line_command_mean_18m.tex}
 
 \end{document}

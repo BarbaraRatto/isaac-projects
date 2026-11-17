@@ -11,6 +11,13 @@ RUN = ROOT / 'spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_gen
 
 
 def main():
+    confirmed = HERE / 'big_map_18m_rettilineo_confermato.json'
+    if confirmed.exists():
+        # Keep the remote results confirmed by the user, rather than older local runs.
+        snapshot = json.loads(confirmed.read_text())
+        (HERE / 'straight_line_command_mean_18m.tex').write_text(snapshot['source_table_content'])
+        print('Restored the four confirmed remote-result tables.')
+        return
     spec = importlib.util.spec_from_file_location('tables12', HERE / 'genera_tabelle_big_map_12m.py')
     helper = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(helper)

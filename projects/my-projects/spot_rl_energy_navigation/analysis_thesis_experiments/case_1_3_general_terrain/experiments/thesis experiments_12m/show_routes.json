@@ -1,6 +1,6 @@
 {
   "source_run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_3_general_terrain/experiments/distance_12m_try1/results_exp/distance_12m_all_20261114_013639_528982",
-  "label_note": "Thesis episode IDs E1\u2013E40 on the map; original try1 IDs in the legend. Collection IDs preserved as provenance.",
+  "label_note": "Thesis episode IDs and categories in the legend; original IDs retained only as provenance.",
   "episodes": [
     {
       "collection_episode": 22,
