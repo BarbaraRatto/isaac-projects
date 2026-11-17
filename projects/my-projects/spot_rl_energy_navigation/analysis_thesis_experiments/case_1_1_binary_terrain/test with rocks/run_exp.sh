@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Run the swapped-map route tracking experiment.
+set -euo pipefail
+EXP_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+EXP_LAUNCHER="${BINARY_MAP_ISAACLAB:-/home/isaac/isaaclab/2.3.0/isaaclab.sh}"
+if [[ "${TERM:-dumb}" == "dumb" ]]; then export TERM=xterm; fi
+exec "$EXP_LAUNCHER" -p "$EXP_DIR/create_exp.py" --device cuda:0 "$@"

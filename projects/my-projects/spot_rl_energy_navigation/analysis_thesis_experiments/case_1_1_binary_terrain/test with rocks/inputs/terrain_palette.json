@@ -1,0 +1,9 @@
+{
+  "t1_asphalt": {"label": "asphalt", "color": "#C4C3C0"},
+  "t2_slippery": {"label": "ice", "color": "#B7DEF4"},
+  "t3_ramp": {"label": "ramp", "color": "#A4A3A0"},
+  "t4_fine_gravel": {"label": "gravel", "color": "#E3D2C5"},
+  "t5_large_rocks": {"label": "rocks", "color": "#BFAEA8"},
+  "t6_obstacles": {"label": "obstacles", "color": "#858481"},
+  "t7_stairs": {"label": "stairs", "color": "#EEE9DD"}
+}

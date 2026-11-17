@@ -1,0 +1,48 @@
+{
+  "original_table_content": "% Generated from the completed swapped-map binary experiment.\n\\begin{table}[H]\n\\centering\n\\caption{Risultati dei percorsi A1--A5 riprodotti sulla mappa B, lungo il ramo con le rocce.}\n\\label{tab:exp1-1-rocks-a}\n\\begingroup\n\\fontsize{9.5}{11.5}\\selectfont\n\\setlength{\\tabcolsep}{2.5pt}\n\\renewcommand{\\arraystretch}{1.25}\n\\begin{tabular}{@{}c cc cccc l@{}}\n\\toprule\nEp. & \\shortstack{Start $(x;y)$\\\\{}[m]} & \\shortstack{Goal $(x;y)$\\\\{}[m]} & \\shortstack{Distanza\\\\percorsa [m]} & \\shortstack{Energia\\\\{}[J]} & \\shortstack{Tempo\\\\{}[s]} & \\shortstack{Velocità\\\\media [m/s]} & Esito \\\\\n\\midrule\n1 & $(-0{,}0289;\\,0{,}0005)$ & $(3{,}9883;\\,4{,}0234)$ & $6{,}65$ & $1362{,}9$ & $11{,}0$ & $0{,}60$ & Successo \\\\\n2 & $(-0{,}0250;\\,0{,}0104)$ & $(3{,}9616;\\,4{,}0260)$ & $6{,}52$ & $1333{,}2$ & $9{,}8$ & $0{,}67$ & Successo \\\\\n3 & $(-0{,}0065;\\,-0{,}0324)$ & $(3{,}9974;\\,3{,}9708)$ & $6{,}81$ & $1384{,}9$ & $11{,}4$ & $0{,}60$ & Successo \\\\\n4 & $(-0{,}0269;\\,-0{,}0069)$ & $(3{,}9525;\\,3{,}9805)$ & --- & --- & --- & --- & Fallimento (caduta) \\\\\n5 & $(-0{,}0408;\\,0{,}0188)$ & $(4{,}0362;\\,4{,}0170)$ & $6{,}76$ & $1370{,}9$ & $10{,}6$ & $0{,}64$ & Successo \\\\\n\\bottomrule\n\\end{tabular}\n\\endgroup\n\\end{table}\n\n% Generated from the completed swapped-map binary experiment.\n\\begin{table}[H]\n\\centering\n\\caption{Risultati dei percorsi B1--B5 riprodotti sulla mappa A, lungo il ramo con le rocce.}\n\\label{tab:exp1-1-rocks-b}\n\\begingroup\n\\fontsize{9.5}{11.5}\\selectfont\n\\setlength{\\tabcolsep}{2.5pt}\n\\renewcommand{\\arraystretch}{1.25}\n\\begin{tabular}{@{}c cc cccc l@{}}\n\\toprule\nEp. & \\shortstack{Start $(x;y)$\\\\{}[m]} & \\shortstack{Goal $(x;y)$\\\\{}[m]} & \\shortstack{Distanza\\\\percorsa [m]} & \\shortstack{Energia\\\\{}[J]} & \\shortstack{Tempo\\\\{}[s]} & \\shortstack{Velocità\\\\media [m/s]} & Esito \\\\\n\\midrule\n1 & $(-0{,}0159;\\,0{,}0339)$ & $(4{,}0441;\\,3{,}9516)$ & --- & --- & --- & --- & Fallimento (caduta) \\\\\n2 & $(0{,}0123;\\,-0{,}0173)$ & $(4{,}0349;\\,3{,}9913)$ & $5{,}95$ & $1218{,}0$ & $6{,}4$ & $0{,}93$ & Successo \\\\\n3 & $(-0{,}0204;\\,-0{,}0445)$ & $(4{,}0249;\\,4{,}0129)$ & $6{,}16$ & $1347{,}0$ & $7{,}6$ & $0{,}81$ & Successo \\\\\n4 & $(0{,}0158;\\,-0{,}0329)$ & $(3{,}9567;\\,4{,}0159)$ & $6{,}27$ & $1446{,}4$ & $7{,}0$ & $0{,}90$ & Successo \\\\\n5 & $(0{,}0060;\\,0{,}0283)$ & $(3{,}9837;\\,3{,}9914)$ & $6{,}02$ & $1225{,}8$ & $6{,}6$ & $0{,}91$ & Successo \\\\\n\\bottomrule\n\\end{tabular}\n\\endgroup\n\\end{table}\n",
+  "revisions": [
+    {
+      "approved_on": "2026-11-18",
+      "source": "User-provided times for table 4 (B routes on the rock map)",
+      "records": [
+        {
+          "episode": 2,
+          "previous_latex_row": "2 & $(0{,}0123;\\,-0{,}0173)$ & $(4{,}0349;\\,3{,}9913)$ & $5{,}95$ & $1218{,}0$ & $6{,}4$ & $0{,}93$ & Successo \\\\",
+          "latex_row": "2 & $(0{,}0123;\\,-0{,}0173)$ & $(4{,}0349;\\,3{,}9913)$ & $5{,}95$ & $1218{,}0$ & $9{,}4$ & $0{,}63$ & Successo \\\\",
+          "previous_time_s": 6.4,
+          "time_s": 9.4,
+          "path_m": 5.95,
+          "mean_speed_m_s": 0.63
+        },
+        {
+          "episode": 3,
+          "previous_latex_row": "3 & $(-0{,}0204;\\,-0{,}0445)$ & $(4{,}0249;\\,4{,}0129)$ & $6{,}16$ & $1347{,}0$ & $7{,}6$ & $0{,}81$ & Successo \\\\",
+          "latex_row": "3 & $(-0{,}0204;\\,-0{,}0445)$ & $(4{,}0249;\\,4{,}0129)$ & $6{,}16$ & $1347{,}0$ & $10{,}6$ & $0{,}58$ & Successo \\\\",
+          "previous_time_s": 7.6,
+          "time_s": 10.6,
+          "path_m": 6.16,
+          "mean_speed_m_s": 0.58
+        },
+        {
+          "episode": 4,
+          "previous_latex_row": "4 & $(0{,}0158;\\,-0{,}0329)$ & $(3{,}9567;\\,4{,}0159)$ & $6{,}27$ & $1446{,}4$ & $7{,}0$ & $0{,}90$ & Successo \\\\",
+          "latex_row": "4 & $(0{,}0158;\\,-0{,}0329)$ & $(3{,}9567;\\,4{,}0159)$ & $6{,}27$ & $1446{,}4$ & $10{,}0$ & $0{,}63$ & Successo \\\\",
+          "previous_time_s": 7.0,
+          "time_s": 10.0,
+          "path_m": 6.27,
+          "mean_speed_m_s": 0.63
+        },
+        {
+          "episode": 5,
+          "previous_latex_row": "5 & $(0{,}0060;\\,0{,}0283)$ & $(3{,}9837;\\,3{,}9914)$ & $6{,}02$ & $1225{,}8$ & $6{,}6$ & $0{,}91$ & Successo \\\\",
+          "latex_row": "5 & $(0{,}0060;\\,0{,}0283)$ & $(3{,}9837;\\,3{,}9914)$ & $6{,}02$ & $1225{,}8$ & $9{,}6$ & $0{,}63$ & Successo \\\\",
+          "previous_time_s": 6.6,
+          "time_s": 9.6,
+          "path_m": 6.02,
+          "mean_speed_m_s": 0.63
+        }
+      ]
+    }
+  ],
+  "source_table_content": "% Generated from the completed swapped-map binary experiment.\n\\begin{table}[H]\n\\centering\n\\caption{Risultati dei percorsi A1--A5 riprodotti sulla mappa B, lungo il ramo con le rocce.}\n\\label{tab:exp1-1-rocks-a}\n\\begingroup\n\\fontsize{9.5}{11.5}\\selectfont\n\\setlength{\\tabcolsep}{2.5pt}\n\\renewcommand{\\arraystretch}{1.25}\n\\begin{tabular}{@{}c cc cccc c@{}}\n\\toprule\nEp. & \\shortstack{Start $(x;y)$\\\\{}[m]} & \\shortstack{Goal $(x;y)$\\\\{}[m]} & \\shortstack{Distanza\\\\percorsa [m]} & \\shortstack{Energia\\\\{}[J]} & \\shortstack{Tempo\\\\{}[s]} & \\shortstack{Velocità\\\\media [m/s]} & Esito \\\\\n\\midrule\n1 & $(-0{,}0289;\\,0{,}0005)$ & $(3{,}9883;\\,4{,}0234)$ & $6{,}65$ & $1362{,}9$ & $11{,}0$ & $0{,}60$ & Successo \\\\\n2 & $(-0{,}0250;\\,0{,}0104)$ & $(3{,}9616;\\,4{,}0260)$ & $6{,}52$ & $1333{,}2$ & $9{,}8$ & $0{,}67$ & Successo \\\\\n3 & $(-0{,}0065;\\,-0{,}0324)$ & $(3{,}9974;\\,3{,}9708)$ & $6{,}81$ & $1384{,}9$ & $11{,}4$ & $0{,}60$ & Successo \\\\\n4 & $(-0{,}0269;\\,-0{,}0069)$ & $(3{,}9525;\\,3{,}9805)$ & --- & --- & --- & --- & Fallimento (caduta) \\\\\n5 & $(-0{,}0408;\\,0{,}0188)$ & $(4{,}0362;\\,4{,}0170)$ & $6{,}76$ & $1370{,}9$ & $10{,}6$ & $0{,}64$ & Successo \\\\\n\\bottomrule\n\\end{tabular}\n\\endgroup\n\\end{table}\n\n% Generated from the completed swapped-map binary experiment.\n\\begin{table}[H]\n\\centering\n\\caption{Risultati dei percorsi B1--B5 riprodotti sulla mappa A, lungo il ramo con le rocce.}\n\\label{tab:exp1-1-rocks-b}\n\\begingroup\n\\fontsize{9.5}{11.5}\\selectfont\n\\setlength{\\tabcolsep}{2.5pt}\n\\renewcommand{\\arraystretch}{1.25}\n\\begin{tabular}{@{}c cc cccc c@{}}\n\\toprule\nEp. & \\shortstack{Start $(x;y)$\\\\{}[m]} & \\shortstack{Goal $(x;y)$\\\\{}[m]} & \\shortstack{Distanza\\\\percorsa [m]} & \\shortstack{Energia\\\\{}[J]} & \\shortstack{Tempo\\\\{}[s]} & \\shortstack{Velocità\\\\media [m/s]} & Esito \\\\\n\\midrule\n1 & $(-0{,}0159;\\,0{,}0339)$ & $(4{,}0441;\\,3{,}9516)$ & --- & --- & --- & --- & Fallimento (caduta) \\\\\n2 & $(0{,}0123;\\,-0{,}0173)$ & $(4{,}0349;\\,3{,}9913)$ & $5{,}95$ & $1218{,}0$ & $9{,}4$ & $0{,}63$ & Successo \\\\\n3 & $(-0{,}0204;\\,-0{,}0445)$ & $(4{,}0249;\\,4{,}0129)$ & $6{,}16$ & $1347{,}0$ & $10{,}6$ & $0{,}58$ & Successo \\\\\n4 & $(0{,}0158;\\,-0{,}0329)$ & $(3{,}9567;\\,4{,}0159)$ & $6{,}27$ & $1446{,}4$ & $10{,}0$ & $0{,}63$ & Successo \\\\\n5 & $(0{,}0060;\\,0{,}0283)$ & $(3{,}9837;\\,3{,}9914)$ & $6{,}02$ & $1225{,}8$ & $9{,}6$ & $0{,}63$ & Successo \\\\\n\\bottomrule\n\\end{tabular}\n\\endgroup\n\\end{table}\n"
+}

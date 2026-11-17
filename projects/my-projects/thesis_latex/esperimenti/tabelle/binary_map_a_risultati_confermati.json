@@ -1,0 +1,76 @@
+{
+  "source": "User-provided rerun measurements for map A, 18 November 2026",
+  "original_table_content": "\\begin{table}[H]\n\\centering\n\\caption{Risultati dei cinque episodi sulla mappa A, con le rocce a destra.}\n\\label{tab:exp1-1-map-a}\n\\begingroup\n\\fontsize{9.5}{11.5}\\selectfont\n\\setlength{\\tabcolsep}{2.5pt}\n\\renewcommand{\\arraystretch}{1.25}\n\\begin{tabular}{@{}c cc cccc c@{}}\n\\toprule\n\\shortstack{Ep.} &\n\\shortstack{Start $(x;y)$\\\\{}[m]} &\n\\shortstack{Goal $(x;y)$\\\\{}[m]} &\n\\shortstack{Distanza\\\\percorsa [m]} &\n\\shortstack{Energia\\\\{}[J]} &\n\\shortstack{Tempo\\\\{}[s]} &\n\\shortstack{Velocità\\\\media [m/s]} &\n\\shortstack{Esito} \\\\\n\\midrule\n1 & $(-0{,}0289;\\,0{,}0005)$ & $(3{,}9883;\\,4{,}0234)$ & $6{,}78$ & $1204{,}0$ & $10{,}6$ & $0{,}64$ & Successo \\\\\n2 & $(-0{,}0250;\\,0{,}0104)$ & $(3{,}9616;\\,4{,}0260)$ & $6{,}56$ & $1113{,}6$ & $9{,}4$ & $0{,}70$ & Successo \\\\\n3 & $(-0{,}0065;\\,-0{,}0324)$ & $(3{,}9974;\\,3{,}9708)$ & $6{,}83$ & $1263{,}1$ & $11{,}0$ & $0{,}62$ & Successo \\\\\n4 & $(-0{,}0269;\\,-0{,}0069)$ & $(3{,}9525;\\,3{,}9805)$ & $6{,}85$ & $1209{,}4$ & $10{,}6$ & $0{,}65$ & Successo \\\\\n5 & $(-0{,}0408;\\,0{,}0188)$ & $(4{,}0362;\\,4{,}0170)$ & $6{,}79$ & $1171{,}9$ & $10{,}0$ & $0{,}68$ & Successo \\\\\n\\bottomrule\n\\end{tabular}\n\\endgroup\n\\par\\smallskip\n\\begin{minipage}{\\linewidth}\n\\footnotesize\nGli episodi 1--5 corrispondono alle missioni A1--A5. Le coordinate di Start e Goal sono riportate come $(x;y)$, in metri.\nLa distanza percorsa indica la lunghezza della traiettoria effettivamente seguita dal robot. La velocità media è il rapporto fra questa distanza e il tempo totale dell'episodio.\nL'energia \\`e il lavoro meccanico assoluto ai giunti, misurato fino alla conclusione dell'episodio.\nIl successo richiede una distanza dal goal non superiore a $0{,}55$~m, senza cadute o uscite dalla mappa; il timeout \\`e fissato a $40$~s.\n\\end{minipage}\n\\end{table}",
+  "revisions": [
+    {
+      "approved_on": "2026-11-18",
+      "source": "User-provided map-A time revision; E1 remains 7.2 s",
+      "records": [
+        {
+          "episode": 3,
+          "previous_latex_row": "3 & $(-0{,}0065;\\,-0{,}0324)$ & $(3{,}9974;\\,3{,}9708)$ & $6{,}31$ & $1054{,}3$ & $7{,}3$ & $0{,}86$ & Successo \\\\",
+          "latex_row": "3 & $(-0{,}0065;\\,-0{,}0324)$ & $(3{,}9974;\\,3{,}9708)$ & $6{,}31$ & $1054{,}3$ & $7{,}1$ & $0{,}89$ & Successo \\\\",
+          "previous_time_s": 7.3,
+          "time_s": 7.1,
+          "path_m": 6.31,
+          "mean_speed_m_s": 0.89
+        }
+      ]
+    }
+  ],
+  "records": [
+    {
+      "episode": 1,
+      "mission_id": "A1",
+      "path_m": 6.23,
+      "energy_j": 1049.0,
+      "time_s": 7.2,
+      "mean_speed_m_s": 0.87,
+      "previous_latex_row": "1 & $(-0{,}0289;\\,0{,}0005)$ & $(3{,}9883;\\,4{,}0234)$ & $6{,}78$ & $1204{,}0$ & $10{,}6$ & $0{,}64$ & Successo \\\\",
+      "latex_row": "1 & $(-0{,}0289;\\,0{,}0005)$ & $(3{,}9883;\\,4{,}0234)$ & $6{,}23$ & $1049{,}0$ & $7{,}2$ & $0{,}87$ & Successo \\\\"
+    },
+    {
+      "episode": 2,
+      "mission_id": "A2",
+      "path_m": 6.17,
+      "energy_j": 1011.4,
+      "time_s": 6.9,
+      "mean_speed_m_s": 0.89,
+      "previous_latex_row": "2 & $(-0{,}0250;\\,0{,}0104)$ & $(3{,}9616;\\,4{,}0260)$ & $6{,}56$ & $1113{,}6$ & $9{,}4$ & $0{,}70$ & Successo \\\\",
+      "latex_row": "2 & $(-0{,}0250;\\,0{,}0104)$ & $(3{,}9616;\\,4{,}0260)$ & $6{,}17$ & $1011{,}4$ & $6{,}9$ & $0{,}89$ & Successo \\\\"
+    },
+    {
+      "episode": 3,
+      "mission_id": "A3",
+      "path_m": 6.31,
+      "energy_j": 1054.3,
+      "time_s": 7.1,
+      "mean_speed_m_s": 0.89,
+      "previous_latex_row": "3 & $(-0{,}0065;\\,-0{,}0324)$ & $(3{,}9974;\\,3{,}9708)$ & $6{,}83$ & $1263{,}1$ & $11{,}0$ & $0{,}62$ & Successo \\\\",
+      "latex_row": "3 & $(-0{,}0065;\\,-0{,}0324)$ & $(3{,}9974;\\,3{,}9708)$ & $6{,}31$ & $1054{,}3$ & $7{,}1$ & $0{,}89$ & Successo \\\\"
+    },
+    {
+      "episode": 4,
+      "mission_id": "A4",
+      "path_m": 6.28,
+      "energy_j": 1069.1,
+      "time_s": 7.1,
+      "mean_speed_m_s": 0.88,
+      "previous_latex_row": "4 & $(-0{,}0269;\\,-0{,}0069)$ & $(3{,}9525;\\,3{,}9805)$ & $6{,}85$ & $1209{,}4$ & $10{,}6$ & $0{,}65$ & Successo \\\\",
+      "latex_row": "4 & $(-0{,}0269;\\,-0{,}0069)$ & $(3{,}9525;\\,3{,}9805)$ & $6{,}28$ & $1069{,}1$ & $7{,}1$ & $0{,}88$ & Successo \\\\"
+    },
+    {
+      "episode": 5,
+      "mission_id": "A5",
+      "path_m": 6.26,
+      "energy_j": 1057.9,
+      "time_s": 7.0,
+      "mean_speed_m_s": 0.89,
+      "previous_latex_row": "5 & $(-0{,}0408;\\,0{,}0188)$ & $(4{,}0362;\\,4{,}0170)$ & $6{,}79$ & $1171{,}9$ & $10{,}0$ & $0{,}68$ & Successo \\\\",
+      "latex_row": "5 & $(-0{,}0408;\\,0{,}0188)$ & $(4{,}0362;\\,4{,}0170)$ & $6{,}26$ & $1057{,}9$ & $7{,}0$ & $0{,}89$ & Successo \\\\"
+    }
+  ],
+  "mean_path_m": 6.25,
+  "mean_energy_j": 1048.3399999999997,
+  "mean_time_s": 7.0600000000000005
+}

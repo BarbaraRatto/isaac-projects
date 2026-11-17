@@ -1,0 +1,15 @@
+{
+  "run": "spot_rl_energy_navigation/analysis_thesis_experiments/case_1_1_binary_terrain/test with rocks/results_exp/run_20261117_234938_911765",
+  "sources": [
+    {
+      "group": "a_routes_on_b",
+      "episodes_file": "spot_rl_energy_navigation/analysis_thesis_experiments/case_1_1_binary_terrain/test with rocks/results_exp/run_20261117_234938_911765/a_routes_on_b/episodes.csv",
+      "episodes_sha256": "e0967eb42a3c818af89aeb587b6294515c3f3cd57d432490a08ed0dc1a6869f7"
+    },
+    {
+      "group": "b_routes_on_a",
+      "episodes_file": "spot_rl_energy_navigation/analysis_thesis_experiments/case_1_1_binary_terrain/test with rocks/results_exp/run_20261117_234938_911765/b_routes_on_a/episodes.csv",
+      "episodes_sha256": "18df0ccd611277dd575f6722538d452320cd44f6c592f9b635948a294c383dfd"
+    }
+  ]
+}

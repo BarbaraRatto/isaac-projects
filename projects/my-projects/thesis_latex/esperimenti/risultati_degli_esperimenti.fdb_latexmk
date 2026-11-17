@@ -1,7 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1794931016 "/home/students/work/barbara/isaac-projects/projects/my-projects/thesis_latex/esperimenti/risultati_degli_esperimenti.tex" "risultati_degli_esperimenti.pdf" "risultati_degli_esperimenti" 1794931017
+["pdflatex"] 1794958942 "risultati_degli_esperimenti.tex" "risultati_degli_esperimenti.pdf" "risultati_degli_esperimenti" 1794958942
   "/etc/texmf/web2c/texmf.cnf" 1778959877 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/students/work/barbara/isaac-projects/projects/my-projects/thesis_latex/esperimenti/risultati_degli_esperimenti.tex" 1794930983 52027 d16ab27bf6b92d6a300b8e5dd6934c21 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm1095.tfm" 1136768653 3584 929cdff2b7a8c11bd4d49fd68cb0ae70 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr10.tfm" 1136768653 1296 45809c5a464d5f32c8f98ba97c1bb47f ""
@@ -123,9 +122,9 @@
   "figure/map_b_routes.pdf" 1794513911 29470 60cf5a215fc9b99a3a3778629f5ad826 ""
   "figure/medium_eval_20261007_114130_routes_outcomes.pdf" 1794516628 76354 f1bfa523cdc7cc5dba45e056e33fa85a ""
   "figure/medium_eval_20261007_114130_routes_successes.pdf" 1794516628 71483 5314aa8f62b35a2bb5e4bd118e3b5ba5 ""
-  "risultati_degli_esperimenti.aux" 1794931017 18347 4d25a1392bcff38c653e1993aaffdc02 "pdflatex"
-  "risultati_degli_esperimenti.out" 1794931017 4531 2b69a40bde9508346b9b2dbdb973d8c5 "pdflatex"
-  "risultati_degli_esperimenti.tex" 1794930983 52027 d16ab27bf6b92d6a300b8e5dd6934c21 ""
+  "risultati_degli_esperimenti.aux" 1794958942 18619 1a61d5f3e676a01976a8c19e8f6f1ae6 "pdflatex"
+  "risultati_degli_esperimenti.out" 1794958942 4531 2b69a40bde9508346b9b2dbdb973d8c5 "pdflatex"
+  "risultati_degli_esperimenti.tex" 1794958872 50935 9ef3271347615128d66fd3d3c40fdf9b ""
   "tabelle/big_map_12m_confronto_statistiche.tex" 1794929179 1041 ebaf5305af27f6e4687f0fe37e0f2dc2 ""
   "tabelle/big_map_12m_confronto_variazioni.tex" 1794929179 782 7ec9df8007849bf2e0e250957557029f ""
   "tabelle/big_map_12m_rettilineo.tex" 1794929179 7132 925ab02c86c748e457ce7b7f8c8f2aef ""
@@ -136,7 +135,8 @@
   "tabelle/big_map_18m_rettilineo.tex" 1794930200 7045 f1b1789926feaf9d8bb1ab6a9aaf5096 ""
   "tabelle/big_map_18m_risultati.tex" 1794860650 7040 7be02063121a75e22143f23a6f8ff456 ""
   "tabelle/big_map_18m_statistiche.tex" 1794860650 697 8481df2a5c968bfb92aa0b0cbd613bd7 ""
-  "tabelle/tabels_exp1_1.tex" 1794854182 3947 f11c6d7b84c1a7245ea08ce139c40f04 ""
+  "tabelle/binary_rocks_risultati.tex" 1794958942 2410 e3a25c4e64b78f76ced89fbc85dc50cc ""
+  "tabelle/tabels_exp1_1.tex" 1794958942 3692 1809b8cf28606acb58da76e130f165f0 ""
   (generated)
   "risultati_degli_esperimenti.aux"
   "risultati_degli_esperimenti.log"

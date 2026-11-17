@@ -192,35 +192,8 @@ Ho assegnato dieci missioni, ciascuna eseguita una volta: cinque sulla mappa A, 
 
 Sono partita dallo start nominale $(0,0)$~m e dal goal nominale $(4,4)$~m. A ciascuna delle quattro coordinate, due dello start e due del goal, ho aggiunto una perturbazione casuale indipendente, estratta da una distribuzione uniforme tra $-0{,}05$~m e $+0{,}05$~m. Il rumore ha quindi media nulla e deviazione standard di circa $0{,}029$~m per coordinata. Il limite di 5~cm si applica separatamente a $x$ e a $y$.
 
-Le coordinate sono state estratte una sola volta e poi mantenute fisse per tutta la rispettiva esecuzione, senza aggiungere altro rumore durante il movimento. L'orientamento iniziale è rimasto pari a $45^\circ$, come nel training. La tabella~\ref{tab:coordinate-caso-1-1} riporta le dieci missioni.
-
-\begin{table}[H]
-\centering
-\caption{Coordinate assegnate alle dieci missioni del caso 1.1. Le coordinate sono espresse nel riferimento della mappa.}
-\label{tab:coordinate-caso-1-1}
-\begingroup
-\small
-\setlength{\tabcolsep}{9pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{cccccc}
-\toprule
-Mappa & Episodio & Start $x$ [m] & Start $y$ [m] & Goal $x$ [m] & Goal $y$ [m] \\
-\midrule
-A & 1 & $-0{,}0289$ & $0{,}0005$ & $3{,}9883$ & $4{,}0234$ \\
-A & 2 & $-0{,}0250$ & $0{,}0104$ & $3{,}9616$ & $4{,}0260$ \\
-A & 3 & $-0{,}0065$ & $-0{,}0324$ & $3{,}9974$ & $3{,}9708$ \\
-A & 4 & $-0{,}0269$ & $-0{,}0069$ & $3{,}9525$ & $3{,}9805$ \\
-A & 5 & $-0{,}0408$ & $0{,}0188$ & $4{,}0362$ & $4{,}0170$ \\
-\midrule
-B & 1 & $-0{,}0159$ & $0{,}0339$ & $4{,}0441$ & $3{,}9516$ \\
-B & 2 & $0{,}0123$ & $-0{,}0173$ & $4{,}0349$ & $3{,}9913$ \\
-B & 3 & $-0{,}0204$ & $-0{,}0445$ & $4{,}0249$ & $4{,}0129$ \\
-B & 4 & $0{,}0158$ & $-0{,}0329$ & $3{,}9567$ & $4{,}0159$ \\
-B & 5 & $0{,}0060$ & $0{,}0283$ & $3{,}9837$ & $3{,}9914$ \\
-\bottomrule
-\end{tabular}
-\endgroup
-\end{table}
+Le coordinate sono state estratte una sola volta e poi mantenute fisse per tutta la rispettiva esecuzione, senza aggiungere altro rumore durante il movimento.
+L'orientamento iniziale è rimasto pari a $45^\circ$, come nel training. 
 
 \subsubsection{Traiettorie e dati delle esecuzioni}
 
@@ -244,7 +217,7 @@ Le tabelle~\ref{tab:exp1-1-map-a} e~\ref{tab:exp1-1-map-b} riportano distanza ef
 
 \input{tabelle/tabels_exp1_1.tex}
 
-In tutte e dieci le esecuzioni Spot ha raggiunto il goal senza cadute o timeout, scegliendo il ramo asfaltato. Nella mappa A la distanza media percorsa è stata di $6{,}76$~m e il tempo medio di $10{,}32$~s; nella mappa B i valori sono stati rispettivamente $6{,}00$~m e $6{,}08$~s. I percorsi non sono quindi perfettamente speculari. Un'eventuale prova dedicata a questa differenza resta da valutare.
+In tutte e dieci le esecuzioni Spot ha raggiunto il goal senza cadute o timeout, scegliendo il ramo asfaltato. Nella mappa A la distanza media percorsa è stata di $6{,}25$~m e il tempo medio di $7{,}06$~s; nella mappa B i valori sono stati rispettivamente $6{,}00$~m e $6{,}08$~s. I percorsi non sono quindi perfettamente speculari. Un'eventuale prova dedicata a questa differenza resta da valutare.
 
 \subsubsection{ANCORA DA FARE --- CONFRONTO ENERGETICO DA VALUTARE}
 
@@ -269,6 +242,8 @@ VOLENDO SI POSSONO USARE L STESSE TRAIETTORIE SCAMBIANDO LE MAPPE, COSI SI FINIS
 \item Provare ad aumentare il rumore sullo start e sul goal.
 \item Confronto con le rocce: come realizzarlo? Definire il percorso da seguire, il controllore e la velocità di riferimento.
 \end{itemize}
+
+\input{tabelle/binary_rocks_risultati.tex}
 
 \clearpage
 \subsection{Caso 1.2: esempio punto a punto sulla mappa grande --- DA FARE}

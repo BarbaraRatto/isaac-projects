@@ -1,0 +1,2464 @@
+{
+  "schema": 1,
+  "name": "Binary reference routes and forward commands on the opposite map",
+  "groups": [
+    "a_routes_on_b",
+    "b_routes_on_a"
+  ],
+  "physics_dt_s": 0.005,
+  "action_dt_s": 0.2,
+  "goal_radius_m": 0.55,
+  "timeout_s": 40.0,
+  "maps": {
+    "rocks_right": {
+      "path": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/maps/rocks_right.usd",
+      "sha256": "0b22f449834ea64505dee3a1d5d584c9fc09f92b08f729e998aeaf91b2946e12"
+    },
+    "rocks_left": {
+      "path": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/maps/rocks_left.usd",
+      "sha256": "fa9ffcee29701a462c2f4c11f3460aa181ca9105c7e54e268f0483cabefc0695"
+    }
+  },
+  "cases": [
+    {
+      "group": "a_routes_on_b",
+      "mission": {
+        "mission_id": "A1",
+        "map": "rocks_left",
+        "start_x_m": -0.0289,
+        "start_y_m": 0.0005,
+        "goal_x_m": 3.9883,
+        "goal_y_m": 4.0234,
+        "start_yaw_deg": 45.0,
+        "source_map": "rocks_right",
+        "target_map": "rocks_left",
+        "source_energy_j": 1204.0135498046875,
+        "source_path_m": 6.778539180755615,
+        "source_time_s": 10.600000000000001
+      },
+      "reference_file": "A1_reference.csv",
+      "reference_sha256": "810ef7c7522f314e8f63a6793b1125696210a38a9ee7d2059d52014c51653312",
+      "source_result": {
+        "env_id": "0",
+        "layout": "rocks_asphalt__right_rocks",
+        "reason": "goal",
+        "success": "1",
+        "steps": "53",
+        "energy_j": "1204.0135498046875",
+        "path_m": "6.778539180755615",
+        "final_distance_m": "0.45530661940574646",
+        "nav_return": "164.6297149658203",
+        "energy_cost": "12.040133476257324",
+        "route": "left",
+        "right_path_m": "0.0",
+        "left_path_m": "5.214831352233887",
+        "asphalt_route": "1",
+        "mission_id": "A1",
+        "map": "rocks_right",
+        "start_x_m": "-0.0289",
+        "start_y_m": "0.0005",
+        "goal_x_m": "3.9883",
+        "goal_y_m": "4.0234",
+        "start_yaw_deg": "45.0",
+        "time_s": "10.600000000000001",
+        "straight_distance_m": "5.685210660125093",
+        "falls": "0",
+        "timeouts": "0",
+        "final_x_m": "3.5474517345428467",
+        "final_y_m": "4.137228012084961"
+      },
+      "source": {
+        "run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_1_binary_terrain/experiments/results_exp/run_20261112_184253_967025/rocks_right",
+        "trajectory_sha256": "933b40a6327c7bfc388b284ea74324f45603076ee49f28177789f9189c017e27",
+        "episodes_sha256": "398e197864244a13acf63e2e2e62b61023cc118c889a746e4ddac65c35ebfa30",
+        "config": {
+          "map": "rocks_right",
+          "layout": "rocks_asphalt__right_rocks",
+          "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/runs/test13_ppo_20261023_122929_726370/policy_final.pt",
+          "checkpoint_sha256": "9d60c837f34356cc221e5ce97e02b6e2b8cf3e8653ab1caaad608d311cea579e",
+          "training_transitions": 100000,
+          "source_identity": {
+            "dino": {
+              "config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d",
+              "preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+              "model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1"
+            },
+            "input_size": 518,
+            "resize": "opencv_linear_square_no_crop",
+            "terrain": {
+              "rocks_asphalt__right_rocks": "0b22f449834ea64505dee3a1d5d584c9fc09f92b08f729e998aeaf91b2946e12",
+              "rocks_asphalt__right_asphalt": "fa9ffcee29701a462c2f4c11f3460aa181ca9105c7e54e268f0483cabefc0695"
+            }
+          },
+          "signature": {
+            "schema": 1,
+            "experiment": "multi_terrain_test13",
+            "algorithm": "asymmetric_multi_head_PPO",
+            "navigation": {
+              "physics_dt": 0.005,
+              "physics_steps_per_action": 40,
+              "settle_seconds": 2.0,
+              "max_episode_seconds": 40.0,
+              "spawn_height_m": 0.75,
+              "goal_radius_m": 0.55,
+              "minimum_body_height_m": 0.25,
+              "max_forward_m_s": 1.6,
+              "max_yaw_rad_s": 1.5,
+              "progress_reward_per_m": 3.0,
+              "time_penalty_per_step": 0.02,
+              "success_bonus": 150.0,
+              "failure_penalty": 300.0,
+              "energy_reference_j": 100.0,
+              "energy_weight": 1.0,
+              "power_filter_seconds": 1.0
+            },
+            "ppo": {
+              "timesteps": 100000,
+              "num_envs": 32,
+              "rollout_steps": 128,
+              "batch_size": 256,
+              "epochs": 10,
+              "learning_rate": 0.0003,
+              "gamma": 0.999,
+              "gae_lambda": 0.95,
+              "clip_range": 0.2,
+              "entropy_coef": 0.005,
+              "value_coef": 0.5,
+              "max_grad_norm": 0.5,
+              "target_kl": 0.02,
+              "checkpoint_every": 50000,
+              "eval_every": 100000,
+              "eval_episodes_per_env": 1
+            },
+            "actor_size": 3255,
+            "critic_size": 3279,
+            "layers": [
+              512,
+              256,
+              128,
+              64
+            ],
+            "feature_dim": 32,
+            "state_order": [
+              "goal_xy",
+              "linear_velocity_xyz",
+              "angular_velocity_xyz",
+              "projected_gravity_xyz",
+              "previous_action_xy",
+              "power_ema",
+              "time_left"
+            ],
+            "cell_order": [
+              "pca32",
+              "relative_height",
+              "slope_x",
+              "slope_y",
+              "roughness",
+              "visual_valid",
+              "geometry_valid",
+              "visual_age",
+              "geometry_age"
+            ],
+            "privileged_order": [
+              "mu_static_dynamic_4x2",
+              "contact4",
+              "normal_force4",
+              "slip4x2"
+            ],
+            "feet": [
+              "fl_foot",
+              "fr_foot",
+              "hl_foot",
+              "hr_foot"
+            ],
+            "look_x": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "look_y": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "cell_resolution_m": 0.5,
+            "map_persistent": true,
+            "memory_resolution_m": 0.1,
+            "memory_age_seconds": 40.0,
+            "memory_fusion": "latest_per_world_xy_bin",
+            "memory_age_aggregation": "sample_weighted_mean",
+            "localization": "simulator_pose",
+            "depth_stride": 4,
+            "geometry_min_points": 10,
+            "geometry_min_xy_eigenvalue": 0.0001,
+            "terminal_timeout": true
+          },
+          "physics_dt_s": 0.005,
+          "action_dt_s": 0.2,
+          "goal_radius_m": 0.55,
+          "timeout_s": 40.0,
+          "energy": "Absolute joint mechanical work; trapezoidal physics-step integration",
+          "policy": "Deterministic PPO actor; frozen normalizer, DINOv2 and PCA",
+          "device": "cuda:0",
+          "agent_device": "cpu",
+          "simulation_seed": 0,
+          "missions": [
+            {
+              "mission_id": "A1",
+              "map": "rocks_right",
+              "start_x_m": -0.0289,
+              "start_y_m": 0.0005,
+              "goal_x_m": 3.9883,
+              "goal_y_m": 4.0234,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A2",
+              "map": "rocks_right",
+              "start_x_m": -0.025,
+              "start_y_m": 0.0104,
+              "goal_x_m": 3.9616,
+              "goal_y_m": 4.026,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A3",
+              "map": "rocks_right",
+              "start_x_m": -0.0065,
+              "start_y_m": -0.0324,
+              "goal_x_m": 3.9974,
+              "goal_y_m": 3.9708,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A4",
+              "map": "rocks_right",
+              "start_x_m": -0.0269,
+              "start_y_m": -0.0069,
+              "goal_x_m": 3.9525,
+              "goal_y_m": 3.9805,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A5",
+              "map": "rocks_right",
+              "start_x_m": -0.0408,
+              "start_y_m": 0.0188,
+              "goal_x_m": 4.0362,
+              "goal_y_m": 4.017,
+              "start_yaw_deg": 45.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "group": "a_routes_on_b",
+      "mission": {
+        "mission_id": "A2",
+        "map": "rocks_left",
+        "start_x_m": -0.025,
+        "start_y_m": 0.0104,
+        "goal_x_m": 3.9616,
+        "goal_y_m": 4.026,
+        "start_yaw_deg": 45.0,
+        "source_map": "rocks_right",
+        "target_map": "rocks_left",
+        "source_energy_j": 1113.577880859375,
+        "source_path_m": 6.556054592132568,
+        "source_time_s": 9.4
+      },
+      "reference_file": "A2_reference.csv",
+      "reference_sha256": "ddc589b8d77294f25b0a03f31bb78008471866b71eb9232c2629af6380bcda87",
+      "source_result": {
+        "env_id": "0",
+        "layout": "rocks_asphalt__right_rocks",
+        "reason": "goal",
+        "success": "1",
+        "steps": "47",
+        "energy_j": "1113.577880859375",
+        "path_m": "6.556054592132568",
+        "final_distance_m": "0.4915415942668915",
+        "nav_return": "164.56072998046875",
+        "energy_cost": "11.135778427124023",
+        "route": "left",
+        "right_path_m": "0.0",
+        "left_path_m": "5.186906814575195",
+        "asphalt_route": "1",
+        "mission_id": "A2",
+        "map": "rocks_right",
+        "start_x_m": "-0.025",
+        "start_y_m": "0.0104",
+        "goal_x_m": "3.9616",
+        "goal_y_m": "4.026",
+        "start_yaw_deg": "45.0",
+        "time_s": "9.4",
+        "straight_distance_m": "5.65844704137098",
+        "falls": "0",
+        "timeouts": "0",
+        "final_x_m": "3.4823286533355713",
+        "final_y_m": "4.1351423263549805"
+      },
+      "source": {
+        "run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_1_binary_terrain/experiments/results_exp/run_20261112_184253_967025/rocks_right",
+        "trajectory_sha256": "933b40a6327c7bfc388b284ea74324f45603076ee49f28177789f9189c017e27",
+        "episodes_sha256": "398e197864244a13acf63e2e2e62b61023cc118c889a746e4ddac65c35ebfa30",
+        "config": {
+          "map": "rocks_right",
+          "layout": "rocks_asphalt__right_rocks",
+          "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/runs/test13_ppo_20261023_122929_726370/policy_final.pt",
+          "checkpoint_sha256": "9d60c837f34356cc221e5ce97e02b6e2b8cf3e8653ab1caaad608d311cea579e",
+          "training_transitions": 100000,
+          "source_identity": {
+            "dino": {
+              "config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d",
+              "preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+              "model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1"
+            },
+            "input_size": 518,
+            "resize": "opencv_linear_square_no_crop",
+            "terrain": {
+              "rocks_asphalt__right_rocks": "0b22f449834ea64505dee3a1d5d584c9fc09f92b08f729e998aeaf91b2946e12",
+              "rocks_asphalt__right_asphalt": "fa9ffcee29701a462c2f4c11f3460aa181ca9105c7e54e268f0483cabefc0695"
+            }
+          },
+          "signature": {
+            "schema": 1,
+            "experiment": "multi_terrain_test13",
+            "algorithm": "asymmetric_multi_head_PPO",
+            "navigation": {
+              "physics_dt": 0.005,
+              "physics_steps_per_action": 40,
+              "settle_seconds": 2.0,
+              "max_episode_seconds": 40.0,
+              "spawn_height_m": 0.75,
+              "goal_radius_m": 0.55,
+              "minimum_body_height_m": 0.25,
+              "max_forward_m_s": 1.6,
+              "max_yaw_rad_s": 1.5,
+              "progress_reward_per_m": 3.0,
+              "time_penalty_per_step": 0.02,
+              "success_bonus": 150.0,
+              "failure_penalty": 300.0,
+              "energy_reference_j": 100.0,
+              "energy_weight": 1.0,
+              "power_filter_seconds": 1.0
+            },
+            "ppo": {
+              "timesteps": 100000,
+              "num_envs": 32,
+              "rollout_steps": 128,
+              "batch_size": 256,
+              "epochs": 10,
+              "learning_rate": 0.0003,
+              "gamma": 0.999,
+              "gae_lambda": 0.95,
+              "clip_range": 0.2,
+              "entropy_coef": 0.005,
+              "value_coef": 0.5,
+              "max_grad_norm": 0.5,
+              "target_kl": 0.02,
+              "checkpoint_every": 50000,
+              "eval_every": 100000,
+              "eval_episodes_per_env": 1
+            },
+            "actor_size": 3255,
+            "critic_size": 3279,
+            "layers": [
+              512,
+              256,
+              128,
+              64
+            ],
+            "feature_dim": 32,
+            "state_order": [
+              "goal_xy",
+              "linear_velocity_xyz",
+              "angular_velocity_xyz",
+              "projected_gravity_xyz",
+              "previous_action_xy",
+              "power_ema",
+              "time_left"
+            ],
+            "cell_order": [
+              "pca32",
+              "relative_height",
+              "slope_x",
+              "slope_y",
+              "roughness",
+              "visual_valid",
+              "geometry_valid",
+              "visual_age",
+              "geometry_age"
+            ],
+            "privileged_order": [
+              "mu_static_dynamic_4x2",
+              "contact4",
+              "normal_force4",
+              "slip4x2"
+            ],
+            "feet": [
+              "fl_foot",
+              "fr_foot",
+              "hl_foot",
+              "hr_foot"
+            ],
+            "look_x": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "look_y": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "cell_resolution_m": 0.5,
+            "map_persistent": true,
+            "memory_resolution_m": 0.1,
+            "memory_age_seconds": 40.0,
+            "memory_fusion": "latest_per_world_xy_bin",
+            "memory_age_aggregation": "sample_weighted_mean",
+            "localization": "simulator_pose",
+            "depth_stride": 4,
+            "geometry_min_points": 10,
+            "geometry_min_xy_eigenvalue": 0.0001,
+            "terminal_timeout": true
+          },
+          "physics_dt_s": 0.005,
+          "action_dt_s": 0.2,
+          "goal_radius_m": 0.55,
+          "timeout_s": 40.0,
+          "energy": "Absolute joint mechanical work; trapezoidal physics-step integration",
+          "policy": "Deterministic PPO actor; frozen normalizer, DINOv2 and PCA",
+          "device": "cuda:0",
+          "agent_device": "cpu",
+          "simulation_seed": 0,
+          "missions": [
+            {
+              "mission_id": "A1",
+              "map": "rocks_right",
+              "start_x_m": -0.0289,
+              "start_y_m": 0.0005,
+              "goal_x_m": 3.9883,
+              "goal_y_m": 4.0234,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A2",
+              "map": "rocks_right",
+              "start_x_m": -0.025,
+              "start_y_m": 0.0104,
+              "goal_x_m": 3.9616,
+              "goal_y_m": 4.026,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A3",
+              "map": "rocks_right",
+              "start_x_m": -0.0065,
+              "start_y_m": -0.0324,
+              "goal_x_m": 3.9974,
+              "goal_y_m": 3.9708,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A4",
+              "map": "rocks_right",
+              "start_x_m": -0.0269,
+              "start_y_m": -0.0069,
+              "goal_x_m": 3.9525,
+              "goal_y_m": 3.9805,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A5",
+              "map": "rocks_right",
+              "start_x_m": -0.0408,
+              "start_y_m": 0.0188,
+              "goal_x_m": 4.0362,
+              "goal_y_m": 4.017,
+              "start_yaw_deg": 45.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "group": "a_routes_on_b",
+      "mission": {
+        "mission_id": "A3",
+        "map": "rocks_left",
+        "start_x_m": -0.0065,
+        "start_y_m": -0.0324,
+        "goal_x_m": 3.9974,
+        "goal_y_m": 3.9708,
+        "start_yaw_deg": 45.0,
+        "source_map": "rocks_right",
+        "target_map": "rocks_left",
+        "source_energy_j": 1263.0567626953125,
+        "source_path_m": 6.834790229797363,
+        "source_time_s": 11.0
+      },
+      "reference_file": "A3_reference.csv",
+      "reference_sha256": "45446d3881c92812264707c8d529df3b0bded1a2da25f0361028901154fc3cdd",
+      "source_result": {
+        "env_id": "0",
+        "layout": "rocks_asphalt__right_rocks",
+        "reason": "goal",
+        "success": "1",
+        "steps": "55",
+        "energy_j": "1263.0567626953125",
+        "path_m": "6.834790229797363",
+        "final_distance_m": "0.43943876028060913",
+        "nav_return": "164.5673065185547",
+        "energy_cost": "12.63056755065918",
+        "route": "left",
+        "right_path_m": "0.0",
+        "left_path_m": "5.2188262939453125",
+        "asphalt_route": "1",
+        "mission_id": "A3",
+        "map": "rocks_right",
+        "start_x_m": "-0.0065",
+        "start_y_m": "-0.0324",
+        "goal_x_m": "3.9974",
+        "goal_y_m": "3.9708",
+        "start_yaw_deg": "45.0",
+        "time_s": "11.0",
+        "straight_distance_m": "5.661874729274748",
+        "falls": "0",
+        "timeouts": "0",
+        "final_x_m": "3.567530632019043",
+        "final_y_m": "4.062006950378418"
+      },
+      "source": {
+        "run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_1_binary_terrain/experiments/results_exp/run_20261112_184253_967025/rocks_right",
+        "trajectory_sha256": "933b40a6327c7bfc388b284ea74324f45603076ee49f28177789f9189c017e27",
+        "episodes_sha256": "398e197864244a13acf63e2e2e62b61023cc118c889a746e4ddac65c35ebfa30",
+        "config": {
+          "map": "rocks_right",
+          "layout": "rocks_asphalt__right_rocks",
+          "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/runs/test13_ppo_20261023_122929_726370/policy_final.pt",
+          "checkpoint_sha256": "9d60c837f34356cc221e5ce97e02b6e2b8cf3e8653ab1caaad608d311cea579e",
+          "training_transitions": 100000,
+          "source_identity": {
+            "dino": {
+              "config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d",
+              "preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+              "model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1"
+            },
+            "input_size": 518,
+            "resize": "opencv_linear_square_no_crop",
+            "terrain": {
+              "rocks_asphalt__right_rocks": "0b22f449834ea64505dee3a1d5d584c9fc09f92b08f729e998aeaf91b2946e12",
+              "rocks_asphalt__right_asphalt": "fa9ffcee29701a462c2f4c11f3460aa181ca9105c7e54e268f0483cabefc0695"
+            }
+          },
+          "signature": {
+            "schema": 1,
+            "experiment": "multi_terrain_test13",
+            "algorithm": "asymmetric_multi_head_PPO",
+            "navigation": {
+              "physics_dt": 0.005,
+              "physics_steps_per_action": 40,
+              "settle_seconds": 2.0,
+              "max_episode_seconds": 40.0,
+              "spawn_height_m": 0.75,
+              "goal_radius_m": 0.55,
+              "minimum_body_height_m": 0.25,
+              "max_forward_m_s": 1.6,
+              "max_yaw_rad_s": 1.5,
+              "progress_reward_per_m": 3.0,
+              "time_penalty_per_step": 0.02,
+              "success_bonus": 150.0,
+              "failure_penalty": 300.0,
+              "energy_reference_j": 100.0,
+              "energy_weight": 1.0,
+              "power_filter_seconds": 1.0
+            },
+            "ppo": {
+              "timesteps": 100000,
+              "num_envs": 32,
+              "rollout_steps": 128,
+              "batch_size": 256,
+              "epochs": 10,
+              "learning_rate": 0.0003,
+              "gamma": 0.999,
+              "gae_lambda": 0.95,
+              "clip_range": 0.2,
+              "entropy_coef": 0.005,
+              "value_coef": 0.5,
+              "max_grad_norm": 0.5,
+              "target_kl": 0.02,
+              "checkpoint_every": 50000,
+              "eval_every": 100000,
+              "eval_episodes_per_env": 1
+            },
+            "actor_size": 3255,
+            "critic_size": 3279,
+            "layers": [
+              512,
+              256,
+              128,
+              64
+            ],
+            "feature_dim": 32,
+            "state_order": [
+              "goal_xy",
+              "linear_velocity_xyz",
+              "angular_velocity_xyz",
+              "projected_gravity_xyz",
+              "previous_action_xy",
+              "power_ema",
+              "time_left"
+            ],
+            "cell_order": [
+              "pca32",
+              "relative_height",
+              "slope_x",
+              "slope_y",
+              "roughness",
+              "visual_valid",
+              "geometry_valid",
+              "visual_age",
+              "geometry_age"
+            ],
+            "privileged_order": [
+              "mu_static_dynamic_4x2",
+              "contact4",
+              "normal_force4",
+              "slip4x2"
+            ],
+            "feet": [
+              "fl_foot",
+              "fr_foot",
+              "hl_foot",
+              "hr_foot"
+            ],
+            "look_x": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "look_y": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "cell_resolution_m": 0.5,
+            "map_persistent": true,
+            "memory_resolution_m": 0.1,
+            "memory_age_seconds": 40.0,
+            "memory_fusion": "latest_per_world_xy_bin",
+            "memory_age_aggregation": "sample_weighted_mean",
+            "localization": "simulator_pose",
+            "depth_stride": 4,
+            "geometry_min_points": 10,
+            "geometry_min_xy_eigenvalue": 0.0001,
+            "terminal_timeout": true
+          },
+          "physics_dt_s": 0.005,
+          "action_dt_s": 0.2,
+          "goal_radius_m": 0.55,
+          "timeout_s": 40.0,
+          "energy": "Absolute joint mechanical work; trapezoidal physics-step integration",
+          "policy": "Deterministic PPO actor; frozen normalizer, DINOv2 and PCA",
+          "device": "cuda:0",
+          "agent_device": "cpu",
+          "simulation_seed": 0,
+          "missions": [
+            {
+              "mission_id": "A1",
+              "map": "rocks_right",
+              "start_x_m": -0.0289,
+              "start_y_m": 0.0005,
+              "goal_x_m": 3.9883,
+              "goal_y_m": 4.0234,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A2",
+              "map": "rocks_right",
+              "start_x_m": -0.025,
+              "start_y_m": 0.0104,
+              "goal_x_m": 3.9616,
+              "goal_y_m": 4.026,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A3",
+              "map": "rocks_right",
+              "start_x_m": -0.0065,
+              "start_y_m": -0.0324,
+              "goal_x_m": 3.9974,
+              "goal_y_m": 3.9708,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A4",
+              "map": "rocks_right",
+              "start_x_m": -0.0269,
+              "start_y_m": -0.0069,
+              "goal_x_m": 3.9525,
+              "goal_y_m": 3.9805,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A5",
+              "map": "rocks_right",
+              "start_x_m": -0.0408,
+              "start_y_m": 0.0188,
+              "goal_x_m": 4.0362,
+              "goal_y_m": 4.017,
+              "start_yaw_deg": 45.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "group": "a_routes_on_b",
+      "mission": {
+        "mission_id": "A4",
+        "map": "rocks_left",
+        "start_x_m": -0.0269,
+        "start_y_m": -0.0069,
+        "goal_x_m": 3.9525,
+        "goal_y_m": 3.9805,
+        "start_yaw_deg": 45.0,
+        "source_map": "rocks_right",
+        "target_map": "rocks_left",
+        "source_energy_j": 1209.4417724609375,
+        "source_path_m": 6.848292350769043,
+        "source_time_s": 10.600000000000001
+      },
+      "reference_file": "A4_reference.csv",
+      "reference_sha256": "5bd2a205190913264a15bde2f7aa2fd74bc44fa98663d75dde41720076ffac08",
+      "source_result": {
+        "env_id": "0",
+        "layout": "rocks_asphalt__right_rocks",
+        "reason": "goal",
+        "success": "1",
+        "steps": "53",
+        "energy_j": "1209.4417724609375",
+        "path_m": "6.848292350769043",
+        "final_distance_m": "0.39122945070266724",
+        "nav_return": "164.66644287109375",
+        "energy_cost": "12.094413757324219",
+        "route": "left",
+        "right_path_m": "0.0",
+        "left_path_m": "5.295721530914307",
+        "asphalt_route": "1",
+        "mission_id": "A4",
+        "map": "rocks_right",
+        "start_x_m": "-0.0269",
+        "start_y_m": "-0.0069",
+        "goal_x_m": "3.9525",
+        "goal_y_m": "3.9805",
+        "start_yaw_deg": "45.0",
+        "time_s": "10.600000000000001",
+        "straight_distance_m": "5.633381144570284",
+        "falls": "0",
+        "timeouts": "0",
+        "final_x_m": "3.592982530593872",
+        "final_y_m": "4.134797096252441"
+      },
+      "source": {
+        "run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_1_binary_terrain/experiments/results_exp/run_20261112_184253_967025/rocks_right",
+        "trajectory_sha256": "933b40a6327c7bfc388b284ea74324f45603076ee49f28177789f9189c017e27",
+        "episodes_sha256": "398e197864244a13acf63e2e2e62b61023cc118c889a746e4ddac65c35ebfa30",
+        "config": {
+          "map": "rocks_right",
+          "layout": "rocks_asphalt__right_rocks",
+          "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/runs/test13_ppo_20261023_122929_726370/policy_final.pt",
+          "checkpoint_sha256": "9d60c837f34356cc221e5ce97e02b6e2b8cf3e8653ab1caaad608d311cea579e",
+          "training_transitions": 100000,
+          "source_identity": {
+            "dino": {
+              "config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d",
+              "preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+              "model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1"
+            },
+            "input_size": 518,
+            "resize": "opencv_linear_square_no_crop",
+            "terrain": {
+              "rocks_asphalt__right_rocks": "0b22f449834ea64505dee3a1d5d584c9fc09f92b08f729e998aeaf91b2946e12",
+              "rocks_asphalt__right_asphalt": "fa9ffcee29701a462c2f4c11f3460aa181ca9105c7e54e268f0483cabefc0695"
+            }
+          },
+          "signature": {
+            "schema": 1,
+            "experiment": "multi_terrain_test13",
+            "algorithm": "asymmetric_multi_head_PPO",
+            "navigation": {
+              "physics_dt": 0.005,
+              "physics_steps_per_action": 40,
+              "settle_seconds": 2.0,
+              "max_episode_seconds": 40.0,
+              "spawn_height_m": 0.75,
+              "goal_radius_m": 0.55,
+              "minimum_body_height_m": 0.25,
+              "max_forward_m_s": 1.6,
+              "max_yaw_rad_s": 1.5,
+              "progress_reward_per_m": 3.0,
+              "time_penalty_per_step": 0.02,
+              "success_bonus": 150.0,
+              "failure_penalty": 300.0,
+              "energy_reference_j": 100.0,
+              "energy_weight": 1.0,
+              "power_filter_seconds": 1.0
+            },
+            "ppo": {
+              "timesteps": 100000,
+              "num_envs": 32,
+              "rollout_steps": 128,
+              "batch_size": 256,
+              "epochs": 10,
+              "learning_rate": 0.0003,
+              "gamma": 0.999,
+              "gae_lambda": 0.95,
+              "clip_range": 0.2,
+              "entropy_coef": 0.005,
+              "value_coef": 0.5,
+              "max_grad_norm": 0.5,
+              "target_kl": 0.02,
+              "checkpoint_every": 50000,
+              "eval_every": 100000,
+              "eval_episodes_per_env": 1
+            },
+            "actor_size": 3255,
+            "critic_size": 3279,
+            "layers": [
+              512,
+              256,
+              128,
+              64
+            ],
+            "feature_dim": 32,
+            "state_order": [
+              "goal_xy",
+              "linear_velocity_xyz",
+              "angular_velocity_xyz",
+              "projected_gravity_xyz",
+              "previous_action_xy",
+              "power_ema",
+              "time_left"
+            ],
+            "cell_order": [
+              "pca32",
+              "relative_height",
+              "slope_x",
+              "slope_y",
+              "roughness",
+              "visual_valid",
+              "geometry_valid",
+              "visual_age",
+              "geometry_age"
+            ],
+            "privileged_order": [
+              "mu_static_dynamic_4x2",
+              "contact4",
+              "normal_force4",
+              "slip4x2"
+            ],
+            "feet": [
+              "fl_foot",
+              "fr_foot",
+              "hl_foot",
+              "hr_foot"
+            ],
+            "look_x": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "look_y": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "cell_resolution_m": 0.5,
+            "map_persistent": true,
+            "memory_resolution_m": 0.1,
+            "memory_age_seconds": 40.0,
+            "memory_fusion": "latest_per_world_xy_bin",
+            "memory_age_aggregation": "sample_weighted_mean",
+            "localization": "simulator_pose",
+            "depth_stride": 4,
+            "geometry_min_points": 10,
+            "geometry_min_xy_eigenvalue": 0.0001,
+            "terminal_timeout": true
+          },
+          "physics_dt_s": 0.005,
+          "action_dt_s": 0.2,
+          "goal_radius_m": 0.55,
+          "timeout_s": 40.0,
+          "energy": "Absolute joint mechanical work; trapezoidal physics-step integration",
+          "policy": "Deterministic PPO actor; frozen normalizer, DINOv2 and PCA",
+          "device": "cuda:0",
+          "agent_device": "cpu",
+          "simulation_seed": 0,
+          "missions": [
+            {
+              "mission_id": "A1",
+              "map": "rocks_right",
+              "start_x_m": -0.0289,
+              "start_y_m": 0.0005,
+              "goal_x_m": 3.9883,
+              "goal_y_m": 4.0234,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A2",
+              "map": "rocks_right",
+              "start_x_m": -0.025,
+              "start_y_m": 0.0104,
+              "goal_x_m": 3.9616,
+              "goal_y_m": 4.026,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A3",
+              "map": "rocks_right",
+              "start_x_m": -0.0065,
+              "start_y_m": -0.0324,
+              "goal_x_m": 3.9974,
+              "goal_y_m": 3.9708,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A4",
+              "map": "rocks_right",
+              "start_x_m": -0.0269,
+              "start_y_m": -0.0069,
+              "goal_x_m": 3.9525,
+              "goal_y_m": 3.9805,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A5",
+              "map": "rocks_right",
+              "start_x_m": -0.0408,
+              "start_y_m": 0.0188,
+              "goal_x_m": 4.0362,
+              "goal_y_m": 4.017,
+              "start_yaw_deg": 45.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "group": "a_routes_on_b",
+      "mission": {
+        "mission_id": "A5",
+        "map": "rocks_left",
+        "start_x_m": -0.0408,
+        "start_y_m": 0.0188,
+        "goal_x_m": 4.0362,
+        "goal_y_m": 4.017,
+        "start_yaw_deg": 45.0,
+        "source_map": "rocks_right",
+        "target_map": "rocks_left",
+        "source_energy_j": 1171.8643798828125,
+        "source_path_m": 6.787905693054199,
+        "source_time_s": 10.0
+      },
+      "reference_file": "A5_reference.csv",
+      "reference_sha256": "36990ce20f094c15a2ea2908a643fc5ee365d1e97e8ab06d1f9bab5652bc0fbb",
+      "source_result": {
+        "env_id": "0",
+        "layout": "rocks_asphalt__right_rocks",
+        "reason": "goal",
+        "success": "1",
+        "steps": "50",
+        "energy_j": "1171.8643798828125",
+        "path_m": "6.787905693054199",
+        "final_distance_m": "0.4136074185371399",
+        "nav_return": "164.89007568359375",
+        "energy_cost": "11.718643188476562",
+        "route": "left",
+        "right_path_m": "0.0",
+        "left_path_m": "5.138309478759766",
+        "asphalt_route": "1",
+        "mission_id": "A5",
+        "map": "rocks_right",
+        "start_x_m": "-0.0408",
+        "start_y_m": "0.0188",
+        "goal_x_m": "4.0362",
+        "goal_y_m": "4.017",
+        "start_yaw_deg": "45.0",
+        "time_s": "10.0",
+        "straight_distance_m": "5.7103005385005785",
+        "falls": "0",
+        "timeouts": "0",
+        "final_x_m": "3.6294708251953125",
+        "final_y_m": "4.092116355895996"
+      },
+      "source": {
+        "run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_1_binary_terrain/experiments/results_exp/run_20261112_184253_967025/rocks_right",
+        "trajectory_sha256": "933b40a6327c7bfc388b284ea74324f45603076ee49f28177789f9189c017e27",
+        "episodes_sha256": "398e197864244a13acf63e2e2e62b61023cc118c889a746e4ddac65c35ebfa30",
+        "config": {
+          "map": "rocks_right",
+          "layout": "rocks_asphalt__right_rocks",
+          "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/runs/test13_ppo_20261023_122929_726370/policy_final.pt",
+          "checkpoint_sha256": "9d60c837f34356cc221e5ce97e02b6e2b8cf3e8653ab1caaad608d311cea579e",
+          "training_transitions": 100000,
+          "source_identity": {
+            "dino": {
+              "config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d",
+              "preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+              "model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1"
+            },
+            "input_size": 518,
+            "resize": "opencv_linear_square_no_crop",
+            "terrain": {
+              "rocks_asphalt__right_rocks": "0b22f449834ea64505dee3a1d5d584c9fc09f92b08f729e998aeaf91b2946e12",
+              "rocks_asphalt__right_asphalt": "fa9ffcee29701a462c2f4c11f3460aa181ca9105c7e54e268f0483cabefc0695"
+            }
+          },
+          "signature": {
+            "schema": 1,
+            "experiment": "multi_terrain_test13",
+            "algorithm": "asymmetric_multi_head_PPO",
+            "navigation": {
+              "physics_dt": 0.005,
+              "physics_steps_per_action": 40,
+              "settle_seconds": 2.0,
+              "max_episode_seconds": 40.0,
+              "spawn_height_m": 0.75,
+              "goal_radius_m": 0.55,
+              "minimum_body_height_m": 0.25,
+              "max_forward_m_s": 1.6,
+              "max_yaw_rad_s": 1.5,
+              "progress_reward_per_m": 3.0,
+              "time_penalty_per_step": 0.02,
+              "success_bonus": 150.0,
+              "failure_penalty": 300.0,
+              "energy_reference_j": 100.0,
+              "energy_weight": 1.0,
+              "power_filter_seconds": 1.0
+            },
+            "ppo": {
+              "timesteps": 100000,
+              "num_envs": 32,
+              "rollout_steps": 128,
+              "batch_size": 256,
+              "epochs": 10,
+              "learning_rate": 0.0003,
+              "gamma": 0.999,
+              "gae_lambda": 0.95,
+              "clip_range": 0.2,
+              "entropy_coef": 0.005,
+              "value_coef": 0.5,
+              "max_grad_norm": 0.5,
+              "target_kl": 0.02,
+              "checkpoint_every": 50000,
+              "eval_every": 100000,
+              "eval_episodes_per_env": 1
+            },
+            "actor_size": 3255,
+            "critic_size": 3279,
+            "layers": [
+              512,
+              256,
+              128,
+              64
+            ],
+            "feature_dim": 32,
+            "state_order": [
+              "goal_xy",
+              "linear_velocity_xyz",
+              "angular_velocity_xyz",
+              "projected_gravity_xyz",
+              "previous_action_xy",
+              "power_ema",
+              "time_left"
+            ],
+            "cell_order": [
+              "pca32",
+              "relative_height",
+              "slope_x",
+              "slope_y",
+              "roughness",
+              "visual_valid",
+              "geometry_valid",
+              "visual_age",
+              "geometry_age"
+            ],
+            "privileged_order": [
+              "mu_static_dynamic_4x2",
+              "contact4",
+              "normal_force4",
+              "slip4x2"
+            ],
+            "feet": [
+              "fl_foot",
+              "fr_foot",
+              "hl_foot",
+              "hr_foot"
+            ],
+            "look_x": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "look_y": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "cell_resolution_m": 0.5,
+            "map_persistent": true,
+            "memory_resolution_m": 0.1,
+            "memory_age_seconds": 40.0,
+            "memory_fusion": "latest_per_world_xy_bin",
+            "memory_age_aggregation": "sample_weighted_mean",
+            "localization": "simulator_pose",
+            "depth_stride": 4,
+            "geometry_min_points": 10,
+            "geometry_min_xy_eigenvalue": 0.0001,
+            "terminal_timeout": true
+          },
+          "physics_dt_s": 0.005,
+          "action_dt_s": 0.2,
+          "goal_radius_m": 0.55,
+          "timeout_s": 40.0,
+          "energy": "Absolute joint mechanical work; trapezoidal physics-step integration",
+          "policy": "Deterministic PPO actor; frozen normalizer, DINOv2 and PCA",
+          "device": "cuda:0",
+          "agent_device": "cpu",
+          "simulation_seed": 0,
+          "missions": [
+            {
+              "mission_id": "A1",
+              "map": "rocks_right",
+              "start_x_m": -0.0289,
+              "start_y_m": 0.0005,
+              "goal_x_m": 3.9883,
+              "goal_y_m": 4.0234,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A2",
+              "map": "rocks_right",
+              "start_x_m": -0.025,
+              "start_y_m": 0.0104,
+              "goal_x_m": 3.9616,
+              "goal_y_m": 4.026,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A3",
+              "map": "rocks_right",
+              "start_x_m": -0.0065,
+              "start_y_m": -0.0324,
+              "goal_x_m": 3.9974,
+              "goal_y_m": 3.9708,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A4",
+              "map": "rocks_right",
+              "start_x_m": -0.0269,
+              "start_y_m": -0.0069,
+              "goal_x_m": 3.9525,
+              "goal_y_m": 3.9805,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "A5",
+              "map": "rocks_right",
+              "start_x_m": -0.0408,
+              "start_y_m": 0.0188,
+              "goal_x_m": 4.0362,
+              "goal_y_m": 4.017,
+              "start_yaw_deg": 45.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "group": "b_routes_on_a",
+      "mission": {
+        "mission_id": "B1",
+        "map": "rocks_right",
+        "start_x_m": -0.0159,
+        "start_y_m": 0.0339,
+        "goal_x_m": 4.0441,
+        "goal_y_m": 3.9516,
+        "start_yaw_deg": 45.0,
+        "source_map": "rocks_left",
+        "target_map": "rocks_right",
+        "source_energy_j": 952.386962890625,
+        "source_path_m": 5.927469730377197,
+        "source_time_s": 6.0
+      },
+      "reference_file": "B1_reference.csv",
+      "reference_sha256": "b6483a46ea351e8d7c226b504ecc46adb3bbff6f042507ebc2ede6f1f0deeab2",
+      "source_result": {
+        "env_id": "0",
+        "layout": "rocks_asphalt__right_asphalt",
+        "reason": "goal",
+        "success": "1",
+        "steps": "30",
+        "energy_j": "952.386962890625",
+        "path_m": "5.927469730377197",
+        "final_distance_m": "0.45638102293014526",
+        "nav_return": "164.95680236816406",
+        "energy_cost": "9.523869514465332",
+        "route": "right",
+        "right_path_m": "4.210309982299805",
+        "left_path_m": "0.0",
+        "asphalt_route": "1",
+        "mission_id": "B1",
+        "map": "rocks_left",
+        "start_x_m": "-0.0159",
+        "start_y_m": "0.0339",
+        "goal_x_m": "4.0441",
+        "goal_y_m": "3.9516",
+        "start_yaw_deg": "45.0",
+        "time_s": "6.0",
+        "straight_distance_m": "5.641983099053028",
+        "falls": "0",
+        "timeouts": "0",
+        "final_x_m": "3.9663801193237305",
+        "final_y_m": "3.501885414123535"
+      },
+      "source": {
+        "run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_1_binary_terrain/experiments/results_exp/run_20261112_184253_967025/rocks_left",
+        "trajectory_sha256": "8a60472d93073ec7a4f631d4ce9d2c0f64959bef3ec4738769884349928a6cec",
+        "episodes_sha256": "9c61851dd5ffb9b4f0f90114fd3efd05612ba92a4353535449c9e255faa6f49e",
+        "config": {
+          "map": "rocks_left",
+          "layout": "rocks_asphalt__right_asphalt",
+          "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/runs/test13_ppo_20261023_122929_726370/policy_final.pt",
+          "checkpoint_sha256": "9d60c837f34356cc221e5ce97e02b6e2b8cf3e8653ab1caaad608d311cea579e",
+          "training_transitions": 100000,
+          "source_identity": {
+            "dino": {
+              "config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d",
+              "preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+              "model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1"
+            },
+            "input_size": 518,
+            "resize": "opencv_linear_square_no_crop",
+            "terrain": {
+              "rocks_asphalt__right_rocks": "0b22f449834ea64505dee3a1d5d584c9fc09f92b08f729e998aeaf91b2946e12",
+              "rocks_asphalt__right_asphalt": "fa9ffcee29701a462c2f4c11f3460aa181ca9105c7e54e268f0483cabefc0695"
+            }
+          },
+          "signature": {
+            "schema": 1,
+            "experiment": "multi_terrain_test13",
+            "algorithm": "asymmetric_multi_head_PPO",
+            "navigation": {
+              "physics_dt": 0.005,
+              "physics_steps_per_action": 40,
+              "settle_seconds": 2.0,
+              "max_episode_seconds": 40.0,
+              "spawn_height_m": 0.75,
+              "goal_radius_m": 0.55,
+              "minimum_body_height_m": 0.25,
+              "max_forward_m_s": 1.6,
+              "max_yaw_rad_s": 1.5,
+              "progress_reward_per_m": 3.0,
+              "time_penalty_per_step": 0.02,
+              "success_bonus": 150.0,
+              "failure_penalty": 300.0,
+              "energy_reference_j": 100.0,
+              "energy_weight": 1.0,
+              "power_filter_seconds": 1.0
+            },
+            "ppo": {
+              "timesteps": 100000,
+              "num_envs": 32,
+              "rollout_steps": 128,
+              "batch_size": 256,
+              "epochs": 10,
+              "learning_rate": 0.0003,
+              "gamma": 0.999,
+              "gae_lambda": 0.95,
+              "clip_range": 0.2,
+              "entropy_coef": 0.005,
+              "value_coef": 0.5,
+              "max_grad_norm": 0.5,
+              "target_kl": 0.02,
+              "checkpoint_every": 50000,
+              "eval_every": 100000,
+              "eval_episodes_per_env": 1
+            },
+            "actor_size": 3255,
+            "critic_size": 3279,
+            "layers": [
+              512,
+              256,
+              128,
+              64
+            ],
+            "feature_dim": 32,
+            "state_order": [
+              "goal_xy",
+              "linear_velocity_xyz",
+              "angular_velocity_xyz",
+              "projected_gravity_xyz",
+              "previous_action_xy",
+              "power_ema",
+              "time_left"
+            ],
+            "cell_order": [
+              "pca32",
+              "relative_height",
+              "slope_x",
+              "slope_y",
+              "roughness",
+              "visual_valid",
+              "geometry_valid",
+              "visual_age",
+              "geometry_age"
+            ],
+            "privileged_order": [
+              "mu_static_dynamic_4x2",
+              "contact4",
+              "normal_force4",
+              "slip4x2"
+            ],
+            "feet": [
+              "fl_foot",
+              "fr_foot",
+              "hl_foot",
+              "hr_foot"
+            ],
+            "look_x": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "look_y": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "cell_resolution_m": 0.5,
+            "map_persistent": true,
+            "memory_resolution_m": 0.1,
+            "memory_age_seconds": 40.0,
+            "memory_fusion": "latest_per_world_xy_bin",
+            "memory_age_aggregation": "sample_weighted_mean",
+            "localization": "simulator_pose",
+            "depth_stride": 4,
+            "geometry_min_points": 10,
+            "geometry_min_xy_eigenvalue": 0.0001,
+            "terminal_timeout": true
+          },
+          "physics_dt_s": 0.005,
+          "action_dt_s": 0.2,
+          "goal_radius_m": 0.55,
+          "timeout_s": 40.0,
+          "energy": "Absolute joint mechanical work; trapezoidal physics-step integration",
+          "policy": "Deterministic PPO actor; frozen normalizer, DINOv2 and PCA",
+          "device": "cuda:0",
+          "agent_device": "cpu",
+          "simulation_seed": 0,
+          "missions": [
+            {
+              "mission_id": "B1",
+              "map": "rocks_left",
+              "start_x_m": -0.0159,
+              "start_y_m": 0.0339,
+              "goal_x_m": 4.0441,
+              "goal_y_m": 3.9516,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B2",
+              "map": "rocks_left",
+              "start_x_m": 0.0123,
+              "start_y_m": -0.0173,
+              "goal_x_m": 4.0349,
+              "goal_y_m": 3.9913,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B3",
+              "map": "rocks_left",
+              "start_x_m": -0.0204,
+              "start_y_m": -0.0445,
+              "goal_x_m": 4.0249,
+              "goal_y_m": 4.0129,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B4",
+              "map": "rocks_left",
+              "start_x_m": 0.0158,
+              "start_y_m": -0.0329,
+              "goal_x_m": 3.9567,
+              "goal_y_m": 4.0159,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B5",
+              "map": "rocks_left",
+              "start_x_m": 0.006,
+              "start_y_m": 0.0283,
+              "goal_x_m": 3.9837,
+              "goal_y_m": 3.9914,
+              "start_yaw_deg": 45.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "group": "b_routes_on_a",
+      "mission": {
+        "mission_id": "B2",
+        "map": "rocks_right",
+        "start_x_m": 0.0123,
+        "start_y_m": -0.0173,
+        "goal_x_m": 4.0349,
+        "goal_y_m": 3.9913,
+        "start_yaw_deg": 45.0,
+        "source_map": "rocks_left",
+        "target_map": "rocks_right",
+        "source_energy_j": 923.2324829101562,
+        "source_path_m": 5.925127029418945,
+        "source_time_s": 6.0
+      },
+      "reference_file": "B2_reference.csv",
+      "reference_sha256": "acf1cab2fb9f651009a58f730c79f5fe773f403fd69558dcb7392c06b6092a04",
+      "source_result": {
+        "env_id": "0",
+        "layout": "rocks_asphalt__right_asphalt",
+        "reason": "goal",
+        "success": "1",
+        "steps": "30",
+        "energy_j": "923.2324829101562",
+        "path_m": "5.925127029418945",
+        "final_distance_m": "0.5331845283508301",
+        "nav_return": "164.83721923828125",
+        "energy_cost": "9.232324600219727",
+        "route": "right",
+        "right_path_m": "4.445747375488281",
+        "left_path_m": "0.0",
+        "asphalt_route": "1",
+        "mission_id": "B2",
+        "map": "rocks_left",
+        "start_x_m": "0.0123",
+        "start_y_m": "-0.0173",
+        "goal_x_m": "4.0349",
+        "goal_y_m": "3.9913",
+        "start_yaw_deg": "45.0",
+        "time_s": "6.0",
+        "straight_distance_m": "5.678924609466127",
+        "falls": "0",
+        "timeouts": "0",
+        "final_x_m": "3.920924663543701",
+        "final_y_m": "3.470439910888672"
+      },
+      "source": {
+        "run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_1_binary_terrain/experiments/results_exp/run_20261112_184253_967025/rocks_left",
+        "trajectory_sha256": "8a60472d93073ec7a4f631d4ce9d2c0f64959bef3ec4738769884349928a6cec",
+        "episodes_sha256": "9c61851dd5ffb9b4f0f90114fd3efd05612ba92a4353535449c9e255faa6f49e",
+        "config": {
+          "map": "rocks_left",
+          "layout": "rocks_asphalt__right_asphalt",
+          "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/runs/test13_ppo_20261023_122929_726370/policy_final.pt",
+          "checkpoint_sha256": "9d60c837f34356cc221e5ce97e02b6e2b8cf3e8653ab1caaad608d311cea579e",
+          "training_transitions": 100000,
+          "source_identity": {
+            "dino": {
+              "config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d",
+              "preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+              "model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1"
+            },
+            "input_size": 518,
+            "resize": "opencv_linear_square_no_crop",
+            "terrain": {
+              "rocks_asphalt__right_rocks": "0b22f449834ea64505dee3a1d5d584c9fc09f92b08f729e998aeaf91b2946e12",
+              "rocks_asphalt__right_asphalt": "fa9ffcee29701a462c2f4c11f3460aa181ca9105c7e54e268f0483cabefc0695"
+            }
+          },
+          "signature": {
+            "schema": 1,
+            "experiment": "multi_terrain_test13",
+            "algorithm": "asymmetric_multi_head_PPO",
+            "navigation": {
+              "physics_dt": 0.005,
+              "physics_steps_per_action": 40,
+              "settle_seconds": 2.0,
+              "max_episode_seconds": 40.0,
+              "spawn_height_m": 0.75,
+              "goal_radius_m": 0.55,
+              "minimum_body_height_m": 0.25,
+              "max_forward_m_s": 1.6,
+              "max_yaw_rad_s": 1.5,
+              "progress_reward_per_m": 3.0,
+              "time_penalty_per_step": 0.02,
+              "success_bonus": 150.0,
+              "failure_penalty": 300.0,
+              "energy_reference_j": 100.0,
+              "energy_weight": 1.0,
+              "power_filter_seconds": 1.0
+            },
+            "ppo": {
+              "timesteps": 100000,
+              "num_envs": 32,
+              "rollout_steps": 128,
+              "batch_size": 256,
+              "epochs": 10,
+              "learning_rate": 0.0003,
+              "gamma": 0.999,
+              "gae_lambda": 0.95,
+              "clip_range": 0.2,
+              "entropy_coef": 0.005,
+              "value_coef": 0.5,
+              "max_grad_norm": 0.5,
+              "target_kl": 0.02,
+              "checkpoint_every": 50000,
+              "eval_every": 100000,
+              "eval_episodes_per_env": 1
+            },
+            "actor_size": 3255,
+            "critic_size": 3279,
+            "layers": [
+              512,
+              256,
+              128,
+              64
+            ],
+            "feature_dim": 32,
+            "state_order": [
+              "goal_xy",
+              "linear_velocity_xyz",
+              "angular_velocity_xyz",
+              "projected_gravity_xyz",
+              "previous_action_xy",
+              "power_ema",
+              "time_left"
+            ],
+            "cell_order": [
+              "pca32",
+              "relative_height",
+              "slope_x",
+              "slope_y",
+              "roughness",
+              "visual_valid",
+              "geometry_valid",
+              "visual_age",
+              "geometry_age"
+            ],
+            "privileged_order": [
+              "mu_static_dynamic_4x2",
+              "contact4",
+              "normal_force4",
+              "slip4x2"
+            ],
+            "feet": [
+              "fl_foot",
+              "fr_foot",
+              "hl_foot",
+              "hr_foot"
+            ],
+            "look_x": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "look_y": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "cell_resolution_m": 0.5,
+            "map_persistent": true,
+            "memory_resolution_m": 0.1,
+            "memory_age_seconds": 40.0,
+            "memory_fusion": "latest_per_world_xy_bin",
+            "memory_age_aggregation": "sample_weighted_mean",
+            "localization": "simulator_pose",
+            "depth_stride": 4,
+            "geometry_min_points": 10,
+            "geometry_min_xy_eigenvalue": 0.0001,
+            "terminal_timeout": true
+          },
+          "physics_dt_s": 0.005,
+          "action_dt_s": 0.2,
+          "goal_radius_m": 0.55,
+          "timeout_s": 40.0,
+          "energy": "Absolute joint mechanical work; trapezoidal physics-step integration",
+          "policy": "Deterministic PPO actor; frozen normalizer, DINOv2 and PCA",
+          "device": "cuda:0",
+          "agent_device": "cpu",
+          "simulation_seed": 0,
+          "missions": [
+            {
+              "mission_id": "B1",
+              "map": "rocks_left",
+              "start_x_m": -0.0159,
+              "start_y_m": 0.0339,
+              "goal_x_m": 4.0441,
+              "goal_y_m": 3.9516,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B2",
+              "map": "rocks_left",
+              "start_x_m": 0.0123,
+              "start_y_m": -0.0173,
+              "goal_x_m": 4.0349,
+              "goal_y_m": 3.9913,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B3",
+              "map": "rocks_left",
+              "start_x_m": -0.0204,
+              "start_y_m": -0.0445,
+              "goal_x_m": 4.0249,
+              "goal_y_m": 4.0129,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B4",
+              "map": "rocks_left",
+              "start_x_m": 0.0158,
+              "start_y_m": -0.0329,
+              "goal_x_m": 3.9567,
+              "goal_y_m": 4.0159,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B5",
+              "map": "rocks_left",
+              "start_x_m": 0.006,
+              "start_y_m": 0.0283,
+              "goal_x_m": 3.9837,
+              "goal_y_m": 3.9914,
+              "start_yaw_deg": 45.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "group": "b_routes_on_a",
+      "mission": {
+        "mission_id": "B3",
+        "map": "rocks_right",
+        "start_x_m": -0.0204,
+        "start_y_m": -0.0445,
+        "goal_x_m": 4.0249,
+        "goal_y_m": 4.0129,
+        "start_yaw_deg": 45.0,
+        "source_map": "rocks_left",
+        "target_map": "rocks_right",
+        "source_energy_j": 923.0283203125,
+        "source_path_m": 5.988236427307129,
+        "source_time_s": 6.0
+      },
+      "reference_file": "B3_reference.csv",
+      "reference_sha256": "43b1c350960ebb4665cdec14876307b49acd3087cff85d7174e51c039ffc90b4",
+      "source_result": {
+        "env_id": "0",
+        "layout": "rocks_asphalt__right_asphalt",
+        "reason": "goal",
+        "success": "1",
+        "steps": "30",
+        "energy_j": "923.0283203125",
+        "path_m": "5.988236427307129",
+        "final_distance_m": "0.5349193811416626",
+        "nav_return": "164.9836883544922",
+        "energy_cost": "9.230280876159668",
+        "route": "right",
+        "right_path_m": "4.377007007598877",
+        "left_path_m": "0.0",
+        "asphalt_route": "1",
+        "mission_id": "B3",
+        "map": "rocks_left",
+        "start_x_m": "-0.0204",
+        "start_y_m": "-0.0445",
+        "goal_x_m": "4.0249",
+        "goal_y_m": "4.0129",
+        "start_yaw_deg": "45.0",
+        "time_s": "6.0",
+        "straight_distance_m": "5.729480504373848",
+        "falls": "0",
+        "timeouts": "0",
+        "final_x_m": "3.9001803398132324",
+        "final_y_m": "3.492723226547241"
+      },
+      "source": {
+        "run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_1_binary_terrain/experiments/results_exp/run_20261112_184253_967025/rocks_left",
+        "trajectory_sha256": "8a60472d93073ec7a4f631d4ce9d2c0f64959bef3ec4738769884349928a6cec",
+        "episodes_sha256": "9c61851dd5ffb9b4f0f90114fd3efd05612ba92a4353535449c9e255faa6f49e",
+        "config": {
+          "map": "rocks_left",
+          "layout": "rocks_asphalt__right_asphalt",
+          "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/runs/test13_ppo_20261023_122929_726370/policy_final.pt",
+          "checkpoint_sha256": "9d60c837f34356cc221e5ce97e02b6e2b8cf3e8653ab1caaad608d311cea579e",
+          "training_transitions": 100000,
+          "source_identity": {
+            "dino": {
+              "config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d",
+              "preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+              "model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1"
+            },
+            "input_size": 518,
+            "resize": "opencv_linear_square_no_crop",
+            "terrain": {
+              "rocks_asphalt__right_rocks": "0b22f449834ea64505dee3a1d5d584c9fc09f92b08f729e998aeaf91b2946e12",
+              "rocks_asphalt__right_asphalt": "fa9ffcee29701a462c2f4c11f3460aa181ca9105c7e54e268f0483cabefc0695"
+            }
+          },
+          "signature": {
+            "schema": 1,
+            "experiment": "multi_terrain_test13",
+            "algorithm": "asymmetric_multi_head_PPO",
+            "navigation": {
+              "physics_dt": 0.005,
+              "physics_steps_per_action": 40,
+              "settle_seconds": 2.0,
+              "max_episode_seconds": 40.0,
+              "spawn_height_m": 0.75,
+              "goal_radius_m": 0.55,
+              "minimum_body_height_m": 0.25,
+              "max_forward_m_s": 1.6,
+              "max_yaw_rad_s": 1.5,
+              "progress_reward_per_m": 3.0,
+              "time_penalty_per_step": 0.02,
+              "success_bonus": 150.0,
+              "failure_penalty": 300.0,
+              "energy_reference_j": 100.0,
+              "energy_weight": 1.0,
+              "power_filter_seconds": 1.0
+            },
+            "ppo": {
+              "timesteps": 100000,
+              "num_envs": 32,
+              "rollout_steps": 128,
+              "batch_size": 256,
+              "epochs": 10,
+              "learning_rate": 0.0003,
+              "gamma": 0.999,
+              "gae_lambda": 0.95,
+              "clip_range": 0.2,
+              "entropy_coef": 0.005,
+              "value_coef": 0.5,
+              "max_grad_norm": 0.5,
+              "target_kl": 0.02,
+              "checkpoint_every": 50000,
+              "eval_every": 100000,
+              "eval_episodes_per_env": 1
+            },
+            "actor_size": 3255,
+            "critic_size": 3279,
+            "layers": [
+              512,
+              256,
+              128,
+              64
+            ],
+            "feature_dim": 32,
+            "state_order": [
+              "goal_xy",
+              "linear_velocity_xyz",
+              "angular_velocity_xyz",
+              "projected_gravity_xyz",
+              "previous_action_xy",
+              "power_ema",
+              "time_left"
+            ],
+            "cell_order": [
+              "pca32",
+              "relative_height",
+              "slope_x",
+              "slope_y",
+              "roughness",
+              "visual_valid",
+              "geometry_valid",
+              "visual_age",
+              "geometry_age"
+            ],
+            "privileged_order": [
+              "mu_static_dynamic_4x2",
+              "contact4",
+              "normal_force4",
+              "slip4x2"
+            ],
+            "feet": [
+              "fl_foot",
+              "fr_foot",
+              "hl_foot",
+              "hr_foot"
+            ],
+            "look_x": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "look_y": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "cell_resolution_m": 0.5,
+            "map_persistent": true,
+            "memory_resolution_m": 0.1,
+            "memory_age_seconds": 40.0,
+            "memory_fusion": "latest_per_world_xy_bin",
+            "memory_age_aggregation": "sample_weighted_mean",
+            "localization": "simulator_pose",
+            "depth_stride": 4,
+            "geometry_min_points": 10,
+            "geometry_min_xy_eigenvalue": 0.0001,
+            "terminal_timeout": true
+          },
+          "physics_dt_s": 0.005,
+          "action_dt_s": 0.2,
+          "goal_radius_m": 0.55,
+          "timeout_s": 40.0,
+          "energy": "Absolute joint mechanical work; trapezoidal physics-step integration",
+          "policy": "Deterministic PPO actor; frozen normalizer, DINOv2 and PCA",
+          "device": "cuda:0",
+          "agent_device": "cpu",
+          "simulation_seed": 0,
+          "missions": [
+            {
+              "mission_id": "B1",
+              "map": "rocks_left",
+              "start_x_m": -0.0159,
+              "start_y_m": 0.0339,
+              "goal_x_m": 4.0441,
+              "goal_y_m": 3.9516,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B2",
+              "map": "rocks_left",
+              "start_x_m": 0.0123,
+              "start_y_m": -0.0173,
+              "goal_x_m": 4.0349,
+              "goal_y_m": 3.9913,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B3",
+              "map": "rocks_left",
+              "start_x_m": -0.0204,
+              "start_y_m": -0.0445,
+              "goal_x_m": 4.0249,
+              "goal_y_m": 4.0129,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B4",
+              "map": "rocks_left",
+              "start_x_m": 0.0158,
+              "start_y_m": -0.0329,
+              "goal_x_m": 3.9567,
+              "goal_y_m": 4.0159,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B5",
+              "map": "rocks_left",
+              "start_x_m": 0.006,
+              "start_y_m": 0.0283,
+              "goal_x_m": 3.9837,
+              "goal_y_m": 3.9914,
+              "start_yaw_deg": 45.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "group": "b_routes_on_a",
+      "mission": {
+        "mission_id": "B4",
+        "map": "rocks_right",
+        "start_x_m": 0.0158,
+        "start_y_m": -0.0329,
+        "goal_x_m": 3.9567,
+        "goal_y_m": 4.0159,
+        "start_yaw_deg": 45.0,
+        "source_map": "rocks_left",
+        "target_map": "rocks_right",
+        "source_energy_j": 977.8677978515625,
+        "source_path_m": 6.106469631195068,
+        "source_time_s": 6.2
+      },
+      "reference_file": "B4_reference.csv",
+      "reference_sha256": "84388083e831b317e0571d031edea27cf18c619f35a212932f70eadc1a94bf23",
+      "source_result": {
+        "env_id": "0",
+        "layout": "rocks_asphalt__right_asphalt",
+        "reason": "goal",
+        "success": "1",
+        "steps": "31",
+        "energy_j": "977.8677978515625",
+        "path_m": "6.106469631195068",
+        "final_distance_m": "0.541526734828949",
+        "nav_return": "164.70567321777344",
+        "energy_cost": "9.778678894042969",
+        "route": "right",
+        "right_path_m": "4.525678634643555",
+        "left_path_m": "0.0",
+        "asphalt_route": "1",
+        "mission_id": "B4",
+        "map": "rocks_left",
+        "start_x_m": "0.0158",
+        "start_y_m": "-0.0329",
+        "goal_x_m": "3.9567",
+        "goal_y_m": "4.0159",
+        "start_yaw_deg": "45.0",
+        "time_s": "6.2",
+        "straight_distance_m": "5.650086216156351",
+        "falls": "0",
+        "timeouts": "0",
+        "final_x_m": "3.9674768447875977",
+        "final_y_m": "3.474480628967285"
+      },
+      "source": {
+        "run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_1_binary_terrain/experiments/results_exp/run_20261112_184253_967025/rocks_left",
+        "trajectory_sha256": "8a60472d93073ec7a4f631d4ce9d2c0f64959bef3ec4738769884349928a6cec",
+        "episodes_sha256": "9c61851dd5ffb9b4f0f90114fd3efd05612ba92a4353535449c9e255faa6f49e",
+        "config": {
+          "map": "rocks_left",
+          "layout": "rocks_asphalt__right_asphalt",
+          "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/runs/test13_ppo_20261023_122929_726370/policy_final.pt",
+          "checkpoint_sha256": "9d60c837f34356cc221e5ce97e02b6e2b8cf3e8653ab1caaad608d311cea579e",
+          "training_transitions": 100000,
+          "source_identity": {
+            "dino": {
+              "config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d",
+              "preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+              "model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1"
+            },
+            "input_size": 518,
+            "resize": "opencv_linear_square_no_crop",
+            "terrain": {
+              "rocks_asphalt__right_rocks": "0b22f449834ea64505dee3a1d5d584c9fc09f92b08f729e998aeaf91b2946e12",
+              "rocks_asphalt__right_asphalt": "fa9ffcee29701a462c2f4c11f3460aa181ca9105c7e54e268f0483cabefc0695"
+            }
+          },
+          "signature": {
+            "schema": 1,
+            "experiment": "multi_terrain_test13",
+            "algorithm": "asymmetric_multi_head_PPO",
+            "navigation": {
+              "physics_dt": 0.005,
+              "physics_steps_per_action": 40,
+              "settle_seconds": 2.0,
+              "max_episode_seconds": 40.0,
+              "spawn_height_m": 0.75,
+              "goal_radius_m": 0.55,
+              "minimum_body_height_m": 0.25,
+              "max_forward_m_s": 1.6,
+              "max_yaw_rad_s": 1.5,
+              "progress_reward_per_m": 3.0,
+              "time_penalty_per_step": 0.02,
+              "success_bonus": 150.0,
+              "failure_penalty": 300.0,
+              "energy_reference_j": 100.0,
+              "energy_weight": 1.0,
+              "power_filter_seconds": 1.0
+            },
+            "ppo": {
+              "timesteps": 100000,
+              "num_envs": 32,
+              "rollout_steps": 128,
+              "batch_size": 256,
+              "epochs": 10,
+              "learning_rate": 0.0003,
+              "gamma": 0.999,
+              "gae_lambda": 0.95,
+              "clip_range": 0.2,
+              "entropy_coef": 0.005,
+              "value_coef": 0.5,
+              "max_grad_norm": 0.5,
+              "target_kl": 0.02,
+              "checkpoint_every": 50000,
+              "eval_every": 100000,
+              "eval_episodes_per_env": 1
+            },
+            "actor_size": 3255,
+            "critic_size": 3279,
+            "layers": [
+              512,
+              256,
+              128,
+              64
+            ],
+            "feature_dim": 32,
+            "state_order": [
+              "goal_xy",
+              "linear_velocity_xyz",
+              "angular_velocity_xyz",
+              "projected_gravity_xyz",
+              "previous_action_xy",
+              "power_ema",
+              "time_left"
+            ],
+            "cell_order": [
+              "pca32",
+              "relative_height",
+              "slope_x",
+              "slope_y",
+              "roughness",
+              "visual_valid",
+              "geometry_valid",
+              "visual_age",
+              "geometry_age"
+            ],
+            "privileged_order": [
+              "mu_static_dynamic_4x2",
+              "contact4",
+              "normal_force4",
+              "slip4x2"
+            ],
+            "feet": [
+              "fl_foot",
+              "fr_foot",
+              "hl_foot",
+              "hr_foot"
+            ],
+            "look_x": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "look_y": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "cell_resolution_m": 0.5,
+            "map_persistent": true,
+            "memory_resolution_m": 0.1,
+            "memory_age_seconds": 40.0,
+            "memory_fusion": "latest_per_world_xy_bin",
+            "memory_age_aggregation": "sample_weighted_mean",
+            "localization": "simulator_pose",
+            "depth_stride": 4,
+            "geometry_min_points": 10,
+            "geometry_min_xy_eigenvalue": 0.0001,
+            "terminal_timeout": true
+          },
+          "physics_dt_s": 0.005,
+          "action_dt_s": 0.2,
+          "goal_radius_m": 0.55,
+          "timeout_s": 40.0,
+          "energy": "Absolute joint mechanical work; trapezoidal physics-step integration",
+          "policy": "Deterministic PPO actor; frozen normalizer, DINOv2 and PCA",
+          "device": "cuda:0",
+          "agent_device": "cpu",
+          "simulation_seed": 0,
+          "missions": [
+            {
+              "mission_id": "B1",
+              "map": "rocks_left",
+              "start_x_m": -0.0159,
+              "start_y_m": 0.0339,
+              "goal_x_m": 4.0441,
+              "goal_y_m": 3.9516,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B2",
+              "map": "rocks_left",
+              "start_x_m": 0.0123,
+              "start_y_m": -0.0173,
+              "goal_x_m": 4.0349,
+              "goal_y_m": 3.9913,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B3",
+              "map": "rocks_left",
+              "start_x_m": -0.0204,
+              "start_y_m": -0.0445,
+              "goal_x_m": 4.0249,
+              "goal_y_m": 4.0129,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B4",
+              "map": "rocks_left",
+              "start_x_m": 0.0158,
+              "start_y_m": -0.0329,
+              "goal_x_m": 3.9567,
+              "goal_y_m": 4.0159,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B5",
+              "map": "rocks_left",
+              "start_x_m": 0.006,
+              "start_y_m": 0.0283,
+              "goal_x_m": 3.9837,
+              "goal_y_m": 3.9914,
+              "start_yaw_deg": 45.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "group": "b_routes_on_a",
+      "mission": {
+        "mission_id": "B5",
+        "map": "rocks_right",
+        "start_x_m": 0.006,
+        "start_y_m": 0.0283,
+        "goal_x_m": 3.9837,
+        "goal_y_m": 3.9914,
+        "start_yaw_deg": 45.0,
+        "source_map": "rocks_left",
+        "target_map": "rocks_right",
+        "source_energy_j": 959.024658203125,
+        "source_path_m": 6.073001384735107,
+        "source_time_s": 6.2
+      },
+      "reference_file": "B5_reference.csv",
+      "reference_sha256": "320f36a528a0b449f7514c5900ac65e7682db83076aac602bb92b8202ccd386d",
+      "source_result": {
+        "env_id": "0",
+        "layout": "rocks_asphalt__right_asphalt",
+        "reason": "goal",
+        "success": "1",
+        "steps": "31",
+        "energy_j": "959.024658203125",
+        "path_m": "6.073001384735107",
+        "final_distance_m": "0.45091795921325684",
+        "nav_return": "164.87225341796875",
+        "energy_cost": "9.590246200561523",
+        "route": "right",
+        "right_path_m": "4.581586837768555",
+        "left_path_m": "0.0",
+        "asphalt_route": "1",
+        "mission_id": "B5",
+        "map": "rocks_left",
+        "start_x_m": "0.006",
+        "start_y_m": "0.0283",
+        "goal_x_m": "3.9837",
+        "goal_y_m": "3.9914",
+        "start_yaw_deg": "45.0",
+        "time_s": "6.2",
+        "straight_distance_m": "5.6150030186991",
+        "falls": "0",
+        "timeouts": "0",
+        "final_x_m": "4.062380313873291",
+        "final_y_m": "3.5473995208740234"
+      },
+      "source": {
+        "run": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_1_binary_terrain/experiments/results_exp/run_20261112_184253_967025/rocks_left",
+        "trajectory_sha256": "8a60472d93073ec7a4f631d4ce9d2c0f64959bef3ec4738769884349928a6cec",
+        "episodes_sha256": "9c61851dd5ffb9b4f0f90114fd3efd05612ba92a4353535449c9e255faa6f49e",
+        "config": {
+          "map": "rocks_left",
+          "layout": "rocks_asphalt__right_asphalt",
+          "checkpoint": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/runs/test13_ppo_20261023_122929_726370/policy_final.pt",
+          "checkpoint_sha256": "9d60c837f34356cc221e5ce97e02b6e2b8cf3e8653ab1caaad608d311cea579e",
+          "training_transitions": 100000,
+          "source_identity": {
+            "dino": {
+              "config.json": "1809f83e3bdb1609a501a610ad4a742f4fd8ae44d72ca4aa0df52d1f2ac8628d",
+              "preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+              "model.safetensors": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1"
+            },
+            "input_size": 518,
+            "resize": "opencv_linear_square_no_crop",
+            "terrain": {
+              "rocks_asphalt__right_rocks": "0b22f449834ea64505dee3a1d5d584c9fc09f92b08f729e998aeaf91b2946e12",
+              "rocks_asphalt__right_asphalt": "fa9ffcee29701a462c2f4c11f3460aa181ca9105c7e54e268f0483cabefc0695"
+            }
+          },
+          "signature": {
+            "schema": 1,
+            "experiment": "multi_terrain_test13",
+            "algorithm": "asymmetric_multi_head_PPO",
+            "navigation": {
+              "physics_dt": 0.005,
+              "physics_steps_per_action": 40,
+              "settle_seconds": 2.0,
+              "max_episode_seconds": 40.0,
+              "spawn_height_m": 0.75,
+              "goal_radius_m": 0.55,
+              "minimum_body_height_m": 0.25,
+              "max_forward_m_s": 1.6,
+              "max_yaw_rad_s": 1.5,
+              "progress_reward_per_m": 3.0,
+              "time_penalty_per_step": 0.02,
+              "success_bonus": 150.0,
+              "failure_penalty": 300.0,
+              "energy_reference_j": 100.0,
+              "energy_weight": 1.0,
+              "power_filter_seconds": 1.0
+            },
+            "ppo": {
+              "timesteps": 100000,
+              "num_envs": 32,
+              "rollout_steps": 128,
+              "batch_size": 256,
+              "epochs": 10,
+              "learning_rate": 0.0003,
+              "gamma": 0.999,
+              "gae_lambda": 0.95,
+              "clip_range": 0.2,
+              "entropy_coef": 0.005,
+              "value_coef": 0.5,
+              "max_grad_norm": 0.5,
+              "target_kl": 0.02,
+              "checkpoint_every": 50000,
+              "eval_every": 100000,
+              "eval_episodes_per_env": 1
+            },
+            "actor_size": 3255,
+            "critic_size": 3279,
+            "layers": [
+              512,
+              256,
+              128,
+              64
+            ],
+            "feature_dim": 32,
+            "state_order": [
+              "goal_xy",
+              "linear_velocity_xyz",
+              "angular_velocity_xyz",
+              "projected_gravity_xyz",
+              "previous_action_xy",
+              "power_ema",
+              "time_left"
+            ],
+            "cell_order": [
+              "pca32",
+              "relative_height",
+              "slope_x",
+              "slope_y",
+              "roughness",
+              "visual_valid",
+              "geometry_valid",
+              "visual_age",
+              "geometry_age"
+            ],
+            "privileged_order": [
+              "mu_static_dynamic_4x2",
+              "contact4",
+              "normal_force4",
+              "slip4x2"
+            ],
+            "feet": [
+              "fl_foot",
+              "fr_foot",
+              "hl_foot",
+              "hr_foot"
+            ],
+            "look_x": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "look_y": [
+              -2.0,
+              -1.5,
+              -1.0,
+              -0.5,
+              0.0,
+              0.5,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "cell_resolution_m": 0.5,
+            "map_persistent": true,
+            "memory_resolution_m": 0.1,
+            "memory_age_seconds": 40.0,
+            "memory_fusion": "latest_per_world_xy_bin",
+            "memory_age_aggregation": "sample_weighted_mean",
+            "localization": "simulator_pose",
+            "depth_stride": 4,
+            "geometry_min_points": 10,
+            "geometry_min_xy_eigenvalue": 0.0001,
+            "terminal_timeout": true
+          },
+          "physics_dt_s": 0.005,
+          "action_dt_s": 0.2,
+          "goal_radius_m": 0.55,
+          "timeout_s": 40.0,
+          "energy": "Absolute joint mechanical work; trapezoidal physics-step integration",
+          "policy": "Deterministic PPO actor; frozen normalizer, DINOv2 and PCA",
+          "device": "cuda:0",
+          "agent_device": "cpu",
+          "simulation_seed": 0,
+          "missions": [
+            {
+              "mission_id": "B1",
+              "map": "rocks_left",
+              "start_x_m": -0.0159,
+              "start_y_m": 0.0339,
+              "goal_x_m": 4.0441,
+              "goal_y_m": 3.9516,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B2",
+              "map": "rocks_left",
+              "start_x_m": 0.0123,
+              "start_y_m": -0.0173,
+              "goal_x_m": 4.0349,
+              "goal_y_m": 3.9913,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B3",
+              "map": "rocks_left",
+              "start_x_m": -0.0204,
+              "start_y_m": -0.0445,
+              "goal_x_m": 4.0249,
+              "goal_y_m": 4.0129,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B4",
+              "map": "rocks_left",
+              "start_x_m": 0.0158,
+              "start_y_m": -0.0329,
+              "goal_x_m": 3.9567,
+              "goal_y_m": 4.0159,
+              "start_yaw_deg": 45.0
+            },
+            {
+              "mission_id": "B5",
+              "map": "rocks_left",
+              "start_x_m": 0.006,
+              "start_y_m": 0.0283,
+              "goal_x_m": 3.9837,
+              "goal_y_m": 3.9914,
+              "start_yaw_deg": 45.0
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

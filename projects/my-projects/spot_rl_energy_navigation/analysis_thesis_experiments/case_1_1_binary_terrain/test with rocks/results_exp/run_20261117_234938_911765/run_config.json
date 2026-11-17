@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/analysis_thesis_experiments/case_1_1_binary_terrain/test with rocks/create_exp.py",
+    "--device",
+    "cuda:0",
+    "--headless"
+  ],
+  "reference_panel_sha256": "03a3ee9ef3d7b2487a5efbd8bc02dc87c228ade1e93194e9931d8ee5f212c7f7",
+  "groups": [
+    "a_routes_on_b",
+    "b_routes_on_a"
+  ],
+  "selected_missions": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5"
+  ]
+}

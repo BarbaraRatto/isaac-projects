@@ -1,0 +1,41 @@
+{
+  "group": "a_routes_on_b",
+  "source_map": "rocks_right",
+  "target_map": "rocks_left",
+  "method": "Recorded geometric route with original forward commands indexed by simulated time",
+  "steering": "Pure-pursuit route correction; original yaw commands saved as reference only",
+  "controller": {
+    "lookahead_m": 0.35,
+    "max_yaw_rad_s": 1.5
+  },
+  "physics_dt_s": 0.005,
+  "action_dt_s": 0.2,
+  "timeout_s": 40.0,
+  "goal_radius_m": 0.55,
+  "energy": "Absolute joint mechanical work; physics-step trapezoidal integration",
+  "device": "cuda:0",
+  "simulation_seed": 0,
+  "maps": {
+    "rocks_right": {
+      "path": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/maps/rocks_right.usd",
+      "sha256": "0b22f449834ea64505dee3a1d5d584c9fc09f92b08f729e998aeaf91b2946e12"
+    },
+    "rocks_left": {
+      "path": "/home/students/work/barbara/isaac-projects/projects/my-projects/spot_rl_energy_navigation/multi_terrain_test13/maps/rocks_left.usd",
+      "sha256": "fa9ffcee29701a462c2f4c11f3460aa181ca9105c7e54e268f0483cabefc0695"
+    }
+  },
+  "reference_panel_sha256": "03a3ee9ef3d7b2487a5efbd8bc02dc87c228ade1e93194e9931d8ee5f212c7f7",
+  "assets": {
+    "/home/students/work/barbara/isaac-projects/projects/my-projects/IsaacRobotics/assets/spot.usd": "79aa68380357daf3b8aea3bb93ebf71b4b7f4015dc97ecb53c286de232ef60dd",
+    "/home/students/work/barbara/isaac-projects/projects/my-projects/IsaacRobotics/policies/spot/models/spot_policy.pt": "d95d675e8b080d5c84a2a2779d165ff7ecd3e34d24b233c083242e615a3d589a",
+    "/home/isaac/isaac-sim/assets/Assets/Isaac/5.1/Isaac/Sensors/Stereolabs/ZED_X/ZED_X.usdc": "fb45044c5ca6127d42ad8c2528b29ac160b5511274a47ad251291d4aa9ac0b4a"
+  },
+  "selected_missions": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5"
+  ]
+}
