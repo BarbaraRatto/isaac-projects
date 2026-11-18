@@ -45,11 +45,13 @@ Ho allenato una policy con PPO su due disposizioni speculari della stessa scena:
 L'obiettivo è mostrare la scelta fra due alternative, raggiungendo il goal senza cadere.
 
 \begin{itemize}
-\item \textbf{Prove:} 10 esecuzioni, cinque per ciascuna disposizione.
+\item \textbf{Prove:} 10 esecuzioni con la policy, cinque per ciascuna disposizione, e 10 prove aggiuntive sul ramo roccioso per il confronto.
 \item \textbf{Start e goal:} partenza nominale a (0, 0) m e arrivo a (4, 4) m, con piccole variazioni iniziali della posizione.
-\item \textbf{Cosa mostro:} andamento del training, traiettorie sulle due mappe, raggiungimenti del goal e costo di ogni esecuzione.
+\item \textbf{Cosa mostro:} andamento del training, traiettorie sulle due mappe, raggiungimenti del goal, costo di ogni esecuzione e confronto tra asfalto e rocce in termini di successo, energia e tempo.
 
 \end{itemize}
+
+Ho inoltre effettuato un confronto con il ramo roccioso, per verificare se la scelta dell'asfalto sia più conveniente. Ho guidato Spot usando le traiettorie registrate come riferimento e riproducendo i comandi di avanzamento a ogni passo, scambiando le due mappe: i primi cinque episodi sono stati ripetuti sulla mappa B e i secondi cinque sulla mappa A. In questo modo, lungo il percorso di riferimento si trovano le rocce al posto dell'asfalto. Il confronto considera il successo su tutte le missioni e i risparmi energetici e temporali soltanto sugli episodi completati in entrambe le condizioni. La procedura e i risultati sono riportati nella sezione~\ref{sec:confronto-binario-asfalto-rocce}.
 
 \subsection{Primo esempio con SAC e sette terreni}
 
@@ -217,33 +219,28 @@ Le tabelle~\ref{tab:exp1-1-map-a} e~\ref{tab:exp1-1-map-b} riportano distanza ef
 
 \input{tabelle/tabels_exp1_1.tex}
 
-In tutte e dieci le esecuzioni Spot ha raggiunto il goal senza cadute o timeout, scegliendo il ramo asfaltato. Nella mappa A la distanza media percorsa è stata di $6{,}25$~m e il tempo medio di $7{,}06$~s; nella mappa B i valori sono stati rispettivamente $6{,}00$~m e $6{,}08$~s. I percorsi non sono quindi perfettamente speculari. Un'eventuale prova dedicata a questa differenza resta da valutare.
+In tutte e dieci le esecuzioni Spot ha raggiunto il goal senza cadute o timeout, scegliendo il ramo asfaltato. Nella mappa A la distanza media percorsa è stata di $6{,}25$~m e il tempo medio di $7{,}06$~s; nella mappa B i valori sono stati rispettivamente $6{,}00$~m e $6{,}08$~s. I percorsi non sono quindi perfettamente speculari.
 
-\subsubsection{ANCORA DA FARE --- CONFRONTO ENERGETICO DA VALUTARE}
+\subsubsection{Confronto energetico tra asfalto e rocce}
+\label{sec:confronto-binario-asfalto-rocce}
 
-\textbf{Il confronto descritto di seguito non è stato ancora eseguito. Occorre ancora decidere se realizzarlo e definirne la procedura.}
+Inizialmente avevo previsto un confronto con una navigazione senza la policy appresa, facendo procedere Spot direttamente verso il goal. In questo caso, però, il segmento fra start e goal attraversa il ghiaccio centrale e ci si aspetta che il robot cada. Il consumo di una missione interrotta non sarebbe confrontabile con quello di una missione completata. Ho quindi scelto di confrontare il passaggio sull'asfalto con quello sulle rocce, per verificare se la scelta del ramo asfaltato sia effettivamente conveniente.
 
-In questo caso il percorso rettilineo fra start e goal attraversa la zona centrale scivolosa. Senza la policy di navigazione che sceglie una deviazione, ci si aspetta che Spot, andando dritto, cada sul ghiaccio. Una prova rettilinea non è stata ancora svolta su queste dieci missioni. Il suo costo energetico includerebbe quindi, nell'eventualità della caduta, un'esecuzione interrotta e non il completamento della stessa missione: per questo non lo considero il confronto energetico principale per questo esempio.
+Ho eseguito dieci prove guidando Spot lungo le traiettorie registrate, usate come riferimento per il movimento, e riproducendo a ogni passo di 0,2~s i comandi di velocità di avanzamento delle esecuzioni originali. Per cambiare il terreno sotto le zampe senza ribaltare il percorso, ho scambiato le mappe: le missioni A1--A5 sono state ripetute sulla mappa B e le missioni B1--B5 sulla mappa A. In questo modo il ramo asfaltato delle prove di riferimento diventa il ramo roccioso, mentre start e goal rimangono nelle stesse posizioni.
 
-Una possibilità da valutare è confrontare il percorso scelto sull'asfalto con un percorso speculare sul ramo roccioso, di lunghezza corrispondente. L'obiettivo sarebbe osservare quanto lavoro meccanico richiede Spot per percorrere una strada analoga sulle rocce anziché sull'asfalto.
+Durante queste prove il controllore locomotorio rimane attivo e un controllore di inseguimento corregge la direzione per seguire il percorso registrato. La traiettoria è quindi un riferimento da seguire, non un movimento imposto al robot: sulle rocce il percorso e la velocità effettiva possono variare. Se la prova dura più della registrazione originale, viene mantenuto l'ultimo comando di avanzamento disponibile. Sono conservati lo stesso orientamento iniziale, il raggio di arrivo di 0,55~m e il limite di tempo di 40~s.
 
-Il costo di questa alternativa deve essere misurato con nuove prove in simulazione e non è ricavabile direttamente dai consumi già registrati sull'asfalto. Restano da definire il modo di seguire il percorso e la velocità di riferimento, valutando se usare la velocità media dei singoli episodi. Andranno mantenuti criteri confrontabili fra le due superfici, registrando anche eventuali cadute o mancati completamenti.
-
-
-
-VOLENDO SI POSSONO USARE L STESSE TRAIETTORIE SCAMBIANDO LE MAPPE, COSI SI FINISCE SULL'ALTRO TERRENO.
-
-
-\textbf{Per ora questa parte resta da fare e da discutere.}
-
-\textbf{ANCORA DA FARE}
-\begin{itemize}
-\item Rifare uno dei due test: in una delle due mappe Spot passa molto più distante dal ghiaccio rispetto all'altra.
-\item Provare ad aumentare il rumore sullo start e sul goal.
-\item Confronto con le rocce: come realizzarlo? Definire il percorso da seguire, il controllore e la velocità di riferimento.
-\end{itemize}
+Le due tabelle seguenti riportano i risultati delle prove sul ramo roccioso. Come nelle altre tabelle, nei fallimenti distanza, energia, tempo e velocità media sono indicati con un trattino.
 
 \input{tabelle/binary_rocks_risultati.tex}
+
+La tabella~\ref{tab:exp1-1-confronto-rocks} riassume il confronto. Il successo è calcolato su tutte le missioni e la sua variazione è espressa in punti percentuali, sottraendo il valore sulle rocce da quello sull'asfalto. I risparmi energetici e temporali sono invece calcolati solo sulle stesse missioni completate in entrambe le condizioni, confrontando le rispettive medie e usando il valore sulle rocce come riferimento.
+
+\input{tabelle/binary_rocks_confronto.tex}
+
+Sull'asfalto Spot completa tutte le dieci missioni; sulle rocce ne completa otto, con una caduta nella missione A4 e una nella missione B1. La scelta dell'asfalto corrisponde quindi, in queste prove, a un aumento del successo di 20 punti percentuali. Nei quattro successi comuni del gruppo A, il consumo medio diminuisce del 23,47\% e il tempo del 34,11\%; nel gruppo B le riduzioni sono rispettivamente del 27,76\% e del 38,38\%. Considerando insieme gli otto successi comuni, il risparmio energetico è del 25,57\% e quello temporale del 36,17\%. Nei singoli episodi riusciti in entrambe le condizioni, questo corrisponde a circa 270--470~J di lavoro meccanico in meno e a un risparmio di tempo compreso tra 2,9 e 4,6~s. In media, il risparmio è di circa 342~J e 3,7~s per missione.
+
+Questi risultati mostrano che, nei casi esaminati, il ramo asfaltato è più conveniente: richiede meno lavoro meccanico, permette di raggiungere il goal in meno tempo e presenta meno cadute. Per il gruppo A, le misure sull'asfalto sono state aggiornate con una nuova esecuzione, mentre il test sulle rocce usa le traiettorie e i comandi della registrazione precedente. Il confronto descrive quindi le due condizioni osservate, senza garantire che traiettoria e velocità effettiva siano perfettamente identiche o attribuire tutta la differenza di consumo al solo terreno.
 
 \clearpage
 \subsection{Caso 1.2: esempio punto a punto sulla mappa grande --- DA FARE}

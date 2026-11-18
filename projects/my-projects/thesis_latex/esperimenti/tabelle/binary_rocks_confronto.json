@@ -1,0 +1,100 @@
+{
+  "sources": [
+    {
+      "file": "tabels_exp1_1.tex",
+      "sha256": "972a00c4c2d26a98010181f68a8228bd1e5a50f99e0f6576bef3615ebef3b910"
+    },
+    {
+      "file": "binary_rocks_risultati.tex",
+      "sha256": "ff28ad42585eee1edc64399f2a56f20060f4554a6d58e021b5877e7afe42b70a"
+    }
+  ],
+  "note": "Descriptive comparisons of current user-confirmed displayed measurements. Paired energy/time use successful missions only. Asphalt group A was updated from a rerun; the original rock replay references are retained separately.",
+  "groups": [
+    {
+      "group": "A",
+      "missions": 5,
+      "asphalt_successes": 5,
+      "rocks_successes": 4,
+      "asphalt_success_percent": 100.0,
+      "rocks_success_percent": 80.0,
+      "success_change_pp": 20.0,
+      "paired_episodes": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "asphalt_paired_means": {
+        "path_m": 6.2425,
+        "energy_j": 1043.15,
+        "time_s": 7.05
+      },
+      "rocks_paired_means": {
+        "path_m": 6.685,
+        "energy_j": 1362.9750000000001,
+        "time_s": 10.7
+      },
+      "energy_saving_percent": 23.465213962104958,
+      "time_saving_percent": 34.112149532710276
+    },
+    {
+      "group": "B",
+      "missions": 5,
+      "asphalt_successes": 5,
+      "rocks_successes": 4,
+      "asphalt_success_percent": 100.0,
+      "rocks_success_percent": 80.0,
+      "success_change_pp": 20.0,
+      "paired_episodes": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "asphalt_paired_means": {
+        "path_m": 6.025,
+        "energy_j": 945.775,
+        "time_s": 6.1
+      },
+      "rocks_paired_means": {
+        "path_m": 6.1,
+        "energy_j": 1309.3,
+        "time_s": 9.9
+      },
+      "energy_saving_percent": 27.764836172000308,
+      "time_saving_percent": 38.38383838383839
+    }
+  ],
+  "total": {
+    "group": "Totale",
+    "missions": 10,
+    "asphalt_successes": 10,
+    "rocks_successes": 8,
+    "asphalt_success_percent": 100.0,
+    "rocks_success_percent": 80.0,
+    "success_change_pp": 20.0,
+    "paired_episodes": [
+      1,
+      2,
+      3,
+      5,
+      7,
+      8,
+      9,
+      10
+    ],
+    "asphalt_paired_means": {
+      "path_m": 6.13375,
+      "energy_j": 994.4625,
+      "time_s": 6.575
+    },
+    "rocks_paired_means": {
+      "path_m": 6.3925,
+      "energy_j": 1336.1375,
+      "time_s": 10.3
+    },
+    "energy_saving_percent": 25.57184421513505,
+    "time_saving_percent": 36.16504854368932
+  }
+}
